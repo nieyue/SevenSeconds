@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.DailyTaskDao">
+<!-- 添加每日任务 -->
+<insert id="addDailyTask" parameterType="DailyTask" keyProperty="dailyTaskId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  daily_task_tb 
+   		 (type,frequency,money,create_date,acount_id)
+   VALUES
+    	 (#{type},#{frequency},#{money},#{createDate},#{acountId})  
+</insert>  
+<!-- 更新每日任务 -->
+<update id="updateDailyTask" parameterType="DailyTask" >  
+    UPDATE 
+    	daily_task_tb 
+    SET 
+    	type=#{type},
+    	frequency=#{frequency},
+    	money=#{money},
+    	create_date=#{createDate},
+    	acount_id=#{acountId}
+    WHERE
+    	daily_task_id=#{dailyTaskId} 
+</update> 
+<!-- 删除每日任务-->
+<delete id="delDailyTask"  parameterType="Integer" >  
+    DELETE FROM
+    	 daily_task_tb 
+    	 WHERE daily_task_id=#{dailyTaskId}
+</delete>  
+<!-- 加载每日任务-->
+<select id="loadDailyTask" parameterType="Integer" resultType="DailyTask" >
+SELECT 
+		daily_task_id,
+		type,
+		frequency,
+	 	money,
+    	create_date,
+    	acount_id
+FROM daily_task_tb 
+WHERE daily_task_id=#{dailyTaskId}
+</select>
+
+<!-- 分页查询每日任务-->
+<select id="browsePagingDailyTask" resultType="DailyTask">  
+        SELECT
+	    daily_task_id,
+		type,
+		frequency,
+	 	money,
+    	create_date,
+    	acount_id
+	FROM daily_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM daily_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(daily_task_id)
+	FROM daily_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

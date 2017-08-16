@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.SignDao">
+<!-- 添加签到 -->
+<insert id="addSign" parameterType="Sign" keyProperty="signId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  sign_tb 
+   		 (level,money,create_date,acount_id)
+   VALUES
+    	 (#{level},#{money},#{createDate},#{acountId})  
+</insert>  
+<!-- 更新签到 -->
+<update id="updateSign" parameterType="Sign" >  
+    UPDATE 
+    	Sign_tb 
+    SET 
+    	level=#{level},
+    	money=#{money},
+    	create_date=#{createDate},
+    	acount_id=#{acountId}
+    WHERE
+    	 sign_id=#{signId} 
+</update> 
+<!-- 删除签到-->
+<delete id="delSign"  parameterType="Integer" >  
+    DELETE FROM
+    	 sign_tb 
+    	 WHERE sign_id=#{signId}
+</delete>  
+<!-- 加载签到-->
+<select id="loadSign" parameterType="Integer" resultType="Sign" >
+SELECT 
+		sign_id,
+		level,
+	 	money,
+    	create_date,
+    	acount_id
+FROM sign_tb 
+WHERE sign_id=#{signId}
+</select>
+
+<!-- 分页查询签到-->
+<select id="browsePagingSign" resultType="Sign">  
+        SELECT
+	    sign_id,
+		level,
+	 	money,
+    	create_date,
+    	acount_id
+	FROM sign_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM sign_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(sign_id)
+	FROM sign_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

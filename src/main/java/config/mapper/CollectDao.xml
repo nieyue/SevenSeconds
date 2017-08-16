@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.CollectDao">
+<!-- 添加收藏 -->
+<insert id="addCollect" parameterType="Collect" keyProperty="collectId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  collect_tb 
+   		 (create_date,article_id,acount_id)
+   VALUES
+    	 (#{createDate},#{articleId},#{acountId})  
+</insert>  
+<!-- 更新收藏 -->
+<update id="updateCollect" parameterType="Collect" >  
+    UPDATE 
+    	collect_tb 
+    SET 
+    	create_date=#{createDate},
+    	article_id=#{articleId},
+    	acount_id=#{acountId}
+    WHERE
+    	 collect_id=#{collectId} 
+</update> 
+<!-- 删除收藏-->
+<delete id="delCollect"  parameterType="Integer" >  
+    DELETE FROM
+    	 collect_tb 
+    	 WHERE collect_id=#{collectId}
+</delete>  
+<!-- 加载收藏-->
+<select id="loadCollect" parameterType="Integer" resultType="Collect" >
+SELECT 
+		collect_id,
+    	create_date,
+    	article_id,
+    	acount_id
+FROM collect_tb 
+<where>
+	<if test="collectId!=null">
+	AND collect_id=#{collectId}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+</where>
+</select>
+
+<!-- 分页查询收藏-->
+<select id="browsePagingCollect" resultType="Collect">  
+        SELECT
+	    collect_id,
+    	create_date,
+    	article_id,
+    	acount_id
+	FROM collect_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM collect_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+<!-- 分页DTO查询收藏-->
+<select id="browsePagingCollectArticleDTO" resultType="CollectArticleDTO">  
+         SELECT 
+        ctb.collect_id,
+    	ctb.create_date,
+    	ctb.article_id,
+    	ctb.acount_id,
+    	atb.title,
+    	atb.reading_number,
+    	atb.comment_number
+      FROM collect_tb ctb, article_tb atb
+	<where>
+	<if test="articleId!=null">
+	AND ctb.article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND ctb.acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM collect_tb
+	<where>
+	<if test="articleId!=null">
+	AND ctb.article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	AND ctb.article_id=atb.article_id
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(collect_id)
+	FROM collect_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

@@ -1,0 +1,98 @@
+<!-- 商品列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">商品列表</label>
+</div>
+<!-- 商品列表选择end -->
+<!-- 商品列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>商品图片</th>
+			  <th>类型</th>
+			  <th>商品名</th>
+			  <th>原始单价</th>
+			  <th>折扣</th>
+			  <th>单价</th>
+			  <th>库存</th>
+			  <th>销售数目</th>
+			  <th>销售额</th>
+			  <th>邮费</th>
+			  <th>状态</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			  <th >操作</th> 
+			</tr>
+			<tr ng-repeat="mer in merList.list" >
+			  <td >
+			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			 	<a ng-repeat="merImg in mer.merImgList" href="javascript:;">
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:20px;height:20px;"
+					ng-src="{{merImg.imgAddress}}" >
+				</a>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.merCate.name"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.title"></span>
+			  </td>
+			  <td >
+			  <span class="text-danger" ng-bind="mer.oldPrice"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.discount"></span>
+			  </td>
+			  <td >
+			  <span class="text-danger" ng-bind="mer.price"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.stock"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.saleNumber"></span>
+			  </td>
+			  <td >
+			  <span class="text-danger" ng-bind="mer.saleMoney"></span>
+			  </td>
+			  <td >
+			  <span ng-if="mer.postage<=0" >0(包邮)</span>
+			  <span ng-if="mer.postage>0" ng-bind="mer.postage"></span>
+			  </td>
+			  <td >
+			  <span  ng-bind="mer.status==1?'上架':mer.status==0?'下架':mer.status==2?'售完':''"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="mer.createDate"></span>
+			  </td>
+			  <td ng-bind="mer.updateDate"></td>
+			 <td >
+			  <button class=" btn btn-warning" ng-click="updateMer(mer)">修改</button>
+			  <!-- <button class=" btn btn-danger" ng-click="delmer(mer)">删除</button> -->
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 商品列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

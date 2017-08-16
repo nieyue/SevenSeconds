@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.ReplyDao">
+<!-- 添加回复 -->
+<insert id="addReply" parameterType="Reply" keyProperty="replyId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  reply_tb 
+   		 (content,point_number,create_date,comment_id,acount_id)
+   VALUES
+    	 (#{content},#{pointNumber},#{createDate},#{commentId},#{acountId})  
+</insert>  
+<!-- 更新回复 -->
+<update id="updateReply" parameterType="Reply" >  
+    UPDATE 
+    	reply_tb 
+    SET 
+    	content=#{content},
+    	point_number=#{pointNumber},
+    	create_date=#{createDate},
+    	comment_id=#{commentId},
+    	acount_id=#{acountId}
+    WHERE
+    	 reply_id=#{replyId} 
+</update> 
+<!-- 删除回复-->
+<delete id="delReply"  parameterType="Integer" >  
+    DELETE FROM
+    	 reply_tb 
+    	 WHERE reply_id=#{replyId}
+</delete>  
+<!-- 加载回复-->
+<select id="loadReply" parameterType="Integer" resultType="Reply" >
+SELECT 
+		reply_id,
+		content,
+	 	point_number,
+    	create_date,
+    	comment_id,
+    	acount_id
+FROM reply_tb 
+WHERE reply_id=#{replyId}
+</select>
+
+<!-- 分页查询回复-->
+<select id="browsePagingReply" resultType="Reply">  
+        SELECT
+	    reply_id,
+		content,
+	 	point_number,
+    	create_date,
+    	comment_id,
+    	acount_id
+	FROM reply_tb
+	<where>
+	<if test="commentId!=null">
+	AND comment_id=#{commentId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM reply_tb
+	<where>
+	<if test="commentId!=null">
+	AND comment_id=#{commentId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+<!-- 分页DTO查询回复-->
+<select id="browsePagingReplyAcountDTO" resultType="ReplyAcountDTO">  
+         SELECT 
+        rtb.reply_id,
+		rtb.content,
+	 	rtb.point_number,
+    	rtb.create_date,
+    	rtb.comment_id,
+    	rtb.acount_id,
+    	atb.nickname,
+    	atb.icon,
+    	atb.phone
+      FROM reply_tb rtb, acount_tb atb
+	<where>
+	<if test="commentId!=null">
+	AND rtb.comment_id=#{commentId}
+	</if>
+	<if test="acountId!=null">
+	AND rtb.acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM reply_tb
+	<where>
+	<if test="commentId!=null">
+	AND comment_id=#{commentId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	AND rtb.acount_id=atb.acount_id
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(reply_id)
+	FROM reply_tb
+	<where>
+	<if test="commentId!=null">
+	AND comment_id=#{commentId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

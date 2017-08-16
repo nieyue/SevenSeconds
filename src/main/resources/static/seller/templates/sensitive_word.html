@@ -1,0 +1,48 @@
+    <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">添加敏感词</label>
+<br/>
+
+<!-- 增加 -->
+ <label class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※txt文件上传添加敏感词（UTF-8格式）</label>
+   <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="file" class="comment-input"   id="sensitiveWordFileUpload">
+  </div>
+  <hr/>
+	<form novalidate name="myAddSensitiveWordForm" ng-submit="addSensitiveWordForm()">
+ <label class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※直接添加敏感词（必填）</label>
+  <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="text" class="comment-input" required name="sensitiveWord"
+     ng-model="sw.sensitiveWord" ng-minlength="2" ng-maxlength="16"  placeholder="最少两位" >
+    <div class="text-danger alert alert-danger " ng-show="myAddSensitiveWordForm.sensitiveWord.$dirty && myAddSensitiveWordForm.sensitiveWord.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>最少两位
+	</div>
+  </div>
+ 
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myAddSensitiveWordForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 增加 end-->
+
+<!-- 敏感词列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">敏感词列表</label>
+</div>
+<!-- 敏感词列表选择end -->
+<!-- 敏感词列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>敏感词</th>
+			</tr>
+			<tr ng-repeat="sensitiveWord in sensitiveWordList" >
+			  <td >
+			  <span ng-bind="$index+1"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="sensitiveWord"></span>
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 敏感词列表end -->
+	<!-- 页面列表end -->

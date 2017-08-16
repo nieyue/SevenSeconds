@@ -1,0 +1,120 @@
+package com.nieyue.business;
+
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 日常业务
+ * @author 聂跃
+ * @date 2017年8月8日
+ */
+@Configuration
+public class DailyTaskBusiness {
+	//阅读资讯
+	private  int readingInformationNumber=10;
+	//分享资讯
+	private  int shareInformationNumber=3;
+	//阅读推送
+	private  int readingPushNumber=2;
+	//评论资讯 
+	private  int commentInformationNumber=3;
+	//分享朋友圈收徒
+	private  int shareCircleRecruitApprenticeNumber=1;
+	//点赞
+	private  int clickFabulousNumber=20;
+	//转发推广文章  有效阅读
+	private  int effectiveReadingNumber=3;
+  /**
+   * 每日触发日常
+   * @param type 任务类型
+   * @param nowNumber 完成次数
+   * @return money积分
+   */
+	public Double dailyTrigger(String type,int nowNumber){
+		Double money=0.0;
+		//阅读资讯   0/10   20积分
+		if(type.equals("阅读资讯")&& nowNumber>=readingInformationNumber){
+			money=20.0;
+		}else
+		//分享资讯   0/3    50积分
+		if(type.equals("分享资讯")&& nowNumber>=shareInformationNumber){
+			money=50.0;
+		}else
+		//阅读推送   0/2   10积分
+		if(type.equals("阅读推送")&& nowNumber>=readingPushNumber){
+			money=10.0;
+		}else
+		//评论资讯   0/3   10积分
+		if(type.equals("评论资讯")&& nowNumber>=commentInformationNumber){
+			money=10.0;
+		}else
+		//分享朋友圈收徒  0/1  10积分
+		if(type.equals("分享朋友圈收徒")&& nowNumber>=shareCircleRecruitApprenticeNumber){
+			money=10.0;
+		}else{
+			money=0.0;
+		}
+		return money;
+	}
+	/**
+	 * 徒弟回馈师傅积分
+	 * @param frequency 第几次
+	 * @return money 积分
+	 */
+	public Double apprenticeNoviceTask(int frequency){
+		Double money=0.0;
+		//徒弟完成新手第一次任务师傅+40
+		if(frequency==1){
+			money=40.0;
+		}else
+		//徒弟完成新手第二次任务师傅+30
+		if(frequency==2){
+			money=30.0;
+		}else
+		//徒弟完成新手第三次任务师傅+40
+		if(frequency==3){
+			money=40.0;
+		}else
+		//徒弟完成新手第三次任务师傅+40
+		if(frequency==4){
+			money=40.0;
+		}else
+		//徒弟完成新手第三次任务师傅+50
+		if(frequency==5){
+			money=50.0;
+		}else{
+			money=0.0;
+		}
+		return money;
+	}
+	/**
+	 * 优质评论
+	 * @param nowNumber 点赞次数
+	 * @return money 积分
+	 */
+	public Double qualityComment(int nowNumber){
+		Double money=0.0;
+		// 30积分 （点赞20次）
+		if(nowNumber>=clickFabulousNumber){
+			money=30.0;
+		}else{
+			money=0.0;
+		}
+		return money;
+	}
+	/**
+	 * 转发推广文章
+	 * @param nowNumber 点赞次数
+	 * @return money 积分
+	 */
+	public Double forwardingPromotionArticle(int nowNumber){
+		Double money=0.0;
+		// 10积分（获得3个有效阅读）
+		if(nowNumber>=effectiveReadingNumber){
+			money=10.0;
+		}else{
+			money=0.0;
+		}
+		return money;
+	}
+	
+}

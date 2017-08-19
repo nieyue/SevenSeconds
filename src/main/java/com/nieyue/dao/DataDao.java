@@ -22,11 +22,13 @@ public interface DataDao {
 	/** 更新数据*/	
 	public boolean updateData(Data data);
 	/** 新增或更新数据*/	
-	public boolean saveOrUpdateData(@Param("Data")Data data,@Param("uv")int uv,@Param("ip")int ip);
+	public boolean saveOrUpdateData(@Param("Data")Data data,@Param("uv")int uv,@Param("ip")int ip,@Param("readingNumber")int readingNumber);
 	/** 装载数据 */	
 	public Data loadData(@Param("dataId")Integer dataId,@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId);	
 	/** 数据总共数目 */	
 	public int countAll(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId);	
 	/** 分页数据信息 */
 	public List<Data> browsePagingData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
+	/** 统计数据信息 */
+	public Data statisticsData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 }

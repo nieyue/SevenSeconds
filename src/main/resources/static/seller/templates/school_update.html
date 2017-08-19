@@ -12,6 +12,15 @@
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确学堂标题
 				    </div>
   </div>
+  
+  <label  class="text-danger">※封面图片</label>
+  <div class="comment-input-margin">
+    <input type="file" class="comment-input"   id="imgAddressFileUpload">
+  <div  style="display: inline-block;position: relative;" ng-mouseenter="delImgBtn=true">
+  <img style="width:300px;height: 200px;"   ng-src="{{school.imgAddress||''}}"/>
+  </div>
+  </div>
+  
     <label  class="text-danger">※内容</label>
   <div class=" comment-input-margin">
     <!-- 

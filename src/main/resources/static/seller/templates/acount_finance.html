@@ -16,6 +16,7 @@
 			  <th>充值金额</th>
 			  <th>消费金额</th>
 			  <th>提现金额</th>
+			  <th>自身总收益</th>
 			  <th>合伙人总收益</th>
 			  <th>基准收益</th>
 			  <th>开户人</th>
@@ -36,6 +37,9 @@
 			  </td>
 			  <td>
 			  ￥:<span class="text-danger" ng-bind="finance.withdrawals||0 | number:2"></span>
+			  </td>
+			  <td>
+			  ￥:<span class="text-danger" ng-bind="finance.selfProfit||0 | number:2"></span>
 			  </td>
 			  <td>
 			  ￥:<span class="text-danger" ng-bind="finance.partnerProfit||0 | number:2"></span>

@@ -25,7 +25,7 @@ public class DailyTaskServiceImpl implements DailyTaskService{
 		boolean b=false;
 		dailyTask.setCreateDate(new Date());
 		Integer fre = dailyTask.getFrequency();
-		String type = dailyTask.getType();
+		Integer type = dailyTask.getType();
 		//不是每日任务
 		if(dailyTaskBusiness.dailyTrigger(type, fre) <=0  ||dailyTask.getAcountId()==null || dailyTask.getAcountId().equals("") ){
 			return b;
@@ -53,7 +53,7 @@ public class DailyTaskServiceImpl implements DailyTaskService{
 		b = dailyTaskDao.addDailyTask(dailyTask);
 		//今日任务全部完成
 		if(b && nl.size()==4 && totalNum>=9 && totalMoney>=250){
-			//另外加500积分
+			//另外加100积分
 		}
 		return b;
 	}

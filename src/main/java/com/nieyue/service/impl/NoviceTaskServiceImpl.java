@@ -30,7 +30,7 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 			return b;
 		}
 		List<NoviceTask> nl = noviceTaskDao.browsePagingNoviceTask(new Date(), noviceTask.getAcountId(), 0, 1, "create_date", "desc");
-		//已经做过了  且不为 收徒
+		//今天已经做过了  且不为 收徒
 		if(nl.size()>0 && nl.get(0).getFrequency()!=0){
 			return b;
 		}

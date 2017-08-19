@@ -29,6 +29,10 @@ public class DataRabbitmqDTO implements Serializable {
 	 *ip
 	 */
 	private  String ip ;
+	/**
+	 *阅读
+	 */
+	private  Integer readingNumber ;
 	
 	public Integer getArticleId() {
 		return articleId;
@@ -60,16 +64,24 @@ public class DataRabbitmqDTO implements Serializable {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public DataRabbitmqDTO(Integer articleId, Integer acountId, Integer uv, String ip) {
+	public DataRabbitmqDTO(Integer articleId, Integer acountId, Integer uv, String ip,Integer readingNumber) {
 		super();
 		this.articleId = articleId;
 		this.acountId = acountId;
 		this.uv = uv;
 		this.ip = ip;
+		this.readingNumber=readingNumber;
+	}
+	public Integer getReadingNumber() {
+		return readingNumber;
+	}
+	public void setReadingNumber(Integer readingNumber) {
+		this.readingNumber = readingNumber;
 	}
 	@Override
 	public String toString() {
-		return "DataRabbitmqDTO [articleId=" + articleId + ", acountId=" + acountId + ", uv=" + uv + ", ip=" + ip + "]";
+		return "DataRabbitmqDTO [articleId=" + articleId + ", acountId=" + acountId + ", uv=" + uv + ", ip=" + ip
+				+ ", readingNumber=" + readingNumber + "]";
 	}
 	
 }

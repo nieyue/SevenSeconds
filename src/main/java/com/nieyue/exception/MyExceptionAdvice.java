@@ -27,6 +27,16 @@ public class MyExceptionAdvice {
 	public StateResult jsonErrorHandler( Exception e) throws Exception {
 	       return ResultUtil.getFail();
 	    }
+	@ExceptionHandler(value=AcountIsExistException.class)
+	@ResponseBody
+	public StateResult acountIsExistErrorHandler( Exception e) throws Exception {
+		return ResultUtil.getSlefSR(40001, "账户已存在");
+	}
+	@ExceptionHandler(value=VerifyCodeErrorException.class)
+	@ResponseBody
+	public StateResult verifyCodeErrorErrorHandler( Exception e) throws Exception {
+		return ResultUtil.getSlefSR(40002, "验证码错误");
+	}
 	@ExceptionHandler(value=BindException.class)
 	@ResponseBody
 	public StateResult paramsErrorHandler( Exception e) throws Exception {

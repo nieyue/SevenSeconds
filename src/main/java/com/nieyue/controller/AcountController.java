@@ -25,9 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
+import com.nieyue.bean.NoviceTask;
 import com.nieyue.bean.Role;
 import com.nieyue.bean.SpreadAcountDTO;
+import com.nieyue.business.PartnerBusiness;
 import com.nieyue.comments.IPCountUtil;
+import com.nieyue.exception.AcountIsExistException;
+import com.nieyue.exception.VerifyCodeErrorException;
+import com.nieyue.limit.RequestLimitException;
+import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.FinanceService;
 import com.nieyue.service.RoleService;
@@ -59,6 +65,10 @@ public class AcountController {
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
 	private SMSInterface sMSInterface;
+	@Resource
+	private Sender sender;
+	@Resource
+	private PartnerBusiness partnerBusiness;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	/**
@@ -294,30 +304,30 @@ public class AcountController {
 	 * @param adminName
 	 * @param session
 	 * @return
+	 * @throws RequestLimitException 
+	 * @throws AcountIsExistException 
 	 * @throws ParseException 
 	 */
 	@RequestMapping(value = "/validCode", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody
-	StateResultList validCode(@RequestParam("adminName") final String adminName)  {
+	StateResultList validCode(@RequestParam("adminName") final String adminName) throws RequestLimitException, AcountIsExistException  {
 		List<String> l=new ArrayList<String>();
 		//账户已经存在
 		if(acountService.loginAcount(adminName, null,null)!=null){
-			l.add("账户已经存在");
-			return ResultUtil.getSlefSRList("40001","失败", l);
+			throw new  AcountIsExistException();//账户已经存在异常
 		}
 		if(!Pattern.matches(MyValidator.REGEX_PHONE,adminName)){
 					return ResultUtil.getSlefSRFailList(l);
 		}
 		BoundValueOperations<String, String> an = stringRedisTemplate.boundValueOps(projectName+"ValidCode"+adminName);
 		if(an.size()>0){
-			l.add("请求过快");
-			return ResultUtil.getSlefSRFailList(l);
+			throw new  RequestLimitException();//请求过快
 		}
 		
 		Integer userValidCode=(int) (Math.random()*9000)+1000;
 		an.set(userValidCode.toString(), 60, TimeUnit.SECONDS);
-		//String ss = sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName);
-		l.add(userValidCode.toString());
+		 sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName);
+		//l.add(userValidCode.toString());
 		return ResultUtil.getSlefSRSuccessList(l);
 	}
 	/**
@@ -370,6 +380,8 @@ public class AcountController {
 	/**
 	 * web用户注册
 	 * @return
+	 * @throws AcountIsExistException 
+	 * @throws VerifyCodeErrorException 
 	 */
 	@RequestMapping(value = "/webregister", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList webRegisterAcount(
@@ -379,23 +391,20 @@ public class AcountController {
 			@RequestParam(value="masterId",required=false) Integer masterId,
 			@RequestParam(value="spreadId",required=false) Integer spreadId,
 			@RequestParam(value="validCode",required=false) String validCode,
-			HttpSession session)  {
+			HttpSession session) throws AcountIsExistException, VerifyCodeErrorException  {
 		//手机验证码
 		BoundValueOperations<String, String> an = stringRedisTemplate.boundValueOps(projectName+"ValidCode"+adminName);
 		String phoneValidCode= an.get();
-		List<String> ls = new ArrayList<String>();
 		List<Acount> list = new ArrayList<Acount>();
 		if(!phoneValidCode.equals(validCode)){
-			ls.add("验证码错误");
-			return ResultUtil.getSlefSRFailList(ls);
+			throw new VerifyCodeErrorException();//验证码错误
 		}
 		//判断是否存在
 		Acount ac = acountService.loginAcount(adminName, null, null);
 		if(ac!=null&&ac.getAcountId()!=null){
-			ls.add("账户已经存在");
-			return ResultUtil.getSlefSRFailList(ls); 
+			throw new AcountIsExistException();
 		}
-		//新用户注册登录
+			//新用户注册登录
 				Acount acount=new Acount();
 				
 				//获取masterId
@@ -410,8 +419,8 @@ public class AcountController {
 					acount.setRoleId(1004);
 					acount.setLoginDate(new Date());
 					acount.setSpreadId(spreadId);
-					acountService.addAcount(acount);
-					
+					boolean b = acountService.addAcount(acount);
+				if(b){
 				session.setAttribute("acount", acount);
 				Role role = roleService.loadRole(acount.getRoleId());
 				session.setAttribute("role", role);
@@ -419,7 +428,31 @@ public class AcountController {
 				//System.out.println(f.get(0).toString());
 				session.setAttribute("finance", f.get(0));
 				list.add(acount);
+				//新手任务，获得一名徒弟  +350积分（这个任务为达成条件任务，无需排序）
+				if(masterId!=null&&!masterId.equals("")){
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+						int count = acountService.countAll(null, null, null, null, null, masterId, null, null, null, null);
+						if(count==1){//第一次才能有
+							NoviceTask noviceTask = new NoviceTask();
+							noviceTask.setAcountId(masterId);
+							noviceTask.setFrequency(0);
+							sender.sendNoviceTask(noviceTask);
+						}
+						//升级scale
+						Double ms = partnerBusiness.getPartnerScale(count);
+						Acount ma = acountService.loadAcount(masterId);
+						ma.setScale(ms);
+						acountService.updateAcount(acount);
+						}
+					}).start();
+				}
 				return ResultUtil.getSlefSRSuccessList(list);
+				}else{
+					return ResultUtil.getSlefSRFailList(list);
+					
+				}	
 	}
 	/**
 	 * 根据IP navigator.appVersion确定师傅关系
@@ -501,7 +534,7 @@ public class AcountController {
 			acount.setProvince(jo.getString("province"));
 			acount.setCity(jo.getString("city"));
 			acount.setLoginDate(new Date());
-			acount.setRoleId(1003);
+			acount.setRoleId(1004);
 			acount.setSpreadId(spreadId);
 			acountService.addAcount(acount);
 		}

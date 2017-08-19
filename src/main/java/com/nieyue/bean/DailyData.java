@@ -4,20 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 数据类
+ * 每日数据类
  * 
  * @author yy
  * 
  */
-public class Data implements Serializable {
+public class DailyData implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * 数据id
+	 * 每日数据id
 	 */
-	private Integer dataId;
+	private Integer dailyDataId;
 	
 	/**
 	 * pv数
@@ -49,12 +49,12 @@ public class Data implements Serializable {
 	 * 账户ID
 	 */
 	private Integer acountId;
-	public Data() {
+	public DailyData() {
 		super();
 	}
-	public Data(Integer dataId, Long pvs, Long uvs, Long ips,Long readingNumber, Date createDate, Integer articleId,Integer acountId) {
+	public DailyData(Integer dailyDataId, Long pvs, Long uvs, Long ips,Long readingNumber, Date createDate, Integer articleId,Integer acountId) {
 		super();
-		this.dataId = dataId;
+		this.dailyDataId = dailyDataId;
 		this.pvs = pvs;
 		this.uvs = uvs;
 		this.ips = ips;
@@ -63,11 +63,11 @@ public class Data implements Serializable {
 		this.articleId = articleId;
 		this.acountId=acountId;
 	}
-	public Integer getDataId() {
-		return dataId;
+	public Integer getDailyDataId() {
+		return dailyDataId;
 	}
-	public void setDataId(Integer dataId) {
-		this.dataId = dataId;
+	public void setDailyDataId(Integer dailyDataId) {
+		this.dailyDataId = dailyDataId;
 	}
 	public Long getPvs() {
 		return pvs;
@@ -116,9 +116,9 @@ public class Data implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Data [dataId=" + dataId + ", pvs=" + pvs + ", uvs=" + uvs + ", ips=" + ips + ", readingNumber="
-				+ readingNumber + ", createDate=" + createDate + ", articleId=" + articleId + ", acountId=" + acountId
-				+ "]";
+		return "DailyData [dailyDataId=" + dailyDataId + ", pvs=" + pvs + ", uvs=" + uvs + ", ips=" + ips
+				+ ", readingNumber=" + readingNumber + ", createDate=" + createDate + ", articleId=" + articleId
+				+ ", acountId=" + acountId + "]";
 	}
 		
 }

@@ -115,9 +115,9 @@
 	      withCredentials: true
 	   },
 　　　　//请求成功后触发
-　　　　success: function (data) { },
+　　　　success: function (data) { $rootScope.formDisabled=false;},
 　　　　//请求失败遇到异常触发
-　　　　error: function (xhr, status, e) { },
+　　　　error: function (xhr, status, e) {$rootScope.formDisabled=false; },
 　　　　//完成请求后触发。即在success或error触发后触发
 　　　　complete: function (xhr, status) { 
 	$rootScope.formDisabled=false; },
@@ -613,18 +613,46 @@
         'rightbody@main': {
         	templateUrl:"/seller/templates/school_add.html",
         	controller:function($rootScope,$scope,$state){
-        	     var editor=$rootScope.myWangEditor("schoolAddEditor");
+        	     var schoolAddEditor=$rootScope.myWangEditor("schoolAddEditor");
+        	     $scope.school={
+        	     title:'',
+        	     imgAddress:'',
+        	     content:'<p><br></p>'
+        	     };
+        	     //上传文章封面图片
+                 		$("#imgAddressFileUpload").change(function(){
+                 			myUtils.fileUpload(
+                 				    {inputfile:$("#imgAddressFileUpload"),
+                 				    ajaxObj:{
+                 				        formData:[
+                 				            {key:"editorUpload",value:$("#imgAddressFileUpload").get(0).files[0]}
+                 				            ],
+                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add",
+                 				        success:function(data){
+                 				            if(data){
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
+                 				           $scope.school.imgAddress=data;
+                 				          $rootScope.formDisabled=false;
+                 				            $scope.$apply();
+                 				            }
+                 				        }
+                 				    }
+                 				}
+                 				);
+                 		});
+                 		
         		 $scope.addSchoolForm=function(){
-        		  $scope.school.content =editor.$txt.html();
+        		  $scope.school.content =schoolAddEditor.$txt.html();
                     	$.post("/school/add",
                     	{
                     	title:$scope.school.title,
+                    	imgAddress:$scope.school.imgAddress,
                     	content:$scope.school.content
                     	},
                     	function(data){
        	   				if(data.code==200){
        	   				$scope.school={};
-       	   				$scope.myAddSchoolForm.$setPristine();;
+       	   				$scope.myAddSchoolForm.$setPristine();
        	   				$scope.$apply();
        	   				 schoolAddEditor.$txt.html('<p><br></p>');
        	   				myUtils.myLoadingToast("添加成功"); 
@@ -663,10 +691,10 @@
                     $.get("/school/"+schoolId,function(data){
        	   				if(data.code==200){
        	   				$scope.school=data.list[0];
+       	   				$rootScope.formDisabled=false;
        	   				$scope.$apply();
        	   				 // 初始化编辑器的内容
     				editor.$txt.html('<p>'+$scope.school.content+'</p>');
-       	   				console.log($scope.school)
        	   				myUtils.myLoadingToast("加载成功" ); 
        	   				}else{
        	   					myUtils.myLoadingToast("加载失败");   	   				
@@ -677,6 +705,27 @@
                     /*
             		*初始化school end
             		*/
+            		//上传文章封面图片
+                 		$("#imgAddressFileUpload").change(function(){
+                 			myUtils.fileUpload(
+                 				    {inputfile:$("#imgAddressFileUpload"),
+                 				    ajaxObj:{
+                 				        formData:[
+                 				            {key:"editorUpload",value:$("#imgAddressFileUpload").get(0).files[0]}
+                 				            ],
+                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add",
+                 				        success:function(data){
+                 				            if(data){
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
+                 				           $scope.school.imgAddress=data;
+                 				            $rootScope.formDisabled=false;
+                 				            $scope.$apply();
+                 				            }
+                 				        }
+                 				    }
+                 				}
+                 				);
+                 		});
             		/*
             		*修改school提交
             		*/

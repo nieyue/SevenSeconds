@@ -34,6 +34,10 @@ public class Finance implements Serializable {
 	 */
 	private Double withdrawals;
 	/**
+	 * 自身总收益
+	 */
+	private Double selfProfit;
+	/**
 	 * 合伙人总收益
 	 */
 	private Double partnerProfit;
@@ -151,15 +155,22 @@ public class Finance implements Serializable {
 	public void setBaseProfit(Double baseProfit) {
 		this.baseProfit = baseProfit;
 	}
+	public Double getSelfProfit() {
+		return selfProfit;
+	}
+	public void setSelfProfit(Double selfProfit) {
+		this.selfProfit = selfProfit;
+	}
 	public Finance(Integer financeId, Double money, Double recharge, Double consume, Double withdrawals,
-			Double partnerProfit, Double baseProfit, String bankUserName, String bankName, String bankAccount,
-			String bankAddress, Date updateDate, Integer acountId) {
+			Double selfProfit, Double partnerProfit, Double baseProfit, String bankUserName, String bankName,
+			String bankAccount, String bankAddress, Date updateDate, Integer acountId) {
 		super();
 		this.financeId = financeId;
 		this.money = money;
 		this.recharge = recharge;
 		this.consume = consume;
 		this.withdrawals = withdrawals;
+		this.selfProfit = selfProfit;
 		this.partnerProfit = partnerProfit;
 		this.baseProfit = baseProfit;
 		this.bankUserName = bankUserName;
@@ -172,10 +183,10 @@ public class Finance implements Serializable {
 	@Override
 	public String toString() {
 		return "Finance [financeId=" + financeId + ", money=" + money + ", recharge=" + recharge + ", consume="
-				+ consume + ", withdrawals=" + withdrawals + ", partnerProfit=" + partnerProfit + ", baseProfit="
-				+ baseProfit + ", bankUserName=" + bankUserName + ", bankName=" + bankName + ", bankAccount="
-				+ bankAccount + ", bankAddress=" + bankAddress + ", updateDate=" + updateDate + ", acountId=" + acountId
-				+ "]";
+				+ consume + ", withdrawals=" + withdrawals + ", selfProfit=" + selfProfit + ", partnerProfit="
+				+ partnerProfit + ", baseProfit=" + baseProfit + ", bankUserName=" + bankUserName + ", bankName="
+				+ bankName + ", bankAccount=" + bankAccount + ", bankAddress=" + bankAddress + ", updateDate="
+				+ updateDate + ", acountId=" + acountId + "]";
 	}
 	
 }

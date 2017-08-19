@@ -14,6 +14,48 @@ import java.util.Date;
  */
 public class DateUtil {
 	/**
+	 *@param n为小时段，默认24段，即
+	 * 段时间的时间设置
+	 * @return
+	 */
+	public static Date getDayPeriod(int n ){ 
+		if(n<=0 ||n>24){
+			n=24;
+		}
+		//long dayseconds=86400;//一天的秒数；
+		long daystart=getStartTime().getTime()/1000;//当日初始秒数
+		Date date =new Date();
+		long daynow = date.getTime()/1000;//现在的秒数
+		long daycha=daynow-daystart;//相差秒数
+		
+		long every=24/n;//如n=3;every=8 即8小时记录一次
+		long everyseconds=every*60*60;//小时段的秒数
+		long nown=daycha/everyseconds;//第几次
+		Date rd = new Date((nown*everyseconds+daystart)*1000);
+		return rd;
+	}  
+	/**
+	 *@param n为小时段，默认24段，即
+	 * 段时间的时间设置
+	 * @return
+	 */
+	public static Date getDayPeriod(int n ,Date date){ 
+		if(n<=0 ||n>24){
+			n=24;
+		}
+		//long dayseconds=86400;//一天的秒数；
+		long daystart=getStartTime().getTime()/1000;//当日初始秒数
+		 date =new Date();
+		long daynow = date.getTime()/1000;//现在的秒数
+		long daycha=daynow-daystart;//相差秒数
+		
+		long every=24/n;//如n=3;every=8 即8小时记录一次
+		long everyseconds=every*60*60;//小时段的秒数
+		long nown=daycha/everyseconds;//第几次
+		Date rd = new Date((nown*everyseconds+daystart)*1000);
+		return rd;
+	}  
+	/**
 	 * 获取当日开始时间
 	 * @return
 	 */
@@ -22,7 +64,8 @@ public class DateUtil {
 		date.setHours(0);
 		date.setMinutes(0);
 		date.setSeconds(0);
-		return date;
+		long nd = date.getTime()/1000*1000;
+		return new Date(nd);
 	}  
 	  
 	/**
@@ -34,7 +77,8 @@ public class DateUtil {
 		date.setHours(23);
 		date.setMinutes(59);
 		date.setSeconds(59);
-		return date;
+		long nd = date.getTime()/1000*1000+999;
+		return new Date(nd);
 	} 
 	 /**
 	  * 获取当前时间到当日结束时间差  
@@ -259,5 +303,12 @@ public class DateUtil {
         Date d1=new Date("2017/08/12 23:13:46");
         Date d2=new Date("2017/08/14 0:38:02");
         System.out.println(getSeparatedTime(d2,d1));
+        
+        
+        System.out.println(dateFormatSimpleDate(getDayPeriod(8,new Date()),"yyyy-MM-dd HH:mm:ss"));
+        System.out.println(getDayPeriod(3).getTime());
+        System.out.println(getStartTime().getTime());
+        System.out.println(getEndTime().getTime());
+       
     }  
 }

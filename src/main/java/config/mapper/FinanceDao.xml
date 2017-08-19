@@ -7,27 +7,55 @@
 <insert id="addFinance" parameterType="Finance" keyProperty="financeId" flushCache="true"  >  
    INSERT IGNORE INTO
    		  finance_tb 
-   		 (money,recharge,consume,withdrawals,partner_profit,base_profit,bank_user_name,bank_name,bank_account,bank_address,update_date,acount_id)
+   		 (money,recharge,consume,withdrawals,self_profit,partner_profit,base_profit,bank_user_name,bank_name,bank_account,bank_address,update_date,acount_id)
    VALUES
-    	 (#{money},#{recharge},#{consume},#{withdrawals},#{partnerProfit},#{baseProfit},#{bankUserName},#{bankName},#{bankAccount},#{bankAddress},#{updateDate},#{acountId})  
+    	 (#{money},#{recharge},#{consume},#{withdrawals},#{selfProfit},#{partnerProfit},#{baseProfit},#{bankUserName},#{bankName},#{bankAccount},#{bankAddress},#{updateDate},#{acountId})  
 </insert>  
 <!-- 更新财务 -->
 <update id="updateFinance" parameterType="Finance" >  
     UPDATE 
     	finance_tb 
-    SET 
+    <set>
+    <if test="money">
     	money=#{money},
+    </if>
+    <if test="recharge!=null">
     	recharge=#{recharge},
+    </if>
+    <if test="consume!=null">
     	consume=#{consume},
+    </if>
+    <if test="withdrawals!=null">
     	withdrawals=#{withdrawals},
+    </if>
+    <if test="selfProfit!=null">
+    	self_profit=#{selfProfit},
+    </if>
+    <if test="partnerProfit!=null">
     	partner_profit=#{partnerProfit},
+    </if>
+    <if test="baseProfit!=null">
     	base_profit=#{baseProfit},
+    </if>
+    <if test="bankUserName!=null">
     	bank_user_name=#{bankUserName},
+    </if>
+    <if test="bankName!=null">
     	bank_name=#{bankName},
+    </if>
+    <if test="bankAccount!=null">
     	bank_account=#{bankAccount},
+    </if>
+    <if test="bankAddress!=null">
     	bank_address=#{bankAddress},
+    </if>
+    <if test="updateDate!=null">
     	update_date=#{updateDate},
+    </if>
+    <if test="acountId!=null">
     	acount_id=#{acountId}
+    </if>
+    </set>
     WHERE
     	 finance_id=#{financeId} 
 </update> 
@@ -45,6 +73,7 @@ SELECT
     	recharge,
     	consume,
     	withdrawals,
+    	self_profit,
     	partner_profit,
     	base_profit,
     	bank_user_name,
@@ -59,7 +88,8 @@ WHERE finance_id=#{financeId}
 
 <!-- 收益排行榜-->
 <select id="browsePagingFinanceByAcountId" resultType="AcountDTO">  
-   <!-- 单人收益排行榜-->
+   <!-- 单人收益排行榜 -->
+	<!--收益为 自身收益+合伙人收益+基础收益-->
    <if test="acountId!=null">
    SELECT b.acount_id,b.nickname,b.icon,b.profitMoneyOrderNum,b.profitMoney from ( 
    SELECT
@@ -67,7 +97,8 @@ WHERE finance_id=#{financeId}
     	a.nickname,
     	a.icon,
     	(@profitMoneyOrderNum:=@profitMoneyOrderNum+1) as profitMoneyOrderNum ,
-	(f.money+f.withdrawals+f.consume-f.recharge) profitMoney
+	<!-- (f.money+f.withdrawals+f.consume-f.recharge) profitMoney -->
+	(f.self_profit+f.partner_profit+f.base_profit) profitMoney 
 	FROM acount_tb a RIGHT JOIN finance_tb f
 	ON a.acount_id=f.acount_id
 	,(select (@profitMoneyOrderNum:=#{pageNum})) profitMoneyOrderNum
@@ -84,7 +115,8 @@ WHERE finance_id=#{financeId}
     	a.nickname,
     	a.icon,
     	(@profitMoneyOrderNum:=@profitMoneyOrderNum+1) as profitMoneyOrderNum ,
-	(f.money+f.withdrawals+f.consume-f.recharge) profitMoney
+	<!-- (f.money+f.withdrawals+f.consume-f.recharge) profitMoney -->
+	(f.self_profit+f.partner_profit+f.base_profit) profitMoney 
 	FROM acount_tb a RIGHT JOIN finance_tb f
 	ON a.acount_id=f.acount_id
 	,(select (@profitMoneyOrderNum:=#{pageNum})) profitMoneyOrderNum
@@ -104,6 +136,7 @@ WHERE finance_id=#{financeId}
     	recharge,
     	consume,
     	withdrawals,
+    	self_profit,
     	partner_profit,
     	base_profit,
     	bank_user_name,

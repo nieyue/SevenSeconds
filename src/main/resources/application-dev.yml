@@ -40,9 +40,30 @@ myPugin:
   jsAd: console.log('dev')
   requestAuth: requestAuthDev
   rabbitmq:
-    DIRECT_EXCHANGE: test.exchange.direct
-    DIRECT_ROUTINGKEY: test.routingkey.direct
-    DIRECT_QUEUE: test.queue.direct
+    ARTICLECLICK_DIRECT_EXCHANGE: test.articleclick.sevenseconds.exchange.direct
+    ARTICLECLICK_DIRECT_ROUTINGKEY: test.articleclick.sevenseconds.routingkey.direct
+    ARTICLECLICK_DIRECT_QUEUE: test.articleclick.sevenseconds.queue.direct
+    ARTICLEREAD_DIRECT_EXCHANGE: test.articleread.sevenseconds.exchange.direct
+    ARTICLEREAD_DIRECT_ROUTINGKEY: test.articleread.sevenseconds.routingkey.direct
+    ARTICLEREAD_DIRECT_QUEUE: test.articleread.sevenseconds.queue.direct
+    ARTICLEWEBREAD_DIRECT_EXCHANGE: test.articlewebread.sevenseconds.exchange.direct
+    ARTICLEWEBREAD_DIRECT_ROUTINGKEY: test.articlewebread.sevenseconds.routingkey.direct
+    ARTICLEWEBREAD_DIRECT_QUEUE: test.articlewebread.sevenseconds.queue.direct
+    COMMENT_DIRECT_EXCHANGE: test.comment.sevenseconds.exchange.direct
+    COMMENT_DIRECT_ROUTINGKEY: test.comment.sevenseconds.routingkey.direct
+    COMMENT_DIRECT_QUEUE: test.comment.sevenseconds.queue.direct
+    REPLY_DIRECT_EXCHANGE: test.reply.sevenseconds.exchange.direct
+    REPLY_DIRECT_ROUTINGKEY: test.reply.sevenseconds.routingkey.direct
+    REPLY_DIRECT_QUEUE: test.reply.sevenseconds.queue.direct
+    NOVICETASK_DIRECT_EXCHANGE: test.novicetask.sevenseconds.exchange.direct
+    NOVICETASK_DIRECT_ROUTINGKEY: test.novicetask.sevenseconds.routingkey.direct
+    NOVICETASK_DIRECT_QUEUE: test.novicetask.sevenseconds.queue.direct
+    DAILYTASK_DIRECT_EXCHANGE: test.dailytask.sevenseconds.exchange.direct
+    DAILYTASK_DIRECT_ROUTINGKEY: test.dailytask.sevenseconds.routingkey.direct
+    DAILYTASK_DIRECT_QUEUE: test.dailytask.sevenseconds.queue.direct
+    FLOWWATER_DIRECT_EXCHANGE: test.flowwater.convertmall.exchange.direct
+    FLOWWATER_DIRECT_ROUTINGKEY: test.flowwater.convertmall.routingkey.direct
+    FLOWWATER_DIRECT_QUEUE: test.flowwater.convertmall.queue.direct
   alibabaSmsAppkey: 23431362
   alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
   alibabaSmsSignName: 雅耀

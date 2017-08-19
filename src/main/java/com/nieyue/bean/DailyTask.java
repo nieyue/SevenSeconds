@@ -21,7 +21,7 @@ public class DailyTask implements Serializable{
 	/**
 	 * 类型
 	 */
-	private String type;
+	private Integer type;
 	/**
 	 * 次数
 	 */
@@ -51,11 +51,11 @@ public class DailyTask implements Serializable{
 		this.dailyTaskId = dailyTaskId;
 	}
 
-	public String getType() {
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 
@@ -95,7 +95,7 @@ public class DailyTask implements Serializable{
 		return serialVersionUID;
 	}
 
-	public DailyTask(Integer dailyTaskId, String type, Integer frequency, Double money, Date createDate,
+	public DailyTask(Integer dailyTaskId, Integer type, Integer frequency, Double money, Date createDate,
 			Integer acountId) {
 		super();
 		this.dailyTaskId = dailyTaskId;

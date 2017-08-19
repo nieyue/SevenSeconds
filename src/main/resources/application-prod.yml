@@ -40,9 +40,30 @@ myPugin:
   jsAd: console.log('prod')
   requestAuth: requestAuthProd
   rabbitmq:
-    DIRECT_EXCHANGE: sevenseconds.exchange.direct
-    DIRECT_ROUTINGKEY: sevenseconds.routingkey.direct
-    DIRECT_QUEUE: sevenseconds.queue.direct
+    ARTICLECLICK_DIRECT_EXCHANGE: articleclick_sevenseconds.exchange.direct
+    ARTICLECLICK_DIRECT_ROUTINGKEY: articleclick_sevenseconds.routingkey.direct
+    ARTICLECLICK_DIRECT_QUEUE: articleclick_sevenseconds.queue.direct
+    ARTICLEREAD_DIRECT_EXCHANGE: articleread.sevenseconds.exchange.direct
+    ARTICLEREAD_DIRECT_ROUTINGKEY: articleread.sevenseconds.routingkey.direct
+    ARTICLEREAD_DIRECT_QUEUE: articleread.sevenseconds.queue.direct
+    ARTICLEWEBREAD_DIRECT_EXCHANGE: articlewebread.sevenseconds.exchange.direct
+    ARTICLEWEBREAD_DIRECT_ROUTINGKEY: articlewebread.sevenseconds.routingkey.direct
+    ARTICLEWEBREAD_DIRECT_QUEUE: articlewebread.sevenseconds.queue.direct
+    COMMENT_DIRECT_EXCHANGE: comment.sevenseconds.exchange.direct
+    COMMENT_DIRECT_ROUTINGKEY: comment.sevenseconds.routingkey.direct
+    COMMENT_DIRECT_QUEUE: comment.sevenseconds.queue.direct
+    REPLY_DIRECT_EXCHANGE: reply.sevenseconds.exchange.direct
+    REPLY_DIRECT_ROUTINGKEY: reply.sevenseconds.routingkey.direct
+    REPLY_DIRECT_QUEUE: reply.sevenseconds.queue.direct
+    NOVICETASK_DIRECT_EXCHANGE: novicetask.sevenseconds.exchange.direct
+    NOVICETASK_DIRECT_ROUTINGKEY: novicetask.sevenseconds.routingkey.direct
+    NOVICETASK_DIRECT_QUEUE: novicetask.sevenseconds.queue.direct
+    DAILYTASK_DIRECT_EXCHANGE: dailytask.sevenseconds.exchange.direct
+    DAILYTASK_DIRECT_ROUTINGKEY: dailytask.sevenseconds.routingkey.direct
+    DAILYTASK_DIRECT_QUEUE: dailytask.sevenseconds.queue.direct
+    FLOWWATER_DIRECT_EXCHANGE: flowwater.convertmall.exchange.direct
+    FLOWWATER_DIRECT_ROUTINGKEY: flowwater.convertmall.routingkey.direct
+    FLOWWATER_DIRECT_QUEUE: flowwater.convertmall.queue.direct
   alibabaSmsAppkey: 23431362
   alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
   alibabaSmsSignName: 雅耀

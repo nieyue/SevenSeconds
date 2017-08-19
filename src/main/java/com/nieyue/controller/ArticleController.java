@@ -63,21 +63,69 @@ public class ArticleController {
 	private Sender sender;
 
 	/**
-	 * 点击文章
+	 * 点击文章获取 根据articleId、acountId、uv来统计数据
 	 * @return
 	 */
+	/*@ApiOperation(value="点击文章获取", notes="根据articleId、acountId、uv来统计数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "articleId", value = "文章ID", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "acountId", value = "账户ID", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "uv", value = "uv,默认为0，1为新用户",defaultValue="0", required = false, dataType = "Integer")
+    })*/
 	@RequestMapping(value = "/click", method = {RequestMethod.GET,RequestMethod.POST})
 	public StateResult clickArticle(
 			@RequestParam(value="articleId") Integer articleId,
 			@RequestParam(value="acountId") Integer acountId,
 			@RequestParam(value="uv",defaultValue="0",required=false) Integer uv,
 			HttpSession session,HttpServletRequest request)  {
+			if(uv!=0 &&uv!=1){
+				return ResultUtil.getFail();
+			}
 			DataRabbitmqDTO drd=new DataRabbitmqDTO();
 			drd.setAcountId(acountId);
 			drd.setArticleId(articleId);
 			drd.setUv(uv);
 			drd.setIp(IPCountUtil.getIpAddr(request));//请求的ip地址
-			sender.send(drd);
+			drd.setReadingNumber(0);//点击不计算阅读
+			sender.sendArticleClick(drd);
+		return ResultUtil.getSuccess();
+	}
+	/**
+	 * 阅读文章获取 根据articleId、acountId、uv来统计数据
+	 * @return
+	 */
+	@RequestMapping(value = "/read", method = {RequestMethod.GET,RequestMethod.POST})
+	public StateResult readArticle(
+			@RequestParam(value="articleId") Integer articleId,
+			@RequestParam(value="acountId") Integer acountId,
+			HttpSession session,HttpServletRequest request)  {
+		DataRabbitmqDTO drd=new DataRabbitmqDTO();
+		drd.setAcountId(acountId);
+		drd.setArticleId(articleId);
+		drd.setUv(0);
+		drd.setReadingNumber(1);//算阅读，计费。
+		sender.sendArticleRead(drd);
+		return ResultUtil.getSuccess();
+	}
+	/**
+	 * web阅读文章获取 根据articleId、acountId、uv来统计数据
+	 * @return
+	 */
+	@RequestMapping(value = "/webRead", method = {RequestMethod.GET,RequestMethod.POST})
+	public StateResult webClickReadArticle(
+			@RequestParam(value="articleId") Integer articleId,
+			@RequestParam(value="acountId") Integer acountId,
+			@RequestParam(value="uv",defaultValue="0",required=false) Integer uv,
+			HttpSession session,HttpServletRequest request)  {
+		if(uv!=0 &&uv!=1){
+			return ResultUtil.getFail();
+		}
+		DataRabbitmqDTO drd=new DataRabbitmqDTO();
+		drd.setAcountId(acountId);//转发推广文章    10积分（获得3个有效阅读）
+		drd.setArticleId(articleId);
+		drd.setUv(uv);
+		drd.setIp(IPCountUtil.getIpAddr(request));//请求的ip地址
+		sender.sendArticleWebRead(drd);
 		return ResultUtil.getSuccess();
 	}
 	/**

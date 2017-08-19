@@ -15,41 +15,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nieyue.bean.Data;
-import com.nieyue.service.DataService;
+import com.nieyue.bean.DailyData;
+import com.nieyue.service.DailyDataService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
 
 
 /**
- * 数据控制类
+ * 每日数据控制类
  * @author yy
  *
  */
 @RestController
-@RequestMapping("/data")
-public class DataController {
+@RequestMapping("/DailyData")
+public class DailyDataController {
 	@Resource
-	private DataService dataService;
+	private DailyDataService dailyDataService;
 	
 	/**
-	 * 数据分页浏览
-	 * @param orderName 商品排序数据库字段
+	 * 每日数据分页浏览
+	 * @param orderName 商品排序每日数据库字段
 	 * @param orderWay 商品排序方法 asc升序 desc降序
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList browsePagingData(
+	public @ResponseBody StateResultList browsePagingDailyData(
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="data_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="daily_data_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
-			List<Data> list = new ArrayList<Data>();
-			list= dataService.browsePagingData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
+			List<DailyData> list = new ArrayList<DailyData>();
+			list= dailyDataService.browsePagingDailyData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 				
@@ -58,25 +58,24 @@ public class DataController {
 			}
 	}
 	/**
-	 * 统计数据
-	 * @param orderName 商品排序数据库字段
+	 * 统计每日数据
+	 * @param orderName 商品排序每日数据库字段
 	 * @param orderWay 商品排序方法 asc升序 desc降序
 	 * @return
 	 */
-	@RequestMapping(value = "/statisticsData", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList statisticsData(
+	@RequestMapping(value = "/statisticsDailyData", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList statisticsDailyData(
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="data_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="daily_data_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
-		List<Data> list = new ArrayList<Data>();
-		Data data = dataService.statisticsData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
-		System.out.println(data);
-		if(data!=null &&data.getPvs()>=0){
-			list.add(data);
+		List<DailyData> list = new ArrayList<DailyData>();
+		DailyData dailyData = dailyDataService.statisticsDailyData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
+		if(dailyData!=null &&dailyData.getPvs()>=0){
+			list.add(dailyData);
 			return ResultUtil.getSlefSRSuccessList(list);
 			
 		}else{
@@ -84,35 +83,35 @@ public class DataController {
 		}
 	}
 	/**
-	 * 数据修改
+	 * 每日数据修改
 	 * @return
 	 */
 	@RequestMapping(value = "/update", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult updateData(@ModelAttribute Data data,HttpSession session)  {
-		boolean um = dataService.updateData(data);
+	public @ResponseBody StateResult updateDailyData(@ModelAttribute DailyData dailyData,HttpSession session)  {
+		boolean um = dailyDataService.updateDailyData(dailyData);
 		return ResultUtil.getSR(um);
 	}
 	/**
-	 * 数据增加
+	 * 每日数据增加
 	 * @return 
 	 */
 	@RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult addData(@ModelAttribute Data data, HttpSession session) {
-		boolean am = dataService.addData(data);
+	public @ResponseBody StateResult addDailyData(@ModelAttribute DailyData dailyData, HttpSession session) {
+		boolean am = dailyDataService.addDailyData(dailyData);
 		return ResultUtil.getSR(am);
 	}
 	/**
-	 * 数据删除
+	 * 每日数据删除
 	 * @return
 	 */
 	@RequestMapping(value = "/delete", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult delData(
-			@RequestParam("dataId") Integer dataId,HttpSession session)  {
-		boolean dm =dataService.delData(dataId);
+	public @ResponseBody StateResult delDailyData(
+			@RequestParam("dailyDataId") Integer dailyDataId,HttpSession session)  {
+		boolean dm =dailyDataService.delDailyData(dailyDataId);
 		return ResultUtil.getSR(dm);
 	}
 	/**
-	 * 数据浏览数量
+	 * 每日数据浏览数量
 	 * @return
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
@@ -121,39 +120,39 @@ public class DataController {
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			HttpSession session)  {
-		int count = dataService.countAll(createDate,articleId,acountId);
+		int count = dailyDataService.countAll(createDate,articleId,acountId);
 		return count;
 	}
 	/**
-	 * 数据单个加载
+	 * 每日数据单个加载
 	 * @return
 	 */
-	@RequestMapping(value = "/{dataId}", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList loadData(@PathVariable("dataId") Integer dataId,HttpSession session)  {
-		List<Data> list = new ArrayList<Data>();
-		Data Data = dataService.loadData(dataId,null,null,null);
-			if(Data!=null &&!Data.equals("")){
-				list.add(Data);
+	@RequestMapping(value = "/{dailyDataId}", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList loadDailyData(@PathVariable("dailyDataId") Integer dailyDataId,HttpSession session)  {
+		List<DailyData> list = new ArrayList<DailyData>();
+		DailyData DailyData = dailyDataService.loadDailyData(dailyDataId,null,null,null);
+			if(DailyData!=null &&!DailyData.equals("")){
+				list.add(DailyData);
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
 				return ResultUtil.getSlefSRFailList(list);
 			}
 	}
 	/**
-	 * 数据单个加载
+	 * 每日数据单个加载
 	 * @return
 	 */
 	@RequestMapping(value = "/load", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList loadDataByParams(
-			@RequestParam(value="dataId",required=false)Integer dataId,
+	public @ResponseBody StateResultList loadDailyDataByParams(
+			@RequestParam(value="dailyDataId",required=false)Integer dailyDataId,
 			@RequestParam(value="crateDate",required=false)Date crateDate,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			HttpSession session)  {
-		List<Data> list = new ArrayList<Data>();
-		Data Data = dataService.loadData(dataId,crateDate,articleId,acountId);
-		if(Data!=null &&!Data.equals("")){
-			list.add(Data);
+		List<DailyData> list = new ArrayList<DailyData>();
+		DailyData dailyData = dailyDataService.loadDailyData(dailyDataId,crateDate,articleId,acountId);
+		if(dailyData!=null &&!dailyData.equals("")){
+			list.add(dailyData);
 			return ResultUtil.getSlefSRSuccessList(list);
 		}else{
 			return ResultUtil.getSlefSRFailList(list);

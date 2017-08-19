@@ -193,12 +193,12 @@ WHERE article_id=#{articleId}
 <!-- 文章数据-->
 <select id="browseArticleData" resultType="ArticleDataDTO">  
     SELECT
-	   SUM(pvs ) pvs, 
-	   SUM(uvs) uvs, 
-	   SUM(ips) ips,
-	   SUM(reading_number) readingNumber,
-	   SUM(now_total_price) nowTotalPrice,
-	   SUM(user_now_total_price) userNowTotalPrice
+	   COALESCE(SUM(pvs),0) pvs, 
+	   COALESCE(SUM(uvs),0) uvs, 
+	   COALESCE(SUM(ips),0) ips,
+	   COALESCE(SUM(reading_number),0) readingNumber,
+	   COALESCE(SUM(now_total_price),0) nowTotalPrice,
+	   COALESCE(SUM(user_now_total_price),0) userNowTotalPrice
 	FROM article_tb
 	<where>
 	<if test="acountId!=null">
@@ -209,20 +209,22 @@ WHERE article_id=#{articleId}
 <!-- 文章日数据-->
 <select id="browseArticleDayData" resultType="ArticleDayDataDTO">  
    SELECT 
-	dtb.pvs pvs,
-	dtb.uvs uvs,
-	dtb.ips ips,
-	ptb.number number,
-	ptb.money userNowTotalPrice,
-	(ptb.money-ptb1.money) userSelfNowTotalPrice,
-	ptb1.money userPartnerNowTotalPrice,
-	dtb.create_date create_date
+	COALESCE(ddtb.pvs,0) pvs,
+	COALESCE(ddtb.uvs,0) uvs,
+	COALESCE(ddtb.ips,0) ips,
+	COALESCE(ddtb.reading_number,0) number,
+	(COALESCE(sfwtb.money,0)+COALESCE(pfwtb.money,0)) userNowTotalPrice,
+	COALESCE(sfwtb.money,0) userSelfNowTotalPrice,
+	COALESCE(pfwtb.money,0) userPartnerNowTotalPrice,
+	ddtb.create_date create_date
 	FROM 
-	(SELECT
-	  SUM(number) number,
-	  SUM(money) money,
-	   DATE(create_date)  create_date
-	FROM profit_tb
+	 (SELECT
+	    SUM(pvs) pvs, 
+	    SUM(uvs) uvs, 
+	    SUM(ips) ips,
+	    SUM(reading_number) reading_number,
+	    DATE(create_date) create_date
+	FROM daily_data_tb
 	<where>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
@@ -232,31 +234,30 @@ WHERE article_id=#{articleId}
 	</if>
 	</where>
 	GROUP BY DATE(create_date)
-	) ptb 
-	left join
+	) ddtb
+	left join 
 	(SELECT
 	  SUM(money) money,
-	  DATE(create_date)  create_date
-	FROM profit_tb
+	  DATE(create_date) create_date
+	FROM flow_water_tb
 	<where>
-	type=1
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
 	</if>
 	<if test="endDate!=null">
 	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
 	</if>
+	AND type=4
+	AND subtype=1
 	</where>
 	GROUP BY DATE(create_date)
-	) ptb1
-	on DATE(ptb.create_date) = DATE(ptb1.create_date )
+	) sfwtb 
+	on DATE(ddtb.create_date) = DATE(sfwtb.create_date )
 	left join 
 	 (SELECT
-	   SUM(pvs ) pvs, 
-	   SUM(uvs) uvs, 
-	   SUM(ips) ips,
+	    SUM(money) money,
 	   DATE(create_date) create_date
-	FROM data_tb
+	FROM flow_water_tb
 	<where>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
@@ -264,10 +265,14 @@ WHERE article_id=#{articleId}
 	<if test="endDate!=null">
 	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
 	</if>
+	AND type=5
+	AND subtype=2
 	</where>
 	GROUP BY DATE(create_date)
-	) dtb
-	on DATE(ptb1.create_date) = DATE(dtb.create_date )
+	) pfwtb
+	on DATE(sfwtb.create_date) = DATE(pfwtb.create_date )
+	
+	
 
 	
 </select> 

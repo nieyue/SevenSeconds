@@ -309,12 +309,14 @@ public class HtmlController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/getBarcodeUrl", method = {RequestMethod.GET,RequestMethod.POST})
-	public String getBarcodeUrl(
+	public StateResultList getBarcodeUrl(
 			@RequestParam("acountId")Integer acountId,
 			HttpSession session,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		List<String> list = new ArrayList<String>();
 		BoundValueOperations<String, String> bvo=stringRedisTemplate.boundValueOps(projectName+"ShareDomain");
 		String text = "http://"+bvo.get()+"/share.html?acountId="+acountId;
-		return text;
+		list.add(text);
+		return ResultUtil.getSlefSRSuccessList(list);
 	}
 	
 	/**

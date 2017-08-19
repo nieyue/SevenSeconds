@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.DailyTask;
+import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.service.DailyTaskService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
@@ -32,6 +33,8 @@ import com.nieyue.util.StateResultList;
 public class DailyTaskController {
 	@Resource
 	private DailyTaskService dailyTaskService;
+	@Resource
+	private Sender sender;
 	/**
 	 * 每日任务分页浏览
 	 * @param orderName 商品排序数据库字段
@@ -69,8 +72,9 @@ public class DailyTaskController {
 	 */
 	@RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResult addDailyTask(@ModelAttribute DailyTask dailyTask, HttpSession session) {
-		boolean am = dailyTaskService.addDailyTask(dailyTask);
-		return ResultUtil.getSR(am);
+		//boolean am = dailyTaskService.addDailyTask(dailyTask);
+		sender.sendDailyTask(dailyTask);
+		return ResultUtil.getSR(true);
 	}
 	/**
 	 * 每日任务删除

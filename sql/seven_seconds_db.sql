@@ -53,6 +53,7 @@ money decimal(11,2) DEFAULT 0 COMMENT '余额',
 recharge decimal(11,2) DEFAULT 0 COMMENT '充值金额',
 consume decimal(11,2) DEFAULT 0 COMMENT '消费金额',
 withdrawals decimal(11,2) DEFAULT 0 COMMENT '提现金额',
+self_profit decimal(11,2) DEFAULT 0 COMMENT '自身总收益',
 partner_profit decimal(11,2) DEFAULT 0 COMMENT '合伙人总收益',
 base_profit decimal(11,2) DEFAULT 0 COMMENT '基准收益',
 bank_user_name varchar(255) COMMENT '开户人',
@@ -88,6 +89,7 @@ PRIMARY KEY (notice_id)
 CREATE TABLE school_tb(
 school_id int(11) NOT NULL AUTO_INCREMENT COMMENT '学堂id',
 title varchar(255) COMMENT '标题',
+img_address varchar(255) COMMENT '图片地址',
 content longtext COMMENT '内容',
 create_date datetime COMMENT '创建时间',
 PRIMARY KEY (school_id)
@@ -111,7 +113,7 @@ is_recommend tinyint(4) DEFAULT 0 COMMENT '是否推荐 默认0否',
 fixed_recommend tinyint(4) DEFAULT 0 COMMENT '是否置顶 默认0否',
 redirect_url varchar(255)  COMMENT '跳转url',
 content longtext  COMMENT '内容',
-model varchar(255) COMMENT '计费模式',
+model tinyint(4) COMMENT '计费模式',
 user_unit_price  decimal(11,2) DEFAULT 0 COMMENT '用户单价',
 unit_price decimal(11,2) DEFAULT 0 COMMENT '单价',
 total_price decimal(11,2) DEFAULT 0 COMMENT '总价',
@@ -187,6 +189,7 @@ data_id int(11) NOT NULL AUTO_INCREMENT COMMENT '数据id',
 pvs bigint(20) COMMENT 'pvs',
 uvs bigint(20) COMMENT 'uvs',
 ips bigint(20) COMMENT 'ips',
+reading_number bigint(20) COMMENT '阅读数',
 create_date datetime COMMENT '创建时间',
 article_id int(11) COMMENT '文章id外键',
 acount_id int(11) COMMENT '账户id外键',
@@ -197,22 +200,22 @@ INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
 UNIQUE INDEX DAY_DATA (create_date,article_id,acount_id) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='数据表';
 
-#创建用户收益表 
-CREATE TABLE profit_tb(
-profit_id int(11) NOT NULL AUTO_INCREMENT COMMENT '收益id',
-type tinyint(4) DEFAULT 0 COMMENT '收益类型，0自身，1合伙人',
-money decimal(11,2) DEFAULT 0 COMMENT '收益金额',
-number bigint(20) DEFAULT 0 COMMENT '阅读数',
+#创建每日数据表 
+CREATE TABLE daily_data_tb(
+daily_data_id int(11) NOT NULL AUTO_INCREMENT COMMENT '数据id',
+pvs bigint(20) COMMENT 'pvs',
+uvs bigint(20) COMMENT 'uvs',
+ips bigint(20) COMMENT 'ips',
+reading_number bigint(20) COMMENT '阅读数',
 create_date datetime COMMENT '创建时间',
 article_id int(11) COMMENT '文章id外键',
 acount_id int(11) COMMENT '账户id外键',
-PRIMARY KEY (profit_id),
+PRIMARY KEY (daily_data_id),
 INDEX INDEX_CREATEDATE (create_date) USING BTREE,
 INDEX INDEX_ARTICLEID (article_id) USING BTREE,
 INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
-INDEX INDEX_TYPE (type) USING BTREE,
-UNIQUE INDEX ARTICLE_PROFIT (create_date,article_id,acount_id,type) USING BTREE
-)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='收益表';
+UNIQUE INDEX DAY_DATA (create_date,article_id,acount_id) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='每日数据表';
 
 #创建app版本表 
 CREATE TABLE app_version_tb(
@@ -273,7 +276,7 @@ INDEX INDEX_CREATEDATE (create_date) USING BTREE
 #创建日常任务表 
 CREATE TABLE daily_task_tb(
 daily_task_id int(11) NOT NULL AUTO_INCREMENT COMMENT '日常任务id',
-type varchar(255)  COMMENT '类型',
+type tinyint(4)  COMMENT '类型',
 frequency tinyint(4)  COMMENT '次数',
 money decimal(11,2) DEFAULT 0 COMMENT '积分',
 create_date datetime COMMENT '创建时间',
@@ -287,12 +290,14 @@ INDEX INDEX_CREATEDATE (create_date) USING BTREE
 CREATE TABLE flow_water_tb(
 flow_water_id int(11) NOT NULL AUTO_INCREMENT COMMENT '流水id',
 type tinyint(4)  COMMENT '类型,1.新手任务 ,2.日常任务,3.达人奖励,4.文章阅读,5.徒弟进贡,6.推广分成,-1.兑换商品',
-subtype tinyint(4)  COMMENT '子类型,1(0,1,2,3,4,5),2(1,2,3,4,5),3(1,2,3,4,5,6,7)',
+subtype tinyint(4)  COMMENT '子类型,1(0,1,2,3,4,5),2(1,2,3,4,5),3(1,2,3,4,5,6,7),4(1),5(1,2),6(1),-1(1)',
 money decimal(11,2)  COMMENT '流水额度，负数为消耗',
 create_date datetime COMMENT '创建时间',
 acount_id int(11) COMMENT '流水人id外键',
 PRIMARY KEY (flow_water_id),
 INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
+INDEX INDEX_TYPE (type) USING BTREE,
+INDEX INDEX_SUBTYPE (subtype) USING BTREE,
 INDEX INDEX_CREATEDATE (create_date) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='流水表';
 

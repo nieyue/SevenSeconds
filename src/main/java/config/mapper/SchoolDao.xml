@@ -7,9 +7,9 @@
 <insert id="addSchool" parameterType="School" keyProperty="schoolId" flushCache="true"  >  
    INSERT IGNORE INTO
    		  school_tb 
-   		 (title,content,create_date)
+   		 (title,img_address,content,create_date)
    VALUES
-    	 (#{title},#{content},#{createDate})  
+    	 (#{title},#{imgAddress},#{content},#{createDate})  
 </insert>  
 <!-- 更新学堂-->
 <update id="updateSchool" parameterType="School" >  
@@ -17,6 +17,7 @@
     	school_tb 
     SET 
     	title=#{title},
+    	img_address=#{imgAddress},
     	content=#{content},
     	create_date=#{createDate}
     WHERE
@@ -33,6 +34,7 @@
 SELECT 
 		school_id,
 	 	title,
+	 	img_address,
     	content,
     	create_date
 FROM school_tb 
@@ -44,6 +46,7 @@ WHERE school_id=#{schoolId}
      SELECT
 	    school_id,
 	 	title,
+	 	img_address,
     	content,
     	create_date
 	FROM school_tb

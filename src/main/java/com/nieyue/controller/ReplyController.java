@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.Reply;
 import com.nieyue.bean.ReplyAcountDTO;
+import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.sensitive.SensitivewordRedisFilter;
 import com.nieyue.service.ReplyService;
 import com.nieyue.util.ResultUtil;
@@ -43,6 +44,8 @@ public class ReplyController {
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
 	private SensitivewordRedisFilter sensitivewordRedisFilter;
+	@Resource
+	private Sender sender;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	/**
@@ -119,8 +122,9 @@ public class ReplyController {
 			list.add("敏感词"+set.size()+"个，包含"+set);
 			return ResultUtil.getSlefSRList("40004", "敏感词", list);
 		}
-		boolean am = replyService.addReply(reply);
-		return ResultUtil.getSlefSRList(am, list);
+		//boolean am = replyService.addReply(reply);
+		sender.sendReply(reply);
+		return ResultUtil.getSlefSRList(true, list);
 	}
 	/**
 	 * 回复删除

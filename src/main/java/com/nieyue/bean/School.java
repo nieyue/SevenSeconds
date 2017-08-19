@@ -23,6 +23,10 @@ public class School  implements Serializable{
 	 */
 	private String title;
 	/**
+	 * 图片地址
+	 */
+	private String imgAddress;
+	/**
 	 * 内容
 	 */
 	private String content;
@@ -57,12 +61,19 @@ public class School  implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public School(Integer schoolId, String title, String content, Date createDate) {
+	public School(Integer schoolId, String title, String imgAddress,String content, Date createDate) {
 		super();
 		this.schoolId = schoolId;
 		this.title = title;
+		this.imgAddress = imgAddress;
 		this.content = content;
 		this.createDate = createDate;
+	}
+	public String getImgAddress() {
+		return imgAddress;
+	}
+	public void setImgAddress(String imgAddress) {
+		this.imgAddress = imgAddress;
 	}
 	public School() {
 		super();

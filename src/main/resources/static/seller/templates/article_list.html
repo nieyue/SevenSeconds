@@ -12,7 +12,9 @@
 <!-- 文章列表 -->
 	<div class="panel panel-default" ng-hide="isEmail">
   <!-- Default panel contents -->
-  		 <div class="panel-heading">文章列表<div style="color:red;">注意：*必须有acountId才能统计数据</div></div>
+  		 <div class="panel-heading">文章列表
+  		<!--  <div style="color:red;">注意：*必须有acountId才能统计数据</div> -->
+  		 </div>
   	</div>
 	<div class="listGroup panel panel-default" ng-repeat="article in articleList.list" >
   <!-- Default panel contents -->
@@ -34,7 +36,9 @@
 					<div ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 					<span class="comment-right-body-title">单价：<span style="color:red;" ng-bind="article.unitPrice  ||'0.00' | number:2"></span></span>
 					<span class="comment-right-body-title">总额：<span style="color:red;" ng-bind="article.totalPrice  ||'0.00' | number:2"></span></span>
-					<span class="comment-right-body-title">计费模式：<span style="color:green;" ng-bind="article.model"></span></span>
+					<span class="comment-right-body-title">计费模式：
+						<span style="color:green;" ng-bind="article.model==1?'阅读计费':article.model==2?'ip计费':article.model==3?'uv计费':article.model==4?'千次展示计费':article.model==5?'销售分成':''"></span>
+					</span>
 					</div>
 					<div ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 					<span class="comment-right-body-title">转发数：<span style="color:red;" ng-bind="article.turnNumber"></span></span>
@@ -87,15 +91,15 @@
 					</div>
 					<div >
 						<span class="comment-right-body-title" >
-						推广链接示例：<a style="color:green;" href="{{shareDomainUrl}}/article.html?articleId={{article.articleId}}&acountId=1000">
-						{{shareDomainUrl}}/article.html?articleId={{article.articleId}}&acountId=1000
+						推广链接：<a style="color:green;" href="{{shareDomainUrl}}/article.html?articleId={{article.articleId}}">
+						{{shareDomainUrl}}/article.html?articleId={{article.articleId}}
 						</a>
 						</span>
 					</div>
 					<div >
 						<span class="comment-right-body-title" >
-						三俗文章推广链接示例：<a style="color:green;" href="{{ssDomainUrl}}/article.html?articleId={{article.articleId}}&acountId=1000">
-						{{ssDomainUrl}}/article.html?articleId={{article.articleId}}&acountId=1000
+						三俗文章推广链接：<a style="color:green;" href="{{ssDomainUrl}}/article.html?articleId={{article.articleId}}">
+						{{ssDomainUrl}}/article.html?articleId={{article.articleId}}
 						</a>
 						</span>
 					</div>

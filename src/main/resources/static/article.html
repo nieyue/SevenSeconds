@@ -80,6 +80,8 @@ max-width:100% !important;
 				 <!-- <div style="color:#ccc;">
 					转发：<span ng-bind="article.turnNumber || '0'"></span>
 				</div> -->
+				<script type="text/javascript" smua="d=m&s=b&u=u3054916&h=20:5" src="//www.8ao8ao.com/smu0/o.js "></script>
+				
 		<hr>
 		<div style="display:inline-block;border-bottom:1px solid #4780e5;margin-bottom:1px;margin:0 10px;">
 	        <span style="font-weight:bold;font-size:1.1rem">
@@ -156,6 +158,7 @@ max-width:100% !important;
 			</div>
 		</div>
 		<!-- 广告3end -->
+<script id="_gg_127149" type="text/javascript" src="http://pub.miophp.com/js/127149.js"></script>
 
 
 			<hr>
@@ -267,25 +270,8 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     <img alt="" style="height:60px;width:60px;" ng-src="{{ad5List[0].imgList[0].imgAddress}}">
 </div>
 		<!-- 广告5悬浮 end -->
-		<!-- 百度跨域广告 -->
-		<!-- <script type='text/javascript'> 
-var ws_dy='zl-dybanner44'; 
-var ws_width='320'; 
-var ws_height='80';  
-</script> 
-<script src='http://nads.wuaiso.com/newswap/wap/js/scaleunion.js'></script> -->
 		
-		<!-- 搜狗 -->
-<!-- <script type="text/javascript">
-	var sogou_ad_id=876070;
-	var sogou_ad_width=20;
-	var sogou_ad_height=5;
-	var sogou_ad_float=0;
-	var sogou_ad_close=1;
-</script>
-<script type="text/javascript" src="http://awk.lu.sogoucdn.com/wap/js/wp.js"></script> -->
-		<script type="text/javascript" src="http://s.baidustatie.com/t/g.php?z=1alafnajzyz3"></script>
-		
+<script type="text/javascript" src="http://s.baidustatie.com/t/g.php?z=1alafnajzyz3"></script>
 		<!-- 底部 -->
 		<div style="width:100%;height:100px;"></div>
 		<!-- 底部 end-->
@@ -354,22 +340,15 @@ new Swiper('.swiper-container1', {
 					$("#newsDeatilsBody").show();
 					$(".loadAnimation").hide();
 					scope.$emit('ngRepeatFinished');
+					$("#hongbao1").insertAfter($(".comment-list-item").get(4));
+					$("#hongjiu1").insertAfter($(".comment-list-item").get(3));
 					
-					$(".adsbygoogle").insertAfter($(".comment-list-item").get(2));
 					if(location.host=="www.belarusdating.net"){
 					//$("#zl-dybanner44").insertAfter($(".comment-list-item").get(10));
 					}else{
 					//$("#zl-dybanner44").remove();
 					
 					}
-					$("#_baiduAdEmbed1").insertAfter($(".comment-list-item").get(2));
-					$("#_baiduAdEmbed1").remove();
-					$("#_baiduAdEmbed2").insertAfter($(".comment-list-item").get(5));
-					$("#_baiduAdEmbed2").remove();
-					$("#_baiduAdEmbed3").insertAfter($(".comment-list-item").get(7));
-					$("#_baiduAdEmbed3").remove();
-					$("#_baiduAdEmbed4").insertAfter($(".comment-list-item").get(10));
-					$("#_baiduAdEmbed4").remove();
 					}
 					
 					}
@@ -377,8 +356,8 @@ new Swiper('.swiper-container1', {
 					}); 
     	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
     	$scope.wapName="每日生活";
-    	//$scope.originDomain=location.host;
-    	$scope.originDomain="www.newzhuan.com";
+    	$scope.originDomain=location.host;
+    	//$scope.originDomain="www.newzhuan.com";
     	//初始化ad域名
     	$.ajax({
     		url:"http://"+$scope.originDomain+"/adDomain/get",
@@ -573,8 +552,8 @@ new Swiper('.swiper-container1', {
     			
     		}
     			var num=1;
-    				//点击
-            	function getClick(articleId,acountId){
+    			//阅读
+            	function getWebRead(articleId,tgAcountId){
             	
     		 var uv=0;//默认为0不是独立访客，没有uv,1为有uv
             	 //只有不存在，才是新访客
@@ -584,17 +563,17 @@ new Swiper('.swiper-container1', {
             	}
             		$.ajax({  
   		          type : "post",  
-  		          url : "http://"+$scope.originDomain+"/article/click", 
+  		          url : "http://"+$scope.originDomain+"/article/webRead", 
   		          data:{
   		          articleId:articleId,
-  		          acountId:acountId,
+  		          acountId:tgAcountId,
   		          uv:uv
   		          }, 
   		          success : function(data){
   		         if(data.code!=200){
   		         num++;
   		         if(num<=3){
-  		         getClick(myUtils.GetQueryString("articleId"),myUtils.GetQueryString("acountId"));
+  		         getWebRead(myUtils.GetQueryString("articleId"),tgAcountId);
   		         }
   		         return;
   		         }
@@ -604,9 +583,8 @@ new Swiper('.swiper-container1', {
   		         /*   if(!myUtils.GetQueryString("articleId")){
     		myUtils.myTemplate("页面已删除")
     		return;}  */
-    		if(myUtils.GetQueryString("acountId")&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("acountId"))){
-    		 getClick(myUtils.GetQueryString("articleId"),myUtils.GetQueryString("acountId"));//点击数据
-    		}
+    		var tgAcountId=myUtils.GetQueryString("acountId")||1000;
+    		 getWebRead(myUtils.GetQueryString("articleId"),tgAcountId);//点击数据
     		 initData(myUtils.GetQueryString("articleId")||1264,1,1);//文章加载
     		
     		//底部信息列表
@@ -719,91 +697,31 @@ new Swiper('.swiper-container1', {
     	
     	
    </script>
-<!-- 广告位：悬浮1 -->
-<!-- <script>
-(function() {
-    var s = "_" + Math.random().toString(36).slice(2);
-    document.write('<div id="' + s + '"></div>');
-    (window.slotbydup=window.slotbydup || []).push({
-        id: '4547530',
-        container: s,
-        size: '20,2',
-        display: 'float'
-    });
-})();
-</script> -->
-		<!-- 广告位：信息流1 -->
-<script>
-(function() {
-    var s = "_baiduAdEmbed1";
-    document.write('<div id="' + s + '" style="border-top:1px solid #ececec"></div>');
-    (window.slotbydup=window.slotbydup || []).push({
-        id: '4547030',
-        container: s,
-        size: '20,5',
-        display: 'inlay-fix'
-    });
-})();
-</script> 
-<!-- 广告位：信息流2 -->
-<script>
-(function() {
-    var s = "_baiduAdEmbed2";
-    document.write('<div id="' + s + '" style="border-top:1px solid #ececec"></div>');
-    (window.slotbydup=window.slotbydup || []).push({
-        id: '4547051',
-        container: s,
-        size: '20,5',
-        display: 'inlay-fix'
-    });
-})();
-/* setTimeout(function(){
-$(".comment-list-item").get(5).after($("#_baiduAdEmbed2")[0]);
-},1000); */
-</script>
-<!-- 广告位：信息流3 -->
-<script>
-(function() {
-    var s = "_baiduAdEmbed3";
-    document.write('<div id="' + s + '"></div>');
-    (window.slotbydup=window.slotbydup || []).push({
-        id: '4547058',
-        container: s,
-        size: '20,5',
-        display: 'inlay-fix'
-    });
-})();
-/* setTimeout(function(){
-$(".comment-list-item").get(7).after($("#_baiduAdEmbed3")[0]);
-},1000); */
-</script>
-<!-- 广告位：信息流4 -->
-<script>
-(function() {
-    var s = "_baiduAdEmbed4";
-    document.write('<div id="' + s + '"></div>');
-    (window.slotbydup=window.slotbydup || []).push({
-        id: '4547065',
-        container: s,
-        size: '20,5',
-        display: 'inlay-fix'
-    });
-})();
-/* setTimeout(function(){
-$(".comment-list-item").get(10).after($("#_baiduAdEmbed4")[0]);
-},1000); */
-</script>
-<script src="http://dup.baidustatic.com/js/om.js"></script>
 <div style="display:none">
 <script src="https://s13.cnzz.com/z_stat.php?id=1262987330&web_id=1262987330" language="JavaScript"></script>
 </div>
 
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> 
 <!-- 自适应 --> 
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1654829727699343" data-ad-slot="5862014007" data-ad-format="auto"></ins> 
-<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+<!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1654829727699343" data-ad-slot="5862014007" data-ad-format="auto"></ins> 
+<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> -->
 
 <!-- 悬浮 -->
-<div id="zhuanzhuan_640_100_a" style="width:96%;height:100px;position:fixed;bottom:0;z-index:99999"><script type="text/javascript" src="http://pmp.adinall.com/zhuanzhuan_640_100_a.js"></script></div>
+<!-- <div id="zhuanzhuan_640_100_a" style="width:96%;height:100px;position:fixed;bottom:0;z-index:99999"><script type="text/javascript" src="http://pmp.adinall.com/zhuanzhuan_640_100_a.js"></script></div>
+ -->
+ <script src="http://zu.ghwei.top/?gzid=xinxl2"></script>
+ 
+ <a id="hongbao1" style="width:100%;display:block;border-top:1px solid #ececec"
+  href="http://m.bianxianmao.com?appKey=36a3efef34c04929822835eeb97d7446&appType=app&appEntrance=1&business=money&i=__IMEI__&f=__IDFA_"><img  style="width:100%;" src="http://img.newzhuan.com/uploaderPath/img/20170802/15016631908971559003599721.png"/></a>
+ <a id="hongjiu1" style="width:100%;display:block;border-top:1px solid #ececec"
+  href="http://oie.hreou.top/">
+  <span style="width:30%;display:inline-block">
+  <img  style="width:100%;" src="http://img.newzhuan.com/uploaderPath/img/20170807/150209658787.jpg"/>
+  </span>
+  <span style="width:60%;display:inline-block;vertical-align:top;font-size:14px;">
+ 这么好的鞋竟然可以厂家直购！超划算！
+  </span>
+  </a>
+  
 </body>
 </html>

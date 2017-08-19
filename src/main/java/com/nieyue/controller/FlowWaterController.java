@@ -15,42 +15,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nieyue.bean.NoviceTask;
-import com.nieyue.rabbitmq.confirmcallback.Sender;
-import com.nieyue.service.NoviceTaskService;
+import com.nieyue.bean.FlowWater;
+import com.nieyue.service.FlowWaterService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
 
 
 /**
- * 新手任务控制类
+ * 流水控制类
  * @author yy
  *
  */
 @RestController
-@RequestMapping("/noviceTask")
-public class NoviceTaskController {
+@RequestMapping("/flowWater")
+public class FlowWaterController {
 	@Resource
-	private NoviceTaskService noviceTaskService;
-	@Resource
-	private Sender sender;
+	private FlowWaterService flowWaterService;
+	
 	/**
-	 * 新手任务分页浏览
+	 * 流水分页浏览
 	 * @param orderName 商品排序数据库字段
 	 * @param orderWay 商品排序方法 asc升序 desc降序
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList browsePagingNoviceTask(
-			@RequestParam(value="createDate",required=false)Date createDate,
+	public @ResponseBody StateResultList browsePagingFlowWater(
 			@RequestParam(value="acountId",required=false)Integer acountId,
+			@RequestParam(value="type",required=false)Integer type,
+			@RequestParam(value="subtype",required=false)Integer subtype,
+			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="novice_task_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="flow_water_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
-			List<NoviceTask> list = new ArrayList<NoviceTask>();
-			list= noviceTaskService.browsePagingNoviceTask(createDate,acountId,pageNum, pageSize, orderName, orderWay);
+			List<FlowWater> list = new ArrayList<FlowWater>();
+			list= flowWaterService.browsePagingFlowWater(acountId,type,subtype,createDate,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
@@ -58,60 +58,60 @@ public class NoviceTaskController {
 			}
 	}
 	/**
-	 * 新手任务修改
+	 * 流水修改
 	 * @return
 	 */
 	@RequestMapping(value = "/update", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult updateNoviceTask(@ModelAttribute NoviceTask noviceTask,HttpSession session)  {
-		boolean um = noviceTaskService.updateNoviceTask(noviceTask);
+	public @ResponseBody StateResult updateFlowWater(@ModelAttribute FlowWater flowWater,HttpSession session)  {
+		boolean um = flowWaterService.updateFlowWater(flowWater);
 		return ResultUtil.getSR(um);
 	}
 	/**
-	 * 新手任务增加
+	 * 流水增加
 	 * @return 
 	 */
 	@RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult addNoviceTask(@ModelAttribute NoviceTask noviceTask, HttpSession session) {
-		//boolean am = noviceTaskService.addNoviceTask(noviceTask);
-		sender.sendNoviceTask(noviceTask);
-		return ResultUtil.getSR(true);
+	public @ResponseBody StateResult addFlowWater(@ModelAttribute FlowWater flowWater, HttpSession session) {
+		boolean am = flowWaterService.addFlowWater(flowWater);
+		return ResultUtil.getSR(am);
 	}
 	/**
-	 * 新手任务删除
+	 * 流水删除
 	 * @return
 	 */
 	@RequestMapping(value = "/delete", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResult delNoviceTask(@RequestParam("noviceTaskId") Integer noviceTaskId,HttpSession session)  {
-		boolean dm = noviceTaskService.delNoviceTask(noviceTaskId);
+	public @ResponseBody StateResult delFlowWater(@RequestParam("flowWaterId") Integer flowWaterId,HttpSession session)  {
+		boolean dm = flowWaterService.delFlowWater(flowWaterId);
 		return ResultUtil.getSR(dm);
 	}
 	/**
-	 * 新手任务浏览数量
+	 * 流水浏览数量
 	 * @return
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody int countAll(
-			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="acountId",required=false)Integer acountId,
+			@RequestParam(value="type",required=false)Integer type,
+			@RequestParam(value="subtype",required=false)Integer subtype,
+			@RequestParam(value="createDate",required=false)Date createDate,
 			HttpSession session)  {
-		int count = noviceTaskService.countAll(createDate,acountId);
+		int count = flowWaterService.countAll(acountId,type,subtype,createDate);
 		return count;
 	}
 	/**
-	 * 新手任务单个加载
+	 * 流水单个加载
 	 * @return
 	 */
-	@RequestMapping(value = "/{noviceTaskId}", method = {RequestMethod.GET,RequestMethod.POST})
-	public  StateResultList loadNoviceTask(@PathVariable("noviceTaskId") Integer noviceTaskId,HttpSession session)  {
-		List<NoviceTask> list = new ArrayList<NoviceTask>();
-		NoviceTask NoviceTask = noviceTaskService.loadNoviceTask(noviceTaskId);
-			if(NoviceTask!=null &&!NoviceTask.equals("")){
-				list.add(NoviceTask);
+	@RequestMapping(value = "/{flowWaterId}", method = {RequestMethod.GET,RequestMethod.POST})
+	public  StateResultList loadFlowWater(@PathVariable("flowWaterId") Integer flowWaterId,HttpSession session)  {
+		List<FlowWater> list = new ArrayList<FlowWater>();
+		FlowWater flowWater = flowWaterService.loadFlowWater(flowWaterId);
+			if(flowWater!=null &&!flowWater.equals("")){
+				list.add(flowWater);
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
 				return ResultUtil.getSlefSRFailList(list);
 			}
 	}
-
 	
 }

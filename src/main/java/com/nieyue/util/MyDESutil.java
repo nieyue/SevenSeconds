@@ -37,6 +37,16 @@ public class MyDESutil {
 		return md5;
 	}
 	/**
+	 * 获取MD5 SESSIONID证书
+	 * @param obj
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMD5SESSIONID(Object obj,String sessionId){
+		String md5 = DigestUtils.md5Hex(obj+MD5_SLAT+sessionId);
+		return md5;
+	}
+	/**
 	 * 获取MD5
 	 * @param obj
 	 * @return

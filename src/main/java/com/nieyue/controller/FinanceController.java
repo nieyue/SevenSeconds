@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
-import com.nieyue.bean.Profit;
+import com.nieyue.bean.FlowWater;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.ArticleService;
 import com.nieyue.service.DataService;
 import com.nieyue.service.FinanceService;
-import com.nieyue.service.ProfitService;
+import com.nieyue.service.FlowWaterService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
@@ -42,7 +42,7 @@ public class FinanceController {
 	@Resource
 	private FinanceService financeService;
 	@Resource
-	private ProfitService profitService;
+	private FlowWaterService flowWaterService;
 	@Resource
 	private AcountService acountService;
 	@Resource
@@ -163,26 +163,11 @@ public class FinanceController {
 		}
 		Finance finance = list.get(0);
 		Double nowMoney=0.0;
-		/*List<Profit> profitlist = profitService.browsePagingProfit(null, acountId, new Date(),null, 1, Integer.MAX_VALUE, "profit_id", "desc");
-		Profit profit;
-		if(profitlist.size()>0){
-		for (int i = 0,profitlength=profitlist.size(); i < profitlength; i++) {
-			profit = profitlist.get(i);
-			nowMoney+=profit.getMoney();
-		}
-		}*/
-		List<Profit> ps = profitService.browsePagingProfit(null, acountId, new Date(), null, 1, Integer.MAX_VALUE, "profit_id", "desc");
+		List<FlowWater> ps = flowWaterService.browsePagingFlowWater(acountId, null, null, new Date(), 1, Integer.MAX_VALUE, "flow_water_id", "asc");
 		for (int i = 0,psl=ps.size(); i < psl; i++) {
+			if(ps.get(i).getMoney()>0){//负数为消耗				
 			nowMoney+=ps.get(i).getMoney();
-//			Integer psaid = ps.get(i).getArticleId();
-//			if(psaid!=null&&!psaid.equals("")){
-//				Article psa = articleService.loadSmallArticle(psaid);
-//				if(psa.getUserUnitPrice()==null||psa.getUserUnitPrice().equals("")){
-//					nowMoney+=0*ps.get(i).getNumber();
-//				}else{
-//					nowMoney+=psa.getUserUnitPrice()*ps.get(i).getNumber();
-//				}
-//			}
+			}
 		}
 		List<AcountDTO> profitMoneyOrder = financeService.browsePagingFinanceByAcountId(acountId, 1, 10, "profitMoney","desc");
 		Integer profitMoneyOrderNum=0;
@@ -214,7 +199,7 @@ public class FinanceController {
 		json.put("apprenticeOrderNum",apprenticeOrderNum );//合伙人排行
 		json.put("apprenticeNum",apprenticeNum );//合伙人人数
 		json.put("partnerProfit",finance.getPartnerProfit() );//合伙人总收益
-		json.put("baseProfit",finance.getBaseProfit() );//基准手机
+		json.put("baseProfit",finance.getBaseProfit() );//基准收益
 		if(finance!=null &&!finance.equals("")){
 			l.add(json);
 			return ResultUtil.getSlefSRSuccessList(l);

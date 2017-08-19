@@ -17,7 +17,7 @@ public class Article implements Serializable {
 	private Integer fixedRecommend;//是否置顶 默认0否
 	private String redirectUrl;//跳转url
 	private String content;//内容
-	private String model;//计费模式
+	private Integer model;//计费模式,1.阅读计费，2.ip计费，3.uv计费，4.千次展示计费
 	private Double userUnitPrice;//用户单价
 	private Double unitPrice;//单价
 	private Double totalPrice;//总价
@@ -42,7 +42,7 @@ public class Article implements Serializable {
 	}
 	
 	public Article(Integer articleId, String type, String title, Integer isRecommend, Integer fixedRecommend,
-			String redirectUrl, String content, String model, Double userUnitPrice, Double unitPrice, Double totalPrice,
+			String redirectUrl, String content, Integer model, Double userUnitPrice, Double unitPrice, Double totalPrice,
 			Integer turnNumber, Integer readingNumber, Double userNowTotalPrice, Double nowTotalPrice,
 			Integer commentNumber, Double scale, Long pvs, Long uvs, Long ips, String status, Date createDate,
 			Date updateDate, Integer acountId, List<Img> imgList) {
@@ -122,10 +122,10 @@ public class Article implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getModel() {
+	public Integer getModel() {
 		return model;
 	}
-	public void setModel(String model) {
+	public void setModel(Integer model) {
 		this.model = model;
 	}
 	public Double getUnitPrice() {

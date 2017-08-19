@@ -52,6 +52,7 @@ public class AcountServiceImpl implements AcountService{
 		finance.setMoney(finance.getBaseProfit());//初始余额=基准收益+0.0
 		finance.setUpdateDate(date);
 		finance.setPartnerProfit(0.0);
+		finance.setSelfProfit(0.0);
 		finance.setAcountId(acount.getAcountId());
 		b=financeDao.addFinance(finance);
 		return b;

@@ -29,26 +29,26 @@ public class DailyTaskBusiness {
    * @param nowNumber 完成次数
    * @return money积分
    */
-	public Double dailyTrigger(String type,int nowNumber){
+	public Double dailyTrigger(int type,int nowNumber){
 		Double money=0.0;
 		//阅读资讯   0/10   20积分
-		if(type.equals("阅读资讯")&& nowNumber>=readingInformationNumber){
+		if(type==1&& nowNumber>=readingInformationNumber){
 			money=20.0;
 		}else
 		//分享资讯   0/3    50积分
-		if(type.equals("分享资讯")&& nowNumber>=shareInformationNumber){
+		if(type==2&& nowNumber>=shareInformationNumber){
 			money=50.0;
 		}else
 		//阅读推送   0/2   10积分
-		if(type.equals("阅读推送")&& nowNumber>=readingPushNumber){
+		if(type==3&& nowNumber>=readingPushNumber){
 			money=10.0;
 		}else
 		//评论资讯   0/3   10积分
-		if(type.equals("评论资讯")&& nowNumber>=commentInformationNumber){
+		if(type==4 && nowNumber>=commentInformationNumber){
 			money=10.0;
 		}else
 		//分享朋友圈收徒  0/1  10积分
-		if(type.equals("分享朋友圈收徒")&& nowNumber>=shareCircleRecruitApprenticeNumber){
+		if(type==5&& nowNumber>=shareCircleRecruitApprenticeNumber){
 			money=10.0;
 		}else{
 			money=0.0;

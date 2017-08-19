@@ -61,9 +61,15 @@ public class DataServiceImpl implements DataService{
 		return l;
 	}
 	@Override
-	public boolean saveOrUpdateData(Data data, int uv, int ip) {
-		boolean b = dataDao.saveOrUpdateData(data, uv, ip);
+	public boolean saveOrUpdateData(Data data, int uv, int ip,int readingNumber) {
+		boolean b = dataDao.saveOrUpdateData(data, uv, ip,readingNumber);
 		return b;
+	}
+	@Override
+	public Data statisticsData(Date createDate, Integer articleId,Integer acountId, int pageNum, int pageSize,
+			String orderName, String orderWay) {
+		Data data = dataDao.statisticsData(createDate, articleId, acountId, pageNum, pageSize, orderName, orderWay);
+		return data;
 	}
 
 	

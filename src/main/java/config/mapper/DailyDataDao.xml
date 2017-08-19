@@ -2,19 +2,19 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="com.nieyue.dao.DataDao">
-<!-- 添加数据 -->
-<insert id="addData" parameterType="Data" keyProperty="dataId" flushCache="true"  >  
+<mapper namespace="com.nieyue.dao.DailyDataDao">
+<!-- 添加每日数据 -->
+<insert id="addDailyData" parameterType="DailyData" keyProperty="dailyDataId" flushCache="true"  >  
    INSERT IGNORE INTO
-   		  data_tb 
+   		  daily_data_tb 
    		 (pvs,uvs,ips,reading_number,create_date,article_id,acount_id)
    VALUES
     	 (#{pvs},#{uvs},#{ips},#{readingNumber},#{createDate},#{articleId},#{acountId})  
 </insert>  
-<!-- 更新数据 -->
-<update id="updateData" parameterType="Data" >  
+<!-- 更新每日数据 -->
+<update id="updateDailyData" parameterType="DailyData" >  
     UPDATE 
-    	data_tb 
+    	daily_data_tb 
     SET 
     	pvs=#{pvs},
     	uvs=#{uvs},
@@ -24,14 +24,14 @@
     	article_id=#{articleId},
     	acount_id=#{acountId}
     WHERE
-    	 data_id=#{dataId} 
+    	 daily_data_id=#{dailyDataId} 
 </update> 
-<!-- 存储或更新数据 -->
-<!-- <insert id="saveOrUpdateData" >  
+<!-- 存储或更新每日数据 -->
+<!-- <insert id="saveOrUpdateDailyData" >  
     INSERT IGNORE INTO
-   		  data_tb 
+   		  DailyData_tb 
    		 (
-   		 data_id,
+   		 DailyData_id,
    		 pvs,
    		 uvs,
    		 ips,
@@ -41,48 +41,48 @@
    		 )
    VALUES
     	 (
-    	 #{Data.dataId},
+    	 #{DailyData.DailyDataId},
     	 1,
     	 1,
     	 1,
-    	 DATE(#{Data.createDate}),
+    	 DATE(#{DailyData.createDate}),
     	  CURDATE(),
-    	 #{Data.articleId},
-    	 #{Data.acountId}
+    	 #{DailyData.articleId},
+    	 #{DailyData.acountId}
     	 )
      ON DUPLICATE KEY UPDATE
     	pvs=pvs+1,
     	uvs=uvs+#{uv},
     	ips=#{ip}  
 </insert>  -->
-<insert id="saveOrUpdateData" >  
+<insert id="saveOrUpdateDailyData" >  
   <selectKey keyProperty="count" resultType="int" order="BEFORE">  
-    select count(data_id) from data_tb 
+    select count(daily_data_id) from daily_data_tb 
     where 
-    article_id = #{Data.articleId}
+    article_id = #{DailyData.articleId}
     AND   
-    acount_id = #{Data.acountId}
+    acount_id = #{DailyData.acountId}
     AND   
-    create_date = #{Data.createDate} 
+    create_date =  #{DailyData.createDate} 
   </selectKey>  
   <if test="count > 0">  
-    update data_tb   
+    update daily_data_tb   
     set pvs=pvs+1,
     	uvs=uvs+#{uv},
     	ips=ips+#{ip},
     	reading_number=reading_number+#{readingNumber}
     where
-     article_id = #{Data.articleId}
+     article_id = #{DailyData.articleId}
     AND   
-    acount_id = #{Data.acountId}
+    acount_id = #{DailyData.acountId}
     AND   
-    create_date = #{Data.createDate} 
+    create_date = #{DailyData.createDate} 
   </if>  
   <if test="count==0">  
      INSERT IGNORE INTO
-   		  data_tb 
+   		  daily_data_tb 
    		 (
-   		<!--  data_id, -->
+   		<!--  daily_data_id, -->
    		 pvs,
    		 uvs,
    		 ips,
@@ -93,28 +93,28 @@
    		 )
    VALUES
     	 (
-    	 <!-- #{Data.dataId}, -->
+    	 <!-- #{DailyData.dailyDataId}, -->
     	 1,
     	 1,
     	 1,
-    	<!--  DATE(#{Data.createDate}), -->
+    	<!--  DATE(#{DailyData.createDate}), -->
     	 #{readingNumber},
-    	  #{Data.createDate},
-    	 #{Data.articleId},
-    	 #{Data.acountId}
+    	  #{DailyData.createDate},
+    	 #{DailyData.articleId},
+    	 #{DailyData.acountId}
     	 )
   </if>  
 </insert> 
-<!-- 删除数据-->
-<delete id="delData"  parameterType="Integer" >  
+<!-- 删除每日数据-->
+<delete id="delDailyData"  parameterType="Integer" >  
     DELETE FROM
-    	 data_tb 
-    	 WHERE data_id=#{dataId}
+    	 daily_data_tb 
+    	 WHERE daily_data_id=#{dailyDataId}
 </delete>  
-<!-- 加载数据-->
-<select id="loadData" parameterType="Integer" resultType="Data" >
+<!-- 加载每日数据-->
+<select id="loadDailyData" parameterType="Integer" resultType="DailyData" >
 SELECT 
-		data_id,
+		daily_data_id,
 	 	pvs,
 	 	uvs,
 	 	ips,
@@ -122,10 +122,10 @@ SELECT
     	create_date,
     	article_id,
     	acount_id
-FROM data_tb 
+FROM daily_data_tb 
 <where>
-<if test="dataId!=null">
-AND data_id=#{dataId}
+<if test="dailyDataId!=null">
+AND daily_data_id=#{dailyDataId}
 </if>
 <if test="createDate!=null">
 AND create_date=#{createDate}
@@ -139,10 +139,10 @@ AND acount_id=#{acountId}
 </where>
 </select>
 
-<!-- 分页查询数据-->
-<select id="browsePagingData" resultType="Data">  
+<!-- 分页查询每日数据-->
+<select id="browsePagingDailyData" resultType="DailyData">  
     SELECT
-	    data_id,
+	    daily_data_id,
 	 	pvs,
 	 	uvs,
 	 	ips,
@@ -150,7 +150,7 @@ AND acount_id=#{acountId}
     	create_date,
     	article_id,
     	acount_id
-	FROM data_tb
+	FROM daily_data_tb
 	<where>
 	<if test="createDate!=null">
 	AND create_date=#{createDate}
@@ -168,7 +168,7 @@ AND acount_id=#{acountId}
 	<if test="orderWay=='desc'">
 	  <![CDATA[<= ]]>
 	</if>
-	(SELECT ${orderName} FROM data_tb 
+	(SELECT ${orderName} FROM daily_data_tb 
 	<where>
 	<if test="createDate!=null">
 	AND create_date=#{createDate}
@@ -191,8 +191,8 @@ AND acount_id=#{acountId}
 		#{pageSize}
 </select> 
 
-<!-- 统计数据 -->
-<select id="statisticsData"  resultType="Data">  
+<!-- 统计每日数据 -->
+<select id="statisticsDailyData"  resultType="DailyData">  
 	SELECT
 	 	COALESCE(sum(pvs),0) pvs,
 	 	COALESCE(sum(uvs),0) uvs,
@@ -205,7 +205,7 @@ AND acount_id=#{acountId}
     	acount_id,
     	</if>
     	create_date
-	FROM data_tb
+	FROM daily_data_tb
 	<where>
 	<if test="createDate!=null">
 	AND create_date=#{createDate}
@@ -225,8 +225,8 @@ AND acount_id=#{acountId}
 <!-- 统计记录条数 -->
 <select id="countAll"  resultType="int">  
 	SELECT
-	 	count(data_id)
-	FROM data_tb
+	 	count(daily_data_id)
+	FROM daily_data_tb
 	<where>
 		<if test="createDate!=null">
 		AND create_date=#{createDate}

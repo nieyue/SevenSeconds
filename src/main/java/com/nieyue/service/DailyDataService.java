@@ -26,5 +26,5 @@ public interface DailyDataService {
 	/** 分页每日数据信息 */
 	public List<DailyData> browsePagingDailyData(Date createDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
 	/** 统计每日数据信息 */
-	public DailyData statisticsDailyData(Date createDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;		
+	public List<DailyData> statisticsDailyData(Date createDate,Date endDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;		
 }

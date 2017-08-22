@@ -26,6 +26,7 @@ import com.nieyue.bean.Finance;
 import com.nieyue.bean.FlowWater;
 import com.nieyue.bean.NoviceTask;
 import com.nieyue.bean.Reply;
+import com.nieyue.bean.Sign;
 import com.nieyue.business.DailyTaskBusiness;
 import com.nieyue.business.NoviceTaskBusiness;
 import com.nieyue.service.AcountService;
@@ -38,6 +39,7 @@ import com.nieyue.service.FinanceService;
 import com.nieyue.service.FlowWaterService;
 import com.nieyue.service.NoviceTaskService;
 import com.nieyue.service.ReplyService;
+import com.nieyue.service.SignService;
 import com.nieyue.util.DateUtil;
 import com.rabbitmq.client.Channel;
 
@@ -60,6 +62,8 @@ public class Listener {
 	private AcountService acountService;
 	@Resource
 	private FlowWaterService flowWaterService;
+	@Resource
+	private SignService signService;
 	@Resource
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
@@ -583,6 +587,50 @@ public class Listener {
 			    	} //确认消息成功消费 
 			    }
 			    
+			    
+			    /**
+			     * 签到
+			     * @param channel
+			     * @param dataRabbitmqDTO
+			     * @param message
+			     * @throws IOException
+			     */
+			    @RabbitListener(queues="${myPugin.rabbitmq.SIGN_DIRECT_QUEUE}") 
+			    public void sign(Channel channel, Sign sign,Message message) throws IOException   {
+			    	try {
+			    		boolean b = signService.addSign(sign);
+			    		if(b){
+			    			List<Finance> financelist = financeService.browsePagingFinance(sign.getAcountId(), 1, 1, "finance_id", "asc");
+			    			Finance selfFinance = financelist.get(0);
+			    			//记录流水，新手任务收益
+			    			FlowWater flowWater = new FlowWater();
+			    			flowWater.setAcountId(sign.getAcountId());
+			    			flowWater.setCreateDate(new Date());
+			    			flowWater.setMoney(sign.getLevel()*2.0);
+			    			flowWater.setType(7);//7，签到
+			    			flowWater.setSubtype(1);
+			    			flowWaterService.addFlowWater(flowWater);
+			    			//自身总收益增加
+			    			selfFinance.setSelfProfit(selfFinance.getSelfProfit()+sign.getLevel()*2.0);
+			    			//余额=增加
+			    			selfFinance.setMoney(selfFinance.getMoney()+sign.getLevel()*2.0);
+			    			financeService.updateFinance(selfFinance);
+			    			
+			    		}
+			    		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+			    	} catch (Exception e) {
+			    		// TODO Auto-generated catch block
+			    		try {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    		} catch (IOException e1) {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    			
+			    			e1.printStackTrace();
+			    		}
+			    		//e.printStackTrace();
+			    	} //确认消息成功消费 
+			    }
+			    
 			    /**
 			     * 新手任务
 			     * @param channel
@@ -621,7 +669,7 @@ public class Listener {
 		        	  if(acount.getMasterId()!=null && !acount.getMasterId().equals("")){
 		        		  List<Finance> masterfinancelist = financeService.browsePagingFinance(acount.getMasterId(), 1, 1, "finance_id", "asc");
 				        	if(masterfinancelist.size()>0){
-		        		  Finance masterFinance = financelist.get(0);
+		        		  Finance masterFinance = masterfinancelist.get(0);
 		        		  //师傅记录流水，新手任务收益
 			        	   FlowWater daflowWater = new FlowWater();
 			        	   daflowWater.setAcountId(acount.getMasterId());
@@ -667,6 +715,7 @@ public class Listener {
 			    	try {
 			    		boolean b = dailyTaskService.addDailyTask(dailyTask);
 			    		if(b){
+			    			
 			    			List<Finance> financelist = financeService.browsePagingFinance(dailyTask.getAcountId(), 1, 1, "finance_id", "asc");
 			    			Finance selfFinance = financelist.get(0);
 			    			//记录流水，新手任务收益
@@ -688,7 +737,7 @@ public class Listener {
 			    			if(acount.getMasterId()!=null && !acount.getMasterId().equals("")){
 			    				List<Finance> masterfinancelist = financeService.browsePagingFinance(acount.getMasterId(), 1, 1, "finance_id", "asc");
 			    				if(masterfinancelist.size()>0){
-			    					Finance masterFinance = financelist.get(0);
+			    					Finance masterFinance = masterfinancelist.get(0);
 			    					//师傅记录流水，新手任务收益
 			    					FlowWater daflowWater = new FlowWater();
 			    					daflowWater.setAcountId(acount.getMasterId());
@@ -704,6 +753,7 @@ public class Listener {
 			    					masterFinance.setPartnerProfit(masterFinance.getPartnerProfit()+dailyTaskBusiness.dailyTrigger(dailyTask.getType(), dailyTask.getFrequency())*finalscale);
 			    					//师傅余额=增加
 			    					masterFinance.setMoney(masterFinance.getMoney()+dailyTaskBusiness.dailyTrigger(dailyTask.getType(), dailyTask.getFrequency())*finalscale);
+			    					System.err.println(masterFinance);
 			    					financeService.updateFinance(masterFinance);
 			    				}
 			    				

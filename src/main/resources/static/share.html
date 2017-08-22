@@ -142,11 +142,11 @@
 					password:registerPassword.value,
 					validCode:registerCode.value
 					};
-				if(myUtils.GetQueryString("masterId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("masterId"))){
-				requestData.masterId=myUtils.GetQueryString("masterId");
-				}	
 				if(myUtils.GetQueryString("acountId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("acountId"))){
 				requestData.masterId=myUtils.GetQueryString("acountId");
+				}else	
+				if(myUtils.GetQueryString("masterId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("masterId"))){
+				requestData.masterId=myUtils.GetQueryString("masterId");
 				}	
 				if(myUtils.GetQueryString("spreadId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("spreadId"))){
 				requestData.spreadId=myUtils.GetQueryString("spreadId");

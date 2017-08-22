@@ -66,10 +66,16 @@ public class DailyDataServiceImpl implements DailyDataService{
 		return b;
 	}
 	@Override
-	public DailyData statisticsDailyData(Date createDate, Integer articleId,Integer acountId, int pageNum, int pageSize,
+	public List<DailyData> statisticsDailyData(Date startDate,Date endDate, Integer articleId,Integer acountId, int pageNum, int pageSize,
 			String orderName, String orderWay) {
-		DailyData DailyData = dailyDataDao.statisticsDailyData(createDate, articleId, acountId, pageNum, pageSize, orderName, orderWay);
-		return DailyData;
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<DailyData> l = dailyDataDao.statisticsDailyData(startDate,endDate, articleId, acountId, pageNum-1, pageSize, orderName, orderWay);
+		return l;
 	}
 
 	

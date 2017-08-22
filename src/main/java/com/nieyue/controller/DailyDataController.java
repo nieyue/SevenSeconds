@@ -28,7 +28,7 @@ import com.nieyue.util.StateResultList;
  *
  */
 @RestController
-@RequestMapping("/DailyData")
+@RequestMapping("/dailyData")
 public class DailyDataController {
 	@Resource
 	private DailyDataService dailyDataService;
@@ -65,21 +65,20 @@ public class DailyDataController {
 	 */
 	@RequestMapping(value = "/statisticsDailyData", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList statisticsDailyData(
-			@RequestParam(value="createDate",required=false)Date createDate,
+			@RequestParam(value="startDate",required=false)Date startDate,
+			@RequestParam(value="endDate",required=false)Date endDate,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="daily_data_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="create_date") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
-		List<DailyData> list = new ArrayList<DailyData>();
-		DailyData dailyData = dailyDataService.statisticsDailyData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
-		if(dailyData!=null &&dailyData.getPvs()>=0){
-			list.add(dailyData);
-			return ResultUtil.getSlefSRSuccessList(list);
+		List<DailyData> l = dailyDataService.statisticsDailyData(startDate,endDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
+		if(l.size()>0){
+			return ResultUtil.getSlefSRSuccessList(l);
 			
 		}else{
-			return ResultUtil.getSlefSRFailList(list);
+			return ResultUtil.getSlefSRFailList(l);
 		}
 	}
 	/**

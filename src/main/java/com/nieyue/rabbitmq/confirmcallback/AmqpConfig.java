@@ -65,6 +65,15 @@ public class AmqpConfig {
 	@Value("${myPugin.rabbitmq.REPLY_DIRECT_QUEUE}")
 	public  String REPLY_DIRECT_QUEUE; 
 	/**
+	 * 签到
+	 */
+	@Value("${myPugin.rabbitmq.SIGN_DIRECT_EXCHANGE}")
+	public  String SIGN_DIRECT_EXCHANGE ;  
+	@Value("${myPugin.rabbitmq.SIGN_DIRECT_ROUTINGKEY}")
+	public String SIGN_DIRECT_ROUTINGKEY; 
+	@Value("${myPugin.rabbitmq.SIGN_DIRECT_QUEUE}")
+	public  String SIGN_DIRECT_QUEUE; 
+	/**
 	 * 新手任务
 	 */
 	@Value("${myPugin.rabbitmq.NOVICETASK_DIRECT_EXCHANGE}")
@@ -247,6 +256,32 @@ public class AmqpConfig {
     } 
     
     
+    /** 
+     *签到
+     */  
+    /*
+     * 设置交换机类型
+     */  
+    @Bean  
+    public DirectExchange signDirectExchange() {  
+    	DirectExchange de = new DirectExchange(SIGN_DIRECT_EXCHANGE);
+    	return de;
+    } 
+    /*
+     * 设置队列
+     */
+    @Bean  
+    public Queue signDirectQueue() {  
+    	return new Queue(SIGN_DIRECT_QUEUE);  
+    } 
+    /*
+     * 设置绑定
+     */
+    @Bean  
+    public Binding signDirectBinding() {  
+    	/** 将队列绑定到交换机 */  
+    	return BindingBuilder.bind(signDirectQueue()).to(signDirectExchange()).with(SIGN_DIRECT_ROUTINGKEY);  
+    } 
     /** 
      *新手任务
      */  

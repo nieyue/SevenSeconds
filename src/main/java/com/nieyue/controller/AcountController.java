@@ -187,7 +187,9 @@ public class AcountController {
 			newa.setWechat(wechat);
 			newa.setRealname(realname);
 			newa.setAlipay(alipay);
+			System.out.println(newa);
 		boolean um = acountService.updateAcount(newa);
+		System.out.println(um);
 		return ResultUtil.getSR(um);
 	}
 	/**
@@ -370,10 +372,6 @@ public class AcountController {
 			List<String> l1 = new ArrayList<String>();
 			l1.add("账户锁定");
 			return ResultUtil.getSlefSRFailList(l1);
-		}else if(acount.getStatus().equals(2)){
-			List<String> l2 = new ArrayList<String>();
-			l2.add("账户警告");
-			return ResultUtil.getSlefSRSuccessList(l2);
 		}
 		return ResultUtil.getSlefSRFailList(list);
 	}

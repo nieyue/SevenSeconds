@@ -30,5 +30,5 @@ public interface DataDao {
 	/** 分页数据信息 */
 	public List<Data> browsePagingData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 统计数据信息 */
-	public Data statisticsData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
+	public List<Data> statisticsData(@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 }

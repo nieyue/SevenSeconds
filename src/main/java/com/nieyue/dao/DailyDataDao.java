@@ -30,5 +30,5 @@ public interface DailyDataDao {
 	/** 分页每日数据信息 */
 	public List<DailyData> browsePagingDailyData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 	/** 统计每日数据信息 */
-	public DailyData statisticsDailyData(@Param("createDate")Date createDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
+	public List<DailyData> statisticsDailyData(@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("articleId")Integer articleId,@Param("acountId")Integer acountId,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;		
 }

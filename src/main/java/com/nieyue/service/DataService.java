@@ -26,5 +26,5 @@ public interface DataService {
 	/** 分页数据信息 */
 	public List<Data> browsePagingData(Date createDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
 	/** 统计数据信息 */
-	public Data statisticsData(Date createDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;		
+	public List<Data> statisticsData(Date startDate,Date endDate,Integer articleId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;		
 }

@@ -65,18 +65,16 @@ public class DataController {
 	 */
 	@RequestMapping(value = "/statisticsData", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList statisticsData(
-			@RequestParam(value="createDate",required=false)Date createDate,
+			@RequestParam(value="startDate",required=false)Date startDate,
+			@RequestParam(value="endDate",required=false)Date endDate,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
 			@RequestParam(value="orderName",required=false,defaultValue="data_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
-		List<Data> list = new ArrayList<Data>();
-		Data data = dataService.statisticsData(createDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
-		System.out.println(data);
-		if(data!=null &&data.getPvs()>=0){
-			list.add(data);
+		List<Data> list= dataService.statisticsData(startDate,endDate,articleId,acountId,pageNum, pageSize, orderName, orderWay);
+		if(list.size()>0){
 			return ResultUtil.getSlefSRSuccessList(list);
 			
 		}else{

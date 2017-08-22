@@ -55,6 +55,9 @@ myPugin:
     REPLY_DIRECT_EXCHANGE: test.reply.sevenseconds.exchange.direct
     REPLY_DIRECT_ROUTINGKEY: test.reply.sevenseconds.routingkey.direct
     REPLY_DIRECT_QUEUE: test.reply.sevenseconds.queue.direct
+    SIGN_DIRECT_EXCHANGE: test.sign.sevenseconds.exchange.direct
+    SIGN_DIRECT_ROUTINGKEY: test.sign.sevenseconds.routingkey.direct
+    SIGN_DIRECT_QUEUE: test.sign.sevenseconds.queue.direct
     NOVICETASK_DIRECT_EXCHANGE: test.novicetask.sevenseconds.exchange.direct
     NOVICETASK_DIRECT_ROUTINGKEY: test.novicetask.sevenseconds.routingkey.direct
     NOVICETASK_DIRECT_QUEUE: test.novicetask.sevenseconds.queue.direct

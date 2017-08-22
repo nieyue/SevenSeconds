@@ -16,6 +16,7 @@ import com.nieyue.bean.DailyTask;
 import com.nieyue.bean.DataRabbitmqDTO;
 import com.nieyue.bean.NoviceTask;
 import com.nieyue.bean.Reply;
+import com.nieyue.bean.Sign;
 
 /**
  * 消息生产者
@@ -77,6 +78,14 @@ public class Sender  implements RabbitTemplate.ConfirmCallback{
 	 public void sendReply(Reply reply) {  
 		 CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
 		 this.rabbitTemplate.convertAndSend(amqpConfig.REPLY_DIRECT_EXCHANGE, amqpConfig.REPLY_DIRECT_ROUTINGKEY, reply, correlationData);  
+	 }
+	 /**
+	  * 签到
+	  * @param dataRabbitmqDTO
+	  */
+	 public void sendSign(Sign sign) {  
+		 CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+		 this.rabbitTemplate.convertAndSend(amqpConfig.SIGN_DIRECT_EXCHANGE, amqpConfig.SIGN_DIRECT_ROUTINGKEY, sign, correlationData);  
 	 }
 	 /**
 	  * 新手任务

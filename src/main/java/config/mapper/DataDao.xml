@@ -207,8 +207,11 @@ AND acount_id=#{acountId}
     	create_date
 	FROM data_tb
 	<where>
-	<if test="createDate!=null">
-	AND create_date=#{createDate}
+	<if test="startDate!=null">
+	AND  create_date<![CDATA[>=]]> #{startDate}
+	</if>
+	<if test="endDate!=null">
+	AND  create_date<![CDATA[<=]]> #{endDate}
 	</if>
 	<if test="articleId!=null">
 	AND  article_id=#{articleId}
@@ -217,6 +220,7 @@ AND acount_id=#{acountId}
 	AND acount_id=#{acountId}
 	</if>
 	</where>
+	GROUP BY create_date
 	ORDER BY
 		${orderName}  ${orderWay}
 	LIMIT

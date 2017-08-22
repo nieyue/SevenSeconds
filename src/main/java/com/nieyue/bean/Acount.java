@@ -300,5 +300,15 @@ public class Acount implements Serializable {
 		this.masterId = masterId;
 		this.roleId = roleId;
 	}
+	@Override
+	public String toString() {
+		return "Acount [acountId=" + acountId + ", nickname=" + nickname + ", icon=" + icon + ", scale=" + scale
+				+ ", openid=" + openid + ", uuid=" + uuid + ", sex=" + sex + ", country=" + country + ", province="
+				+ province + ", city=" + city + ", realname=" + realname + ", phone=" + phone + ", email=" + email
+				+ ", password=" + password + ", identityCards=" + identityCards + ", qq=" + qq + ", wechat=" + wechat
+				+ ", microblog=" + microblog + ", alipay=" + alipay + ", createDate=" + createDate + ", loginDate="
+				+ loginDate + ", status=" + status + ", spreadId=" + spreadId + ", masterId=" + masterId + ", roleId="
+				+ roleId + "]";
+	}
 	
 }

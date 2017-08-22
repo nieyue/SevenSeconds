@@ -77,17 +77,104 @@ text-align:center;}
 			</table>
 		</div>
 <!-- 数据列表end -->
+
 <!-- 每日数据标题-->
 <div style="margin:10px;">
 	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日数据</label>
 	
 </div>
 <!-- 每日数据标题 end-->
-<!-- 每日数据图表-->
-<div id='main' style='height:400px;border:1px dashed #ccc;'></div>
-<!-- 每日数据图表 end-->
+<!-- 每日数据切换 -->
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-default" ng-click="articleDataByDay(1)" ng-disabled="showNum==1" >今日数据</button>
+  <button type="button" class="btn btn-info"  ng-click="articleDataByDay(7)"  ng-disabled="showNum==7">七日数据</button>
+  <button type="button" class="btn btn-warning"  ng-click="articleDataByDay(30)"  ng-disabled="showNum==30">月数据</button>
+</div>
+<!--每日数据切换end -->
 
-<!-- 每日数据列表 -->
+<!-- 每日数据图表-->
+<div id='dataByArticleAndDayEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日数据图表 end-->
+<!-- 每日数据 -->
+<div style="width:100%" >
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<thead>
+			<tr>
+			  <th>日期</th>
+			  <th>PV</th>
+			  <th>UV</th>
+			  <th>IP</th>
+			  <th>阅读数</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataByArticleAndDay in dataByArticleAndDayList" >
+				  <td ng-bind="dataByArticleAndDay.createDate | limitTo:10"></td>
+				  <td >
+				  <span ng-bind="dataByArticleAndDay.pvs"></span>
+				  </td>
+				  <td ng-bind="dataByArticleAndDay.uvs"></td>
+				  <td ng-bind="dataByArticleAndDay.ips"></td>
+				  <td ng-bind="dataByArticleAndDay.readingNumber"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+<!-- 每日数据end -->
+
+<!-- 每日时间段数据标题-->
+<div style="margin:10px;">
+	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日时间段数据</label>
+	
+</div>
+<!-- 每日时间段数据标题 end-->
+
+<!-- 每日时间段数据图表-->
+<div id='dataByArticleAndTimePeriodEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日时间段数据图表 end-->
+<!-- 每日时间段数据 -->
+<div style="width:100%" >
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<thead>
+			<tr>
+			  <th>日期</th>
+			  <th>PV</th>
+			  <th>UV</th>
+			  <th>IP</th>
+			  <th>阅读数</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataByArticleAndTimePeriod in dataByArticleAndTimePeriodList" >
+				  <td>
+				  <span ng-bind="dataByArticleAndTimePeriod.createDate | limitTo:10"></span>
+				  (
+				  <span ng-bind="dataByArticleAndTimePeriod.index==0?'16-24':dataByArticleAndTimePeriod.index==1?'8-16':'0-8'"></span>
+				  )
+				  </td>
+				  <td >
+				  <span ng-bind="dataByArticleAndTimePeriod.pvs"></span>
+				  </td>
+				  <td ng-bind="dataByArticleAndTimePeriod.uvs"></td>
+				  <td ng-bind="dataByArticleAndTimePeriod.ips"></td>
+				  <td ng-bind="dataByArticleAndTimePeriod.readingNumber"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+<!-- 每日时间段数据end -->
+
+<!-- 每日详细数据标题-->
+<div style="margin:10px;">
+	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日详细数据</label>
+	
+</div>
+<!-- 每日详细数据标题 end-->
+<!-- 每日详细数据图表-->
+<div id='dataByArticleEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日详细数据图表 end-->
+
+<!-- 每日详细数据列表 -->
  	<div style="width:100%" ">
 			<table class="table table-bordered" style="width:100%;background-color: #fff;">
 			<thead>
@@ -96,6 +183,7 @@ text-align:center;}
 			  <th>PV</th>
 			  <th>UV</th>
 			  <th>IP</th>
+			  <th>阅读数</th>
 			  <th>创建日期</th>
 			</tr>
 			</thead>
@@ -109,6 +197,7 @@ text-align:center;}
 				  </td>
 				  <td ng-bind="dataByArticle.uvs"></td>
 				  <td ng-bind="dataByArticle.ips"></td>
+				  <td ng-bind="dataByArticle.readingNumber"></td>
 				  <td ng-bind="dataByArticle.createDate | limitTo:10"></td>
 				</tr>
 			</tbody>
@@ -130,7 +219,7 @@ text-align:center;}
    </div>
 <!--  加载更多end -->
 		
-<!-- 每日数据列表end -->
+<!-- 每日详细数据列表end -->
 </div>
 	<!-- 页面列表end -->
 	<script src="/resources/js/jquery2.1.js"></script>
@@ -157,7 +246,198 @@ text-align:center;}
        
 					
     	indexApp.controller('indexCtrl',function($scope){
-    	 /*
+    	  //显示
+    	$scope.showNum=1;//默认显示当天数据 ，7七天数据，30月数据，0详细数据
+    	
+    	
+    	//验证是否已经登录
+    		$.ajax({
+    		url:"/acount/islogin",
+    		async:false,  
+    		success:function(data){
+       			console.log(data)
+       			if(data.code=='200'){
+       			$scope.sessionAcount=data.list[0];
+       			
+       			if($scope.sessionAcount.roleId!=1000){
+       			location.replace("/seller/index.html");
+       			} 
+       			//$rootScope.$apply();
+       			return;
+       			}
+       			location.replace("/seller/index.html");
+       	}});
+       	/**
+    	**日数据
+    	*/
+       	$scope.dataByArticleAndDayListInit=function(day){
+       	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayStartTime());//今日
+        //初始化
+  $.get("/dailyData/statisticsDailyData?articleId="+myUtils.GetQueryString("articleId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
+           $scope.dataByArticleAndDayList=pld.list;
+           initDataByArticleAndDayList($('#dataByArticleAndDayEchart')[0],day);
+			 //console.log($scope.dataByArticleAndDayList)
+			$scope.$apply();
+               });
+			};
+				$scope.dataByArticleAndDayListInit($scope.showNum);
+		/**
+		**切换日、周、月数据
+		*/		
+		$scope.articleDataByDay=function(day){
+		$scope.showNum=day;
+		$scope.dataByArticleAndDayListInit($scope.showNum);
+		$scope.dataByArticleAndTimePeriodListInit($scope.showNum);
+		};	
+		
+		//初始化图表每日详细数据
+	function initDataByArticleAndDayList(echartObj,day){
+           var dataList={
+           createDates:[],
+           pvs:[],
+           uvs:[],
+           ips:[],
+           readingNumber:[]
+           };
+           	var  data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0
+           };
+           $scope.newDataByArticleAndDayList=[];
+               for(var z=day-1;z>=0;z--){
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0
+		       };
+               data.createDate=myUtils.timeStampToDayDate(myUtils.beforeDayToTodayTime(z));//获取当前时间
+ 				$scope.newDataByArticleAndDayList[z]=data;
+     	 		}
+           //注入
+           for(var i=0;i<$scope.newDataByArticleAndDayList.length;i++){//先循环所有天数
+           if($scope.dataByArticleAndDayList.length>0){
+             for(var j=0;j<$scope.dataByArticleAndDayList.length;j++){//循环已有的天数
+             	if(myUtils.timeStampToDayDate($scope.dataByArticleAndDayList[j].createDate)==$scope.newDataByArticleAndDayList[i].createDate){
+             	$scope.newDataByArticleAndDayList[i].createDate=myUtils.timeStampToDayDate($scope.dataByArticleAndDayList[j].createDate);
+             	$scope.newDataByArticleAndDayList[i].pvs=$scope.dataByArticleAndDayList[j].pvs;
+             	$scope.newDataByArticleAndDayList[i].uvs=$scope.dataByArticleAndDayList[j].uvs;
+             	$scope.newDataByArticleAndDayList[i].ips=$scope.dataByArticleAndDayList[j].ips;
+             	$scope.newDataByArticleAndDayList[i].readingNumber=$scope.dataByArticleAndDayList[j].readingNumber;
+             	}
+             }
+           }
+           dataList.createDates.unshift(myUtils.timeStampToDayDate($scope.newDataByArticleAndDayList[i].createDate));
+           dataList.pvs.unshift($scope.newDataByArticleAndDayList[i].pvs);
+           dataList.uvs.unshift($scope.newDataByArticleAndDayList[i].uvs);
+           dataList.ips.unshift($scope.newDataByArticleAndDayList[i].ips);
+           dataList.readingNumber.unshift($scope.newDataByArticleAndDayList[i].readingNumber);
+           }
+           $scope.dataByArticleAndDayList=$scope.newDataByArticleAndDayList;
+           initEcharts(dataList,echartObj);
+				$scope.$apply();
+      
+	} 
+	
+	
+	  	/**
+    	**日时间段数据
+    	*/
+       	$scope.dataByArticleAndTimePeriodListInit=function(day){
+       	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayStartTime());//今日
+        //初始化
+  $.get("/data/statisticsData?articleId="+myUtils.GetQueryString("articleId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
+           $scope.dataByArticleAndTimePeriodList=pld.list;
+           initDataByArticleAndTimePeriodList($('#dataByArticleAndTimePeriodEchart')[0],day);
+			// console.log($scope.dataByArticleAndTimePeriodList)
+			$scope.$apply();
+               });
+			};
+				$scope.dataByArticleAndTimePeriodListInit($scope.showNum);
+		
+		//初始化图表每日数据
+	function initDataByArticleAndTimePeriodList(echartObj,day){
+           var dataList={
+           createDates:[],
+           pvs:[],
+           uvs:[],
+           ips:[],
+           readingNumber:[],
+           index:[]
+           };
+           	var  data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0,
+           index:0
+           };
+           $scope.newDataByArticleAndTimePeriodList=[];
+               for(var z=day-1;z>=0;z--){
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+           			index:0
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z).getTime()+16*60*60*1000);//获取当前时间
+ 				$scope.newDataByArticleAndTimePeriodList[z*3+0]=data;
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+          		    index:1
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z).getTime()+8*60*60*1000);//获取当前时间
+ 				$scope.newDataByArticleAndTimePeriodList[z*3+1]=data;
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+                   index:2
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z));//获取当前时间
+ 				$scope.newDataByArticleAndTimePeriodList[z*3+2]=data;
+     	 		}
+           //注入
+           for(var i=0;i<$scope.newDataByArticleAndTimePeriodList.length;i++){//先循环所有天数
+           if($scope.dataByArticleAndTimePeriodList.length>0){
+             for(var j=0;j<$scope.dataByArticleAndTimePeriodList.length;j++){//循环已有的天数
+             	if(myUtils.timeStampToDate($scope.dataByArticleAndTimePeriodList[j].createDate)==$scope.newDataByArticleAndTimePeriodList[i].createDate){
+             	$scope.newDataByArticleAndTimePeriodList[i].createDate=myUtils.timeStampToDate($scope.dataByArticleAndTimePeriodList[j].createDate);
+             	$scope.newDataByArticleAndTimePeriodList[i].pvs=$scope.dataByArticleAndTimePeriodList[j].pvs;
+             	$scope.newDataByArticleAndTimePeriodList[i].uvs=$scope.dataByArticleAndTimePeriodList[j].uvs;
+             	$scope.newDataByArticleAndTimePeriodList[i].ips=$scope.dataByArticleAndTimePeriodList[j].ips;
+             	$scope.newDataByArticleAndTimePeriodList[i].readingNumber=$scope.dataByArticleAndTimePeriodList[j].readingNumber;
+             	}
+             }
+           }
+           dataList.createDates.unshift(myUtils.timeStampToDate($scope.newDataByArticleAndTimePeriodList[i].createDate));
+           dataList.pvs.unshift($scope.newDataByArticleAndTimePeriodList[i].pvs);
+           dataList.uvs.unshift($scope.newDataByArticleAndTimePeriodList[i].uvs);
+           dataList.ips.unshift($scope.newDataByArticleAndTimePeriodList[i].ips);
+           dataList.readingNumber.unshift($scope.newDataByArticleAndTimePeriodList[i].readingNumber);
+           }
+           console.log($scope.newDataByArticleAndTimePeriodList)
+           $scope.dataByArticleAndTimePeriodList=$scope.newDataByArticleAndTimePeriodList;
+           initEcharts(dataList,echartObj);
+				$scope.$apply();
+      
+	}
+    	    /*
             *列表
             */
             $scope.dataByArticleList=[]; 		
@@ -188,7 +468,7 @@ text-align:center;}
         //初始化
   $.get("/data/list?articleId="+myUtils.GetQueryString("articleId")+"&pageNum="+(($scope.currentPage-1)*$scope.pageNumber+1)+"&pageSize="+$scope.pageNumber,function(pld){
            $scope.dataByArticleList=pld.list;
-           initDataByArticleList();
+           initDataByArticleList($('#dataByArticleEchart')[0]);
 			 console.log($scope.dataByArticleList)
 			$scope.$apply();
                });
@@ -231,7 +511,7 @@ text-align:center;}
 			$scope.$apply();
        });
 	//初始化图表每日数据
-	function initDataByArticleList(){
+	function initDataByArticleList(echartObj){
            var dataList={
            createDates:[],
            pvs:[],
@@ -273,15 +553,15 @@ text-align:center;}
            dataList.ips.unshift($scope.newDataByArticleList[j].ips);
            }
            
-           initEcharts(dataList);
+           initEcharts(dataList,echartObj);
 				$scope.$apply();
       
 	}
 	//initEcharts();
 	//图表init
-	function initEcharts(list){
+	function initEcharts(list,echartObj){
 	     // 指定图表的配置项和数据
-    var myChart = echarts.init($('#main')[0]);
+    var myChart = echarts.init(echartObj);
         let option = {
     // title: {
     //     text: titleText
@@ -305,7 +585,7 @@ backgroundColor: {
     globalCoord: false // 缺省为 false
 },
     legend: {
-        data:['浏览次数(PV)','独立访客(UV)','IP','转发']
+        data:['浏览次数(PV)','独立访客(UV)','IP','阅读数']
     },
     // grid: {
     //     left: '3%',
@@ -352,6 +632,11 @@ backgroundColor: {
             name:'IP',
             type:'line',
             data: list.ips
+        },
+        {
+            name:'阅读数',
+            type:'line',
+            data: list.readingNumber
         }
     ]
 };

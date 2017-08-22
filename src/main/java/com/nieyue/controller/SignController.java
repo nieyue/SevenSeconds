@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.Sign;
+import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.service.SignService;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
@@ -32,6 +33,8 @@ import com.nieyue.util.StateResultList;
 public class SignController {
 	@Resource
 	private SignService signService;
+	@Resource
+	private Sender sender;
 	/**
 	 * 签到分页浏览
 	 * @param orderName 商品排序数据库字段
@@ -69,8 +72,9 @@ public class SignController {
 	 */
 	@RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResult addSign(@ModelAttribute Sign sign, HttpSession session) {
-		boolean am = signService.addSign(sign);
-		return ResultUtil.getSR(am);
+		//boolean am = signService.addSign(sign);
+		sender.sendSign(sign);
+		return ResultUtil.getSR(true);
 	}
 	/**
 	 * 签到删除

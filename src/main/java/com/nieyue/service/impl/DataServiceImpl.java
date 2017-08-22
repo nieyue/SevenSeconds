@@ -66,10 +66,16 @@ public class DataServiceImpl implements DataService{
 		return b;
 	}
 	@Override
-	public Data statisticsData(Date createDate, Integer articleId,Integer acountId, int pageNum, int pageSize,
-			String orderName, String orderWay) {
-		Data data = dataDao.statisticsData(createDate, articleId, acountId, pageNum, pageSize, orderName, orderWay);
-		return data;
+	public List<Data> statisticsData(Date startDate, Date endDate, Integer articleId, Integer acountId, int pageNum,
+			int pageSize, String orderName, String orderWay) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<Data> l = dataDao.statisticsData(startDate,endDate,articleId,acountId,pageNum-1, pageSize, orderName, orderWay);
+		return l;
 	}
 
 	

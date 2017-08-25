@@ -105,6 +105,64 @@
 		
         mainApp.controller('mainCtrl', function($rootScope,$scope,$http) {
         //console.log=function(){};
+        
+         //验证是否已经登录
+    		$.ajax({
+    		url:"/acount/islogin",
+    		async:false,  
+    		success:function(data){
+       			console.log(data)
+       			if(data.code=='200'){
+       			$rootScope.sessionAcount=data.list[0];
+       			//$rootScope.$apply();
+       			return;
+       			}
+       			location.replace("/seller/index.html");
+       	}});
+    	 //获取roleList
+    		$.ajax({
+    		url:"/role/list",
+    		async:false,  
+    		success:function(data){
+       			if(data.code=='200'){
+       			$rootScope.roleList=data.list;
+       			//console.log($rootScope.roleList)
+       			//$rootScope.$apply();
+       			for(var i=0;i<$rootScope.roleList.length;i++){
+       			//获取sessionRole
+       			if($rootScope.roleList[i].roleId==$rootScope.sessionAcount.roleId){
+       			$rootScope.sessionRole=$rootScope.roleList[i];
+       			//获取新roleList
+	       			if($rootScope.sessionRole.name!='超级管理员'){
+	       			$rootScope.oldRoleList=$rootScope.roleList;
+	       			$rootScope.roleList=[];
+		       			for(var j=0;j<$rootScope.oldRoleList.length;j++){
+		       				if($rootScope.oldRoleList[j].name!='超级管理员'){
+	       					$rootScope.roleList.push($rootScope.oldRoleList[j]);
+		       				
+		       				}
+		       			}
+	       			}
+       			}
+       			}
+       			return;
+       			}
+       			location.replace("/seller/index.html");
+       	}});
+   		//登录退出
+   		$scope.sellerLoginOut=function(){
+   			myUtils.myLoginOut("确定退出吗？", function(){
+   				$.get("/acount/loginout",function(data){
+   	   				if(data.code==200){
+   	   					myUtils.myLoadingToast("退出成功", null);   	   				
+   						location.replace("/seller/index.html");
+   	   				}else{
+   	   					myUtils.myLoadingToast("退出失败", null);   	   				
+   	   				}
+   	   			});
+   			});
+   		};
+   		
        $scope.currentDate=myUtils.timeStampToDate(new Date());
        $scope.backstageName="七秒";//系统名称
        $rootScope.formDisabled=false;//表单提交，默认可以点击。
@@ -120,10 +178,16 @@
 　　　　error: function (xhr, status, e) {$rootScope.formDisabled=false; },
 　　　　//完成请求后触发。即在success或error触发后触发
 　　　　complete: function (xhr, status) { 
-	$rootScope.formDisabled=false; },
+	$rootScope.formDisabled=false; 
+	},
 　　　　//发送请求前触发
 　　　　beforeSend: function (xhr) {
 　　　　$rootScope.formDisabled=true;
+	//没session
+		if(!$rootScope.sessionAcount){
+		location.replace("/seller/index.html");
+		return false;
+		}
 　　　　},
 　　});
     	 //设置高度
@@ -184,7 +248,7 @@
 			     // 阻止输出log
 			    editor.config.printLog = false;
 			    //取消过滤js
-			    editor.config.jsFilter=false;
+			   // editor.config.jsFilter=false;
 			    //zindex
 			    editor.config.zindex = 99999999;
 			    editor.config.menuFixed = 50;
@@ -218,62 +282,7 @@
             /*
             *横向滚动 end
             */
-    	 //验证是否已经登录
-    		$.ajax({
-    		url:"/acount/islogin",
-    		async:false,  
-    		success:function(data){
-       			console.log(data)
-       			if(data.code=='200'){
-       			$rootScope.sessionAcount=data.list[0];
-       			//$rootScope.$apply();
-       			return;
-       			}
-       			location.replace("/seller/index.html");
-       	}});
-    	 //获取roleList
-    		$.ajax({
-    		url:"/role/list",
-    		async:false,  
-    		success:function(data){
-       			if(data.code=='200'){
-       			$rootScope.roleList=data.list;
-       			//console.log($rootScope.roleList)
-       			//$rootScope.$apply();
-       			for(var i=0;i<$rootScope.roleList.length;i++){
-       			//获取sessionRole
-       			if($rootScope.roleList[i].roleId==$rootScope.sessionAcount.roleId){
-       			$rootScope.sessionRole=$rootScope.roleList[i];
-       			//获取新roleList
-	       			if($rootScope.sessionRole.name!='超级管理员'){
-	       			$rootScope.oldRoleList=$rootScope.roleList;
-	       			$rootScope.roleList=[];
-		       			for(var j=0;j<$rootScope.oldRoleList.length;j++){
-		       				if($rootScope.oldRoleList[j].name!='超级管理员'){
-	       					$rootScope.roleList.push($rootScope.oldRoleList[j]);
-		       				
-		       				}
-		       			}
-	       			}
-       			}
-       			}
-       			return;
-       			}
-       			location.replace("/seller/index.html");
-       	}});
-   		//登录退出
-   		$scope.sellerLoginOut=function(){
-   			myUtils.myLoginOut("确定退出吗？", function(){
-   				$.get("/acount/loginout",function(data){
-   	   				if(data.code==200){
-   	   					myUtils.myLoadingToast("退出成功", null);   	   				
-   						location.replace("/seller/index.html");
-   	   				}else{
-   	   					myUtils.myLoadingToast("退出失败", null);   	   				
-   	   				}
-   	   			});
-   			});
-   		};
+    	
    		//修改状态
    		$scope.updateAcountStatus=function(acount){
 		myUtils.myLoginOut("确定修改吗？", function(){

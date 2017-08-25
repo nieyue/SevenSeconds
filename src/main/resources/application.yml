@@ -18,6 +18,7 @@ mybatis:
     mapUnderscoreToCamelCase: true
     useColumnLabel: true
     useGeneratedKeys: true
+  
     
     
 spring:

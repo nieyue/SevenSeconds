@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.AcountDTO;
+import com.nieyue.bean.Sign;
 import com.nieyue.bean.SpreadAcountDTO;
 
 /**
@@ -57,7 +58,7 @@ public interface AcountService {
 			String orderName,
 			String orderWay) ;
 	/** 渠道分页账户信息 */
-	public List<SpreadAcountDTO> browsePagingAcountBySpread(
+	public List<SpreadAcountDTO> browsePagingAcountBySpreadId(
 			Integer spreadId,
 			Date createDate,
 			Date loginDate,
@@ -65,4 +66,7 @@ public interface AcountService {
 			int pageSize,
 			String orderName,
 			String orderWay) ;
+	/** 根据签到渠道分页账户信息 */
+	public List<Sign> browsePagingAcountBySpreadIdAndSignId(
+			List<Integer> acountIdList) ;
 }

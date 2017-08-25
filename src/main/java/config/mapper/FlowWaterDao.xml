@@ -7,9 +7,9 @@
 <insert id="addFlowWater" parameterType="FlowWater" keyProperty="flowWaterId" flushCache="true"  >  
    INSERT IGNORE INTO
    		  flow_water_tb 
-   		 (type,subtype,money,create_date,acount_id)
+   		 (type,subtype,money,real_money,create_date,acount_id)
    VALUES
-    	 (#{type},#{subtype},#{money},#{createDate},#{acountId})  
+    	 (#{type},#{subtype},#{money},#{realMoney},#{createDate},#{acountId})  
 </insert>  
 <!-- 更新流水-->
 <update id="updateFlowWater" parameterType="FlowWater" >  
@@ -24,6 +24,9 @@
     </if>
     <if test="money!=null">
     	money=#{money},
+    </if>
+    <if test="realMoney!=null">
+    	real_money=#{realMoney},
     </if>
     <if test="createDate!=null">
     	create_date=#{createDate},
@@ -48,6 +51,7 @@ SELECT
 	 	type,
 	 	subtype,
 	 	money,
+	 	real_money,
     	create_date,
     	acount_id
 FROM flow_water_tb 
@@ -61,6 +65,7 @@ WHERE flow_water_id=#{flowWaterId}
 	 	type,
 	 	subtype,
 	 	money,
+	 	real_money,
     	create_date,
     	acount_id
 	FROM flow_water_tb

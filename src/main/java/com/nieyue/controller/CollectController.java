@@ -80,7 +80,7 @@ public class CollectController {
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="Collect_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="collect_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<Collect> list = new ArrayList<Collect>();
 			list= collectService.browsePagingCollect(articleId,acountId,pageNum, pageSize, orderName, orderWay);

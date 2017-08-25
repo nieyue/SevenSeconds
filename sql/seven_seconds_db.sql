@@ -197,7 +197,7 @@ PRIMARY KEY (data_id),
 INDEX INDEX_CREATEDATE (create_date) USING BTREE,
 INDEX INDEX_ARTICLEID (article_id) USING BTREE,
 INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
-UNIQUE INDEX DAY_DATA (create_date,article_id,acount_id) USING BTREE
+UNIQUE INDEX TIME_DATA (create_date,article_id,acount_id) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='数据表';
 
 #创建每日数据表 
@@ -291,7 +291,8 @@ CREATE TABLE flow_water_tb(
 flow_water_id int(11) NOT NULL AUTO_INCREMENT COMMENT '流水id',
 type tinyint(4)  COMMENT '类型,1.新手任务 ,2.日常任务,3.达人奖励,4.文章阅读,5.徒弟进贡,6.推广分成,-1.兑换商品',
 subtype tinyint(4)  COMMENT '子类型,1(0,1,2,3,4,5),2(1,2,3,4,5),3(1,2,3,4,5,6,7),4(1),5(1,2),6(1),-1(1)',
-money decimal(11,2)  COMMENT '流水额度，负数为消耗',
+money decimal(11,2) DEFAULT 0  COMMENT '流水积分，负数为消耗',
+real_money decimal(11,2) DEFAULT 0 COMMENT '流水真钱，负数为消耗',
 create_date datetime COMMENT '创建时间',
 acount_id int(11) COMMENT '流水人id外键',
 PRIMARY KEY (flow_water_id),

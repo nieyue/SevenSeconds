@@ -214,14 +214,14 @@ public class Listener {
 	       			channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 	       			return;
 	       		}
-	       		//20秒一次,acountId=1000,不需限制
+	       		//7秒一次,acountId=1000,不需限制
 	       		if(dataRabbitmqDTO.getAcountId()!=1000){
-	     	   BoundValueOperations<String, String> bvotworequest = stringRedisTemplate.boundValueOps(projectName+"AcountId"+dataRabbitmqDTO.getAcountId()+"DataTwentySecondsReuqest");
+	     	   BoundValueOperations<String, String> bvotworequest = stringRedisTemplate.boundValueOps(projectName+"AcountId"+dataRabbitmqDTO.getAcountId()+"DataSevenSecondsReuqest");
 	     	  if(bvotworequest.size()>0){
 	     		 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 	       		 return;
 	     	  }else{
-	     		  bvotworequest.set("1", 20, TimeUnit.SECONDS);
+	     		  bvotworequest.set("1", 7, TimeUnit.SECONDS);
 	     	  }
 	       		}
 	     	  
@@ -284,6 +284,7 @@ public class Listener {
 	        	   flowWater.setAcountId(dataRabbitmqDTO.getAcountId());
 	        	   flowWater.setCreateDate(new Date());
 	        	   flowWater.setMoney(article.getUserUnitPrice());
+	        	   flowWater.setRealMoney(0.0);
 	        	   flowWater.setType(4);//4文章阅读
 	        	   flowWater.setSubtype(1);
 	        	   flowWaterService.addFlowWater(flowWater);
@@ -311,6 +312,7 @@ public class Listener {
 	    	        	   BoundValueOperations<String, String> bvo=stringRedisTemplate.boundValueOps(projectName+"ScaleIncrement");//合伙人增量
 		      	           double masterUserUnitPrice = article.getUserUnitPrice()*(masterAcount.getScale()+Double.valueOf(bvo.get()));//合伙人比例收益=合伙人单价*（合伙人收益比例+全局收益比例）
 		      	           parentFlowWater.setMoney(masterUserUnitPrice);
+		      	           parentFlowWater.setRealMoney(0.0);
 		      	           parentFlowWater.setType(5);//5徒弟进贡
 		      	           parentFlowWater.setSubtype(2);//文章阅读
 	    	        	   flowWaterService.addFlowWater(parentFlowWater);
@@ -462,6 +464,7 @@ public class Listener {
 			        		   tgflowWater.setAcountId(dataRabbitmqDTO.getAcountId());
 			        		   tgflowWater.setCreateDate(new Date());
 			        		   tgflowWater.setMoney(dailyTaskBusiness.forwardingPromotionArticle(Integer.valueOf(tgbvo.get())));
+			        		   tgflowWater.setRealMoney(0.0);
 			        		   tgflowWater.setType(3);//3达人奖励
 			        		   tgflowWater.setSubtype(7);//转发推广文章    10积分（获得3个有效阅读）
 			        		   flowWaterService.addFlowWater(tgflowWater);
@@ -482,6 +485,7 @@ public class Listener {
 		        	   flowWater.setAcountId(inacount.getAcountId());
 		        	   flowWater.setCreateDate(new Date());
 		        	   flowWater.setMoney(article.getUserUnitPrice());
+		        	   flowWater.setRealMoney(0.0);
 		        	   flowWater.setType(4);//4文章阅读
 		        	   flowWater.setSubtype(1);
 		        	   flowWaterService.addFlowWater(flowWater);
@@ -509,6 +513,7 @@ public class Listener {
 		    	        	   BoundValueOperations<String, String> bvo=stringRedisTemplate.boundValueOps(projectName+"ScaleIncrement");//合伙人增量
 			      	           double masterUserUnitPrice = article.getUserUnitPrice()*(masterAcount.getScale()+Double.valueOf(bvo.get()));//合伙人比例收益=合伙人单价*（合伙人收益比例+全局收益比例）
 			      	           parentFlowWater.setMoney(masterUserUnitPrice);
+			      	           parentFlowWater.setRealMoney(0.0);
 			      	           parentFlowWater.setType(5);//5徒弟进贡
 			      	           parentFlowWater.setSubtype(2);//文章阅读
 		    	        	   flowWaterService.addFlowWater(parentFlowWater);
@@ -607,6 +612,7 @@ public class Listener {
 			    			flowWater.setAcountId(sign.getAcountId());
 			    			flowWater.setCreateDate(new Date());
 			    			flowWater.setMoney(sign.getLevel()*2.0);
+			    			flowWater.setRealMoney(0.0);
 			    			flowWater.setType(7);//7，签到
 			    			flowWater.setSubtype(1);
 			    			flowWaterService.addFlowWater(flowWater);
@@ -650,6 +656,7 @@ public class Listener {
 		        	   flowWater.setAcountId(noviceTask.getAcountId());
 		        	   flowWater.setCreateDate(new Date());
 		        	   flowWater.setMoney(noviceTaskBusiness.disposableTrigger(noviceTask.getFrequency()));
+		        	   flowWater.setRealMoney(0.0);
 		        	   flowWater.setType(1);//1新手任务
 		        	   flowWater.setSubtype(noviceTask.getFrequency());
 		        	   flowWaterService.addFlowWater(flowWater);
@@ -675,6 +682,7 @@ public class Listener {
 			        	   daflowWater.setAcountId(acount.getMasterId());
 			        	   daflowWater.setCreateDate(new Date());
 			        	   daflowWater.setMoney(dailyTaskBusiness.apprenticeNoviceTask(noviceTask.getFrequency()));//达人奖励，回馈师傅积分
+			        	   daflowWater.setRealMoney(0.0);
 			        	   daflowWater.setType(3);//3达人奖励
 			        	   daflowWater.setSubtype(noviceTask.getFrequency());
 			        	   flowWaterService.addFlowWater(daflowWater);
@@ -723,6 +731,7 @@ public class Listener {
 			    			flowWater.setAcountId(dailyTask.getAcountId());
 			    			flowWater.setCreateDate(new Date());
 			    			flowWater.setMoney(dailyTaskBusiness.dailyTrigger(dailyTask.getType(), dailyTask.getFrequency()));
+			    			flowWater.setRealMoney(0.0);
 			    			flowWater.setType(2);//2日常任务
 			    			flowWater.setSubtype(dailyTask.getType());
 			    			flowWaterService.addFlowWater(flowWater);
@@ -746,6 +755,7 @@ public class Listener {
 				    	        	   BoundValueOperations<String, String> bvo=stringRedisTemplate.boundValueOps(projectName+"ScaleIncrement");//合伙人增量
 					      	           double finalscale = masterAcount.getScale()+Double.valueOf(bvo.get());//合伙人比例收益=合伙人单价*（合伙人收益比例+全局收益比例）
 			    					daflowWater.setMoney(dailyTaskBusiness.dailyTrigger(dailyTask.getType(), dailyTask.getFrequency())*finalscale);
+			    					daflowWater.setRealMoney(0.0);
 			    					daflowWater.setType(5);//5，徒弟进贡
 			    					daflowWater.setSubtype(1);//日常任务
 			    					flowWaterService.addFlowWater(daflowWater);
@@ -774,14 +784,47 @@ public class Listener {
 			    	} //确认消息成功消费 
 			    }
 			    /**
-			     * 流水
+			     * 商品订单流水
 			     * @param channel
 			     * @param flowWater
 			     * @param message
 			     * @throws IOException
 			     */
-			    @RabbitListener(queues="${myPugin.rabbitmq.FLOWWATER_DIRECT_QUEUE}") 
-			    public void flowWater(Channel channel, FlowWater flowWater,Message message) throws IOException   {
+			    @RabbitListener(queues="${myPugin.rabbitmq.MERORDERFLOWWATER_DIRECT_QUEUE}") 
+			    public void merOrderFlowWater(Channel channel, FlowWater flowWater,Message message) throws IOException   {
+			    	try {
+			    		boolean b = flowWaterService.addFlowWater(flowWater);
+			    		if(b){
+			    			List<Finance> financelist = financeService.browsePagingFinance(flowWater.getAcountId(), 1, 1, "finance_id", "asc");
+			    			Finance selfFinance = financelist.get(0);
+			    			//自身消费增加 ,money为负数，所以减
+			    			selfFinance.setConsume(selfFinance.getConsume()-flowWater.getMoney());
+			    			//余额 减少，money为负数，所以加
+			    			selfFinance.setMoney(selfFinance.getMoney()+flowWater.getMoney());
+			    			financeService.updateFinance(selfFinance);
+			    		}
+			    		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+			    	} catch (Exception e) {
+			    		// TODO Auto-generated catch block
+			    		try {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    		} catch (IOException e1) {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    			
+			    			e1.printStackTrace();
+			    		}
+			    		//e.printStackTrace();
+			    	} //确认消息成功消费 
+			    }
+			    /**
+			     * 书订单流水
+			     * @param channel
+			     * @param flowWater
+			     * @param message
+			     * @throws IOException
+			     */
+			    @RabbitListener(queues="${myPugin.rabbitmq.BOOKORDERFLOWWATER_DIRECT_QUEUE}") 
+			    public void bookOrderFlowWater(Channel channel, FlowWater flowWater,Message message) throws IOException   {
 			    	try {
 			    		boolean b = flowWaterService.addFlowWater(flowWater);
 			    		if(b){

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
+import com.nieyue.bean.Sign;
 import com.nieyue.bean.SpreadAcountDTO;
 import com.nieyue.dao.AcountDao;
 import com.nieyue.dao.FinanceDao;
@@ -164,7 +165,7 @@ public class AcountServiceImpl implements AcountService{
 		return l;
 	}
 	@Override
-	public List<SpreadAcountDTO> browsePagingAcountBySpread(
+	public List<SpreadAcountDTO> browsePagingAcountBySpreadId(
 			Integer spreadId, 
 			Date createDate,
 			Date loginDate,
@@ -178,7 +179,7 @@ public class AcountServiceImpl implements AcountService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<SpreadAcountDTO> l = acountDao.browsePagingAcountBySpread(
+		List<SpreadAcountDTO> l = acountDao.browsePagingAcountBySpreadId(
 				spreadId,
 				createDate,
 				loginDate,
@@ -186,6 +187,11 @@ public class AcountServiceImpl implements AcountService{
 				pageSize, 
 				orderName,
 				orderWay);
+		return l;
+	}
+	@Override
+	public List<Sign> browsePagingAcountBySpreadIdAndSignId(List<Integer> acountIdList) {
+		List<Sign> l = acountDao.browsePagingAcountBySpreadIdAndSignId(acountIdList);
 		return l;
 	}
 	

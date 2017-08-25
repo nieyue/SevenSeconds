@@ -195,6 +195,7 @@ public class FinanceController {
 		json.put("todayProfit", nowMoney);//今日收益
 		json.put("money", finance.getMoney());//余额
 		json.put("withdrawals", finance.getWithdrawals());//提现金额
+		json.put("consume", finance.getConsume());//消费积分
 		json.put("profitMoneyOrderNum",profitMoneyOrderNum );//收益排行
 		json.put("apprenticeOrderNum",apprenticeOrderNum );//合伙人排行
 		json.put("apprenticeNum",apprenticeNum );//合伙人人数

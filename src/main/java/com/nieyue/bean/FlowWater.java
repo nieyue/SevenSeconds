@@ -28,9 +28,13 @@ public class FlowWater implements Serializable{
 	 */
 	private Integer subtype;
 	/**
-	 * 流水额度，负数为消耗
+	 * 流水积分，负数为消耗
 	 */
 	private Double money;
+	/**
+	 * 流水真钱，负数为消耗
+	 */
+	private Double realMoney;
 	/**
 	 * 流水创建时间
 	 */
@@ -44,16 +48,19 @@ public class FlowWater implements Serializable{
 	public FlowWater() {
 		super();
 	}
-	public FlowWater(Integer flowWaterId, Integer type, Integer subtype, Double money, Date createDate,
-			Integer acountId) {
+
+	public FlowWater(Integer flowWaterId, Integer type, Integer subtype, Double money, Double realMoney,
+			Date createDate, Integer acountId) {
 		super();
 		this.flowWaterId = flowWaterId;
 		this.type = type;
 		this.subtype = subtype;
 		this.money = money;
+		this.realMoney = realMoney;
 		this.createDate = createDate;
 		this.acountId = acountId;
 	}
+
 	public Integer getFlowWaterId() {
 		return flowWaterId;
 	}
@@ -92,6 +99,12 @@ public class FlowWater implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Double getRealMoney() {
+		return realMoney;
+	}
+	public void setRealMoney(Double realMoney) {
+		this.realMoney = realMoney;
 	}
 	
 }

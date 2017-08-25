@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.AcountDTO;
+import com.nieyue.bean.Sign;
 import com.nieyue.bean.SpreadAcountDTO;
 
 /**
@@ -69,7 +70,7 @@ public interface AcountDao {
 			@Param("orderName")String orderName,
 			@Param("orderWay")String orderWay) ;		
 	/** 渠道分页账户信息 */
-	public List<SpreadAcountDTO> browsePagingAcountBySpread(
+	public List<SpreadAcountDTO> browsePagingAcountBySpreadId(
 			@Param("spreadId")Integer spreadId,
 			@Param("createDate")Date createDate,
 			@Param("loginDate")Date loginDate,
@@ -77,4 +78,7 @@ public interface AcountDao {
 			@Param("pageSize")int pageSize,
 			@Param("orderName")String orderName,
 			@Param("orderWay")String orderWay) ;		
+	/** 根据签到渠道分页账户信息 */
+	public List<Sign> browsePagingAcountBySpreadIdAndSignId(
+			@Param("acountIdList")List<Integer> acountIdList) ;		
 }

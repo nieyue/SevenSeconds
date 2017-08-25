@@ -92,14 +92,14 @@ public class AmqpConfig {
 	@Value("${myPugin.rabbitmq.DAILYTASK_DIRECT_QUEUE}")
 	public  String DAILYTASK_DIRECT_QUEUE; 
 	/**
-	 *流水
+	 *商品订单流水
 	 */
-	@Value("${myPugin.rabbitmq.FLOWWATER_DIRECT_EXCHANGE}")
-	public  String FLOWWATER_DIRECT_EXCHANGE ;  
-	@Value("${myPugin.rabbitmq.FLOWWATER_DIRECT_ROUTINGKEY}")
-	public String FLOWWATER_DIRECT_ROUTINGKEY;  
-	@Value("${myPugin.rabbitmq.FLOWWATER_DIRECT_QUEUE}")
-	public  String FLOWWATER_DIRECT_QUEUE; 
+	@Value("${myPugin.rabbitmq.MERORDERFLOWWATER_DIRECT_EXCHANGE}")
+	public  String MERORDERFLOWWATER_DIRECT_EXCHANGE ;  
+	@Value("${myPugin.rabbitmq.MERORDERFLOWWATER_DIRECT_ROUTINGKEY}")
+	public String MERORDERFLOWWATER_DIRECT_ROUTINGKEY;  
+	@Value("${myPugin.rabbitmq.MERORDERFLOWWATER_DIRECT_QUEUE}")
+	public  String MERORDERFLOWWATER_DIRECT_QUEUE; 
 	
     @Autowired
     ConnectionFactory  connectionFactory ;
@@ -337,29 +337,29 @@ public class AmqpConfig {
     } 
     
     /** 
-     *流水
+     *商品订单流水
      */  
     /*
      * 设置交换机类型
      */   
     @Bean  
-    public DirectExchange flowWaterDirectExchange() {  
-    	DirectExchange de = new DirectExchange(FLOWWATER_DIRECT_EXCHANGE);
+    public DirectExchange merOrderFlowWaterDirectExchange() {  
+    	DirectExchange de = new DirectExchange(MERORDERFLOWWATER_DIRECT_EXCHANGE);
     	return de;
     }
     /*
      * 设置队列
      */
     @Bean  
-    public Queue flowWaterDirectQueue() {  
-    	return new Queue(FLOWWATER_DIRECT_QUEUE);  
+    public Queue merOrderFlowWaterDirectQueue() {  
+    	return new Queue(MERORDERFLOWWATER_DIRECT_QUEUE);  
     }
     /*
      * 设置绑定
      */
     @Bean  
-    public Binding flowWaterDirectBinding() {  
+    public Binding merOrderFlowWaterDirectBinding() {  
     	/** 将队列绑定到交换机 */  
-    	return BindingBuilder.bind(flowWaterDirectQueue()).to(flowWaterDirectExchange()).with(FLOWWATER_DIRECT_ROUTINGKEY);  
+    	return BindingBuilder.bind(merOrderFlowWaterDirectQueue()).to(merOrderFlowWaterDirectExchange()).with(MERORDERFLOWWATER_DIRECT_ROUTINGKEY);  
     } 
 }

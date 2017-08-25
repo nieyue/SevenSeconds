@@ -182,7 +182,7 @@ text-align:center;}
      
      $scope.acountSpreadList=[];//最终展示
      function daySpreadInit(){
-        $.get("/acount/data?spreadId="+myUtils.GetQueryString("spreadId")+"&pageSize=10000000&orderWay=asc",function(pld){
+        $.get("/acount/dataBySpreadId?spreadId="+myUtils.GetQueryString("spreadId")+"&pageSize=10000000&orderWay=asc",function(pld){
            $scope.daySpreadList=pld.list;
 			 //存放createDate
 			  for(var i=0;i<$scope.days;i++){
@@ -203,8 +203,7 @@ text-align:center;}
 			}
 			
 			//活跃数目
-			if( myUtils.timeStampToDayDate($scope.daySpreadList[z].createDate)<=$scope.createDates[j] && myUtils.timeStampToDayDate($scope.daySpreadList[z].loginDate)>=$scope.createDates[j]){
-			//console.log($scope.activeNums[j])
+			if(new Date( myUtils.timeStampToDayDate($scope.daySpreadList[z].createDate)).getTime()<=new Date($scope.createDates[j]).getTime() && new Date(myUtils.timeStampToDayDate($scope.daySpreadList[z].loginDate)).getTime()>=new Date($scope.createDates[j]).getTime()){
 			$scope.activeNums[j].push($scope.daySpreadList[z]);
 			}
 			}

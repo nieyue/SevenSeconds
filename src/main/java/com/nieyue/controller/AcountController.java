@@ -27,6 +27,7 @@ import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
 import com.nieyue.bean.NoviceTask;
 import com.nieyue.bean.Role;
+import com.nieyue.bean.Sign;
 import com.nieyue.bean.SpreadAcountDTO;
 import com.nieyue.business.PartnerBusiness;
 import com.nieyue.comments.IPCountUtil;
@@ -130,9 +131,9 @@ public class AcountController {
 	 * @param orderWay 商品排序方法 asc升序 desc降序
 	 * @return
 	 */
-	@RequestMapping(value = "/data", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList browseDataPagingAcount(
-			@RequestParam(value="spreadId",required=false)Integer spreadId,
+	@RequestMapping(value = "/dataBySpreadId", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList browseDataPagingAcountBySpreadId(
+			@RequestParam(value="spreadId")Integer spreadId,
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="loginDate",required=false)Date loginDate,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -140,13 +141,50 @@ public class AcountController {
 			@RequestParam(value="orderName",required=false,defaultValue="acount_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
 		List<SpreadAcountDTO> list = new ArrayList<SpreadAcountDTO>();
-		list= acountService.browsePagingAcountBySpread(spreadId,createDate,loginDate,pageNum, pageSize, orderName, orderWay);
+		list= acountService.browsePagingAcountBySpreadId(spreadId,createDate,loginDate,pageNum, pageSize, orderName, orderWay);
 		
 		if(list.size()>0){
 			return ResultUtil.getSlefSRSuccessList(list);
 			
 		}else{
 			return ResultUtil.getSlefSRFailList(list);
+		}
+	}
+	/**
+	 * 数据账户分页浏览
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dataBySpreadIdAndSignId", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList browseDataPagingAcountBySpreadIdAndSignId(
+			@RequestParam(value="spreadId")Integer spreadId,
+			HttpSession session)  {
+		List<Sign> list = new ArrayList<Sign>();
+		List<Integer> lid=new ArrayList<Integer>();
+		List<SpreadAcountDTO> nlsad = new ArrayList<SpreadAcountDTO>();//最终结果
+		List<SpreadAcountDTO> lsad= acountService.browsePagingAcountBySpreadId(spreadId,null,null,1, Integer.MAX_VALUE, "acount_id", "desc");
+		lsad.forEach((spreadAcountDTO)->{
+			lid.add(spreadAcountDTO.getAcountId());
+		});
+		
+		if(lid.size()<=0){
+			return ResultUtil.getSlefSRFailList(nlsad); 
+		}
+		list= acountService.browsePagingAcountBySpreadIdAndSignId(lid);
+		list.forEach((sign)->{//签到循环
+			lsad.forEach((sad)->{//登录循环
+				if(sign.getAcountId().equals(sad.getAcountId())){
+					nlsad.add(sad);
+				}
+			});
+			
+		});
+		if(list.size()>0){
+			return ResultUtil.getSlefSRSuccessList(nlsad);
+			
+		}else{
+			return ResultUtil.getSlefSRFailList(nlsad);
 		}
 	}
 	/**

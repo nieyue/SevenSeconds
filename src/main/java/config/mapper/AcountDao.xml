@@ -309,7 +309,7 @@ from ( SELECT
 		#{pageSize}
 </select> 
 <!-- 渠道分页查询账户-->
-<select id="browsePagingAcountBySpread" resultType="SpreadAcountDTO">  
+<select id="browsePagingAcountBySpreadId" resultType="SpreadAcountDTO">  
     SELECT
 	    acount_id,
     	create_date,
@@ -354,6 +354,25 @@ from ( SELECT
 		${orderName}  ${orderWay}
 	LIMIT
 		#{pageSize}
+</select>
+<!-- 根据签到渠道分页查询账户-->
+<select id="browsePagingAcountBySpreadIdAndSignId" resultType="Sign">  	
+	SELECT 
+		acount_id,
+		create_date 
+	FROM 
+		(SELECT 
+			acount_id,
+			create_date 
+		FROM sign_tb 
+		ORDER BY create_date DESC
+		) subsigntb 
+	WHERE subsigntb.acount_id 
+	IN 
+	<foreach collection="acountIdList" index="index" item="acountId" open="(" separator="," close=")" >
+	#{acountId}
+	</foreach>
+	GROUP BY subsigntb.acount_id
 </select>
 
 <!-- 统计记录条数 -->

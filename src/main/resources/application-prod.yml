@@ -64,9 +64,12 @@ myPugin:
     DAILYTASK_DIRECT_EXCHANGE: dailytask.sevenseconds.exchange.direct
     DAILYTASK_DIRECT_ROUTINGKEY: dailytask.sevenseconds.routingkey.direct
     DAILYTASK_DIRECT_QUEUE: dailytask.sevenseconds.queue.direct
-    FLOWWATER_DIRECT_EXCHANGE: flowwater.convertmall.exchange.direct
-    FLOWWATER_DIRECT_ROUTINGKEY: flowwater.convertmall.routingkey.direct
-    FLOWWATER_DIRECT_QUEUE: flowwater.convertmall.queue.direct
+    MERORDERFLOWWATER_DIRECT_EXCHANGE: merorderflowwater.convertmall.exchange.direct
+    MERORDERFLOWWATER_DIRECT_ROUTINGKEY: merorderflowwater.convertmall.routingkey.direct
+    MERORDERFLOWWATER_DIRECT_QUEUE: merorderflowwater.convertmall.queue.direct
+    BOOKORDERFLOWWATER_DIRECT_EXCHANGE: bookorderflowwater.bookstore.exchange.direct
+    BOOKORDERFLOWWATER_DIRECT_ROUTINGKEY: bookorderflowwater.bookstore.routingkey.direct
+    BOOKORDERFLOWWATER_DIRECT_QUEUE: bookorderflowwater.bookstore.queue.direct
   alibabaSmsAppkey: 23431362
   alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
   alibabaSmsSignName: 雅耀

@@ -23,6 +23,7 @@ public class CertificateBusiness {
     		   .equals(MyDESutil.getMD5SESSIONID("jiaxingyufa",request.getSession().getId()))){
     	   System.err.println(new Date().getTime()/30000);
     	   System.err.println(request.getParameter("certificate"));
+    	   System.err.println(request.getSession().getId()); 
     	   System.err.println(MyDESutil.getMD5SESSIONID("jiaxingyufa",request.getSession().getId()));
     	   return false;
        }

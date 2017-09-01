@@ -10,11 +10,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nieyue.bean.Article;
+import com.nieyue.bean.ArticleCate;
 import com.nieyue.bean.ArticleDataDTO;
 import com.nieyue.bean.ArticleDayDataDTO;
 import com.nieyue.bean.Img;
 import com.nieyue.dao.ArticleDao;
 import com.nieyue.dao.ImgDao;
+import com.nieyue.service.ArticleCateService;
 import com.nieyue.service.ArticleService;
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -22,6 +24,8 @@ public class ArticleServiceImpl implements ArticleService{
 	ArticleDao articleDao;
 	@Resource
 	ImgDao imgDao;
+	@Resource
+	ArticleCateService articleCateService;
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public boolean addArticle(Article article) {
@@ -82,19 +86,23 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public Article loadArticle(Integer articleId) {
 		Article r = articleDao.loadArticle(articleId);
+		if(r!=null){
 		List<Img> imgl = imgDao.browsePagingImg(r.getArticleId(), 0, 3, "img_id","asc");
 		r.setImgList(imgl);
+		ArticleCate ac = articleCateService.loadArticleCate(r.getArticleCateId());
+		r.setArticleCate(ac);
+		}
 		return r;
 	}
 
 	@Override
-	public int countAll(String status,Integer acountId,String type,Integer isRecommend,Integer fixedRecommend) {
-		int c = articleDao.countAll(status,acountId,type,isRecommend,fixedRecommend);
+	public int countAll(String status,Integer acountId,Integer articleCateId,Integer isRecommend,Integer fixedRecommend) {
+		int c = articleDao.countAll(status,acountId,articleCateId,isRecommend,fixedRecommend);
 		return c;
 	}
 
 	@Override
-	public List<Article> browsePagingArticle(String status,Integer acountId, String type, Integer isRecommend, Integer fixedRecommend,
+	public List<Article> browsePagingArticle(String status,Integer acountId, Integer articleCateId, Integer isRecommend, Integer fixedRecommend,
 			int pageNum, int pageSize, String orderName, String orderWay) {
 		if(pageNum<1){
 			pageNum=1;
@@ -102,27 +110,23 @@ public class ArticleServiceImpl implements ArticleService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<Article> l = articleDao.browsePagingArticle(status,acountId,type,isRecommend,fixedRecommend,pageNum-1, pageSize, orderName, orderWay);
+		List<Article> l = articleDao.browsePagingArticle(status,acountId,articleCateId,isRecommend,fixedRecommend,pageNum-1, pageSize, orderName, orderWay);
 		for (Article article : l) {
 			List<Img> imgl = imgDao.browsePagingImg(article.getArticleId(), 0, 3, "img_id","asc");
 			article.setImgList(imgl);
-			//list.add(article);
+			ArticleCate ac = articleCateService.loadArticleCate(article.getArticleCateId());
+			article.setArticleCate(ac);
 		}
-		return l;
-	}
-	@Override
-	public List<String> browseArticleTypeList(Integer acountId) {
-		List<String> l = articleDao.browseArticleTypeList(acountId);
 		return l;
 	}
 	@Override
 	public Article loadSmallArticle(Integer articleId) {
 		Article r = articleDao.loadSmallArticle(articleId);
-		if(r==null||r.equals("")){
-			r=new Article();
-		}else{
+		if(r!=null){
 			List<Img> imgl = imgDao.browsePagingImg(r.getArticleId(), 0, 3, "img_id","asc");
-			r.setImgList(imgl);			
+			r.setImgList(imgl);	
+			ArticleCate ac = articleCateService.loadArticleCate(r.getArticleCateId());
+			r.setArticleCate(ac);
 		}
 		return r;
 	}

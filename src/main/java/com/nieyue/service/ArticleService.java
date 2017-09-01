@@ -26,14 +26,12 @@ public interface ArticleService {
 	/** 装载文章Small */	
 	public Article loadSmallArticle(Integer articleId);
 	/** 文章总共数目 */	
-	public int countAll(String status,Integer acountId,String type,Integer isRecommend,Integer fixedRecommend);
+	public int countAll(String status,Integer acountId,Integer articleCateId,Integer isRecommend,Integer fixedRecommend);
 	/** 分页文章信息 */
 	public List<Article> browsePagingArticle(
 			String status,
-			Integer acountId,String type,Integer isRecommend,Integer fixedRecommend,
+			Integer acountId,Integer articleCateId,Integer isRecommend,Integer fixedRecommend,
 			int pageNum,int pageSize,String orderName,String orderWay) ;
-	/** 文章类型 */
-	public List<String> browseArticleTypeList(Integer acountId) ;
 	/** 文章数据 */
 	public List<ArticleDataDTO> browseArticleData(Integer acountId) ;
 	/** 文章日数据 */

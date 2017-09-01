@@ -2,9 +2,11 @@
  * 兑换商城JS
  */
 mainApp.config(function ($stateProvider, $urlRouterProvider) {
-	var requestDomainUrl="http://"+location.hostname+":8080";//请求数据url
-	var imgUploadDomainUrl="http://img.newzhuan.com";//请求图片上传url
-	//var imgUploadDomainUrl="http://img.fuwu88.com";//请求图片上传url
+	var requestDomainUrl="http://"+domainManager.ConvertMall;//请求数据url
+	//var requestDomainUrl="http://mall.newzhuan.cn";//请求数据url
+	//var requestDomainUrl="http://"+location.hostname+":8081";//请求数据url
+	var imgUploadDomainUrl="http://"+domainManager.MyWangEditor;//请求图片上传url
+	//var imgUploadDomainUrl="http://img.newzhuan.com";//请求图片上传url
 	
      	$stateProvider
      	.state("main.merCateList", {//商品类型列表
@@ -288,7 +290,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                      *获取参数merCate 
                      */
                     $scope.merCateListInit=function(){
-                        $.get(requestDomainUrl+"/merCate/list?orderWay=asc",function(data){
+                        $.get(requestDomainUrl+"/merCate/list?orderWay=asc&pageSize=100000",function(data){
            	   				if(data.code==200){
            	   				 $scope.merCateList=data.list;
            	   				$scope.$apply();
@@ -424,7 +426,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                      *获取参数merCate 
                      */
                     $scope.merCateListInit=function(){
-                        $.get(requestDomainUrl+"/merCate/list?orderWay=asc",function(data){
+                        $.get(requestDomainUrl+"/merCate/list?orderWay=asc&pageSize=100000",function(data){
            	   				if(data.code==200){
            	   				 $scope.merCateList=data.list;
            	   			$scope.mer.merCateId=$scope.merCateList[0].merCateId;

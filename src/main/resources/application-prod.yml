@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   session:
     timeout: 1800
   #address: acount.yayao8.com
@@ -13,11 +13,11 @@ spring:
    datasource:
      name: master
      driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://39.108.60.100:3306/seven_seconds_db
+     url: jdbc:mysql://120.77.253.90:3306/seven_seconds_db
      username: root
      password: liliu
    redis:
-     host: 39.108.60.100
+     host: 120.77.253.90
      password: liliu
      port: 6379 
      database: 1
@@ -30,13 +30,15 @@ myPugin:
   session: 
     myDomainName: newzhuan.cn
   projectName: SevenSeconds
+  pushStoreDomainUrl: http://push.newzhuan.cn
+  bookStoreDomainUrl: http://book.newzhuan.cn
   location: /home/config/thirdParty.properties
-  articleUrl: http://www.newzhuan.com/article.html
-  shareUrl: http://www.newzhuan.com/share.html
-  shareDomain: www.newzhuan.com
-  gmwDomain: www.newzhuan.com
-  ssDomain: www.newzhuan.com
-  adDomain: www.chinastocksblog.net
+  articleUrl: http://www.newzhuan.cn/article.html
+  shareUrl: http://www.newzhuan.cn/share.html
+  shareDomain: www.newzhuan.cn
+  gmwDomain: www.newzhuan.cn
+  ssDomain: www.newzhuan.cn
+  adDomain: www.newzhuan.cn
   jsAd: console.log('prod')
   requestAuth: requestAuthProd
   rabbitmq:

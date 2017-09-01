@@ -32,6 +32,7 @@ import com.nieyue.bean.SpreadAcountDTO;
 import com.nieyue.business.PartnerBusiness;
 import com.nieyue.comments.IPCountUtil;
 import com.nieyue.exception.AcountIsExistException;
+import com.nieyue.exception.MySessionException;
 import com.nieyue.exception.VerifyCodeErrorException;
 import com.nieyue.limit.RequestLimitException;
 import com.nieyue.rabbitmq.confirmcallback.Sender;
@@ -201,6 +202,7 @@ public class AcountController {
 		}
 		//System.err.println(acount);
 		boolean um = acountService.updateAcount(acount);
+		session.setAttribute("acount", acount);
 		//System.err.println(um);
 		return ResultUtil.getSR(um);
 	}
@@ -211,23 +213,31 @@ public class AcountController {
 	@RequestMapping(value = "/updatePhone", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResult updatePhoneAcount(
 			@RequestParam(value="acountId")Integer acountId,
-			@RequestParam(value="phone")String phone,
+			@RequestParam(value="phone",required=false)String phone,
 			@RequestParam(value="wechat")String wechat,
 			@RequestParam(value="realname")String realname,
 			@RequestParam(value="alipay")String alipay,
 			HttpSession session)  {
-		//账户已经存在
-		if(acountService.loginAcount(phone, null,acountId)!=null){
+		//手机号登陆 账户已经存在
+		if(!phone.equals("")&&((Acount)session.getAttribute("acount")).getPhone().equals(phone)
+				&&acountService.loginAcount(phone, null,acountId)!=null){//不存在就错
 			return ResultUtil.getSR(false);
+		}
+		//微信登陆 账户已经存在
+		if((((Acount)session.getAttribute("acount")).getPhone()==null||((Acount)session.getAttribute("acount")).getPhone().equals(""))
+				&&acountService.loginAcount(phone, null,acountId)==null){//存在就错
+			return ResultUtil.getSR(false);
+		}
+		if(phone.equals("")){
+			phone=null;
 		}
 		Acount newa = acountService.loadAcount(acountId);
 			newa.setPhone(phone);
 			newa.setWechat(wechat);
 			newa.setRealname(realname);
 			newa.setAlipay(alipay);
-			System.out.println(newa);
 		boolean um = acountService.updateAcount(newa);
-		System.out.println(um);
+		session.setAttribute("acount", newa);
 		return ResultUtil.getSR(um);
 	}
 	/**
@@ -293,13 +303,14 @@ public class AcountController {
 	/**
 	 * 管理员登录
 	 * @return
+	 * @throws MySessionException 
 	 */
 	@RequestMapping(value = "/login", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList loginAcount(
 			@RequestParam(value="adminName") String adminName,
 			@RequestParam(value="password") String password,
 			@RequestParam(value="random",required=false) String random,
-			HttpSession session)  {
+			HttpSession session) throws MySessionException  {
 		//1代验证码
 		/*String ran= (String) session.getAttribute("random");
 		List<Acount> list = new ArrayList<Acount>();
@@ -313,13 +324,16 @@ public class AcountController {
 			return ResultUtil.getSlefSRFailList(list);
 		}
 		Acount acount = acountService.loginAcount(adminName, MyDESutil.getMD5(password),null);
-		if(acount!=null&&!acount.equals("")&&acount.getStatus().equals(0)){
+		if(acount!=null&&!acount.equals("")){
 			acount.setLoginDate(new Date());
 			boolean b = acountService.updateAcount(acount);
 			if(b){
-			session.setAttribute("acount", acount);
 			Integer roleId = acount.getRoleId();
 			Role r = roleService.loadRole(roleId);
+			if(r.getName().equals("用户")){
+			throw new MySessionException();//没权限	
+			}
+			session.setAttribute("acount", acount);
 			session.setAttribute("role", r);
 			List<Finance> f = financeService.browsePagingFinance(acount.getAcountId(), 1, 1, "finance_id", "asc");
 			session.setAttribute("finance", f.get(0));
@@ -330,10 +344,6 @@ public class AcountController {
 			List<String> l1 = new ArrayList<String>();
 			l1.add("账户锁定");
 			return ResultUtil.getSlefSRFailList(l1);
-		}else if(acount.getStatus().equals(2)){
-			List<String> l2 = new ArrayList<String>();
-			l2.add("账户警告");
-			return ResultUtil.getSlefSRSuccessList(l2);
 		}
 		return ResultUtil.getSlefSRFailList(list);
 	}

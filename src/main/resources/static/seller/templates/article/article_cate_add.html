@@ -1,0 +1,27 @@
+    <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">添加文章类型</label>
+<br/>
+<!-- 增加 -->
+	<form novalidate name="myAddArticleCateForm" ng-submit="addArticleCateForm()">
+    <label  class="text-danger">※文章类名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="articleCate.name" name="name" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddArticleCateForm.name.$dirty && myAddArticleCateForm.name.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确文章类名
+				    </div>
+  </div>
+   <label  class="text-danger">
+  		<span> ※持有者.默认为公共;</span>
+   		<span style="display:block" class="btn alert-success">可选公共（所有可见）;</span>
+	   	<span style="display:block" class="btn alert-danger" >平台方（自营平台可见）;</span>
+	   	<span style="display:block" class="btn alert-warning">企业号（自媒体企业号可见）;</span>
+	   	<span style="display:block" class="btn alert-info">个人号（自媒体个人号可见）.</span>
+   </label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="articleCate.holder" name="holder"
+    ng-options="h.id as h.value for h in [{id:0,value:'公共'},{id:1,value:'平台方'},{id:2,value:'企业号'},{id:3,value:'个人号'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled=" myAddArticleCateForm.$invalid || formDisabled " value="提交"/>
+</form>
+<!-- 增加 end-->

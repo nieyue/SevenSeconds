@@ -42,7 +42,7 @@ public class RoleController {
 	public @ResponseBody StateResultList browsePagingRole(
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="role_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="update_date") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<Role> list = new ArrayList<Role>();
 			list= roleService.browsePagingRole(pageNum, pageSize, orderName, orderWay);

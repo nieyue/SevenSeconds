@@ -2,19 +2,14 @@ package com.nieyue.controller;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,12 +30,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nieyue.bean.Acount;
-import com.nieyue.comments.IPCountUtil;
+import com.nieyue.bean.Article;
 import com.nieyue.comments.RequestToMethdoItemUtils;
 import com.nieyue.comments.RequestToMethodItem;
 import com.nieyue.limit.RequestLimit;
 import com.nieyue.sensitive.SensitivewordRedisFilter;
-import com.nieyue.util.MacAddressUtil;
+import com.nieyue.service.ArticleService;
+import com.nieyue.util.HttpClientUtil;
 import com.nieyue.util.MyDESutil;
 import com.nieyue.util.MyPugin;
 import com.nieyue.util.ResultUtil;
@@ -49,6 +45,7 @@ import com.nieyue.util.StateResultList;
 import com.nieyue.util.barcode.QRCodeUtil;
 import com.nieyue.verification.VerificationCode;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
@@ -65,8 +62,14 @@ public class HtmlController {
 	MyPugin myPugin;
 	@Resource
 	VerificationCode verificationCode;
+	@Resource
+	ArticleService articleService;
 	@Value("${myPugin.projectName}")
 	String projectName;
+	@Value("${myPugin.pushStoreDomainUrl}")
+	String pushStoreDomainUrl;
+	@Value("${myPugin.bookStoreDomainUrl}")
+	String bookStoreDomainUrl;
 	/**
 	 * 设置全局合伙人收益比例增量
 	 * @param session
@@ -456,6 +459,41 @@ public class HtmlController {
 		list.add("敏感词"+set.size()+"个，包含"+set);
 		return ResultUtil.getSlefSRList("40004", "敏感词", list);
 		}
+		return ResultUtil.getSlefSRSuccessList(list);
+	}
+	/**
+	 *计划任务接收
+	 * @param session
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/scheduleJob/accept", method = {RequestMethod.GET,RequestMethod.POST})
+	public StateResultList scheduleJobAccept(
+			@RequestParam("jobId") Integer jobId,
+			@RequestParam("type") Integer type,
+			HttpSession session			
+			) throws Exception{
+		List<String> list = new ArrayList<String>();
+		String title="";
+		String content="";
+		if(type==1){//文章推送
+			Article article = articleService.loadSmallArticle(jobId);
+		title=article.getTitle();
+		content=title;
+		}else if(type==2){//书城推送
+	String bookurl=bookStoreDomainUrl+"/book/"+jobId+"?auth="+MyDESutil.getMD5(1000);
+			String booklist = HttpClientUtil.doGet(bookurl);
+			JSONObject json=JSONObject.fromObject(booklist);
+			JSONArray jsa = JSONArray.fromObject(json.get("list"));
+			JSONObject book =(JSONObject)jsa.get(0);
+			title=book.getString("title");
+			content=(book.getString("summary").substring(0, 20).trim());
+		}else{
+		return ResultUtil.getSlefSRFailList(list);
+		}
+		String url=pushStoreDomainUrl+"/push/sendAllAlert?auth="+MyDESutil.getMD5(1000)+"&businessId="+jobId+"&businessType="+type+"&title="+title+"&content="+content;
+		String s = HttpClientUtil.doGet(url);
+		list.add(s);
 		return ResultUtil.getSlefSRSuccessList(list);
 	}
 	/**

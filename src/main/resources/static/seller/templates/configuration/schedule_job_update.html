@@ -1,0 +1,55 @@
+    <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">修改任务工作</label>
+<br/>
+<!-- 增加 -->
+	<form novalidate name="myUpdateScheduleJobForm" ng-submit="updateScheduleJobForm()">
+ <!--    <label  class="text-danger">※任务工作名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="scheduleJob.jobName" name="jobName" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateScheduleJobForm.jobName.$dirty && myUpdateScheduleJobForm.jobName.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确任务工作名
+				    </div>
+  </div> -->
+  
+ <div>
+  <input type="radio"  ng-init="selectState=1" ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'"  ng-click="selectState=1" ng-checked="selectState==1" ng-model="selectState" name="selectState"/>固定时间规则
+  <input type="radio"  ng-model="selectState" ng-click="selectState=2" ng-checked="selectState==2" name="selectState"/>自定义规则（cron表达式）
+  </div>
+   <label  class="text-default" ng-show="selectState==1">*固定时间规则</label>
+  <div class=" comment-input-margin input-group date form_datetime" ng-show="selectState==1">
+ <input style="width:200px;height:30px;" type="text" size="16" ng-model="scheduleJob.cronExpressionDate" name="cronExpressionDate"
+    ng-change="scheduleJobCronExpressionDateChange(scheduleJob)" />
+	<span class="input-group-addon" style="color:red;display:inline" ><span class="glyphicon glyphicon-th"></span></span>
+  </div>
+      <label  class="text-danger" ng-show="selectState==2">※自定义规则</label>
+  <div class=" comment-input-margin" ng-show="selectState==2">
+        <input type="text" ng-model="scheduleJob.cronExpression" ng-change="scheduleJobCronExpressionChange(scheduleJob)" placeholder="cron表达式"/>
+  </div> 
+    <label  class="text-danger">※任务描述</label>
+  <div class=" comment-input-margin">
+  	<textarea style="width:600px;height:200px;"ng-model="scheduleJob.description" name="description" required ng-minlength="1" ng-maxlength="255" placeholder="1-255位" ></textarea>
+  	<div class="text-danger alert alert-danger " ng-show="myUpdateScheduleJobForm.description.$dirty && myUpdateScheduleJobForm.description.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>1-255位
+				    </div>
+  </div>
+    <label  class="text-danger">※业务ID</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="scheduleJob.jobId" name="jobId" required ng-pattern="/^\+?[1-9][0-9]*$/" placeholder="正整数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateScheduleJobForm.jobId.$dirty && myUpdateScheduleJobForm.jobId.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确业务ID
+				    </div>
+  </div>
+    <label  class="text-danger">※业务类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="scheduleJob.type" name="type" ng-init="scheduleJob.type=1"  ng-options="typeModel.id as typeModel.value for typeModel in typeModels">
+  </select>
+  </div>  
+  
+  <label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="scheduleJob.jobStatus" name="jobStatus" ng-init="scheduleJob.jobStatus=jobStatusModels[0].key"  ng-options="jobStatusModel.key as jobStatusModel.value for jobStatusModel in jobStatusModels">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled=" myUpdateScheduleJobForm.$invalid || formDisabled " value="提交"/>
+</form>
+<!-- 增加 end-->

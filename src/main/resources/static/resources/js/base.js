@@ -1,9 +1,10 @@
 /**
  * 修改原型
  */
-	String.prototype.trim=function(){
+	/*String.prototype.trim=function(){
+		console.log(22)
 		    return this.replace(/(^\s*)|(\s*$)/g,"");
-		}
+		}*/
 	
 /**
  * *工具包
@@ -11,6 +12,9 @@
 var myUtils = {
 	slice:function(obj){
 		return Array.prototype.slice.call(obj);
+	},
+	trim:function(){
+		return this.replace(/(^\s*)|(\s*$)/g,"");
 	},
 	/**
 	 * 验证规则

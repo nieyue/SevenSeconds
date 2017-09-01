@@ -14,7 +14,7 @@
   </div>
     <label  class="text-danger">※内容</label>
   <div class=" comment-input-margin">
-    <textarea type="text" style="min-width:500px;min-height:300px;" class=" comment-input" ng-model="notice.content" name="content" required ng-minlength="2" ng-maxlength="255" placeholder="2-255位">
+    <textarea type="text" ng-trim=false style="min-width:500px;min-height:300px;" class=" comment-input" ng-model="notice.content" name="content" required ng-minlength="2" ng-maxlength="255" placeholder="2-255位">
     </textarea>
 <div class="text-danger alert alert-danger " ng-show="myUpdateNoticeForm.content.$dirty && myUpdateNoticeForm.content.$invalid">
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确公告内容

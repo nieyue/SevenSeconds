@@ -7,7 +7,7 @@
 		<meta charset="UTF-8">
 		<meta name="description"
 			content="七秒资讯  一触即发！">
-		<link type="text/css" rel="stylesheet" href="http://www.newzhuan.com/resources/css/bootstrap.min.css">        
+		<link type="text/css" rel="stylesheet" href="http://www.newzhuan.cn/resources/css/bootstrap.min.css">        
     <style>
         *{
             padding:0;
@@ -93,8 +93,9 @@
         
 
     </body>
-    <script src="http://www.newzhuan.com/resources/js/jquery2.1.js"></script>
-    <script src="http://www.newzhuan.com/resources/js/base.js"></script>
+    <script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
+    <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script>
+    <script src="http://www.newzhuan.cn/resources/js/base.js"></script>
     <script type="text/javascript">
     		   $("input").on("focus",function(){
     		  $(".background—wrap-img").css("height","auto");
@@ -103,7 +104,9 @@
     		  $(".background—wrap-img").css("height","100%");
     		  }); 
     
-    			var hostUrl="http://"+location.hostname;
+    			var hostUrl="http://"+domainManager.SevenSeconds;
+    			//var hostUrl="http://"+location.hostname;
+    			//var hostUrl="http://www.newzhuan.cn";
     			//发送手机验证码
 				var registerCodeBtn=document.querySelector("#registerCodeBtn");
 				var registerPhone=document.querySelector("#registerPhone");

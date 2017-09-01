@@ -7,40 +7,85 @@
 <insert id="addArticle" parameterType="Article" keyProperty="articleId" flushCache="true"  >  
    INSERT IGNORE INTO
    		  article_tb 
-   		 (type,title,is_recommend,fixed_recommend,redirect_url,content,model,user_unit_price,unit_price,total_price,turn_number,reading_number,user_now_total_price,now_total_price,comment_number,scale,pvs,uvs,ips,status,create_date,update_date,acount_id)
+   		 (title,is_recommend,fixed_recommend,redirect_url,content,model,user_unit_price,unit_price,total_price,turn_number,reading_number,user_now_total_price,now_total_price,comment_number,scale,pvs,uvs,ips,status,create_date,update_date,acount_id,article_cate_id)
    VALUES
-    	 (#{type},#{title},#{isRecommend},#{fixedRecommend},#{redirectUrl},#{content},#{model},#{userUnitPrice},#{unitPrice},#{totalPrice},#{turnNumber},#{readingNumber},#{userNowTotalPrice},#{nowTotalPrice},#{commentNumber},#{scale},#{pvs},#{uvs},#{ips},#{status},#{createDate},#{updateDate},#{acountId})  
+    	 (#{title},#{isRecommend},#{fixedRecommend},#{redirectUrl},#{content},#{model},#{userUnitPrice},#{unitPrice},#{totalPrice},#{turnNumber},#{readingNumber},#{userNowTotalPrice},#{nowTotalPrice},#{commentNumber},#{scale},#{pvs},#{uvs},#{ips},#{status},#{createDate},#{updateDate},#{acountId},#{articleCateId})  
 </insert>  
 <!-- 更新文章 -->
 <update id="updateArticle" parameterType="Article" >  
     UPDATE 
     	article_tb 
-    SET 
-    	type=#{type},
+    <set>
+    	<if test="title!=null">
     	title=#{title},
+    	</if>
+    	<if test="isRecommend!=null">
     	is_recommend=#{isRecommend},
+    	</if>
+    	<if test="fixedRecommend!=null">
     	fixed_recommend=#{fixedRecommend},
+    	</if>
+    	<if test="title!=null">
     	redirect_url=#{redirectUrl},
+    	</if>
     	<if test="content!=null">
     	content=#{content},
     	</if>
+    	<if test="model!=null">
     	model=#{model},
+    	</if>
+    	<if test="userUnitPrice!=null">
     	user_unit_price=#{userUnitPrice},
+    	</if>
+    	<if test="unitPrice!=null">
     	unit_price=#{unitPrice},
+    	</if>
+    	<if test="totalPrice!=null">
     	total_price=#{totalPrice},
+    	</if>
+    	<if test="turnNumber!=null">
     	turn_number=#{turnNumber},
+    	</if>
+    	<if test="readingNumber!=null">
     	reading_number=#{readingNumber},
+    	</if>
+    	<if test="userNowTotalPrice!=null">
     	user_now_total_price=#{userNowTotalPrice},
+    	</if>
+    	<if test="nowTotalPrice!=null">
     	now_total_price=#{nowTotalPrice},
+    	</if>
+    	<if test="commentNumber!=null">
     	comment_number=#{commentNumber},
+    	</if>
+    	<if test="scale!=null">
     	scale=#{scale},
+    	</if>
+    	<if test="pvs!=null">
     	pvs=#{pvs},
+    	</if>
+    	<if test="uvs!=null">
     	uvs=#{uvs},
+    	</if>
+    	<if test="ips!=null">
     	ips=#{ips},
+    	</if>
+    	<if test="status!=null">
     	status=#{status},
+    	</if>
+    	<if test="createDate!=null">
     	create_date=#{createDate},
+    	</if>
+    	<if test="updateDate!=null">
     	update_date=#{updateDate},
-    	acount_id=#{acountId}
+    	</if>
+    	<if test="acountId!=null">
+    	acount_id=#{acountId},
+    	</if>
+    	<if test="articleCateId!=null">
+    	article_cate_id=#{articleCateId},
+    	</if>
+    </set> 
     WHERE
     	 article_id=#{articleId} 
 </update> 
@@ -54,7 +99,6 @@
 <select id="loadArticle" parameterType="Integer" resultType="Article" >
 SELECT 
 		article_id,
-	 	type,
     	title,
     	is_recommend,
     	fixed_recommend,
@@ -76,7 +120,8 @@ SELECT
     	status,
     	create_date,
     	update_date,
-    	acount_id
+    	acount_id,
+    	article_cate_id
 FROM article_tb 
 WHERE article_id=#{articleId}
 </select>
@@ -84,7 +129,6 @@ WHERE article_id=#{articleId}
 <select id="loadSmallArticle" parameterType="Integer" resultType="Article" >
 SELECT 
 		article_id,
-	 	type,
     	title,
     	is_recommend,
     	fixed_recommend,
@@ -106,7 +150,8 @@ SELECT
     	status,
     	create_date,
     	update_date,
-    	acount_id
+    	acount_id,
+    	article_cate_id
 FROM article_tb 
 WHERE article_id=#{articleId}
 </select>
@@ -115,7 +160,6 @@ WHERE article_id=#{articleId}
 <select id="browsePagingArticle" resultType="Article">  
     SELECT
 	    article_id,
-	 	type,
     	title,
     	is_recommend,
     	fixed_recommend,
@@ -137,7 +181,8 @@ WHERE article_id=#{articleId}
     	status,
     	create_date,
     	update_date,
-    	acount_id
+    	acount_id,
+    	article_cate_id
 	FROM article_tb
 	<where>
 	<if test="status!=null">
@@ -146,8 +191,8 @@ WHERE article_id=#{articleId}
 	<if test="acountId!=null">
 	AND  acount_id=#{acountId}
 	</if>
-	<if test="type!=null">
-	AND  type=#{type}
+	<if test="articleCateId!=null">
+	AND  article_cate_id=#{articleCateId}
 	</if>
 	<if test="isRecommend!=null">
 	AND  is_recommend=#{isRecommend}
@@ -170,8 +215,8 @@ WHERE article_id=#{articleId}
 	<if test="acountId!=null">
 	AND  acount_id=#{acountId}
 	</if>
-	<if test="type!=null">
-	AND  type=#{type}
+	<if test="articleCateId!=null">
+	AND  article_cate_id=#{articleCateId}
 	</if>
 	<if test="isRecommend!=null">
 	AND  is_recommend=#{isRecommend}
@@ -276,20 +321,6 @@ WHERE article_id=#{articleId}
 
 	
 </select> 
-<!-- 文章类型-->
-<select id="browseArticleTypeList" resultType="String">  
-    SELECT
-	    type
-	FROM article_tb
-	<where>
-	<if test="acountId!=null">
-	AND  acount_id=#{acountId}
-	</if>
-	AND type !='' 
-	</where>
-	GROUP BY
-	type
-</select> 
 
 <!-- 统计记录条数 -->
 <select id="countAll"  resultType="int">  
@@ -297,14 +328,14 @@ WHERE article_id=#{articleId}
 	 	count(article_id)
 	FROM article_tb
 	<where>
-	<if test="status!=null">
-	AND  status=#{status}
-	</if>
+		<if test="status!=null">
+		AND  status=#{status}
+		</if>
 		<if test="acountId!=null">
 		AND  acount_id=#{acountId}
 		</if>
-		<if test="type!=null">
-		AND  type=#{type}
+		<if test="articleCateId!=null">
+		AND  article_cate_id=#{articleCateId}
 		</if>
 		<if test="isRecommend!=null">
 		AND  is_recommend=#{isRecommend}

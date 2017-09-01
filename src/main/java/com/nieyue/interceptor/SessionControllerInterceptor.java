@@ -101,6 +101,10 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("appVersion/count")>-1
         		||request.getRequestURI().indexOf("appVersion/list")>-1
         		||method.getName().equals("loadAppVersion")
+        		//articleCate
+        		||request.getRequestURI().indexOf("articleCate/count")>-1
+        		||request.getRequestURI().indexOf("articleCate/list")>-1
+        		||method.getName().equals("loadArticleCate")
         		//article
         		||request.getRequestURI().indexOf("article/count")>-1
         		||(request.getRequestURI().indexOf("article/click")>-1&& CertificateBusiness.md5SessionCertificate(request))
@@ -109,8 +113,12 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("article/list")>-1
         		//||request.getRequestURI().indexOf("article/data")>-1
         		||method.getName().equals("loadArticle")
-        		||request.getRequestURI().indexOf("article/type")>-1
         		||request.getRequestURI().indexOf("article/img/add")>-1
+        		//dailyData
+        		||request.getRequestURI().indexOf("dailyData/count")>-1
+        		||request.getRequestURI().indexOf("dailyData/statisticsDailyData")>-1
+        		||request.getRequestURI().indexOf("dailyData/list")>-1
+        		||method.getName().equals("loadDailyData")
         		//data
         		||request.getRequestURI().indexOf("data/count")>-1
         		||request.getRequestURI().indexOf("data/statisticsData")>-1
@@ -136,11 +144,6 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("notice/count")>-1
         		||request.getRequestURI().indexOf("notice/list")>-1
         		||method.getName().equals("loadNotice")
-        		//profit
-        		||request.getRequestURI().indexOf("profit/count")>-1
-        		||request.getRequestURI().indexOf("profit/list")>-1
-        		||request.getRequestURI().indexOf("profit/listProfitByAcountId")>-1
-        		||method.getName().equals("loadProfit")
         		//role
         		||request.getRequestURI().indexOf("role/count")>-1
         		//school
@@ -190,7 +193,6 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         	if(sessionRole.getName().equals("超级管理员")
         			||sessionRole.getName().equals("运营管理员")
         			||sessionRole.getName().equals("编辑管理员")
-        			||sessionRole.getName().equals("商城管理员")
         			){
         		return true;
         	}
@@ -246,6 +248,37 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         			}
         			throw new MySessionException();
         		}
+        		//版本不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/appVersion/delete")>-1 
+        				|| request.getRequestURI().indexOf("/appVersion/update")>-1 
+        				|| request.getRequestURI().indexOf("/appVersion/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//文章类型不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/articleCate/delete")>-1 
+        				|| request.getRequestURI().indexOf("/articleCate/update")>-1 
+        				|| request.getRequestURI().indexOf("/articleCate/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//文章不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/article/delete")>-1 
+        				|| request.getRequestURI().indexOf("/article/update")>-1 
+        				|| request.getRequestURI().indexOf("/article/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//文章时间段数据不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/data/delete")>-1 
+        				|| request.getRequestURI().indexOf("/data/update")>-1 
+        				|| request.getRequestURI().indexOf("/data/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//文章日数据不许删除/修改/增加
+        		if( request.getRequestURI().indexOf("/dailyData/delete")>-1 
+        				|| request.getRequestURI().indexOf("/dailyData/update")>-1 
+        				|| request.getRequestURI().indexOf("/dailyData/add")>-1){
+        			throw new MySessionException();
+        		}
+        		
         		//提现、充值不许删除/修改/增加
         		if( request.getRequestURI().indexOf("/financeDetails/delete")>-1 
         				|| request.getRequestURI().indexOf("/financeDetails/add")>-1
@@ -267,12 +300,6 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		if( request.getRequestURI().indexOf("/notice/delete")>-1 
         				|| request.getRequestURI().indexOf("/notice/update")>-1 
         				|| request.getRequestURI().indexOf("/notice/add")>-1){
-        			throw new MySessionException();
-        		}
-        		//收益不许删除/修改/增加
-        		if( request.getRequestURI().indexOf("/profit/delete")>-1 
-        				|| request.getRequestURI().indexOf("/profit/update")>-1 
-        				|| request.getRequestURI().indexOf("/profit/add")>-1){
         			throw new MySessionException();
         		}
         		//角色全不许

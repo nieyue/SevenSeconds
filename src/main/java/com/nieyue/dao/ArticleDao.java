@@ -31,22 +31,20 @@ public interface ArticleDao {
 	public int countAll(
 			@Param("status")String status,
 			@Param("acountId")Integer acountId,
-			@Param("type")String type,
+			@Param("articleCateId")Integer articleCateId,
 			@Param("isRecommend")Integer isRecommend,
 			@Param("fixedRecommend")Integer fixedRecommend);	
 	/** 分页文章信息 */
 	public List<Article> browsePagingArticle(
 			@Param("status")String status,
 			@Param("acountId")Integer acountId,
-			@Param("type")String type,
+			@Param("articleCateId")Integer articleCateId,
 			@Param("isRecommend")Integer isRecommend,
 			@Param("fixedRecommend")Integer fixedRecommend,
 			@Param("pageNum")int pageNum,
 			@Param("pageSize")int pageSize,
 			@Param("orderName")String orderName,
 			@Param("orderWay")String orderWay);		
-	/** 文章类型 */
-	public List<String> browseArticleTypeList(@Param("acountId")Integer acountId) ;		
 	/** 文章数据 */
 	public List<ArticleDataDTO> browseArticleData(@Param("acountId")Integer acountId) ;		
 	/** 文章日数据 */

@@ -27,12 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nieyue.bean.Article;
+import com.nieyue.bean.ArticleCate;
 import com.nieyue.bean.ArticleDataDTO;
 import com.nieyue.bean.ArticleDayDataDTO;
 import com.nieyue.bean.DataRabbitmqDTO;
 import com.nieyue.comments.IPCountUtil;
 import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.service.AcountService;
+import com.nieyue.service.ArticleCateService;
 import com.nieyue.service.ArticleService;
 import com.nieyue.service.DataService;
 import com.nieyue.util.DateUtil;
@@ -59,6 +61,8 @@ public class ArticleController {
 	private DataService dataService;
 	@Resource
 	private AcountService acountService;
+	@Resource
+	private ArticleCateService articleCateService;
 	@Resource
 	private Sender sender;
 
@@ -137,9 +141,10 @@ public class ArticleController {
 	//@RequestLimit(count=10,time=100000)
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingArticle(HttpServletRequest request,
+			@RequestParam(value="type",required=false)String type,//articleCate上的name
 			@RequestParam(value="status",required=false)String status,
 			@RequestParam(value="acountId",required=false)Integer acountId,
-			@RequestParam(value="type",required=false)String type,
+			@RequestParam(value="articleCateId",required=false)Integer articleCateId,
 			@RequestParam(value="isRecommend",required=false)Integer isRecommend,
 			@RequestParam(value="fixedRecommend",required=false)Integer fixedRecommend,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -147,7 +152,18 @@ public class ArticleController {
 			@RequestParam(value="orderName",required=false,defaultValue="update_date") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
 			List<Article> list = new ArrayList<Article>();
-			list= articleService.browsePagingArticle(status,acountId,type,isRecommend,fixedRecommend,pageNum, pageSize, orderName, orderWay);
+			//根据类型名称查找
+			if(type!=null &&!type.equals("")){
+				List<ArticleCate> acl = articleCateService.browsePagingArticleCate(null, type, 1, Integer.MAX_VALUE, "article_cate_id", "asc");
+				if(acl.size()!=1){//必须只有一位
+					return ResultUtil.getSlefSRFailList(list);
+				}
+			list = articleService.browsePagingArticle(status, acountId, acl.get(0).getarticleCateId(), isRecommend, fixedRecommend, pageNum, pageSize, orderName, orderWay);
+			return ResultUtil.getSlefSRSuccessList(list);
+			}
+			
+			//不根据类型名查找
+			list= articleService.browsePagingArticle(status,acountId,articleCateId,isRecommend,fixedRecommend,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 				
@@ -229,13 +245,26 @@ public class ArticleController {
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody int countAll(
+			@RequestParam(value="type",required=false)String type,//articleCate上的name
 			@RequestParam(value="status",required=false)String status,
 			@RequestParam(value="acountId",required=false)Integer acountId,
-			@RequestParam(value="type",required=false)String type,
+			@RequestParam(value="articleCateId",required=false)Integer articleCateId,
 			@RequestParam(value="isRecommend",required=false)Integer isRecommend,
 			@RequestParam(value="fixedRecommend",required=false)Integer fixedRecommend,
 			HttpSession session)  {
-		int count = articleService.countAll(status,acountId,type, isRecommend,fixedRecommend);
+		int count=0;
+		//根据类型名称查找
+		if(type!=null &&!type.equals("")){
+			List<ArticleCate> acl = articleCateService.browsePagingArticleCate(null, type, 1, Integer.MAX_VALUE, "article_cate_id", "asc");
+			System.err.println(acl.get(0).getName());
+			if(acl.size()!=1){//必须只有一位
+				return count;
+			}
+			count = articleService.countAll(status, acountId, acl.get(0).getarticleCateId(), isRecommend, fixedRecommend);
+			return count;
+		}
+		//不根据类型名查找
+		count= articleService.countAll(status,acountId,articleCateId, isRecommend,fixedRecommend);
 		return count;
 	}
 	@Value("${myPugin.projectName}")
@@ -268,22 +297,6 @@ public class ArticleController {
 			}else{
 				return ResultUtil.getSlefSRFailList(list);
 			}
-	}
-	/**
-	 * 文章类型
-	 * @return
-	 */
-	@RequestMapping(value = "/type", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList browseArticleTypeList(
-			@RequestParam(value="acountId",required=false) Integer acountId,
-			HttpSession session)  {
-		List<String> l = articleService.browseArticleTypeList(acountId);
-		if(l.size()>0){
-			return ResultUtil.getSlefSRSuccessList(l);
-		}else{
-			List<String> list = new ArrayList<String>();
-			return ResultUtil.getSlefSRFailList(list);
-		}
 	}
 	/**
 	 * 图片增加、修改

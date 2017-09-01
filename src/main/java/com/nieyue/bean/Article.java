@@ -11,7 +11,6 @@ import java.util.List;
 public class Article implements Serializable {
 	private static final long serialVersionUID = 8198930199550185349L;
 	private Integer articleId;//id
-	private String type;//类型
 	private String title;//标题
 	private Integer isRecommend;//是否推荐 默认0否
 	private Integer fixedRecommend;//是否置顶 默认0否
@@ -34,6 +33,8 @@ public class Article implements Serializable {
 	private Date createDate;//创建时间
 	private Date updateDate;//更新时间
 	private Integer acountId;//账户id
+	private Integer articleCateId;//文章类型id
+	private ArticleCate articleCate;//文章类型
 	private List<Img> imgList;
 	
 	
@@ -41,14 +42,14 @@ public class Article implements Serializable {
 		super();
 	}
 	
-	public Article(Integer articleId, String type, String title, Integer isRecommend, Integer fixedRecommend,
-			String redirectUrl, String content, Integer model, Double userUnitPrice, Double unitPrice, Double totalPrice,
+
+	public Article(Integer articleId, String title, Integer isRecommend, Integer fixedRecommend, String redirectUrl,
+			String content, Integer model, Double userUnitPrice, Double unitPrice, Double totalPrice,
 			Integer turnNumber, Integer readingNumber, Double userNowTotalPrice, Double nowTotalPrice,
 			Integer commentNumber, Double scale, Long pvs, Long uvs, Long ips, String status, Date createDate,
-			Date updateDate, Integer acountId, List<Img> imgList) {
+			Date updateDate, Integer acountId, Integer articleCateId, ArticleCate articleCate, List<Img> imgList) {
 		super();
 		this.articleId = articleId;
-		this.type = type;
 		this.title = title;
 		this.isRecommend = isRecommend;
 		this.fixedRecommend = fixedRecommend;
@@ -71,32 +72,30 @@ public class Article implements Serializable {
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 		this.acountId = acountId;
+		this.articleCateId = articleCateId;
+		this.articleCate = articleCate;
 		this.imgList = imgList;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Article [articleId=" + articleId + ", type=" + type + ", title=" + title + ", isRecommend="
-				+ isRecommend + ", fixedRecommend=" + fixedRecommend + ", redirectUrl=" + redirectUrl + ", content="
-				+ content + ", model=" + model + ", userUnitPrice=" + userUnitPrice + ", unitPrice=" + unitPrice
-				+ ", totalPrice=" + totalPrice + ", turnNumber=" + turnNumber + ", readingNumber=" + readingNumber
+		return "Article [articleId=" + articleId + ", title=" + title + ", isRecommend=" + isRecommend
+				+ ", fixedRecommend=" + fixedRecommend + ", redirectUrl=" + redirectUrl + ", content=" + content
+				+ ", model=" + model + ", userUnitPrice=" + userUnitPrice + ", unitPrice=" + unitPrice + ", totalPrice="
+				+ totalPrice + ", turnNumber=" + turnNumber + ", readingNumber=" + readingNumber
 				+ ", userNowTotalPrice=" + userNowTotalPrice + ", nowTotalPrice=" + nowTotalPrice + ", commentNumber="
 				+ commentNumber + ", scale=" + scale + ", pvs=" + pvs + ", uvs=" + uvs + ", ips=" + ips + ", status="
 				+ status + ", createDate=" + createDate + ", updateDate=" + updateDate + ", acountId=" + acountId
-				+ ", imgList=" + imgList + "]";
+				+ ", articleCateId=" + articleCateId + ", articleCate=" + articleCate + ", imgList=" + imgList + "]";
 	}
+
 
 	public Integer getArticleId() {
 		return articleId;
 	}
 	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public String getTitle() {
 		return title;
@@ -239,6 +238,22 @@ public class Article implements Serializable {
 	}
 	public void setCommentNumber(Integer commentNumber) {
 		this.commentNumber = commentNumber;
+	}
+
+	public Integer getArticleCateId() {
+		return articleCateId;
+	}
+
+	public void setArticleCateId(Integer articleCateId) {
+		this.articleCateId = articleCateId;
+	}
+
+	public ArticleCate getArticleCate() {
+		return articleCate;
+	}
+
+	public void setArticleCate(ArticleCate articleCate) {
+		this.articleCate = articleCate;
 	}
 	
 	

@@ -1,0 +1,64 @@
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">增加书</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myAddBookForm" ng-submit="addBookForm()">
+    <label  class="text-danger">※书类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="book.bookCateId" name="bookCateId"
+    ng-options="bookCate.bookCateId as bookCate.name for bookCate in bookCateList;">
+  </select>
+  </div>
+    <label  class="text-danger">※书名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="book.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddBookForm.title.$dirty && myAddBookForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确书标题
+				    </div>
+  </div>
+  
+   <label  class="text-danger">※书图片</label>
+  <div class="comment-input-margin">
+    <input type="file" class="comment-input"   id="bookImgFileUpload">
+  <div  style="display: inline-block;position: relative;" ng-mouseenter="delBookImgBtn=true">
+  <img style="width:120px;height: 160px;"   ng-src="{{book.imgAddress||''}}"/>
+  </div>
+  </div>
+  
+   <label class="text-danger" >※简介</label>
+  <div class="comment-input-margin " >
+    <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="summary"
+     ng-model="book.summary" required ng-minlength="1" ng-maxlength="255" placeholder="255位"  placeholder="1-255位" ></textarea>
+    <div class="text-danger alert alert-danger " ng-show="myAddBookForm.summary.$dirty && myAddBookForm.summary.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-255位
+	</div>
+  </div>
+   <label class="text-danger" >※作者</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="author"
+     ng-model="book.author" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位" >
+    <div class="text-danger alert alert-danger " ng-show="myAddBookForm.author.$dirty && myAddBookForm.author.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-16位
+	</div>
+  </div>
+   <label class="text-danger" >※推荐类型</label>
+  <div class="comment-input-margin " >
+     <select style="width:180px;height:50px;" ng-model="book.recommend" name="recommend"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'不推荐'},{id:1,value:'封推'},{id:2,value:'精推'},{id:3,value:'优推'}]">
+  </select>
+  </div>
+   <label class="text-danger" >※费用</label>
+  <div class="comment-input-margin " >
+     <select style="width:180px;height:50px;" ng-model="book.cost" name="cost"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'免费'},{id:1,value:'收费'}]">
+  </select>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="book.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myAddBookForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

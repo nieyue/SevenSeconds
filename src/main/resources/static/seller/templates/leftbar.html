@@ -32,12 +32,23 @@
 						<li>
 							<a href="javascript:;">
 								<span class="glyphicon glyphicon-certificate"></span>
+								<span>任务工作管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.scheduleJobList">任务工作列表</a></li>
+								<li><a class="text-center" ui-sref="main.scheduleJobAdd">增加任务工作</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-certificate"></span>
 								<span >APP版本管理</span>
 								<span class="glyphicon arrow"></span>
 							</a>
 							<ul>
-								<li><a class="text-center" ui-sref="main.appVersionList">App版本列表</a></li>
-								<li><a class="text-center" ui-sref="main.appVersionAdd">增加App版本</a></li>
+								<li><a class="text-center" ui-sref="main.appVersionList">APP版本列表</a></li>
+								<li><a class="text-center" ui-sref="main.appVersionAdd">增加APP版本</a></li>
 							</ul>
 						</li>
 						<li>
@@ -53,7 +64,7 @@
 						</li>
 					</ul>
 				</li>
-				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'||sessionRole.name=='商城管理员'">
 					<a href="javascript:;">
 						<span class="glyphicon glyphicon-flag"></span>
 						<span >商城管理 </span>
@@ -62,7 +73,7 @@
 					<ul>
 						<li>
 							<a href="javascript:;">
-								<span class="glyphicon glyphicon-th-list"></span>
+								<span class="glyphicon glyphicon-duplicate"></span>
 								<span >商品类型管理</span>
 								<span class="glyphicon arrow"></span>
 							</a>
@@ -90,6 +101,47 @@
 							</a>
 							<ul>
 								<li><a class="text-center" ui-sref="main.merOrderList">商品订单列表</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'||sessionRole.name=='书城管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-book"></span>
+						<span >书城管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-duplicate"></span>
+								<span >书类型管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.bookCateList">书类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.bookCateAdd">增加书类型</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-book"></span>
+								<span >书管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.bookList">书列表</a></li>
+								<li><a class="text-center" ui-sref="main.bookAdd">增加书</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+								<span >书订单管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.bookOrderList">书订单列表</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -145,7 +197,18 @@
 						<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 							<a href="javascript:;">
 								<span class="glyphicon glyphicon-list-alt"></span>
-								<span >全部</span>
+								<span >全部文章类型</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.articleCateList">文章类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.articleCateAdd">增加文章类型</a></li>
+							</ul>
+						</li>
+						<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-list-alt"></span>
+								<span >全部文章</span>
 								<span class="glyphicon arrow"></span>
 							</a>
 							<ul>
@@ -154,9 +217,18 @@
 								<li><a class="text-center" ui-sref="main.articleAdd({acountId:NaN})">全部增加文章</a></li>
 							</ul>
 						</li>
-						<li><a class="text-center" ui-sref="main.articleData({acountId:sessionAcount.acountId})">文章数据</a></li>
-						<li><a class="text-center" ui-sref="main.articleList({acountId:sessionAcount.acountId})">文章列表</a></li>
-						<li><a class="text-center" ui-sref="main.articleAdd({acountId:sessionAcount.acountId})">增加新闻</a></li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-list-alt"></span>
+								<span >文章</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.articleData({acountId:sessionAcount.acountId})">文章数据</a></li>
+								<li><a class="text-center" ui-sref="main.articleList({acountId:sessionAcount.acountId})">文章列表</a></li>
+								<li><a class="text-center" ui-sref="main.articleAdd({acountId:sessionAcount.acountId})">增加新闻</a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">

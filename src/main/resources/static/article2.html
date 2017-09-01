@@ -9,9 +9,9 @@
 <meta charset="UTF-8">
 <meta name="description"
 	content="{{article.title}}">
-  <link href="http://www.newzhuan.com/resources/css/bootstrap.min.css" rel="stylesheet">
- <link href="http://www.newzhuan.com/resources/css/swiper.min.css" rel="stylesheet">
-<link href="http://www.newzhuan.com/resources/css/base.css" rel="stylesheet">
+  <link href="http://www.newzhuan.cn/resources/css/bootstrap.min.css" rel="stylesheet">
+ <link href="http://www.newzhuan.cn/resources/css/swiper.min.css" rel="stylesheet">
+<link href="http://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
 <style type="text/css">
 
 #newsDeatilsBody *{
@@ -202,12 +202,13 @@ https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260
 cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascript'%3E%3C/script%3E"));</script>
  -->		</div>
 		
-	<script src="http://www.newzhuan.com/resources/js/jquery2.1.js"></script>
+	<script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
 	<!-- <script src="/resources/js/bootstrap3.2.0.js"></script> -->
-	<script src="http://www.newzhuan.com/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="http://www.newzhuan.cn/resources/js/angularjs.min.1.5.7.js"></script>
 	<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
- 	<script src="http://www.newzhuan.com/resources/js/swiper.min.js"></script> 
-	<script  src="http://www.newzhuan.com/resources/js/base.js"></script>
+ 	<script src="http://www.newzhuan.cn/resources/js/swiper.min.js"></script> 
+ 	<script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
+	<script  src="http://www.newzhuan.cn/resources/js/base.js"></script>
 	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
 
 	<script>
@@ -263,8 +264,9 @@ new Swiper('.swiper-container1', {
 					}); 
     	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
     	$scope.wapName="每日生活";
+    	$scope.originDomain=domainManager.SevenSeconds;
     	//$scope.originDomain=location.host;
-    	$scope.originDomain="www.newzhuan.com";
+    	//$scope.originDomain="www.newzhuan.cn";
     	//初始化ad域名
     	$.ajax({
     		url:"http://"+$scope.originDomain+"/adDomain/get",

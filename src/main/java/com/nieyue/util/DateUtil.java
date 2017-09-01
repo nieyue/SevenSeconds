@@ -81,6 +81,17 @@ public class DateUtil {
 		return new Date(nd);
 	} 
 	 /**
+	  * 获取某日开始
+	  * @return
+	  */
+	 public static Date getStartTime(Date date){  
+			date.setHours(0);
+			date.setMinutes(0);
+			date.setSeconds(0);
+			long nd = date.getTime()/1000*1000;
+		 return new Date(nd);
+	 } 
+	 /**
 	  * 获取当前时间到当日结束时间差  
 	  * 单位 ： 秒
 	  * @return
@@ -206,19 +217,18 @@ public class DateUtil {
      * @param args
      * @throws ParseException 
      */
-    public static Long getSeparatedTime(Date d1,Date d2) {  
-    	//String date01 = "2016-3-1 9:20:00";
-    	//String date02 = "2016-3-2 9:19:00";
-    	//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	//Date d1 = null;
-    	//Date d2 = null;
-		if(isSameDate(d1, d2)){//同一天
+    public static Long getSeparatedTime(Date d1,Date d2) { 
+    	Date d1starttime = getStartTime(d1);
+    	Date d2starttime = getStartTime(d2);
+		if(isSameDate(d1starttime, d2starttime)){//同一天
 			return 0l;
-		}else if(Math.abs((d2.getTime()-d1.getTime()))<=3600*24*1000){//差24小时以内算一天
+		}
+		else if(Math.abs((d2.getTime()-d1.getTime()))<=3600*24*1000l){//差24小时以内算一天
 			return 1l;
-		}else{
-			//long daysBetween = Math.abs((d2.getTime()-d1.getTime())/(3600*24*1000));//两日期之间相隔的天数 	
-			long daysBetween = Math.abs(d2.getDate()-d1.getDate());//两日期之间相隔的天数 	
+		}
+		else{
+			long daysBetween = Math.abs((d2.getTime()-d1.getTime())/(3600*24*1000l));//两日期之间相隔的天数 	
+			//long daysBetween = Math.abs(d2.getDate()-d1.getDate());//两日期之间相隔的天数 	
 			return daysBetween;  
 		}
     }  
@@ -302,13 +312,15 @@ public class DateUtil {
         System.out.println(getImgDir());
         Date d1=new Date("2017/08/12 23:13:46");
         Date d2=new Date("2017/08/14 0:38:02");
-        System.out.println(getSeparatedTime(d2,d1));
+        System.out.println(getSeparatedTime(new Date("2017/08/30 06:49:58"),new Date("2017/09/01 08:58:30")));
         
         
-        System.out.println(dateFormatSimpleDate(getDayPeriod(8,new Date()),"yyyy-MM-dd HH:mm:ss"));
+        /*System.out.println(dateFormatSimpleDate(getDayPeriod(8,new Date()),"yyyy-MM-dd HH:mm:ss"));
         System.out.println(getDayPeriod(3).getTime());
         System.out.println(getStartTime().getTime());
-        System.out.println(getEndTime().getTime());
+        System.out.println(getEndTime().getTime());*/
+        
+       // DateUtil.getSeparatedTime(s0.getCreateDate(), new Date())
        
     }  
 }

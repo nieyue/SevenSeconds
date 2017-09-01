@@ -30,6 +30,8 @@ myPugin:
   session: 
     myDomainName: null
   projectName: SevenSeconds
+  pushStoreDomainUrl: http://192.168.7.111:8002
+  bookStoreDomainUrl: http://192.168.7.111:8082
   location: c://config/thirdParty.properties
   articleUrl: http://192.168.7.111/article.html
   shareUrl: http://192.168.7.111/share.html

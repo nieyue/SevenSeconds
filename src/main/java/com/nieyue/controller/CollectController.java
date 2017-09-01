@@ -49,7 +49,7 @@ public class CollectController {
 	 * @return
 	 */
 	@RequestMapping(value = "/listDTO", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody StateResultList browsePagingCollectAcountDTO(
+	public @ResponseBody StateResultList browsePagingCollectArticleDTO(
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,

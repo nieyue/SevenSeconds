@@ -1,12 +1,26 @@
 <!-- 文章列表选择 -->
 <div style="margin:10px;">
 	<button class="btn btn-primary" ng-click="articleListByParams(acountId)">全部文章列表</button>
-	<button class="btn btn-danger" ng-click="articleListByParams(acountId,null,null,1)">热门置顶文章列表</button>
-	<button class="btn btn-info" ng-click="articleListByParams(acountId,null,1,null)">推荐文章列表</button>
+	<button class="btn btn-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'" ng-click="articleListByParams(acountId,null,null,1)">热门置顶文章列表</button>
+	<button class="btn btn-info" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'" ng-click="articleListByParams(acountId,null,1,null)">推荐文章列表</button>
 </div>
 <div style="margin:10px;">
-<p>动态分类列表</p>
-	<button class="btn btn-primary" ng-click="articleListByParams(acountId,type,null,null)" ng-repeat="type in types.list">{{type}}</button>
+	<div ng-if="articleCateList0.list.length>0">
+		<p>公共分类列表</p>
+		<button class="btn btn-primary" ng-click="articleListByParams(acountId,articleCate.name,null,null)" ng-repeat="articleCate in articleCateList0.list">{{articleCate.name}}</button>
+	</div>
+	<div  ng-if="articleCateList1.list.length>0">
+		<p>平台方分类列表</p>
+		<button class="btn btn-primary" ng-click="articleListByParams(acountId,articleCate.name,null,null)" ng-repeat="articleCate in articleCateList1.list">{{articleCate.name}}</button>
+	</div>
+	<div  ng-if="articleCateList2.list.length>0">
+		<p>企业号分类列表</p>
+		<button class="btn btn-primary" ng-click="articleListByParams(acountId,articleCate.name,null,null)" ng-repeat="articleCate in articleCateList2.list">{{articleCate.name}}</button>
+	</div>
+	<div  ng-if="articleCateList3.list.length>0">
+		<p>个人号分类列表</p>
+		<button class="btn btn-primary" ng-click="articleListByParams(acountId,articleCate.name,null,null)" ng-repeat="articleCate in articleCateList3.list">{{articleCate.name}}</button>
+	</div>
 </div>
 <!-- 文章列表选择end -->
 <!-- 文章列表 -->
@@ -68,7 +82,7 @@
 					更新时间：<span ng-bind="article.updateDate"></span>
 					</div>
 					<div>
-					类型：<span class="newsType" ng-bind="article.type"></span>
+					类型：<span class="newsType" ng-bind="article.articleCate.name"></span>
 					</div>
 					</div>
 					<button class=" btn btn-warning" ng-click="updateArticle(article)"><span class="glyphicon glyphicon-pencil"></span>编辑</button>
@@ -105,22 +119,22 @@
 					</div>
 					<div ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 						<span class="comment-right-body-title">
-						平台数据链接：<a style="color:green;" href="{{mainDomainUrl}}/data_details.html?articleId={{article.articleId}}">
-						{{mainDomainUrl}}/data_details.html?articleId={{article.articleId}}
+						平台数据链接：<a style="color:green;" href="{{mainDomainUrl}}/article_platform_data.html?articleId={{article.articleId}}">
+						{{mainDomainUrl}}/article_platform_data.html?articleId={{article.articleId}}
 						</a>
 						</span>
 					</div>
 					<div>
 						<span class="comment-right-body-title">
-						广告主数据链接：<a style="color:green;" href="{{mainDomainUrl}}/advertiser.html?articleId={{article.articleId}}">
-						{{mainDomainUrl}}/advertiser.html?articleId={{article.articleId}}
+						广告主数据链接：<a style="color:green;" href="{{mainDomainUrl}}/article_advertiser_data.html?articleId={{article.articleId}}">
+						{{mainDomainUrl}}/article_advertiser_data.html?articleId={{article.articleId}}
 						</a>
 						</span>
 					</div>
 					<div>
 						<span class="comment-right-body-title">
-						客户数据链接：<a style="color:green;" href="{{mainDomainUrl}}/customer.html?articleId={{article.articleId}}">
-						{{mainDomainUrl}}/customer.html?articleId={{article.articleId}}
+						客户数据链接：<a style="color:green;" href="{{mainDomainUrl}}/article_customer_data.html?articleId={{article.articleId}}">
+						{{mainDomainUrl}}/article_customer_data.html?articleId={{article.articleId}}
 						</a>
 						</span>
 					</div>

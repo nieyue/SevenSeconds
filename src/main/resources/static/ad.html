@@ -114,13 +114,14 @@ height:100%;
 		<div style="display:none;">
 		</div>
 		<iframe id="c_iframe"  height="0" width="0"  src="" style="display:none" ></iframe>
-<!-- 		<iframe id="c_iframe"  height="0" width="0"  src="http://www.newzhuan.com/cross_domain_agent.html" style="display:none" ></iframe> -->
+<!-- 		<iframe id="c_iframe"  height="0" width="0"  src="http://www.newzhuan.cn/cross_domain_agent.html" style="display:none" ></iframe> -->
 
 	<script src="/resources/js/jquery2.1.js"></script>
 	<script src="/resources/js/bootstrap3.2.0.js"></script>
 	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="/resources/js/swiper.min.js"></script>
+	<script src="/resources/js/domainManager.js"></script>
 	<script src="/resources/js/base.js"></script>
 	<script>
 	$(function(){
@@ -178,9 +179,11 @@ height:100%;
 					
     	indexApp.controller('indexCtrl',function($rootScope,$scope){
     	$scope.wapName="";
+    	
+    	$scope.originDomain=domainManager.SevenSeconds;
+    	//$scope.originDomain="www.newzhuan.cn";
     	//$scope.originDomain=location.host;
-    	$scope.originDomain="www.newzhuan.com";
-    	//http://www.newzhuan.com/cross_domain_agent.html
+    	//http://www.newzhuan.cn/cross_domain_agent.html
     	//初始化share域名
   /*   	function initShareDomain(){
     	 $.ajax({

@@ -224,6 +224,7 @@ text-align:center;}
 	<script src="/resources/js/bootstrap3.2.0.js"></script>
 	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
 	<script src="/resources/js/echarts.common.min.js"></script>
+	<script src="/resources/js/domainManager.min.js"></script>
 	<script src="/resources/js/base.js"></script>
 	<script>
 	$(function(){
@@ -251,7 +252,7 @@ text-align:center;}
     	*/
     	$scope.dataByArticleAndDayListInit=function(day){
        	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
-       	var endDate=myUtils.timeStampToDate(myUtils.todayStartTime());//今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayEndTime());//今日
         //初始化
   $.get("/dailyData/statisticsDailyData?articleId="+myUtils.GetQueryString("articleId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
            $scope.dataByArticleAndDayList=pld.list;
@@ -329,7 +330,7 @@ text-align:center;}
     	*/
        	$scope.dataByArticleAndTimePeriodListInit=function(day){
        	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
-       	var endDate=myUtils.timeStampToDate(myUtils.todayStartTime());//今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayEndTime());//今日
         //初始化
   $.get("/data/statisticsData?articleId="+myUtils.GetQueryString("articleId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
            $scope.dataByArticleAndTimePeriodList=pld.list;
@@ -410,7 +411,7 @@ text-align:center;}
            dataList.ips.unshift($scope.newDataByArticleAndTimePeriodList[i].ips);
            dataList.readingNumber.unshift($scope.newDataByArticleAndTimePeriodList[i].readingNumber);
            }
-           console.log($scope.newDataByArticleAndTimePeriodList)
+           //console.log($scope.newDataByArticleAndTimePeriodList)
            $scope.dataByArticleAndTimePeriodList=$scope.newDataByArticleAndTimePeriodList;
            initEcharts(dataList,echartObj);
 				$scope.$apply();
@@ -462,7 +463,7 @@ text-align:center;}
     	
     	
         //初始化
-  $.get(myUtils.getDomain()+"/article/"+myUtils.GetQueryString("articleId"),function(d){
+  $.get("/article/"+myUtils.GetQueryString("articleId"),function(d){
   console.log(d)
            $scope.article=d.list[0];
          //  $scope.showNoticeListIcon=false;

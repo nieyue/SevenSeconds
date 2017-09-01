@@ -104,10 +104,19 @@ acount_id int(11) COMMENT '提交人账户id外键',
 PRIMARY KEY (feedback_id)
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='意见反馈表';
 
+#创建文章类型表 
+CREATE TABLE article_cate_tb(
+article_cate_id int(11) NOT NULL AUTO_INCREMENT COMMENT '文章类型id',
+name varchar(255) COMMENT '文章类型名称',
+holder tinyint(4) COMMENT '持有者，默认为0公共，1平台方，2企业号，3个人号',
+update_date datetime COMMENT '更新时间',
+PRIMARY KEY (article_cate_id),
+INDEX INDEX_HOLDER (holder) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='文章类型表';
+
 #创建文章表 
 CREATE TABLE article_tb(
 article_id int(11) NOT NULL AUTO_INCREMENT COMMENT '文章id',
-type varchar(255) COMMENT '类型',
 title varchar(255) COMMENT '标题',
 is_recommend tinyint(4) DEFAULT 0 COMMENT '是否推荐 默认0否',
 fixed_recommend tinyint(4) DEFAULT 0 COMMENT '是否置顶 默认0否',
@@ -130,8 +139,10 @@ status varchar(255) COMMENT '状态',
 create_date datetime COMMENT '创建时间',
 update_date datetime COMMENT '更新时间',
 acount_id int(11) COMMENT '账户id外键',
+article_cate_id int(11) COMMENT '文章类型id外键',
 PRIMARY KEY (article_id),
-INDEX INDEX_TYPE (type) USING BTREE,
+INDEX INDEX_ARTICLECATEID (article_cate_id) USING BTREE,
+INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
 INDEX INDEX_ISRECOMMEND (is_recommend) USING BTREE,
 INDEX INDEX_FIXEDRECOMMEND (fixed_recommend) USING BTREE,
 INDEX INDEX_STATUS (status) USING BTREE
@@ -281,7 +292,7 @@ frequency tinyint(4)  COMMENT '次数',
 money decimal(11,2) DEFAULT 0 COMMENT '积分',
 create_date datetime COMMENT '创建时间',
 acount_id int(11) COMMENT '任务人id外键',
-PRIMARY KEY (daliy_task_id),
+PRIMARY KEY (daily_task_id),
 INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
 INDEX INDEX_CREATEDATE (create_date) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='日常任务表';
@@ -289,8 +300,8 @@ INDEX INDEX_CREATEDATE (create_date) USING BTREE
 #创建流水表 
 CREATE TABLE flow_water_tb(
 flow_water_id int(11) NOT NULL AUTO_INCREMENT COMMENT '流水id',
-type tinyint(4)  COMMENT '类型,1.新手任务 ,2.日常任务,3.达人奖励,4.文章阅读,5.徒弟进贡,6.推广分成,-1.兑换商品',
-subtype tinyint(4)  COMMENT '子类型,1(0,1,2,3,4,5),2(1,2,3,4,5),3(1,2,3,4,5,6,7),4(1),5(1,2),6(1),-1(1)',
+type tinyint(4)  COMMENT '类型,1.新手任务 ,2.日常任务,3.达人奖励,4.文章阅读,5.徒弟进贡,6.推广分成,7.签到,-1.兑换商品,-2.书城消费',
+subtype tinyint(4)  COMMENT '子类型,1(0,1,2,3,4,5),2(1,2,3,4,5),3(1,2,3,4,5,6,7),4(1),5(1,2),6(1),7(1),-1(1),-2(0,1,2)',
 money decimal(11,2) DEFAULT 0  COMMENT '流水积分，负数为消耗',
 real_money decimal(11,2) DEFAULT 0 COMMENT '流水真钱，负数为消耗',
 create_date datetime COMMENT '创建时间',
@@ -314,6 +325,8 @@ INSERT IGNORE INTO role_tb (name,duty,update_date)
 VALUES ("商城管理员","商城管理员",now()); 
 INSERT IGNORE INTO role_tb (name,duty,update_date) 
 VALUES ("用户","用户",now()); 
+INSERT IGNORE INTO role_tb (name,duty,update_date) 
+VALUES ("书城管理员","书城管理员",now()); 
 
 #设置初始管理员密码MD5加密123456
 INSERT IGNORE INTO acount_tb (nickname,scale,phone,email,password,create_date,login_date,role_id) 

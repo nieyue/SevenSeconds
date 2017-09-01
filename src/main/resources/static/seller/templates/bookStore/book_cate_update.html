@@ -1,0 +1,18 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.bookCateList">返回书类型列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">修改书类型</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myUpdateBookCateForm" ng-submit="updateBookCateForm()">
+    <label  class="text-danger">※书类名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="bookCate.name" name="name" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateBookCateForm.name.$dirty && myUpdateBookCateForm.name.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确书类型标题
+				    </div>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateBookCateForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

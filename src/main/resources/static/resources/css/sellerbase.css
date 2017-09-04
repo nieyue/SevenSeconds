@@ -269,7 +269,7 @@ td{
 */
 .seller-foot{
 	position:relative;
-	height:180px;
+	height:200px;
 	margin-bottom:0;
 	background: -webkit-linear-gradient(left, red , blue); /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(right, red, blue); /* Opera 11.1 - 12.0 */

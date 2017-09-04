@@ -54,7 +54,7 @@ height:100%;
 			<div class="media-left" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
 				 <img class="comment-list-item-img"
 					ng-src="{{article.imgList[0].imgAddress||'http://img.fuwu88.cn/uploaderPath/img/20170623/14981883995725043847212203.png'}}" >
-					<div ng-if="article.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
 				</a> -->
 			</div> 
@@ -68,7 +68,7 @@ height:100%;
 				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
 				 <img style="width:100%;"
 					ng-src="{{img.imgAddress}}" >
-					<div ng-if="article.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</div>
 			</div>
 			 <div class="media-body comment-right-body">
@@ -89,7 +89,7 @@ height:100%;
 				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
 				 <img  style="width:100%"
 					ng-src="{{img.imgAddress}}" >
-					<div ng-if="article.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</div>
 			</div>
 			<div class="media-body comment-right-body">

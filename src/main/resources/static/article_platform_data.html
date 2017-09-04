@@ -42,7 +42,7 @@ padding:0 15px !important;
 			</tr>
 			<tr >
 			  <td ng-bind="article.title"></td> 
-			  <td ng-bind="article.type"></td>
+			  <td ng-bind="article.articleCate.name"></td>
 			  <td>
 			  <a ng-repeat="img in article.imgList" href="/article.html?articleId={{article.articleId}}">
 				 <img class=" comment-list-item-img " style="margin-top:3px;"

@@ -406,11 +406,24 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		fixedRecommend:0,
             		model:'2',//默认2ip计费
             		status:"正常",
+            		articleCateId:0,
             		imgList:[]};
             		//$scope.selectState=1;
             		var editor=$rootScope.myWangEditor("articleAddEditor");
-				    
-                     
+				    //文章类型初始化
+            		$scope.articleCateInit=function(holder){
+            			  $.get("/articleCate/list?pageSize=100000&holder="+holder,function(data){
+                 	   				if(data.code==200){
+                 	   				$scope.articleCateList=data.list;
+                 	   				$scope.article.articleCateId=$scope.articleCateList[0].articleCateId;
+                 	   				$scope.$apply();
+                 	   				myUtils.myLoadingToast("加载成功" ); 
+                 	   				}else{
+                 	   					myUtils.myLoadingToast("加载失败");   	   				
+                 	   				}
+                 	   			});
+            				};
+                        
                  		//上传文章封面图片
                  		$("#articleImgFileUpload").change(function(){
                  			//最多上传三张
@@ -529,8 +542,22 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		articleId:$scope.aritlceParams.articleId,
             		content:'',
             		status:"正常",
+            		articleCateId:0,
             		imgList:[]};
             		var editor=$rootScope.myWangEditor("articleUpdateEditor");
+            		 //文章类型初始化
+            		$scope.articleCateInit=function(holder){
+            			  $.get("/articleCate/list?pageSize=100000&holder="+holder,function(data){
+                 	   				if(data.code==200){
+                 	   				$scope.articleCateList=data.list;
+                 	   				$scope.article.articleCateId=$scope.articleCateList[0].articleCateId;
+                 	   				$scope.$apply();
+                 	   				myUtils.myLoadingToast("加载成功" ); 
+                 	   				}else{
+                 	   					myUtils.myLoadingToast("加载失败");   	   				
+                 	   				}
+                 	   			});
+            				};
             		/*
             		*初始化article
             		*/
@@ -545,6 +572,9 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
        	   				$scope.selectState=2;
        	   				
        	   				}
+       	   				$scope.articleCate.holder=$scope.article.articleCate.holder;//初始化
+       	   				$scope.articleCateInit($scope.article.articleCate.holder);//初始化
+       	   			
        	   				editor.$txt.html($scope.article.content);
        	   				$scope.$apply();
        	   				myUtils.myLoadingToast("加载成功" ); 

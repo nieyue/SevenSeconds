@@ -68,9 +68,7 @@ li.full{
 /**
 **重写p 
 */
-p{
-	font-size:16px;
-}
+
 /**
 **重写a 
 */
@@ -98,6 +96,18 @@ body,html{
 	font-size:18px;
 }
 /**
+*切换字体大小
+*/
+.fontSizeBig{
+	font-size:24px !important;
+}
+.fontSizeNormal{
+	font-size:18px !important;
+}
+.fontSizeSmall{
+	font-size:12px !important;
+}
+/**
 **包裹居中
 */
 .comment-wrap{
@@ -121,7 +131,7 @@ body,html{
 */
 .comment-list-item{
 	background-color: #fff;
-	padding:5% 0;
+	padding:2% 0;
 	margin: 0 3% !important; 
 	border-top: 1px solid #ececec;
 }
@@ -133,8 +143,6 @@ body,html{
 }
 .comment-list-item:active{
 	background-color: #f1eff0;
-	color:blue;
-	
 }
 .ad3:last-child{
 	border-bottom: 1px solid #ececec !important;
@@ -216,10 +224,11 @@ body,html{
 .comment-right-body{
 	width:100%;
 	height: 100%;
+	margin:2% 0 0 0;
 }
 .comment-right-body-title{
 	font-size: 16px;
-	margin:1% 0;
+	margin:0 0 2% 0;
 }
 /**
 **热门图标

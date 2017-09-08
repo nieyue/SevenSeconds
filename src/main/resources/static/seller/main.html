@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="mainApp" ng-controller="mainCtrl">
 <head>
-		<title ng-bind="backstageName"></title>
+	<title ng-bind="companyName"></title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<meta name="Keywords" content="系统，管理"/>
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
 	 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 	 <link rel="stylesheet" type="text/css" href="/resources/css/metisMenu.min.css"/>
      <link href="/resources/css/sellerbase.css" rel="stylesheet">
 	 <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap-datetimepicker.min.css"/>
 	 <link rel="stylesheet" type="text/css" href="/wangEditor/css/wangEditor.min.css"/>
 </head>
-   <body ng-app="mainApp" ng-controller="mainCtrl">
+   <body >
   	<div ui-view></div>
 <!-- 按钮触发模态框 -->
 <button class="hide" data-toggle="modal" 
@@ -168,6 +169,7 @@
    		
        $scope.currentDate=myUtils.timeStampToDate(new Date());
        $scope.backstageName="七秒";//系统名称
+       $scope.companyName="长沙嘉行煜发科技有限公司";//公司名称
        $rootScope.formDisabled=false;//表单提交，默认可以点击。
        $.ajaxSetup({
 　　　　timeout: 10000,

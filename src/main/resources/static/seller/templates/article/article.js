@@ -423,9 +423,18 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  	   				}
                  	   			});
             				};
-                        
+            				$scope.articleCateInit(0);//默认0；公共
                  		//上传文章封面图片
                  		$("#articleImgFileUpload").change(function(){
+                 			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+                 					&&($scope.imgConfigWidth>1200
+                 					||$scope.imgConfigWidth<=0
+                 					||$scope.imgConfigHeight<=0
+                 					||$scope.imgConfigHeight>1200)
+                 					){
+                 			myUtils.myLoadingToast("图片尺寸不符合");
+                			 return;
+                			 }
                  			//最多上传三张
                  			 if($scope.article.imgList.length>=3){
                  			 myUtils.myLoadingToast("最多上传三张");
@@ -437,7 +446,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  				        formData:[
                  				            {key:"editorUpload",value:$("#articleImgFileUpload").get(0).files[0]}
                  				            ],
-                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add",
+                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
                  				        success:function(data){
 				                 			var img={
 				                 			imgId:'',
@@ -447,7 +456,12 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				                 			};
                  				            if(data){
                  				            myUtils.myPrevToast("上传成功",null,"remove");
-                 				            img.number=$scope.article.imgList.length+1;
+                 				           var maxImg=$scope.article.imgList[$scope.article.imgList.length-1];
+                   				          if(maxImg){
+                    				        	 img.number=maxImg.number+1; 
+                    				          }else{
+                    				        	  img.number=1;
+                    				          }
                  				           img.imgAddress=data;
                  				            $scope.article.imgList.push(img);
                  				            console.log(JSON.parse(angular.toJson($scope.article.imgList)))
@@ -550,7 +564,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             			  $.get("/articleCate/list?pageSize=100000&holder="+holder,function(data){
                  	   				if(data.code==200){
                  	   				$scope.articleCateList=data.list;
-                 	   				$scope.article.articleCateId=$scope.articleCateList[0].articleCateId;
+                 	   				//$scope.article.articleCateId=$scope.articleCateList[0].articleCateId;
                  	   				$scope.$apply();
                  	   				myUtils.myLoadingToast("加载成功" ); 
                  	   				}else{
@@ -589,6 +603,15 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		*/
             		//上传文章封面图片
                  		$("#articleImgFileUpload").change(function(){
+                 			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+                 					&&($scope.imgConfigWidth>1200
+                 					||$scope.imgConfigWidth<=0
+                 					||$scope.imgConfigHeight<=0
+                 					||$scope.imgConfigHeight>1200)
+                 					){
+                 			myUtils.myLoadingToast("图片尺寸不符合");
+                			 return;
+                			 }
                  			//最多上传三张
                  			 if($scope.article.imgList.length>=3){
                  			 myUtils.myLoadingToast("最多上传三张");
@@ -600,7 +623,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  				        formData:[
                  				            {key:"editorUpload",value:$("#articleImgFileUpload").get(0).files[0]}
                  				            ],
-                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add",
+                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
                  				        success:function(data){
 				                 			var img={
 				                 			imgId:'',
@@ -610,7 +633,12 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				                 			};
                  				            if(data){
                  				            myUtils.myPrevToast("上传成功",null,"remove");
-                 				            img.number=$scope.article.imgList.length+1;
+                 				           var maxImg=$scope.article.imgList[$scope.article.imgList.length-1];
+                  				          if(maxImg){
+                   				        	 img.number=maxImg.number+1; 
+                   				          }else{
+                   				        	  img.number=1;
+                   				          }
                  				           img.imgAddress=data;
                  				            $scope.article.imgList.push(img);
                  				            console.log(JSON.parse(angular.toJson($scope.article.imgList)))

@@ -16,11 +16,24 @@
 				    </div>
   </div>
   
-   <label  class="text-danger">※商品图片</label>
+   <label  class="text-danger">※商品图片（宽高最大1200px）</label>
   <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=100">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=100">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>  
     <input type="file" class="comment-input"   id="merImgFileUpload">
   <div ng-repeat="merImg in mer.merImgList" style="display: inline-block;position: relative;" ng-mouseenter="delMerImgBtn=true">
-  <img style="width:100px;height: 100px;"   ng-src="{{merImg.imgAddress||''}}"/>
+  <img    ng-src="{{merImg.imgAddress||''}}"/>
   <span  ng-click="delMerImg(merImg)" style="background-color:#fff;position: absolute;top:0;right:0">×</span>
   </div>
   </div>

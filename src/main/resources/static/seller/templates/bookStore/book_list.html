@@ -8,6 +8,7 @@
 			<table class="table table-bordered" style="width:100%">
 			<tr>
 			  <th>序号</th>
+			  <th>书ID</th>
 			  <th>书图片</th>
 			  <th>类型</th>
 			  <th>书名</th>
@@ -29,7 +30,10 @@
 			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
 			  </td>
 			  <td >
-				 <img class=" comment-list-item-img " style="margin-top:3px;width:60px;height:80px;"
+			  <span ng-bind="book.bookId"></span>
+			  </td>
+			  <td >
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:75px;height:100px;"
 					ng-src="{{book.imgAddress}}" >
 			  </td>
 			  <td >

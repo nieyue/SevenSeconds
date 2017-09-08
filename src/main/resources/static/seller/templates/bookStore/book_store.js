@@ -345,13 +345,22 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		//上传书图片
             		//上传文章封面图片
              		$("#bookImgFileUpload").change(function(){
+             			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+             					&&($scope.imgConfigWidth>1200
+             					||$scope.imgConfigWidth<=0
+             					||$scope.imgConfigHeight<=0
+             					||$scope.imgConfigHeight>1200)
+             					){
+             			myUtils.myLoadingToast("图片尺寸不符合");
+            			 return;
+            			 }
              			myUtils.fileUpload(
              				    {inputfile:$("#bookImgFileUpload"),
              				    ajaxObj:{
              				        formData:[
              				            {key:"editorUpload",value:$("#bookImgFileUpload").get(0).files[0]}
              				            ],
-             				        url:imgUploadDomainUrl+"/img/add",
+             				        url:imgUploadDomainUrl+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
              				        success:function(data){
              				            if(data){
              				            myUtils.myPrevToast("上传成功",null,"remove");
@@ -403,13 +412,22 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                      
                 		//上传文章封面图片
                  		$("#bookImgFileUpload").change(function(){
+                 			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+                 					&&($scope.imgConfigWidth>1200
+                 					||$scope.imgConfigWidth<=0
+                 					||$scope.imgConfigHeight<=0
+                 					||$scope.imgConfigHeight>1200)
+                 					){
+                 			myUtils.myLoadingToast("图片尺寸不符合");
+                			 return;
+                			 }
                  			myUtils.fileUpload(
                  				    {inputfile:$("#bookImgFileUpload"),
                  				    ajaxObj:{
                  				        formData:[
                  				            {key:"editorUpload",value:$("#bookImgFileUpload").get(0).files[0]}
                  				            ],
-                 				        url:imgUploadDomainUrl+"/img/add",
+                 				        url:imgUploadDomainUrl+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
                  				        success:function(data){
                  				            if(data){
                  				            myUtils.myPrevToast("上传成功",null,"remove");

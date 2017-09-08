@@ -349,6 +349,15 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		**上传商品图片
             		*/
                  		$("#merImgFileUpload").change(function(){
+                 			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+                 					&&($scope.imgConfigWidth>1200
+                 					||$scope.imgConfigWidth<=0
+                 					||$scope.imgConfigHeight<=0
+                 					||$scope.imgConfigHeight>1200)
+                 					){
+                 			myUtils.myLoadingToast("图片尺寸不符合");
+                			 return;
+                			 }
                  			//最多上传八张
                  			 if($scope.mer.merImgList.length>=8){
                  			 myUtils.myLoadingToast("最多上传八张");
@@ -360,7 +369,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  				        formData:[
                  				            {key:"editorUpload",value:$("#merImgFileUpload").get(0).files[0]}
                  				            ],
-                 				        url:imgUploadDomainUrl+"/img/add",
+                 				        url:imgUploadDomainUrl+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
                  				        success:function(data){
 				                 			var merImg={
 				                 			merImgId:'',
@@ -371,7 +380,11 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  				            if(data){
                  				            myUtils.myPrevToast("上传成功",null,"remove");
                  				           var maxMerImg=$scope.mer.merImgList[$scope.mer.merImgList.length-1];
-                 				           merImg.orderNum=maxMerImg.orderNum+1;
+                 				          if(maxMerImg){
+                  				        	 merImg.orderNum=maxMerImg.orderNum+1; 
+                  				          }else{
+                  				        	  merImg.orderNum=1;
+                  				          }
                  				           merImg.imgAddress=data;
                  				            $scope.mer.merImgList.push(merImg);
                  				            console.log(JSON.parse(angular.toJson($scope.mer.merImgList)))
@@ -445,6 +458,15 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                 		**上传商品图片
                 		*/
                      		$("#merImgFileUpload").change(function(){
+                     			if(($scope.imgConfigWidth && $scope.imgConfigHeight)
+                     					&&($scope.imgConfigWidth>1200
+                     					||$scope.imgConfigWidth<=0
+                     					||$scope.imgConfigHeight<=0
+                     					||$scope.imgConfigHeight>1200)
+                     					){
+                     			myUtils.myLoadingToast("图片尺寸不符合");
+                    			 return;
+                    			 }
                      			//最多上传八张
                      			 if($scope.mer.merImgList.length>=8){
                      			 myUtils.myLoadingToast("最多上传八张");
@@ -456,7 +478,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                      				        formData:[
                      				            {key:"editorUpload",value:$("#merImgFileUpload").get(0).files[0]}
                      				            ],
-                     				        url:imgUploadDomainUrl+"/img/add",
+                     				        url:imgUploadDomainUrl+"/img/add?width="+$scope.imgConfigWidth+"&height="+$scope.imgConfigHeight,
                      				        success:function(data){
     				                 			var merImg={
     				                 			merImgId:'',

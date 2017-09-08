@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <meta name="description"
 	content="{{article.title}}">
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
   <link href="http://www.newzhuan.cn/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/base.css" rel="stylesheet">
 <!-- <link href="http://www.newzhuan.cn/resources/css/base.css" rel="stylesheet"> -->
@@ -16,6 +17,9 @@
 
 #newsDeatilsBody *{
 max-width:100% !important;
+}
+.appArticleContent *{
+font-size:1rem !important;
 }
 </style>
 </head>
@@ -71,7 +75,7 @@ max-width:100% !important;
 			</div>
 		<!-- 广告2end -->
 				
-				 <div style="font-size:1rem !important;" ng-bind-html="article.content" >
+				 <div style="font-size:1rem !important;" class="appArticleContent" ng-bind-html="article.content" >
 				</div> 
 				
 
@@ -128,6 +132,8 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		<!-- 谷歌广告 end -->
 		
 		<div style="width:100%;height:10px;background-color:#ececec;"></div>
+		<!-- 相关推荐 -->
+		<div style="max-width:640px;width:100%;margin:0 auto;">
 		<div style="margin-bottom:1px;margin:10px 0;text-align:center;">
 	        <span style="font-size:0.8rem">
 	        -相关推荐-
@@ -240,6 +246,9 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 			</div> 
 			</div>
 			</div>
+		</div>
+		<!-- 相关推荐end -->
+		
 		<!-- 底部 -->
 		<!-- <div style="width:100%;height:100px;"></div> -->
 		<!-- 底部 end-->
@@ -651,7 +660,7 @@ cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascrip
         		return;
         		}
         		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
-        			onReachBottom();
+        			//onReachBottom();
         		}
         			
         		});

@@ -217,7 +217,7 @@
 								<li><a class="text-center" ui-sref="main.articleAdd({acountId:NaN})">全部增加文章</a></li>
 							</ul>
 						</li>
-						<li>
+						<li ng-show="sessionRole.name!='超级管理员' && sessionRole.name!='运营管理员'">
 							<a href="javascript:;">
 								<span class="glyphicon glyphicon-list-alt"></span>
 								<span >文章</span>

@@ -9,7 +9,7 @@ var domainManager={
 		MyWangEditor:'img.newzhuan.cn',	//图片服务器
 };
 //prod
-/*var domainManager={
+var domainManager={
 	SevenSeconds:'www.newzhuan.cn',	
 	Article:'www.newzhuan.cn',	
 	BookStore:'book.newzhuan.cn',	
@@ -17,4 +17,4 @@ var domainManager={
 	ScheduleJob:'task.newzhuan.cn',	
 	Push:'push.newzhuan.cn',	
 	MyWangEditor:'img.newzhuan.cn',	
-};*/
+};

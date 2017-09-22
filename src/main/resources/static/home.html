@@ -1,0 +1,607 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>七秒资讯</title>
+<script type="text/javascript" src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
+<link href="http://www.newzhuan.cn/resources/css/bootstrap.min.css" rel="stylesheet">
+<!-- 
+<script src="static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>  -->
+<style>
+	html body{ 
+		padding: 0;
+		margin: 0;
+	}
+	.top_cls{
+		width:100%;
+		min-width: 1220px;
+		height:34px;
+		line-height:34px; 
+		background-color: black;
+	}
+	.down_top{
+		width: 6.2%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;
+	}
+	.down_top a{
+		color:#ccc;
+		text-decoration: none;
+	}
+	.weather_top{
+		width: 13.6%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;
+	}
+	.weather_top label{
+		color: white;
+	}
+	.login_top{
+		width: 5.5%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;
+	    margin-left:57%;
+	    background-color: red;
+	}
+	.login_top a{
+		color:#333;
+		text-decoration: none;
+	}
+	.feedback_top{
+		width: 4%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;  
+	}
+	.feedback_top a{
+		color:white;
+		text-decoration: none;
+	}
+	.complain_top{
+		width: 6.22%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;
+	}
+	.complain_top a{
+		color:white;
+		text-decoration: none;
+	}
+	.product_top{
+		width: 6.22%;
+	    height: 100%;
+	    /* background-color: red; */
+	    text-align: center;
+	    float:left;
+	}
+	.product_top a{
+		color:white;
+		text-decoration: none;
+	}
+	.hid_div{
+		position: absolute; 
+		width: 89px;
+		top:34px;
+		text-align: center;
+		left:92%;
+		background-color: #f3eaea;
+	}
+	
+	.main_cls{
+		width: 1170px;
+	    margin: 0 auto;
+	    margin-top: 16px;
+	    min-height: 1500px;
+	    /* background-color: #e4d3d3; */
+	}
+	.left_cls{
+		width: 110px;
+		height:auto;
+		background-color:#efefef;
+		float:left;
+		height:590px;
+	}
+	.middle_cls{
+		width: 660px;
+		/* background-color: green; */
+		float:left;
+		margin-left: 30px;
+		height:auto;
+		min-height: 1500px;
+	}
+	.right_cls{
+		width: 340px;
+		/* background-color: blue; */
+		float:left;
+		margin-left: 30px;
+		height:auto;
+		min-height: 1500px;
+	}
+	.left_cls{
+		text-align: center;
+	}
+	.left{
+		width:110px;
+		height:40px;
+		line-height: 40px;
+		margin-top: 1.5px;
+	}
+	.left a{
+		color: #503a3a;
+		text-decoration: none;
+	}
+	.recommended_left{
+		/* background-color: red; */
+		border-radius: 5px;
+	}
+	
+	.carousel_pic_middle{
+		position: relative;
+		width:660px;
+		height:300px;
+		/* background-color: orange; */
+		display:none;
+	}
+	.carousel_pic{
+		width:600px;
+		height:300px;
+		/* background-color: blue; */
+		float: left;
+	}
+	.carousel_pic img{
+		width:600px;
+		height:300px;
+	}
+	.contents_pic{
+		width:60px;
+		height:300px;
+		/* background-color: black; */
+		float: left;
+	}
+	.con_a{
+		text-align: center;
+		width:60px;
+		height:50px;
+		background-color: white;
+		line-height: 50px;
+	}
+	.pic_div{
+		position: relative;
+		width:660px;
+		height:auto;
+		/* background-color: #FF5722; */
+		margin: 0px auto;
+	}
+	.middle_cls a{
+		text-decoration: none;
+		color:#000;
+	}
+	.zero_pic_middle{
+		position: relative;
+		width:660px;
+		height:123px;
+		/* line-height: 123px;*/
+		/* background-color: #e2d3d3; */
+		margin: 0px auto;
+		line-height: 130%;
+		border-top: 1px solid #ececec;
+		font-size: 20px;
+	}
+	.zero_pic_middle label{
+		width:660px;
+		margin-top: 25px;
+	}
+	.zero_info{
+		width:660px;
+	}
+	.zero_info_comments{
+		float: left;
+		font-size: 15px;
+	}
+	.zero_info_read{
+	    margin-left: 15px;
+		float: left;
+		font-size: 15px;
+	}
+	.one_pic_middle{
+		position: relative;
+		width:660px;
+		height:123px;
+		line-height: 123px;
+		/* background-color: yellow; */
+		margin: 0px auto;
+		border-top: 1px solid #ececec;
+	}
+	.one_pic{
+		position: absolute;
+		width:158px;
+		height: 102px;
+		top: 10;
+	}
+	.one_pic img{
+		width:156px;
+		height:101.8px;
+		margin-left: 4.8;
+	}
+	.one_mid{
+		position: absolute;
+		width:486px;
+		height:82px;
+		top: 20.5px;
+		left:167px;
+	}
+	.one_mid_title{
+		width:486px;
+		height:52px;
+		line-height: 52px;
+		/* background-color: #bacaba; */
+	}
+	.one_mid_title a{
+		/* color: rgba(0, 0, 0, 0.71); #337ab7  */
+    	font-size: 18px;
+    	font-weight: 700;
+	}
+	.one_mid_title a{
+		line-height: 160%;
+	}
+	.one_mid_info{
+		width:486px;
+		height:20px;
+		line-height: 20px;
+		/* background-color: orange; */
+		margin-top: 10px;
+	}
+	.one_info_comments{
+		float: left;
+	}
+	.one_info_read{
+		margin-left: 15px;
+		float: left;
+	}
+	.two_pic_middle{
+		position: relative;
+		width:660px;
+		height:200px;
+		line-height: 123px;
+		/* background-color: #a6b7a6; */
+		margin: 0px auto;
+		border-top: 1px solid #ececec;
+		/* font-size: 20px; */
+	}
+	.two_pic_title{
+		height:42px;
+		line-height: 21px;
+		font-size: 18px;
+		font-weight: 700;
+		margin-top: 15px;
+		/* background-color: #43e05f;	 */
+	}
+	.two_pic_show{
+		height:115px;
+		/* background-color: #566358; */
+	}
+	.two_pic_show img{
+		width:156px;
+		height: 109px;
+	    margin-top: 3px;
+	    margin-left: 4.85px;
+	}
+	.two_pic_info{
+		height: 33.5px;
+		line-height: 33.5px;
+		/* background-color: #43e05f;	 */
+	}
+	.two_info_comments{
+		float: left;
+	}
+	.two_info_read{
+		margin-left: 15px;
+		float: left;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 顶部 -->
+		<div class="top_cls">
+			<!-- <div class="down_top">
+				<a href="download.html">下载APP</a>
+			</div>
+			<div class="weather_top">
+				<label>天气</label>
+			</div>
+			<div class="login_top">
+				<a href="login.html">登录</a>
+			</div>
+			<div class="feedback_top">
+				<a href="http://www.baidu.com" target="_blank">反馈</a>
+			</div>
+			<div class="complain_top">
+				<a href="http://www.baidu.com" target="_blank">侵权投诉</a>	
+			</div>
+			<div class="product_top" onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')">
+				<a href="javascript:;" >七秒产品</a>
+			</div>
+			<div class="hid_div" id="hidDiv" style="display:none">
+				<div onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')"><a href="http://www.baidu.com">问答</a></div>
+				<div onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')"><a href="">头条号</a></div>
+				<div onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')"><a href="">图虫</a></div>
+				<div onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')"><a href="">正版图库</a></div>
+				<div onmouseover="show('hidDiv')" onmouseout="hid('hidDiv')"><a href="">广告投放</a></div>
+			</div> -->
+			<div class="down_top" style="color:white;font-size: 16px;">七秒资讯</div>
+		</div>
+		
+		<div class="main_cls">
+			<!-- 左边目录 -->
+			<div class="left_cls">
+				<div class="left title_left">
+	                <a href="index.html">
+	                    <img src="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" alt="七秒资讯" style="width: 37px; height: 37px;" />
+	                </a>
+                </div>
+            	<div class="left recommended_left" id="left1" onmouseover="show('left1')" onmouseout="hid('left1')" onclick="hit('left1')">
+            		<a href="javascript:;">新闻</a>
+            	</div>
+            	<div class="left hot_left" id="left2" onmouseover="show('left2')" onmouseout="hid('left2')" onclick="hit('left2')">
+            		<a href="javascript:;">推广</a>
+            	</div>
+            	<div class="left video_left" id="left3" onmouseover="show('left3')" onmouseout="hid('left3')" onclick="hit('left3')">
+            		<a href="javascript:;">游戏</a>
+            	</div>
+            	<div class="left picture_left" id="left4" onmouseover="show('left4')" onmouseout="hid('left4')" onclick="hit('left4')">
+            		<a href="javascript:;">军事</a>
+            	</div>
+            	<div class="left sports_left" id="left5" onmouseover="show('left5')" onmouseout="hid('left5')" onclick="hit('left5')">
+            		<a href="javascript:;">生活</a>
+            	</div>
+            	<div class="left game_left" id="left6" onmouseover="show('left6')" onmouseout="hid('left6')" onclick="hit('left6')">
+            		<a href="javascript:;">法治</a>
+            	</div>
+            	<div class="left recreation_left" id="left7" onmouseover="show('left7')" onmouseout="hid('left7')" onclick="hit('left7')">
+            		<a href="javascript:;">娱乐</a>
+            	</div>
+            	<div class="left world_left" id="left8" onmouseover="show('left8')" onmouseout="hid('left8')" onclick="hit('left8')">
+            		<a href="javascript:;">社会</a>
+            	</div>
+            	<div class="left science_left" id="left9" onmouseover="show('left9')" onmouseout="hid('left9')" onclick="hit('left9')">
+            		<a  href="javascript:;">科技</a>
+            	</div>
+            	
+			</div>
+			<!-- 中间文章 -->
+			<div class="middle_cls">
+				<!-- 轮播图 -->
+				<div class="carousel_pic_middle">
+					<div class="carousel_pic">
+						<img id="carousel_img" src="" alt=""/>
+					</div>
+					<div class="contents_pic">
+						<div class="con_a"><a href="javascript:;">要闻</a></div>
+						<div class="con_a"><a href="javascript:;">书城</a></div>
+						<div class="con_a"><a href="javascript:;">游戏</a></div>
+						<div class="con_a"><a href="javascript:;">体育</a></div>
+						<div class="con_a"><a href="javascript:;">社会</a></div>
+						<div class="con_a"><a href="javascript:;">娱乐</a></div>
+					</div>
+				</div>
+
+				<div class='pic_div'>
+					<!-- 没有图片 -->
+					<!-- <div class="zero_pic_middle">
+						<label><a href="article.html?articleId=1024">天下第一，英雄本色,凡人修仙，世界这么大，谁想谁去看。。。，世界之大，无奇不有，天下武功为快不破</a>
+						</label>
+						<div class="zero_info">
+							<div class="zero_info_comments">3评论</div>
+							<div class="zero_info_read">10阅读</div>
+						</div>
+					</div> --> 
+					<!-- 一张图片 -->
+					<!-- <div class="middle_cls">
+						<div class="one_pic_middle">
+							<div class="one_pic">
+								<img alt="" src="http://p3.so.qhmsg.com/t014d3503dd2d67d728.jpg">	
+							</div>
+							<div class="one_mid">
+								<div class="one_mid_title">
+									aaa
+								</div>
+								<div class="one_mid_info">
+									<asfsd</a>
+								</div>
+							</div>
+						</div>	 -->
+					<!-- 多张图片(2,3,4) -->
+					<!-- <div class="two_pic_middle">
+						<div class="two_pic_title">
+							<a href="">天下无双</a>
+						</div>
+						<div class="two_pic_show">
+							<img src="http://img.newzhuan.cn/uploaderPath/img/20170911/15051112001.jpg" alt="" />
+							<img src="http://img.newzhuan.cn/uploaderPath/img/20170911/15051112052.jpg" alt="" />
+							<img src="http://img.newzhuan.cn/uploaderPath/img/20170911/150511120888.jpg" alt="" />
+							<img src="http://file-www.sioe.cn/201012/5/1655299809.jpg" alt="" />
+						</div>
+						<div class="two_pic_info">
+							<div class="two_info_comments">2评论</div>
+							<div class="two_info_read">5阅读</div>
+						</div>
+					</div> -->  
+				</div>
+			</div>
+			<!-- 右边广告 -->
+			<div class="right_cls">
+				
+			</div>
+		</div> 
+	</div>
+	
+	<script type="text/javascript">
+			//tab标记：用于判断是否点击了 默认 false (没点击)  idCode记录本次点击的id 
+			var tab=false;
+			var choseid="left1";
+			$("#left1").css("background","#f8f8f8");
+			function show(id){
+				if(id=="hidDiv"){
+					document.querySelector("#"+id).style.display="block";
+				}else{
+					document.querySelector("#"+id).style.backgroundColor="#f8f8f8";
+					document.querySelector("#"+id).style.borderRadius="5px";
+					//document.querySelector("#"+id).find("a").style.color="white";
+					$("#"+id).find("a").css("color","#333");
+				}
+			}
+			function hid(id){
+				if(id=="hidDiv"){
+					document.querySelector("#"+id).style.display="none";
+				}else{
+					if(choseid==id){
+						$("#"+choseid).css("background","#f8f8f8");
+						return;
+					}
+					document.querySelector("#"+id).style.backgroundColor="";
+					$("#"+id).find("a").css("color","#333");
+					
+				}
+			} 
+			
+			//获取文章内容 ,默认url: type=新闻 
+			var ul="http://www.newzhuan.cn"; 
+			var url=ul+"/article/list?type=新闻";
+			getArticle(url);
+			//左边，项目点击选择 
+			function hit(id){
+				if(id=="left1"){
+					url=ul+"/article/list?type=新闻"			
+				}
+				if(id=="left2"){
+					url=ul+"/article/list?type=推广"		
+				}
+				if(id=="left3"){
+					url=ul+"/article/list?type=游戏" 
+				}
+				if(id=="left4"){
+					url=ul+"/article/list?type=军事" 
+				}
+				if(id=="left5"){
+					url=ul+"/article/list?type=生活" 
+				}
+				if(id=="left6"){
+					url=ul+"/article/list?type=法治" 
+				}
+				if(id=="left7"){
+					url=ul+"/article/list?type=娱乐" 
+				}
+				if(id=="left8"){
+					url=ul+"/article/list?type=社会"  
+				}
+				if(id=="left9"){
+					url=ul+"/article/list?type=科技" 
+				}
+				$("#"+choseid).css("background-color","");
+				$("#"+choseid).find("a").css("color","#333");
+				choseid = id;
+				
+				
+				$(".pic_div").empty();  
+				getArticle(url);
+				//console.log(url);
+			} 
+			//发送ajax请求获取数据 
+		    function getArticle(url){
+		    	//var url="http://www.newzhuan.cn/article/list?type=%E6%96%B0%E9%97%BB&pageNum=1&pageSize=10&orderName=update_date&orderWay=desc";
+				$.ajax({
+					url:url, 
+					//data:
+					dataType:"json",
+					type:"get",
+					success:function(result){
+						var list=result.list;
+						console.log(list);
+						showPic(result);
+					}
+				});
+			}
+		    //展示文章信息 
+		   function showPic(result){
+		   		 for(var i=0;i<result.list.length;i++){
+			    	var title=result.list[i].title;
+			    	var time=result.list[i].createDate;
+			    	var titleUrl=result.list[i].redirectUrl;
+			    	var picNum=result.list[i].imgList.length;
+			    	var comments=result.list[i].commentNumber;
+			    	var read=result.list[i].readingNumber;
+			    	var articleId=result.list[i].articleId;
+			    	//判断是否有图片 
+			    	//1、没图片
+			    	if(picNum==0){
+			    		$(".pic_div").append("<div class='zero_pic_middle'><label><a href='article.html?articleId="
+			    				  +articleId+"'>"
+			    				  +title+"</a></label><div class='zero_info'><div class='zero_info_comments'>"
+			    				  +comments+"评论</div><div class='zero_info_read'>"
+			    				  +read+"阅读</div></div></div>");
+			    	}
+			    	//2、有图片 
+			    	if(picNum>0){
+			    		var picUrl=result.list[i].imgList[0].imgAddress;
+			    		//判断是否是轮播图片 
+				    	if(title.indexOf("轮播")>=0){ 
+				    		console.log(picUrl);
+				    		$(".carousel_pic_middle").css("display","block");
+				    		$("#carousel_img").attr("src",picUrl);
+				    	}else{
+				    		if(picNum==1){	
+				    		//一张图片展示 
+				    			$(".pic_div").append("<div class='one_pic_middle'><div class='one_pic'>"
+		    							 +"<a href='article.html?articleId="
+		    							 +articleId+"'><img alt='' src='"
+		    							 +picUrl+"'></a></div><div class='one_mid'><div class='one_mid_title'><a href='article.html?articleId="
+		    							 +articleId+"'>"
+		    							 +title+"</a></div><div class='one_mid_info'><div class='one_info_comments'>"
+		    							 +comments+"评论</div><div class='one_info_read'>"
+		    							 +read+"阅读</div></div></div>");	
+				    		}
+				    		//两张图片 
+			    			if(picNum==2){
+			    				var picUrl1=result.list[i].imgList[1].imgAddress;
+			    				$(".pic_div").append("<div class='two_pic_middle'><div class='two_pic_title'><a href='article.html?articleId="
+			    						+articleId+"'>"
+				    					+title+"</div><div class='two_pic_show'><a href='article.html?articleId="
+				    					+articleId+"'><img alt='' src='"
+				    					+picUrl+"'></a><a href='article.html?articleId="
+				    					+articleId+"'><img alt='' src='"
+				    					+picUrl1+"'></a></div><div class='two_pic_info'><div class='two_info_comments'>"
+				    					+comments+"评论</div><div class='two_info_read'>"
+				    					+read+"阅读</div></div></div>");
+			    			}
+				    		//三张图片 		
+			    			if(picNum==3){
+			    				var picUrl1=result.list[i].imgList[1].imgAddress;
+			    				var picUrl2=result.list[i].imgList[2].imgAddress;
+			    				
+			    				$(".pic_div").append("<div class='two_pic_middle'><div class='two_pic_title'><a href='article.html?articleId="
+			    						+articleId+"'>"
+				    					+title+"</a></div><div class='two_pic_show'><a href='article.html?articleId="
+				    					+articleId+"'><img alt='' src='"
+				    					+picUrl+"'></a><a href='article.html?articleId="
+				    					+articleId+"'><img alt='' src='"
+				    					+picUrl1+"'></a><a href='article.html?articleId="
+				    					+articleId+"'><img alt='' src='"
+				    					+picUrl2+"'></a></div><div class='two_pic_info'><div class='two_info_comments'>"
+				    					+comments+"评论</div><div class='two_info_read'>"
+				    					+read+"阅读</div></div></div>"); 
+			    			}		
+				    	}
+			    	}		
+		    	}	
+		    }   
+	</script>
+</body>
+</html>

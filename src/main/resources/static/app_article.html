@@ -18,16 +18,16 @@
 #newsDeatilsBody *{
 max-width:100% !important;
 }
-.appArticleContent *{
+/* .appArticleContent *{
 font-size:1rem !important;
-}
+} */
 </style>
 </head>
 <body >
 	<div  class="comment-wrap "  >
 			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#ececec)" >
-			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
- -->				<div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
+			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div> -->
+ 			<!-- <div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
 					<div></div>
 					<div></div>
 					<div></div>
@@ -40,12 +40,14 @@ font-size:1rem !important;
 					<div></div>
 					<div></div>
 					<div></div>
-				</div>
+				</div> -->
 			</div>
 		<!-- 新闻列表 -->
-<!-- 		<div  style="margin-top:50px !important;display:none;" id="newsDeatilsBody"   > -->
 		<div style="margin-top:0px !important;display:none;" on-finish-render-filters id="newsDeatilsBody"   >
-		<div style="padding:2%;background-color:#fff;" >
+<!-- 	
+	<div  style="margin-top:0px !important;"  on-finish-render-filters id="newsDeatilsBody"   >
+	 -->
+		<div style="padding:0 4%;background-color:#fff;" >
 			<div class="media-center">
 			
 				<div >
@@ -57,6 +59,8 @@ font-size:1rem !important;
 					阅读：<span ng-bind="article.readingNumber || '0'"></span>
 					</span>
 				</div >
+				<div style="font-size:1rem !important;" class="appArticleContent" ng-bind-html="article.content" >
+				</div> 
 				
 				<!-- 广告1 -->
 		<div class="listGroup swiper-slide" style="height:100%;width:100%;margin:10px 0;" ng-repeat="article in ad1List"  ng-click="goAd(article)" >
@@ -75,13 +79,6 @@ font-size:1rem !important;
 			</div>
 		<!-- 广告2end -->
 				
-				 <div style="font-size:1rem !important;" class="appArticleContent" ng-bind-html="article.content" >
-				</div> 
-				
-
-
-			
-				 		
 			</div>
 		</div>
 		</div>
@@ -254,12 +251,8 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		<!-- 底部 end-->
 		<!-- cnzz -->
 		<div style="display:none;">
-		<!-- <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " 
-
-https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260079475'%3E%3C/span%3E%3Cscript src='" + 
-
-cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascript'%3E%3C/script%3E"));</script>
- -->		</div>
+		<script src="https://s22.cnzz.com/z_stat.php?id=1264379874&web_id=1264379874" language="JavaScript"></script>
+		</div>
 		
 	<script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
 	<!-- <script src="/resources/js/bootstrap3.2.0.js"></script> -->
@@ -577,13 +570,44 @@ cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascrip
     		          $(".loadAnimation").hide();
     		          	return;
     		          }
+    		          
+    		            /**随机取
+    		        	  *arr数组
+    		        	  *num 取的个数
+    		        	  */
+    		        	  function  randomTake(arr,num){
+						    //新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+						    var temp_array = new Array();
+						    for (var index in arr) {
+						        temp_array.push(arr[index]);
+						    }
+						    //取出的数值项,保存在此数组
+						    var return_array = new Array();
+						    for (var i = 0; i<num; i++) {
+						        //判断如果数组还有可以取出的元素,以防下标越界
+						        if (temp_array.length>0) {
+						            //在数组中产生一个随机索引
+						            var arrIndex = Math.floor(Math.random()*temp_array.length);
+						            //将此随机索引的对应的数组元素值复制出来
+						            return_array[i] = temp_array[arrIndex];
+						            //然后删掉此索引的数组元素,这时候temp_array变为新的数组
+						            temp_array.splice(arrIndex, 1);
+						        } else {
+						            //数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+						            break;
+						        }
+						    }
+						    return return_array;
+						}
     		        	  if(a.pageNum>1){
-    		        		  for (var int = 0; int < data.length; int++) {
+    		        	 $scope.articleList =$scope.articleList.concat(randomTake(data.list,3));
+    		        		  /* for (var int = 0; int < data.length; int++) {
+    		        	  		var gailv=Math.floor(Math.random()*10);
     		        			$scope.articleList.push(data.list[int]); 
-							}
+							} */
     		        	  }else{
-    		        	  $scope.articleList=data.list; 
-    		        		   
+    		        	 // $scope.articleList=data.list; 
+    		        	$scope.articleList =randomTake(data.list,3);
     		        	  } 
     		        	  myUtils.myPrevToast("加载完成", null, "remove");
     		          }  

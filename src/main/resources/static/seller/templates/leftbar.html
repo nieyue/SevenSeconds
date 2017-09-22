@@ -148,6 +148,37 @@
 				</li>
 				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 					<a href="javascript:;">
+						<span class="glyphicon glyphicon-fire"></span>
+						<span >活动管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-duplicate"></span>
+								<span >活动类型管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.activityCateList">活动类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.activityCateAdd">增加活动类型</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-fire"></span>
+								<span >活动管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.activityList">活动列表</a></li>
+								<li><a class="text-center" ui-sref="main.activityAdd">增加活动</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
 						<span class="glyphicon glyphicon-asterisk"></span>
 						<span >展示管理 </span>
 						<span class="glyphicon arrow"></span>

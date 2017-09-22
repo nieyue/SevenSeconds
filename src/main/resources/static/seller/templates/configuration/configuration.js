@@ -368,7 +368,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
        					console.log($scope.appVersion)
        	   				if(data.code==200){
        	   				myUtils.myLoadingToast("删除成功", function(){
-       	   				$scope.appVersionListInit();
+       	   				$scope.appVersionListInit($scope.platform,$scope.status);
        	   				}); 
        	   				
        	   				}else{
@@ -420,7 +420,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                  				        formData:[
                  				            {key:"editorUpload",value:$("#appVersionLinkFileUpload").get(0).files[0]}
                  				            ],
-                 				        url:"http://"+ $rootScope.imgUploadDomain+"/img/add",
+                 				        url:"http://"+ $rootScope.imgUploadDomain+"/file/add",
                  				        success:function(data){
                  				            console.log(data)
                  				            if(data){

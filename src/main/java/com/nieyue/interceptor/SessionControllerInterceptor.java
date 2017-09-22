@@ -214,8 +214,10 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				||method.getName().equals("loadAcount")
         				){
         			//加载自身账户
-        			if((method.getName().equals("loadAcount")
-        					&& request.getRequestURI().indexOf(sessionAcount.getAcountId().toString())>-1)){
+        			if((	method.getName().equals("loadAcount")
+        					|| request.getRequestURI().equals("/acount/list")
+        					)
+        					&& request.getRequestURI().indexOf(sessionAcount.getAcountId().toString())>-1){
         				return true;
         			}
         			//获取合伙人

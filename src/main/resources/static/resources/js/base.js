@@ -1005,6 +1005,15 @@ myTipToast : function(imgUrl ) {
 	});
 	},
 	/**
+	 * 自定义fullTemplate
+	 */
+	fullTemplate : function(value) {
+		$("body")
+		.append(
+				"<div id='fullTemplateDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;z-index:9998;'></div><div id='fullTemplate' style='z-index:9999;color:#000;background-color:#fff;text-align:center;line-height:30px;border:1px solid #fff;border-radius:5px;height:100%;width:100%;top:0;left:0;position:fixed;font-size:20px;'>"
+				+ "<div style='position:absolute;top:20px;width:100%;text-align:center;'>"+value+"</div></div>");
+	},
+	/**
 	 * 自定义登录退出
 	 */
 	myLoginOut : function(value,fn) {

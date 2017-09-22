@@ -327,6 +327,10 @@ INSERT IGNORE INTO role_tb (name,duty,update_date)
 VALUES ("用户","用户",now()); 
 INSERT IGNORE INTO role_tb (name,duty,update_date) 
 VALUES ("书城管理员","书城管理员",now()); 
+INSERT IGNORE INTO role_tb (name,duty,update_date) 
+VALUES ("企业号","企业号",now()); 
+INSERT IGNORE INTO role_tb (name,duty,update_date) 
+VALUES ("个人号","个人号",now()); 
 
 #设置初始管理员密码MD5加密123456
 INSERT IGNORE INTO acount_tb (nickname,scale,phone,email,password,create_date,login_date,role_id) 

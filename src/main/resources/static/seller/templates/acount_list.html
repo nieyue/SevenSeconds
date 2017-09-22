@@ -54,6 +54,7 @@
 			<table class="table table-bordered">
 			<tr>
 			  <th>序号</th>
+			  <th>账户ID</th>
 			  <th>渠道ID</th>
 			  <th>昵称</th>
 			  <th>图像</th>
@@ -83,6 +84,9 @@
 			<tr  ng-repeat="acount in acountList.list"ng-style="{color:acount.status==0?'green':acount.status==1?'red':acount.status==2?'#989804':'black'}" >
 			  <td >
 			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="acount.acountId"></span>
 			  </td>
 			  <td >
 			  <span ng-bind="(acount.spreadId==0||acount.spreadId==null)?'自然量':acount.spreadId">自然量</span>

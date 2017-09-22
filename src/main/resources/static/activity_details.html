@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html >
+<head>
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="活动、详情">
+<meta charset="UTF-8">
+<meta name="description"
+	content="活动、详情">
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+</head>
+<style>
+html,body,div,span{
+margin:0;
+padding:0;
+}
+html,body{
+font-size:18px;
+background-color:#f3f3f3;
+}
+.comment-list {
+    height: 100%;
+    width: 100%;
+    border-bottom:1px solid #F3F3F3;
+}
+.comment-list {
+    height: 100%;
+    width: 100%;
+    border-bottom:1px solid #F3F3F3;
+}
+
+.comment-list-content {
+	margin:0 0;
+    height: 100%;
+    width: 94%;
+    font-size:0.9rem;
+     margin :1% 3%;
+}
+.comment-list-img{
+width:100%;
+}
+
+.comment-hot-icon {
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    width: 2px;
+    border-left: 2px solid #189ADB;
+}
+.comment-list-content-title {
+    color:#189ADB;
+    display: inline-block;
+    font-weight: 500;
+    background-color:#fff;
+    text-align:center;
+    padding:0.2rem;
+    border-radius:5px ;
+}
+.comment-list-content-value {
+    color:#189ADB;
+    font-weight: 500;
+}
+/**
+*底部固定按钮
+*/
+.comment-list-bottom{
+position:fixed;
+left:0;
+bottom:0;
+width:100%;
+}
+.comment-list-bottom-btn{
+width:100%;
+height:50px;
+color:#fff;
+border:0px;
+font-size:1rem;
+background:linear-gradient(to bottom, #35caef,#189adb)
+}
+/**
+*遮罩
+*/
+.comment-mask-full{
+position:fixed;
+left:0;
+top:0;
+background:100% 100%;
+background-color:#000;
+height:100%;
+width:100%;
+opacity:0.5;
+z-index:9999;
+display:none;
+}
+.comment-mask-form{
+position:fixed;
+left:0;
+top:0;
+background:100% 100%;
+margin:15% 5%;
+background-color:#f3f3f3;
+width:90%;
+z-index:99999;
+/* opacity:0.9; */
+border-radius:10px;
+display:none;
+}
+.comment-mask-ball{
+position:absolute;
+left:50%;
+top:0;
+margin-left:-40px;
+margin-top:-15%;
+background-color:#f3f3f3;
+height:80px;
+width:80px;
+z-index:999999;
+border:5px solid #fff;
+border-radius:80px;
+text-align:center;
+}
+.comment-mask-form-div{
+margin:2% 0;
+}
+.comment-mask-form-label{
+display:inline-block;
+width:20%;
+}
+.comment-mask-form-input{
+padding-left:10px;
+width:60%;
+height:30px;
+border:2px solid #fff;
+background-color: #f3f3f3;
+}
+</style>
+<body >
+	<div>
+		<div>
+			<img alt="" class="comment-list-img" id="imgAddressId" src="">
+<!-- 			<img alt="" class="comment-list-img" id="imgAddressId" src="http://img.newzhuan.cn/uploaderPath/img/20170919/15058014972_meitu_22.jpg"> -->
+		</div>
+	</div>
+	<div class="comment-list" style="margin-top:20px;">
+		<div class="comment-list-content">
+			<span class="comment-list-content-title" style="color:#333333;">
+			活动对象
+			</span>
+			:
+			<span class="comment-list-content-value" id="targetId" style="color:#333333;">
+			</span>
+		</div>
+	</div>
+	<div class="comment-list" >
+		<div class="comment-list-content">
+			<span class="comment-list-content-title" style="color:#333333;">
+			活动时间
+			</span>
+			:
+			<span class="comment-list-content-value" id="startToEndDateId" style="color:#999;font-size:14px;">
+			</span>
+		</div>
+	</div>
+	<div class="comment-list" >
+		<div class="comment-list-content">
+			<span class="comment-list-content-title" style="color:#333333;">
+			活动内容
+			</span>
+			:
+		</div>
+	</div>
+	<div class="comment-list" style="background-color:#fff;margin:0 3%;margin-bottom:60px;width:90%;height:100%;padding:2%;" >
+		<div class="comment-list-content" style="height:100%;" id="contentId">
+		</div>
+	</div>
+	<div class="comment-list-bottom">
+			<button class="comment-list-bottom-btn" id="activityFormId">立即参加</button>
+	</div>
+	<!-- 遮罩填写数据 -->
+	<div>
+		<div class="comment-mask-full"></div>
+		<div class="comment-mask-form" >
+		<div class="comment-mask-ball">
+			<img alt="" style="width:40px;margin-top:20px" src="http://img.newzhuan.cn/uploaderPath/img/20170919/1505807009pencil.png">
+		</div>
+			<div style="margin:20% 5%;font-size:16px" >
+				<div class="comment-mask-form-div" >
+					<span class="comment-mask-form-label">
+					姓名：
+					</span>
+					<input type="text" class="comment-mask-form-input" id="activityName"  placeholder="姓名"/>
+				</div>
+				<div class="comment-mask-form-div" >
+				<span class="comment-mask-form-label">
+					手机：
+					</span>
+					<input type="text" class="comment-mask-form-input"  id="activityPhone"  placeholder="手机号码"/>
+				</div>
+				<div class="comment-mask-form-div" style="height:60px;" id="activityAddressWrapId">
+				<span class="comment-mask-form-label" style="height:100%;vertical-align:top;">
+					地址：
+					</span>
+					<textarea  class="comment-mask-form-input" style="height:100%;" id="activityAddress" cols="3"  placeholder="地址">
+					</textarea>
+<!-- 					
+<input type="text" class="comment-mask-form-input"  placeholder="地址"/> -->
+				</div>
+			</div>
+				<div class="" >
+				<button style="width:100%;height:50px;border:1px solid #fff;;background-color:#f3f3f3;border-bottom-left-radius:10px;border-bottom-right-radius:10px;" id="activitySubmit">确定</button>
+				</div>
+		</div>
+	</div>
+	<!-- end遮罩填写数据 -->
+	<!-- 遮罩预加载 -->
+	<div id="preLoadingId" style="width:100%;height:100%;position:fixed;left:0;top:0;">
+		<img style="width:100%;height:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20170920/1505895875QQ%E5%9B%BE%E7%89%8720170920162246.png"/>
+	</div>
+	<!-- end遮罩预加载 -->
+	<script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
+<!--
+ 	<script src="/resources/js/domainManager.js"></script>
+	<script src="/resources/js/base.js"></script>
+	 -->
+	<script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
+	<script src="http://www.newzhuan.cn/resources/js/base.js"></script> 
+	
+	<script>
+	$(function(){
+	var hostUrl="http://"+domainManager.ActivityCenter;
+	//显示表单
+	$("#activityFormId").on("click",function(){
+	$(".comment-mask-full").css("display","block");
+	$(".comment-mask-ball").css("display","block");
+	$(".comment-mask-form").css("display","block");
+	});
+	//隐藏表单
+	$(".comment-mask-full").on("click",function(){
+	$(".comment-mask-full").css("display","none");
+	$(".comment-mask-ball").css("display","none");
+	$(".comment-mask-form").css("display","none");
+	});
+	var activityId=myUtils.GetQueryString("activityId");//活动id
+	var acountId=myUtils.GetQueryString("acountId");//账户id
+	var haveAddress=true;//默认有地址填写，
+	if(!activityId||!myUtils.userVerification.catNum.test(activityId)){
+		myUtils.fullTemplate("页面已删除");
+       document.body.style.overflow='hidden';
+		return ;
+	}
+	//时间解析
+	function dateTransition(timestamp){
+		var date = new Date(timestamp);
+		M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
+		D = date.getDate() + '日';
+		h = date.getHours() + ':';
+		m = (date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes());
+	return M+D+h+m; 
+	
+	}
+	
+	//初始化数据
+	function init(){
+	$.ajax({
+				url:hostUrl+'/activity/'+activityId,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				//headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					if(data.code==200){
+					var activity=data.list[0];
+					$("#imgAddressId").attr("src", activity.imgAddress);//设置图片
+					$("#targetId").text(activity.target);//设置活动对象
+					$("#startToEndDateId").text(dateTransition(activity.startDate)+"-"+dateTransition(activity.endDate));//设置活动时间
+					$("#contentId").html(activity.content);//活动内容
+					if(activity.activityCate.name=="会议"){
+					haveAddress=false;//没有地址
+					$("#activityAddressWrapId").remove();
+					}
+					$("#preLoadingId").remove();//去除遮罩
+					}
+					
+				}
+			});
+	}
+	
+				var num=1;
+    			//阅读
+            	function getWebRead(activityId,tgAcountId){
+            	
+    		 var uv=0;//默认为0不是独立访客，没有uv,1为有uv
+            	 //只有不存在，才是新访客
+            	if(!myUtils.getCookie("activityUv"+myUtils.GetQueryString("activityId"))){
+            		myUtils.setCookie("activityUv"+myUtils.GetQueryString("activityId"), myUtils.GetQueryString("activityId"), myUtils.currentToEndTime());
+            		uv=1;
+            	}
+            		$.ajax({  
+  		          type : "post",  
+  		          url : hostUrl+"/activity/webRead", 
+  		          data:{
+  		          activityId:activityId,
+  		          acountId:tgAcountId,
+  		          uv:uv
+  		          }, 
+  		          success : function(data){
+  		         if(data.code!=200){
+  		         num++;
+  		         if(num<=3){
+  		         getWebRead(myUtils.GetQueryString("activityId"),tgAcountId);
+  		         }
+  		         return;
+  		         }
+  		          }  
+  		          });
+  		          }
+    		var tgAcountId=myUtils.GetQueryString("acountId")||1000;
+    		 getWebRead(myUtils.GetQueryString("activityId"),tgAcountId);//点击数据
+			init();//初始化活动
+	//表单提交
+	$("#activitySubmit").on("click",function(){
+	if($("#activityName").val().trim().length<2){
+					myUtils.myLoadingToast("姓名至少两位");
+					return ;
+	}
+	if(!/(^1[0-9]{10}$)/.test($("#activityPhone").val().trim())){
+					myUtils.myLoadingToast("手机号错误");
+					return ;
+	}
+	if(haveAddress){
+	if($("#activityAddress").val().trim().length<8){
+		myUtils.myLoadingToast("请填写详细地址，最少8位");
+		return ;
+	}
+	}
+	//添加数据
+	var activityUserData={
+	name:$("#activityName").val().trim(),
+	phone:$("#activityPhone").val().trim(),
+	activityId:activityId
+	};
+	//如果存在就添加
+	if(acountId&&myUtils.userVerification.catNum.test(acountId)){
+	activityUserData.acountId=acountId;
+	}
+	//如果存在就添加
+	if(haveAddress){
+	activityUserData.address=$("#activityAddress").val().trim();
+	}
+	$.ajax({
+				url:hostUrl+'/activityUser/add',
+				data:activityUserData,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				//headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					if(data.code==200){
+					myUtils.myLoadingToast("提交成功");
+					$(".comment-mask-full").click();
+					}else{
+						myUtils.myLoadingToast("提交失败，请检查！");
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					myUtils.myLoadingToast("提交失败，请检查！");
+				}
+			});
+	
+	
+	});
+	});
+	
+	</script>
+</body>
+</html>

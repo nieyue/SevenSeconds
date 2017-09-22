@@ -59,7 +59,7 @@
    <label class="text-danger" >※推荐类型</label>
   <div class="comment-input-margin " >
      <select style="width:180px;height:50px;" ng-model="book.recommend" name="recommend"
-     ng-options="sa.id as sa.value for sa in [{id:0,value:'不推荐'},{id:1,value:'封推'},{id:2,value:'精推'},{id:3,value:'优推'}]">
+     ng-options="sa.id as sa.value for sa in bookRecommend">
   </select>
   </div>
    <label class="text-danger" >※费用</label>
@@ -67,6 +67,15 @@
      <select style="width:180px;height:50px;" ng-model="book.cost" name="cost"
      ng-options="sa.id as sa.value for sa in [{id:0,value:'免费'},{id:1,value:'收费'}]">
   </select>
+  </div>
+   <label  class="text-danger">跳转url</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="book.redirectUrl" name="redirectUrl"  
+    ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
+   placeholder="http://或https://">
+    <div class="text-danger alert alert-danger " ng-show="myAddBookForm.redirectUrl.$dirty && myAddBookForm.redirectUrl.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确跳转url
+				    </div>
   </div>
 <label  class="text-danger" >※状态</label>
   <div class=" comment-input-margin" >

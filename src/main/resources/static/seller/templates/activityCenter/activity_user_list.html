@@ -1,0 +1,62 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.activityList">返回活动列表</button>
+</div>
+<!-- 活动用户列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">活动用户列表</label>
+</div>
+<!-- 活动用户列表选择end -->
+<!-- 活动用户列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>用户名</th>
+			  <th>用户手机号</th>
+			  <th>地址</th>
+			  <th>账户ID</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			</tr>
+			<tr ng-repeat="activityUser in activityUserList.list" >
+			  <td >
+			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="activityUser.name"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="activityUser.phone"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="activityUser.address"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="activityUser.acountId"></span>
+			  </td>
+			  <td ng-bind="activityUser.createDate"></td>
+			  <td ng-bind="activityUser.updateDate"></td>
+			</tr>
+			</table>
+		</div>
+<!-- 活动用户列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

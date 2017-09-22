@@ -1,13 +1,21 @@
 /**
  * 书城JS
  */
+//初始化书籍频道
+mainApp.value('bookRecommend',[
+	{id:0,value:'不推荐'},
+	{id:1,value:'封推'},
+	{id:2,value:'精推'},
+	{id:3,value:'优推'},
+	{id:5,value:'男生最爱'},
+	{id:6,value:'女生最爱'}
+	]);
 mainApp.config(function ($stateProvider, $urlRouterProvider) {
 	var requestDomainUrl="http://"+domainManager.BookStore;//请求数据url
 	//var requestDomainUrl="http://"+location.hostname+":8082";//请求数据url
 	//var requestDomainUrl="http://book.newzhuan.cn";//请求数据url
 	var imgUploadDomainUrl="http://"+domainManager.MyWangEditor;//请求图片上传url
 	//var imgUploadDomainUrl="http://img.newzhuan.cn";//请求图片上传url
-	
      	$stateProvider
      	.state("main.bookCateList", {//书类型列表
             url:"/bookCateList",
@@ -190,8 +198,8 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             views: {
             	'rightbody@main': {
                     templateUrl: "/seller/templates/bookStore/book_list.html",
-                    controller:function($rootScope,$scope,$state){
-            
+                    controller:function($rootScope,$scope,$state,bookRecommend){
+                    	$scope.bookRecommend=bookRecommend;//注入
             //列表
             
             $scope.bookList=[]; 		
@@ -272,7 +280,8 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             views: {
             	'rightbody@main': {
                     templateUrl: "/seller/templates/bookStore/book_update.html",
-                    controller:function($rootScope,$scope,$state){
+                    controller:function($rootScope,$scope,$state,bookRecommend){
+                    	$scope.bookRecommend=bookRecommend;//注入
             		//获取参数bookId
             		
                     $scope.updateBookId=$state.params.bookId;
@@ -383,7 +392,8 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             views: {
             	'rightbody@main': {
                     templateUrl: "/seller/templates/bookStore/book_add.html",
-                    controller:function($rootScope,$scope,$state){
+                    controller:function($rootScope,$scope,$state,bookRecommend){
+                    $scope.bookRecommend=bookRecommend;//注入
 				    $scope.book={
 				    title:'',
 				    bookCateId:'',

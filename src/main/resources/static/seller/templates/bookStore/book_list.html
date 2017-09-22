@@ -20,6 +20,7 @@
 			  <th>费用</th>
 			  <th>收藏数</th>
 			  <th>数据</th>
+			  <th>跳转url</th>
 			  <th>状态</th>
 			  <th>创建时间</th>
 			  <th>更新时间</th>
@@ -43,7 +44,7 @@
 			  <span ng-bind="book.title"></span>
 			  </td>
 			  <td >
-			  <span style="color:#999" ng-bind="book.summary"></span>
+			  <span style="color:#999" ng-bind="(book.summary).substring(0,20)"></span>
 			  </td>
 			  <td >
 			  <span ng-bind="book.author"></span>
@@ -56,7 +57,8 @@
 			  <span ng-bind="book.wordNumber>10000?(book.wordNumber/10000).toFixed(2)+'万':book.wordNumber"></span>
 			  </td>
 			  <td >
-			  <span ng-bind="book.recommend==0?'不推荐':book.recommend==1?'封推':book.recommend==2?'精推':book.recommend==3?'优推':''"></span>
+			  <span ng-repeat="recommend in bookRecommend" ng-if="recommend.id==book.recommend" ng-bind="recommend.value"></span>
+<!-- 			  <span ng-repeat="recommend in bookRecommend" ng-if="recommend.id==book.recommend" ng-bind="book.recommend==0?'不推荐':book.recommend==1?'封推':book.recommend==2?'精推':book.recommend==3?'优推':''"></span> -->
 			  </td>
 			  <td >
 			  <span ng-class="book.cost==0?'text-success':'text-danger'" ng-bind="book.cost==0?'免费':book.cost==1?'收费':''"></span>
@@ -74,6 +76,9 @@
 				数据链接
 				</a>
 			  </div>
+			  </td>
+			  <td >
+			  <span  ng-bind="book.redirectUrl"></span>
 			  </td>
 			  <td >
 			  <span  ng-bind="book.status==1?'上架':book.status==0?'下架':''"></span>

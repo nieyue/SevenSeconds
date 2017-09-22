@@ -1,0 +1,15 @@
+    <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">添加活动类型</label>
+<br/>
+<!-- 增加 -->
+	<form novalidate name="myAddActivityCateForm" ng-submit="addActivityCateForm()">
+    <label  class="text-danger">※活动类名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="activityCate.name" name="name" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddActivityCateForm.name.$dirty && myAddActivityCateForm.name.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确活动类名
+				    </div>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled=" myAddActivityCateForm.$invalid || formDisabled " value="提交"/>
+</form>
+<!-- 增加 end-->

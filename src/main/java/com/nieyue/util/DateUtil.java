@@ -321,6 +321,6 @@ public class DateUtil {
         System.out.println(getEndTime().getTime());*/
         
        // DateUtil.getSeparatedTime(s0.getCreateDate(), new Date())
-       
+       System.out.println(MyDESutil.getMD5("jiaxingyufa"));
     }  
 }

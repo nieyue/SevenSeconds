@@ -179,6 +179,37 @@
 				</li>
 				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 					<a href="javascript:;">
+						<span class="glyphicon glyphicon-modal-window"></span>
+						<span >应用管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-duplicate"></span>
+								<span >应用类型管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.appCateList">应用类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.appCateAdd">增加应用类型</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-modal-window"></span>
+								<span >应用管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.appList">应用列表</a></li>
+								<li><a class="text-center" ui-sref="main.appAdd">增加应用</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
 						<span class="glyphicon glyphicon-asterisk"></span>
 						<span >展示管理 </span>
 						<span class="glyphicon arrow"></span>

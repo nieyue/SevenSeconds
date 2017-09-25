@@ -272,29 +272,6 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             	'rightbody@main': {
                     templateUrl: "/seller/templates/activityCenter/activity_update.html",
                     controller:function($rootScope,$scope,$state){
-                    	//初始化datetimerpicker
-                    	//开始时间：  
-                    	$('#startDateId').datetimepicker({
-                    		language: 'zh-CN',
-                    		format: 'yyyy-mm-dd hh:ii:ss',
-                    		startDate : new Date(),
-                    		autoclose: true
-                    	}).on('changeDate',function(e){  
-                    		var nowDate = e.date; 
-                    		//保证开始时间是结束时间的开头  
-                    	    $('#endDateId').datetimepicker('setStartDate',nowDate);
-                    	});  
-                    	//结束时间：  
-                    	$('#endDateId').datetimepicker({ 
-                    		language: 'zh-CN',
-                    		format: 'yyyy-mm-dd hh:ii:ss',
-                    		startDate : new Date(),
-                    		autoclose: true
-                    	}).on('changeDate',function(e){  
-                    		 var nowDate = e.date;
-                    		 //保证结束时间是开始时间的结尾
-                    	    $('#startDateId').datetimepicker('setEndDate',nowDate); 
-                    	});  
                     	 var editor=$rootScope.myWangEditor("activityUpdateEditor");
                     //获取参数activityId
                     $scope.updateActivityId=$state.params.activityId;
@@ -331,6 +308,30 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
                     	if(data.code==200){
                     		$scope.activity=data.list[0];
                     		editor.$txt.html($scope.activity.content);
+                    		//初始化datetimerpicker
+                        	//开始时间：  
+                        	$('#startDateId').datetimepicker({
+                        		language: 'zh-CN',
+                        		format: 'yyyy-mm-dd hh:ii:ss',
+                        		startDate : new Date($scope.activity.startDate),
+                        		autoclose: true
+                        	}).on('changeDate',function(e){  
+                        		var nowDate = e.date; 
+                        		//保证开始时间是结束时间的开头  
+                        	    $('#endDateId').datetimepicker('setStartDate',nowDate);
+                        	});  
+                        	//结束时间：  
+                        	$('#endDateId').datetimepicker({ 
+                        		language: 'zh-CN',
+                        		format: 'yyyy-mm-dd hh:ii:ss',
+                        		startDate : new Date($scope.activity.endDate),
+                        		autoclose: true
+                        	}).on('changeDate',function(e){  
+                        		 var nowDate = e.date;
+                        		 //保证结束时间是开始时间的结尾
+                        	    $('#startDateId').datetimepicker('setEndDate',nowDate); 
+                        	}); 
+                    		
                     		$scope.$apply();
                     		myUtils.myLoadingToast("加载成功" ); 
                     	}else{

@@ -1,0 +1,137 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.appList">返回应用列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">修改应用</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myUpdateAppForm" ng-submit="updateAppForm()">
+   <label  class="text-danger">※应用类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="app.appCateId" name="appCateId"
+    ng-options="appCate.appCateId as appCate.name for appCate in appCateList;">
+  </select>
+  </div>
+    <label  class="text-danger">※版面类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="app.type" name="type"
+    ng-options="appType.id as appType.value for appType in appTypes;">
+  </select>
+  </div>
+    <label  class="text-danger">※应用来源</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="app.source" name="source" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.source.$dirty && myAddAppForm.source.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用来源
+				    </div>
+  </div>
+    <label  class="text-danger">※应用版本</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="app.version" name="version" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.version.$dirty && myAddAppForm.version.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用来源
+				    </div>
+  </div>
+    <label  class="text-danger">※应用名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="app.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.title.$dirty && myAddAppForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用名
+				    </div>
+  </div>
+    <label class="text-danger" >※应用简介</label>
+  <div class="comment-input-margin " >
+    <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="summary"
+     ng-model="app.summary" required ng-minlength="1" ng-maxlength="255" placeholder="255位"  placeholder="1-255位" ></textarea>
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.summary.$dirty && myAddAppForm.summary.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-255位
+	</div>
+  </div>
+   <label class="text-danger" >※应用容量(单位：MB)</label>
+  <div class="comment-input-margin">
+    <input type="text" class="comment-input" required name="capacity"
+     ng-model="app.capacity" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.capacity.$dirty && myAddAppForm.capacity.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label  class="text-danger">※应用封面图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=120">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=120">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>
+    <input type="file" class="comment-input"   id="appImgFileUpload">
+  <div  style="display: inline-block;position: relative;" ng-mouseenter="delAppImgBtn=true">
+  <img   ng-src="{{app.imgAddress||''}}"/>
+  </div>
+  </div>
+  
+  <label  class="text-danger">※详情图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+ 	<div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadioDetails" ng-init="imgConfigRadioDetails=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadioDetails" ng-change="imgConfigWidthDetails='';imgConfigHeightDetails='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadioDetails==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidthDetails" ng-init="$parent.imgConfigWidthDetails=180">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeightDetails" ng-init="$parent.imgConfigHeightDetails=300">
+ 		</div>
+ 		<div ng-if="imgConfigRadioDetails==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>   
+    <input type="file" class="comment-input"   id="appImgFileUploadDetails">
+  <div ng-repeat="appImg in app.appImgList" style="display: inline-block;position: relative;" ng-mouseenter="delAppImgBtn=true">
+  <img  ng-src="{{appImg.imgAddress||''}}"/>
+  <span  ng-click="delAppImg(appImg)" style="background-color:#fff;position: absolute;top:0;right:0">×</span>
+  </div>
+  </div>
+  
+   <label  class="text-default" >*安卓链接地址</label>
+  <div class=" comment-input-margin" >
+    <input type="text" class=" comment-input"
+   ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
+      ng-model="app.androidUrl" name="androidUrl"
+      placeholder="http://或https://">
+      <div class="text-danger alert alert-danger " ng-show="myAddAppForm.androidUrl.$dirty && myAddAppForm.androidUrl.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>链接地址错误
+	</div>
+     </div>
+   <label  class="text-default" >*IOS链接地址</label>
+  <div class=" comment-input-margin" >
+    <input type="text" class=" comment-input"
+   ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
+      ng-model="app.iosUrl" name="iosUrl"
+      placeholder="http://或https://">
+      <div class="text-danger alert alert-danger " ng-show="myAddAppForm.iosUrl.$dirty && myAddAppForm.iosUrl.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>链接地址错误
+	</div>
+     </div>
+   <label class="text-danger" >※应用内容</label>
+  <div class="comment-input-margin " >
+    <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="content"
+     ng-model="app.content" required ng-minlength="1" ng-maxlength="65535" placeholder="65535位"  placeholder="1-65535位" ></textarea>
+    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.content.$dirty && myAddAppForm.content.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-65535位
+	</div>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="app.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateAppForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

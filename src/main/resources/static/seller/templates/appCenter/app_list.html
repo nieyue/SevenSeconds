@@ -1,0 +1,115 @@
+<!-- 应用列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">应用列表</label>
+</div>
+<!-- 应用列表选择end -->
+<!-- 应用列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>应用ID</th>
+			  <th>应用图片</th>
+			  <th>类型</th>
+			  <th>版面类型</th>
+			  <th>应用来源</th>
+			  <th>应用版本</th>
+			  <th>应用名</th>
+			  <th>应用简介</th>
+			  <th>容量</th>
+			  <th>数据</th>
+			  <th>链接</th>
+			  <th>状态</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			  <th >操作</th> 
+			</tr>
+			<tr ng-repeat="app in appList.list" >
+			  <td >
+			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			  <span  ng-bind="app.appId"></span>
+			  </td>
+			  <td >
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:80px;height:80px;"
+					ng-src="{{app.imgAddress}}" >
+			  </td>
+			  <td >
+			  <span ng-bind="app.appCate.name"></span>
+			  </td>
+			  <td >
+			  <span ng-repeat=" appType in appTypes" ng-if="appType.id==app.type" ng-bind="appType.value"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="app.source"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="app.version"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="app.title"></span>
+			  </td>
+			  <td >
+			  <span style="color:#999" ng-bind="app.summary"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="app.capacity"></span>MB
+			  </td>
+			  <td style="text-align:left;white-space:nowrap ">
+			  <div>pv:<span style="color:#999" ng-bind="app.pvs"></span></div>
+			  <div>uv:<span style="color:#999" ng-bind="app.uvs"></span></div>
+			  <div>ip:<span style="color:#999" ng-bind="app.ips"></span></div>
+			  <div>阅读:<span style="color:#999" ng-bind="app.readingNumber"></span></div>
+			  <div>下载:<span style="color:#999" ng-bind="app.downloadNumber>10000?(app.downloadNumber/10000).toFixed(2)+'万':app.downloadNumber"></span></div>
+			  <div>
+				<a class="btn btn-success btn-xs"  href="{{mainDomainUrl}}/app_platform_data.html?appId={{app.appId}}">
+				数据链接
+				</a>
+			  </div>
+			  </td>
+			  <td >
+			     <div>
+			      	安卓:
+			     <span style="color:#ccc;" ng-bind="app.androidUrl"></span>
+			     </div> 
+			     <div>
+			 		IOS:
+			  <span style="color:#ccc;" ng-bind="app.iosUrl"></span>
+			     </div> 
+			  </td>
+			  <td >
+			  <span  ng-bind="app.status==1?'上架':app.status==0?'下架':''"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="app.createDate"></span>
+			  </td>
+			  <td ng-bind="app.updateDate"></td>
+			 <td >
+			  <button class=" btn btn-warning" ng-click="updateApp(app)">修改</button>
+			  <!-- <button class=" btn btn-danger" ng-click="delApp(app)">删除</button> -->
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 应用列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

@@ -640,6 +640,44 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			/*
             *修改end
             */
+            /*
+             *快递公司,0暂无,1顺丰速运SF,2中通快递ZTO,3圆通速递YTO,4申通快递STO,5百世快递BestExpress,6韵达快递YUNDA,7中国邮政EMS,8宅急送ZJS,9FedEx联邦,10京东物流
+             */
+            $scope.changeCourier=function(orderMer){
+            	orderMer.$$courier=1;//默认0显示结果，1，显示修改，
+            };
+            $scope.orderMerCourier=[
+            	{id:0,value:'暂无'},
+            	{id:1,value:'顺丰速运SF'},
+            	{id:2,value:'中通快递ZTO'},
+            	{id:3,value:'圆通速递YTO'},
+            	{id:4,value:'申通快递STO'},
+            	{id:5,value:'百世快递BestExpress'},
+            	{id:6,value:'韵达快递YUNDA'},
+            	{id:7,value:'中国邮政EMS'},
+            	{id:8,value:'宅急送ZJS'},
+            	{id:9,value:'FedEx联邦'},
+            	{id:10,value:'京东物流'}
+            	];
+            $scope.updateOrderMerCourier=function(orderMer){
+            	$.get(requestDomainUrl+"/orderMer/update",
+            			{
+            		orderMerId:orderMer.orderMerId,
+            		courierCompany:orderMer.courierCompany,
+            		courierNumber:orderMer.courierNumber
+            			}
+            	,function(data){
+            		if(data.code==200){
+            			location.reload();
+            			myUtils.myLoadingToast("加载成功" ); 
+            		}else{
+            			myUtils.myLoadingToast("加载失败");   	   				
+            		}
+            	});
+            };
+            /*
+             *修改end
+             */
                     }
                 } 
             }

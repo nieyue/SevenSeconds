@@ -406,7 +406,6 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				    content:'',
 				    link:''
 				    };
-                     
                  		//上传链接
                  		$("#appVersionLinkFileUpload").change(function(){
                  			//最多上传1张

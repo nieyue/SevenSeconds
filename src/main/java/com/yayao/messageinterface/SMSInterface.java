@@ -27,9 +27,12 @@ public class SMSInterface {
 	String alibabaSmsAppsecret;
 	@Value("${myPugin.alibabaSmsSignName}")
 	String alibabaSmsSignName;
-	@Value("${myPugin.alibabaSmsTemplateCodeId}")
-	String alibabaSmsTemplateCodeId;
-	
+	//用户注册
+	@Value("${myPugin.alibabaSmsTemplateCodeAcountRegister}")
+	String alibabaSmsTemplateCodeAcountRegister;
+	//修改密码
+	@Value("${myPugin.alibabaSmsTemplateCodePasswordUpdate}")
+	String alibabaSmsTemplateCodePasswordUpdate;
     /** 
      * SessionKey简单的说就是代表卖家的登录session 
      * SessionKey是用户身份的标识，应用获取到了SessionKey即意味着应用取得了用户的授权，可以替用户向TOP请求用户的 
@@ -37,16 +40,32 @@ public class SMSInterface {
     public  String sessionKey = "*********";
 	/**
 	 *短信发送
+	 *@param extend 验证码
+	 *@param recNum 手机号
+	 *@param stc 模板码 1用户注册，2修改密码
 	 */
-    public  String SmsNumSend(String extend,String recNum){
+    public  String SmsNumSend(String extend,String recNum,Integer stc){
+    	String smsTemplatecode=alibabaSmsTemplateCodeAcountRegister;
+    	if(stc==1){
+    		smsTemplatecode=alibabaSmsTemplateCodeAcountRegister;
+    	}else if(stc==2){
+    		smsTemplatecode=alibabaSmsTemplateCodePasswordUpdate;
+    		
+    	}
+    	// alibabaSmsAppkey: 23431362
+    	//alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
+    	 // alibabaSmsSignName: 雅耀
+    	//TaobaoClient client = new DefaultTaobaoClient(url, "23431362", "dfbbbfe72864929214f23f48c901a638");
     	TaobaoClient client = new DefaultTaobaoClient(url, alibabaSmsAppkey, alibabaSmsAppsecret);
     	AlibabaAliqinFcSmsNumSendRequest  req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend(extend);
 		req.setSmsType("normal");
 		req.setSmsFreeSignName(alibabaSmsSignName);
+		//req.setSmsFreeSignName("雅耀");
 		req.setRecNum(recNum);
 		req.setSmsParamString("{\"code\":\""+extend+"\",\"product\":\""+recNum+"\"}");
-		req.setSmsTemplateCode(alibabaSmsTemplateCodeId);
+		//req.setSmsTemplateCode("SMS_13026944");
+		req.setSmsTemplateCode(smsTemplatecode);
 		//req.setExtendCode("1234");
 		//req.setExtendName("1234");
 		AlibabaAliqinFcSmsNumSendResponse rsp = null;
@@ -100,7 +119,7 @@ public class SMSInterface {
 //    
     
     public static void main(String[] args) throws ApiException {
-    	System.out.println(new SMSInterface().SmsNumSend(String.valueOf((int)Math.random()*9000+1000),"15111336587"));
+    	System.out.println(new SMSInterface().SmsNumSend(String.valueOf((int)Math.random()*9000+1000),"15111336587",1));
     	
     	//System.out.println(SmsNumQuery("15111336587"));
     	//SmsNumTotal();

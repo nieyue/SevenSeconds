@@ -45,12 +45,13 @@ public class NoviceTaskController {
 	public @ResponseBody StateResultList browsePagingNoviceTask(
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="acountId",required=false)Integer acountId,
+			@RequestParam(value="frequency",required=false)Integer frequency,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
 			@RequestParam(value="orderName",required=false,defaultValue="novice_task_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<NoviceTask> list = new ArrayList<NoviceTask>();
-			list= noviceTaskService.browsePagingNoviceTask(createDate,acountId,pageNum, pageSize, orderName, orderWay);
+			list= noviceTaskService.browsePagingNoviceTask(createDate,acountId,frequency,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
@@ -93,8 +94,9 @@ public class NoviceTaskController {
 	public @ResponseBody int countAll(
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="acountId",required=false)Integer acountId,
+			@RequestParam(value="frequency",required=false)Integer frequency,
 			HttpSession session)  {
-		int count = noviceTaskService.countAll(createDate,acountId);
+		int count = noviceTaskService.countAll(createDate,acountId,frequency);
 		return count;
 	}
 	/**

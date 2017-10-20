@@ -75,4 +75,5 @@ myPugin:
   alibabaSmsAppkey: 23431362
   alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
   alibabaSmsSignName: 雅耀
-  alibabaSmsTemplateCodeId: SMS_13026946
+  alibabaSmsTemplateCodeAcountRegister: SMS_13026946
+  alibabaSmsTemplateCodePasswordUpdate: SMS_13026944

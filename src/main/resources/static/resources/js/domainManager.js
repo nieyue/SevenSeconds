@@ -17,7 +17,7 @@ var domainManager={
 	BookStore:'book.newzhuan.cn',	
 	ConvertMall:'mall.newzhuan.cn',	
 	ActivityCenter:'activity.newzhuan.cn',
-	AppCenter:'game.newzhuan.cn',
+	AppCenter:'app.newzhuan.cn',
 	ScheduleJob:'task.newzhuan.cn',	
 	Push:'push.newzhuan.cn',	
 	MyWangEditor:'img.newzhuan.cn',	

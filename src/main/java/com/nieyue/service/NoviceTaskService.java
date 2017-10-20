@@ -22,7 +22,7 @@ public interface NoviceTaskService {
 			Integer noviceTaskId
 			);	
 	/** 新手任务总共数目 */	
-	public int countAll(Date createDate,Integer acountId);
+	public int countAll(Date createDate,Integer acountId,Integer frequency);
 	/** 分页新手任务信息 */
-	public List<NoviceTask> browsePagingNoviceTask(Date createDate,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
+	public List<NoviceTask> browsePagingNoviceTask(Date createDate,Integer acountId,Integer frequency,int pageNum,int pageSize,String orderName,String orderWay) ;
 }

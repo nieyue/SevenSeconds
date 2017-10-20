@@ -29,10 +29,21 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 		if(noviceTaskBusiness.disposableTrigger(fre) <=0 ||noviceTask.getAcountId()==null || noviceTask.getAcountId().equals("")){
 			return b;
 		}
-		List<NoviceTask> nl = noviceTaskDao.browsePagingNoviceTask(new Date(), noviceTask.getAcountId(), 0, 1, "create_date", "desc");
-		//今天已经做过了  且不为 收徒
-		if(nl.size()>0 && nl.get(0).getFrequency()!=0){
+		//获取当前任务是否存在
+		List<NoviceTask> nl = noviceTaskDao.browsePagingNoviceTask(null, noviceTask.getAcountId(),fre, 0, 1, "create_date", "desc");
+		//已经做过了 的任务 
+		if(nl.size()>0){
 			return b;
+		}
+		//获取每天做的任务
+		List<NoviceTask> daynl = noviceTaskDao.browsePagingNoviceTask(new Date(), noviceTask.getAcountId(),null, 0, 1, "create_date", "desc");
+		//今日已经做过做过了，且不是收徒（控制除开收徒外，每天只能做一次新手任务） 
+		if(daynl.size()>0){
+		for (int i = 0; i < daynl.size(); i++) {
+			if(!daynl.get(i).getFrequency().equals(0)){
+				return b;
+			}
+		}
 		}
 		noviceTask.setMoney(noviceTaskBusiness.disposableTrigger(fre));
 		b = noviceTaskDao.addNoviceTask(noviceTask);
@@ -60,14 +71,14 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 	}
 
 	@Override
-	public int countAll(Date createDate,Integer acountId) {
-		int c = noviceTaskDao.countAll(createDate,acountId);
+	public int countAll(Date createDate,Integer acountId,Integer frequency) {
+		int c = noviceTaskDao.countAll(createDate,acountId,frequency);
 		return c;
 	}
 
 	@Override
 	public List<NoviceTask> browsePagingNoviceTask(
-			Date createDate,Integer acountId,
+			Date createDate,Integer acountId,Integer frequency,
 			int pageNum, int pageSize,
 			String orderName, String orderWay) {
 		if(pageNum<1){
@@ -76,7 +87,7 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<NoviceTask> l = noviceTaskDao.browsePagingNoviceTask(createDate,acountId,pageNum-1, pageSize, orderName, orderWay);
+		List<NoviceTask> l = noviceTaskDao.browsePagingNoviceTask(createDate,acountId,frequency,pageNum-1, pageSize, orderName, orderWay);
 		return l;
 	}
 

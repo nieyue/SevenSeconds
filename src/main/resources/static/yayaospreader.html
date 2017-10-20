@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="description"
 	content="数据列表">
-<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/sellerbase.css" rel="stylesheet">
 <style>
@@ -34,15 +34,15 @@ text-align:center;}
 			  <th>推广平台</th>
 			  <th>推广名</th>
 			  <th>推广方式</th>
-			  <th>app链接</th>
-			  <th>计费方式</th>
-			  <th>单价</th>
-			  <th>总价</th>
-			  <th>下载次数</th>
+			  <!-- <th>app链接</th> -->
+			  <!-- <th>计费方式</th> -->
+			  <!-- <th>单价</th>
+			  <th>总价</th> -->
+			  <!-- <th>下载次数</th> -->
 			  <th>注册次数</th>
-			  <th>消耗额</th>
+			  <!-- <th>消耗额</th> -->
 			  <th>创建时间</th>
-			 <th>结束时间</th>
+			 <!--  <th>结束时间</th> -->
 			  <th>状态</th>
 			</tr>
 			<tr >
@@ -59,49 +59,42 @@ text-align:center;}
 			  <td >
 			  <span ng-bind="spread.method"></span>
 			  </td>
-			 <td >
+			 <!--  <td >
 			  <a style="word-break: break-word;" href="{{spread.link}}">{{spread.link}}</a>
-			  </td> 
-			  <td >
+			  </td> -->
+			 <!--  <td >
 			  <span ng-if="spread.model==0">注册</span>
 			  <span ng-if="spread.model==1">下载</span>
-			  </td> 
-			  <td >
+			  </td> -->
+			  <!-- <td >
 			  <span ng-bind="spread.unitPrice"></span>
 			  </td>
 			  <td >
 			  <span ng-bind="spread.totalPrice"></span>
-			  </td>
-			  <td >
+			  </td> -->
+			  <!-- <td >
 			  <span ng-bind="spread.downloadNumber"></span>
-			  </td>
+			  </td> -->
 			  <td >
 			  <span ng-bind="spread.registerNumber"></span>
 			  </td>
-			 <td >
-			  <span ng-bind="spread.nowTotalPrice | number:2"></span>
-			  </td>
+			 <!--  <td >
+			  <span ng-bind="spread.nowTotalPrice"></span>
+			  </td> -->
 			  <td ng-bind="spread.createDate"></td>
-			 <td ng-bind="spread.endDate"></td>
+			 <!--  <td ng-bind="spread.endDate"></td> -->
 			  <td >
 			  <span ng-bind="spread.status" ></span>
 			  </td>
 			</table>
 		</div>
 <!-- 数据列表end -->
-
 <!-- 数据标题-->
 <div style="margin:10px;">
-	 <div  class="text-danger" style="font-size:30px;color:#ccc;text-align:center;">每日数据(按登录计算)</div>
+	 <div  class="text-danger" style="font-size:30px;color:#ccc;text-align:center;">每日数据</div>
 	
 </div>
 <!-- 数据标题 end-->
-<!-- 每日数据切换 -->
-<div class="btn-group" role="group">
-  <button type="button" class="btn btn-default" ng-click="changeType(1)" ng-disabled="showNum==1" >按登陆计算</button>
-  <button type="button" class="btn btn-info"  ng-click="changeType(2)"  ng-disabled="showNum==2">按签到计算</button>
-</div>
-<!--每日数据切换end -->
 <!-- 每日数据列表 -->
  	<div style="width:100%" ">
 			<table class="table table-bordered" style="width:100%;background-color: #fff;">
@@ -169,69 +162,35 @@ text-align:center;}
        
 					
     	indexApp.controller('indexCtrl',function($scope){
-    	$scope.type=1;//默认按登陆计算
-    	$scope.showNum=1;//
-    	
+    	$scope.scale=0.8;
     	$.ajaxSetup({async:false});
-    	
-    	//验证是否已经登录
-    		$.ajax({
-    		url:"/acount/islogin",
-    		async:false,  
-    		success:function(data){
-       			console.log(data)
-       			if(data.code=='200'){
-       			$scope.sessionAcount=data.list[0];
-       			
-       			if($scope.sessionAcount.roleId!=1000 && $scope.sessionAcount.roleId!=1001){
-       			location.replace("/seller/index.html");
-       			} 
-       			//$rootScope.$apply();
-       			return;
-       			}
-       			location.replace("/seller/index.html");
-       	}});
-    	
      function spreadInit(){
      $.get("/spread/"+myUtils.GetQueryString("spreadId"),function(pld){
            $scope.spread=pld.list[0];
+         // $scope.spread.registerNumber= $scope.spread.registerNumber*$scope.scale;
 			 console.log($scope.spread)
-               });
-     }
-     spreadInit();//初始化渠道
+			//$scope.$apply();
+               }); }
+     spreadInit();
      
-     function daySpreadInit(type){
-     var url="/acount/dataBySpreadId?spreadId="+myUtils.GetQueryString("spreadId")+"&pageSize=10000000&orderWay=asc";
-     if(type==1){//按登录计算留存
-     	url=url;
-     }else if(type==2){//按签到计算留存
-     url="/acount/dataBySpreadIdAndSignId?spreadId="+myUtils.GetQueryString("spreadId");
-     }
-        $.get(url,function(pld){
+     //天数差 从建立推广开始算起
+     $scope.difference =new Date().getTime()-new Date($scope.spread.createDate).getTime();
+     //天数 ，  +1计算最新当天
+     $scope.days=$scope.difference/1000/60/60/24==0?parseInt($scope.difference/1000/60/60/24)+1:parseInt($scope.difference/1000/60/60/24)+2;
+     $scope.createDates=[];//注册时间
+     $scope.registerNums=[];//注册数目
+     $scope.cumulativeRegisterNums=[];//累计注册数目
+     $scope.activeNums=[];//活跃数
+     $scope.retentions=[];//留存率
+     
+     $scope.acountSpreadList=[];//最终展示
+     function daySpreadInit(){
+        $.get("/acount/dataBySpreadId?spreadId="+myUtils.GetQueryString("spreadId")+"&pageSize=10000000&orderWay=asc",function(pld){
            $scope.daySpreadList=pld.list;
-    	
-    	 //天数差 从建立推广开始算起
-	     $scope.difference =new Date().getTime()-new Date($scope.spread.createDate).getTime();
-	     //天数 ，  +1计算最新当天
-	     $scope.days=$scope.difference/1000/60/60/24==0?parseInt($scope.difference/1000/60/60/24)+1:parseInt($scope.difference/1000/60/60/24)+2;
-	     $scope.createDates=[];//注册时间
-	     $scope.registerNums=[];//注册数目
-	     $scope.cumulativeRegisterNums=[];//累计注册数目
-	     $scope.activeNums=[];//活跃数
-	     $scope.retentions=[];//留存率
-    	 $scope.acountSpreadList=[];//最终展示
-    	 
 			 //存放createDate
 			  for(var i=0;i<$scope.days;i++){
 			$scope.createDates.push(myUtils.timeStampToDayDate(new Date($scope.spread.createDate).getTime()+24*3600*1000*i));
 			} 
-			/*  for(var i=0;i<$scope.daySpreadList.length;i++){
-			if($scope.createDates.indexOf(myUtils.timeStampToDayDate($scope.daySpreadList[i].createDate))<0){
-			$scope.createDates.push(myUtils.timeStampToDayDate($scope.daySpreadList[i].createDate));
-			}
-			}  */
-			//console.log($scope.createDates)
-			
 			//循环天数
 			for(var j=0;j<$scope.createDates.length;j++){
 			$scope.registerNums.push([]);
@@ -251,6 +210,8 @@ text-align:center;}
 			$scope.activeNums[j].push($scope.daySpreadList[z]);
 			}
 			}
+			$scope.registerNums[j].length=Math.round($scope.registerNums[j].length*$scope.scale)
+			$scope.activeNums[j].length=Math.round($scope.activeNums[j].length*$scope.scale)
 			
 			//累计注册数目
 			for(var xx=0;xx<j+1;xx++){
@@ -258,11 +219,11 @@ text-align:center;}
 			$scope.cumulativeRegisterNums[j]=$scope.cumulativeRegisterNums[j].concat($scope.registerNums[xx]);
 			}
 			//console.log("j="+j)
-				//console.log($scope.activeNums[j])
-				//console.log($scope.cumulativeRegisterNums[j])
+			//console.log($scope.activeNums[j])
+			//console.log($scope.cumulativeRegisterNums[j])
 			//留存率
 			$scope.retentions[j].push(($scope.activeNums[j].length/$scope.cumulativeRegisterNums[j].length)*100||0);
-			//console.log($scope.cumulativeRegisterNums[j].length)
+			//console.log($scope.activeNums[j].length*$scope.scale)
 			$scope.acountSpreadList.push({
 			registerNum:$scope.registerNums[j].length,
 			activeNum:$scope.activeNums[j].length,
@@ -272,17 +233,22 @@ text-align:center;}
 			}
 			}
 			$scope.acountSpreadList.reverse();//反转
-			console.log($scope.acountSpreadList)
+		//
+		$scope.spread.registerNumber=0;
+		for(var ii=0;ii<$scope.acountSpreadList.length;ii++){
+          	//$scope.acountSpreadList[ii].registerNum=Math.round($scope.acountSpreadList[ii].registerNum*$scope.scale);
+          //	$scope.acountSpreadList[ii].activeNum=Math.round($scope.acountSpreadList[ii].activeNum*$scope.scale);
+          	$scope.spread.registerNumber+=$scope.acountSpreadList[ii].registerNum;//注册总数
+          // console.log($scope.acountSpreadList[ii].registerNum)
+          // console.log($scope.spread.registerNumber)
+           }
+           //console.log($scope.acountSpreadList)
+			
+			//$scope.$apply();
                });
      
      }
-     daySpreadInit($scope.type);//按登录计算留存
-     //切换
-     $scope.changeType=function(type){
-     $scope.type=type;
-     $scope.showNum=type;
-     daySpreadInit(type);
-     };
+     daySpreadInit();
        });
     </script>
 </body>

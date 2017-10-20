@@ -20,21 +20,21 @@
     <label  class="text-danger">※应用来源</label>
   <div class=" comment-input-margin">
     <input type="text" class=" comment-input" ng-model="app.source" name="source" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.source.$dirty && myAddAppForm.source.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.source.$dirty && myUpdateAppForm.source.$invalid">
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用来源
 				    </div>
   </div>
     <label  class="text-danger">※应用版本</label>
   <div class=" comment-input-margin">
     <input type="text" class=" comment-input" ng-model="app.version" name="version" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.version.$dirty && myAddAppForm.version.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.version.$dirty && myUpdateAppForm.version.$invalid">
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用来源
 				    </div>
   </div>
     <label  class="text-danger">※应用名</label>
   <div class=" comment-input-margin">
     <input type="text" class=" comment-input" ng-model="app.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.title.$dirty && myAddAppForm.title.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.title.$dirty && myUpdateAppForm.title.$invalid">
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确应用名
 				    </div>
   </div>
@@ -42,7 +42,7 @@
   <div class="comment-input-margin " >
     <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="summary"
      ng-model="app.summary" required ng-minlength="1" ng-maxlength="255" placeholder="255位"  placeholder="1-255位" ></textarea>
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.summary.$dirty && myAddAppForm.summary.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.summary.$dirty && myUpdateAppForm.summary.$invalid">
 		<i class="glyphicon glyphicon-info-sign"></i>1-255位
 	</div>
   </div>
@@ -50,7 +50,7 @@
   <div class="comment-input-margin">
     <input type="text" class="comment-input" required name="capacity"
      ng-model="app.capacity" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.capacity.$dirty && myAddAppForm.capacity.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.capacity.$dirty && myUpdateAppForm.capacity.$invalid">
 		<i class="glyphicon glyphicon-info-sign"></i>两位小数
 	</div>
   </div>
@@ -103,7 +103,7 @@
    ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
       ng-model="app.androidUrl" name="androidUrl"
       placeholder="http://或https://">
-      <div class="text-danger alert alert-danger " ng-show="myAddAppForm.androidUrl.$dirty && myAddAppForm.androidUrl.$invalid">
+      <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.androidUrl.$dirty && myUpdateAppForm.androidUrl.$invalid">
 		<i class="glyphicon glyphicon-info-sign"></i>链接地址错误
 	</div>
      </div>
@@ -113,7 +113,7 @@
    ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
       ng-model="app.iosUrl" name="iosUrl"
       placeholder="http://或https://">
-      <div class="text-danger alert alert-danger " ng-show="myAddAppForm.iosUrl.$dirty && myAddAppForm.iosUrl.$invalid">
+      <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.iosUrl.$dirty && myUpdateAppForm.iosUrl.$invalid">
 		<i class="glyphicon glyphicon-info-sign"></i>链接地址错误
 	</div>
      </div>
@@ -121,7 +121,7 @@
   <div class="comment-input-margin " >
     <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="content"
      ng-model="app.content" required ng-minlength="1" ng-maxlength="65535" placeholder="65535位"  placeholder="1-65535位" ></textarea>
-    <div class="text-danger alert alert-danger " ng-show="myAddAppForm.content.$dirty && myAddAppForm.content.$invalid">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateAppForm.content.$dirty && myUpdateAppForm.content.$invalid">
 		<i class="glyphicon glyphicon-info-sign"></i>1-65535位
 	</div>
   </div>

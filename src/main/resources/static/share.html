@@ -74,7 +74,7 @@
     <body>
         <div class="wrap" >
             <div class="background—wrap">
-                <img class="background—wrap-img" src="http://img.newzhuan.com/uploaderPath/img/20170824/1503561192050081187040850406.jpg" alt="七秒资讯" />
+                <img class="background—wrap-img" src="http://img.newzhuan.cn/uploaderPath/img/20171009/1507521196264.jpg" alt="七秒资讯" />
             </div>
             <form class="container register-form" >
 			  <div class="form-group">
@@ -105,9 +105,24 @@
     		  $(".background—wrap-img").css("height","100%");
     		  }); 
     
+    				
     			var hostUrl="http://"+domainManager.SevenSeconds;
     			//var hostUrl="http://"+location.hostname;
     			//var hostUrl="http://www.newzhuan.cn";
+    			function directUrl(){
+				if(navigator.appVersion.indexOf("Android")>-1){
+		              location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		            }else if(navigator.appVersion.indexOf("iPhone")>-1){
+		              //location.href="https://www.pgyer.com/zeqf";
+		              setTimeout(function(){
+		              myUtils.myLoadingToast("暂不开放");
+		              },1000);
+		              setTimeout(function(){
+		              myUtils.myLoadingToast("IOS攻城狮正在努力中");
+		              },2000);
+		            }
+    			}
+    			
     			//发送手机验证码
 				var registerCodeBtn=document.querySelector("#registerCodeBtn");
 				var registerPhone=document.querySelector("#registerPhone");
@@ -147,7 +162,7 @@
 					},1000);
 					}else if(data.code){
 						myUtils.myLoadingToast(data.msg);
-					
+						directUrl();//跳转
 					}else{
 						myUtils.myLoadingToast("发送失败，请检查！");
 					}
@@ -203,12 +218,7 @@
 					if(data.code==200){
 					myUtils.myLoadingToast("注册成功");
 					setTimeout(function(){
-					//注册成功，跳转
-						if(navigator.appVersion.indexOf("Android")>-1){
-		              location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
-		            }else if(navigator.appVersion.indexOf("iPhone")>-1){
-		              location.href="https://www.pgyer.com/zeqf";
-		            }
+					directUrl();
 					},1000);
 					}else{
 						myUtils.myLoadingToast("注册失败，请检查！");

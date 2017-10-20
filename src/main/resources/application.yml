@@ -1,20 +1,26 @@
 #日志记录
 logging:
   level:
+    com:
+      nieyue:
+        dao: DEBUG
     org:
-      springframework:
+      springframework: 
         web: DEBUG
       hibernate: ERROR
+     
+      
  
 
 
 #mybatis配置
-mybatis: 
+mybatis:
   #check-config-location: true
   #executor-type: batch
   type-aliases-package: com.nieyue.bean 
   mapper-locations: classpath:config/mapper/*.xml   
   configuration: 
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     mapUnderscoreToCamelCase: true
     useColumnLabel: true
     useGeneratedKeys: true
@@ -35,8 +41,8 @@ spring:
   session:
     store-type: redis      
   profiles:
-   active: dev
-   #active: prod
+    active: dev
+    #active: prod
   rabbitmq:
     #addresses: 118.190.133.146
     addresses: 120.77.253.90

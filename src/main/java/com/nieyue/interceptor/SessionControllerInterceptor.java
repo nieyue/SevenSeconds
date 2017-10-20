@@ -95,6 +95,7 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("acount/addMasterId")>-1
         		||request.getRequestURI().indexOf("register")>-1
         		||request.getRequestURI().indexOf("login")>-1
+        		||request.getRequestURI().indexOf("acount/updatePassword")>-1
         		||request.getRequestURI().indexOf("acount/listGroupByMasterId")>-1
         		||request.getRequestURI().indexOf("acount/data")>-1
         		//版本
@@ -215,7 +216,7 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				){
         			//加载自身账户
         			if((	method.getName().equals("loadAcount")
-        					|| request.getRequestURI().equals("/acount/list")
+        					|| request.getRequestURI().indexOf("/acount/list")>-1
         					)
         					&& request.getRequestURI().indexOf(sessionAcount.getAcountId().toString())>-1){
         				return true;
@@ -224,6 +225,10 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         			if((request.getRequestURI().indexOf("/acount/list")>-1)
         					&& request.getParameter("masterId").equals(sessionAcount.getAcountId().toString())){
         				return true;
+        			}
+        			//不能修改全部
+        			if(request.getRequestURI().equals("/acount/update")){
+        				throw new MySessionException();
         			}
         			//提交修改自身信息
         			if((request.getRequestURI().indexOf("/acount/update")>-1)

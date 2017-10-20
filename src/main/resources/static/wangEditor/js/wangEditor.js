@@ -3882,7 +3882,6 @@ _e(function (E, $) {
             title: lang.strikethrough,
             commandName: 'StrikeThrough'
         });
-
         // 定义选中状态下的click事件
         menu.clickEventSelected = function (e) {
             var isRangeEmpty = editor.isRangeEmpty();
@@ -3920,15 +3919,14 @@ _e(function (E, $) {
         });
 
         // 定义点击事件
-        menu.clickEvent = function (e) {
+       menu.clickEvent = function (e) {
             var isRangeEmpty = editor.isRangeEmpty();
-
             if (!isRangeEmpty) {
                 // 选区不是空的，则执行默认命令
                 editor.command(e, 'RemoveFormat');
                 return;
             }
-
+            
             var $clearElem;
 
             // 自定义的命令函数
@@ -3938,7 +3936,6 @@ _e(function (E, $) {
                 var pElem, $pElem;
                 var quoteElem, $quoteElem;
                 var listElem, $listElem;
-
                 // 获取选区 elem
                 rangeElem = editor.getRangeElem();
                 // 第一步，获取 quote 父元素

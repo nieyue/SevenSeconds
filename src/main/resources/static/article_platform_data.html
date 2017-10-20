@@ -305,7 +305,7 @@ padding:0 15px !important;
        			if(data.code=='200'){
        			$scope.sessionAcount=data.list[0];
        			
-       			if($scope.sessionAcount.roleId!=1000){
+       			if($scope.sessionAcount.roleId!=1000 && $scope.sessionAcount.roleId!=1001){
        			location.replace("/seller/index.html");
        			} 
        			//$rootScope.$apply();

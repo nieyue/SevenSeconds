@@ -281,6 +281,7 @@ create_date datetime COMMENT '创建时间',
 acount_id int(11) COMMENT '任务人id外键',
 PRIMARY KEY (novice_task_id),
 INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
+INDEX INDEX_FREQUENCY (frequency) USING BTREE,
 INDEX INDEX_CREATEDATE (create_date) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='新手任务表';
 

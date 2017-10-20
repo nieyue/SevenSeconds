@@ -52,7 +52,8 @@
 		<script src="/resources/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="/resources/js/sortable.min.js"></script>
        <script src="/resources/js/base64.js"></script> 
-       <script type="text/javascript" src="/wangEditor/js/wangEditor.min.js"></script>
+       <!-- <script type="text/javascript" src="/wangEditor/js/wangEditor.min.js"></script> -->
+       <script type="text/javascript" src="/wangEditor/js/wangEditor.js"></script>
        <script src="/resources/js/domainManager.js"></script> 
        <script src="/resources/js/base.js"></script> 
        <script type="text/javascript">
@@ -254,12 +255,17 @@
 			     // 阻止输出log
 			    editor.config.printLog = false;
 			    //取消过滤js
-			   // editor.config.jsFilter=false;
+			    //if($rootScope.sessionRole.name=='超级管理员'
+			    //||$rootScope.sessionRole.name!='运营管理员'){
+			    //editor.config.jsFilter=false;
+			  //  }
 			    //zindex
 			    editor.config.zindex = 99999999;
 			    editor.config.menuFixed = 50;
-			    // 取消粘贴过滤
-			    editor.config.pasteFilter = false;
+			    // 插入代码时的默认语言
+				//editor.config.codeDefaultLang = 'javascript'
+			    // 粘贴过滤
+			    editor.config.pasteFilter = true;
 			    // 上传图片
 			    editor.config.uploadImgUrl = 'http://'+ $rootScope.imgUploadDomain+'/img/add';//editorUpload
 			   // editor.config.uploadImgUrl = 'http://web1.nieyue.com/img/add';//editorUpload

@@ -25,7 +25,7 @@ font-size:1rem !important;
 </head>
 <body >
 	<div  class="comment-wrap "  >
-			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#ececec)" >
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background-color:#fff;" >
 			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div> -->
  			<!-- <div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
 					<div></div>
@@ -41,6 +41,9 @@ font-size:1rem !important;
 					<div></div>
 					<div></div>
 				</div> -->
+				<div class="text-center">
+				<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+				</div>
 			</div>
 		<!-- 新闻列表 -->
 		<div style="margin-top:0px !important;display:none;" on-finish-render-filters id="newsDeatilsBody"   >
@@ -112,19 +115,19 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 </div>
 		<!-- 广告5悬浮 end -->
 		
-		<div style="width:100%;height:10px;background-color:#ececec;"></div>
+		<!-- <div style="width:100%;height:10px;background-color:#ececec;"></div> -->
 		<!-- 谷歌广告 -->
-		<div style="margin-bottom:1px;margin:10px 0;text-align:center;">
+	<div style=" margin-bottom:1px;margin:10px 0;text-align:center;">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- 自适应-1 -->
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-client="ca-pub-5966861399302066"
-		     data-ad-slot="4022127141"
-		     data-ad-format="auto"></ins>
-		<script>
-		(adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+<!-- 自适应-2 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5588246681675782"
+     data-ad-slot="4339608720"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 		</div>
 		<!-- 谷歌广告 end -->
 		
@@ -133,12 +136,12 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		<div style="max-width:640px;width:100%;margin:0 auto;">
 		<div style="margin-bottom:1px;margin:10px 0;text-align:center;">
 	        <span style="font-size:0.8rem">
-	        -相关推荐-
+	        一&nbsp;&nbsp;相关推荐&nbsp;&nbsp;一 
 	        </span>
 	    </div>
 
 		<!-- 第二列表 -->
-		<div  class="listGroup list-group media comment-list-item" ng-repeat="article in articleList" on-finish-render-filters  ng-click="goRedirectUrl(article.articleId,article.redirectUrl)">
+		<div  class="listGroup list-group media comment-list-item" ng-repeat="article in articleList"   ng-click="goRedirectUrl(article.articleId,article.redirectUrl)">
 			<!-- 0张图片列表 -->
 			<div ng-if="article.imgList.length==0" style="width:100%;">
 			<div class="media-body comment-right-body" style="display:inline-block;width:100%;">
@@ -292,20 +295,16 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					return {
 					restrict: 'A',
 					link: function(scope, element, attr) {
-					if(scope.$last==true){
+					if(scope.article){
+					$("#newsDeatilsBody").css("display","block");
+					setTimeout(function(){
+					$(".loadAnimation").css("display","none");
+					},2000);
 					$(".comment-list-item").last().css("border-bottom","1px solid #ececec");
-					$("#newsDeatilsBody").show();
-					$(".loadAnimation").hide();
 					scope.$emit('ngRepeatFinished');
 					//$("#hongbao1").insertAfter($(".comment-list-item").get(4));
 					//$("#hongjiu1").insertAfter($(".comment-list-item").get(3));
 					
-					if(location.host=="www.belarusdating.net"){
-					//$("#zl-dybanner44").insertAfter($(".comment-list-item").get(10));
-					}else{
-					//$("#zl-dybanner44").remove();
-					
-					}
 					}
 					
 					}
@@ -377,14 +376,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告1"
     		};
-      			initAdList("ad1List",{
+      			/* initAdList("ad1List",{
     			pageNum:$scope.ad1.pageNum,
     			pageSize:$scope.ad1.pageSize,
     			status:$scope.ad1.status,
     			type:$scope.ad1.type,
     			orderName:"create_date",
     			orderWay:"desc"
-    			});
+    			}); */
     		//广告2
     			$scope.ad2={
     		pageNum:1,
@@ -392,14 +391,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告2"
     		};
-      			initAdList("ad2List",{
+      			/* initAdList("ad2List",{
     			pageNum:$scope.ad2.pageNum,
     			pageSize:$scope.ad2.pageSize,
     			status:$scope.ad2.status,
     			type:$scope.ad2.type,
     			orderName:"create_date",
     			orderWay:"desc"
-    			});
+    			}); */
     		//广告3
     			$scope.ad3={
     		pageNum:1,
@@ -407,14 +406,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告3"
     		};
-      			initAdList("ad3List",{
+      			/* initAdList("ad3List",{
     			pageNum:$scope.ad3.pageNum,
     			pageSize:$scope.ad3.pageSize,
     			status:$scope.ad3.status,
     			type:$scope.ad3.type,
     			orderName:"create_date",
     			orderWay:"desc"
-    			});
+    			}); */
     			
     		//广告4
     			$scope.ad4={
@@ -423,14 +422,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告4"
     		};
-      			initAdList("ad4List",{
+      		/* 	initAdList("ad4List",{
     			pageNum:$scope.ad4.pageNum,
     			pageSize:$scope.ad4.pageSize,
     			status:$scope.ad4.status,
     			type:$scope.ad4.type,
     			orderName:"create_date",
     			orderWay:"desc"
-    			});
+    			}); */
     		//广告5
     			$scope.ad5={
     		pageNum:1,
@@ -438,14 +437,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告5"
     		};
-      			initAdList("ad5List",{
+      			/* initAdList("ad5List",{
     			pageNum:$scope.ad5.pageNum,
     			pageSize:$scope.ad5.pageSize,
     			status:$scope.ad5.status,
     			type:$scope.ad5.type,
     			orderName:"create_date",
     			orderWay:"desc"
-    			});
+    			}); */
     		//jsAd广告
     			function initJsAdList(){
     			$.ajax({  
@@ -464,7 +463,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		          }  
     		          });  
     		}
-    		initJsAdList();
+    		//initJsAdList();
     			
     		//非跨域广告跳转	
     		$scope.goAd=function(article){
@@ -620,19 +619,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		$scope.type="广告";//初始化类别
     		$scope.status="正常";//初始化状态
     		
-    		if($scope.article.articleCate.name=="推广"||$scope.article.articleCate.name.indexOf("广告")>-1){
+    		if($scope.article.articleCate.name=="推广"){
+    		$scope.type="推广";
+    		}else if($scope.article.articleCate.name.indexOf("广告")>-1){
     		$scope.type="广告";
-    		}else{
+    		}
+    		else{
     		$scope.type=$scope.article.articleCate.name;
     		}
-    		
-/*     		if($scope.article.type=="推广"||$scope.article.type.indexOf("广告")>-1){
-    		$scope.type="广告";
-    		}else{
-    		$scope.type=$scope.article.type;
-    		}
-    		 */
-    		
     		
     			initDataList({
     			pageNum:$scope.pageNum,
@@ -711,31 +705,5 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     	
     	
    </script>
-<!-- <div style="display:none">
-<script src="https://s13.cnzz.com/z_stat.php?id=1262987330&web_id=1262987330" language="JavaScript"></script>
-</div> -->
-
-<!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
-<!-- 自适应 --> 
-<!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1654829727699343" data-ad-slot="5862014007" data-ad-format="auto"></ins> 
-<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script> -->
-
-<!-- 悬浮 -->
-<!-- <div id="zhuanzhuan_640_100_a" style="width:96%;height:100px;position:fixed;bottom:0;z-index:99999"><script type="text/javascript" src="http://pmp.adinall.com/zhuanzhuan_640_100_a.js"></script></div>
- -->
-<!--  <script src="http://zu.ghwei.top/?gzid=xinxl2"></script> -->
- 
-<!--  <a id="hongbao1" style="width:100%;display:block;border-top:1px solid #ececec"
-  href="http://m.bianxianmao.com?appKey=36a3efef34c04929822835eeb97d7446&appType=app&appEntrance=1&business=money&i=__IMEI__&f=__IDFA_"><img  style="width:100%;" src="http://img.newzhuan.com/uploaderPath/img/20170802/15016631908971559003599721.png"/></a>
- <a id="hongjiu1" style="width:100%;display:block;border-top:1px solid #ececec"
-  href="http://oie.hreou.top/">
-  <span style="width:30%;display:inline-block">
-  <img  style="width:100%;" src="http://img.newzhuan.com/uploaderPath/img/20170807/150209658787.jpg"/>
-  </span>
-  <span style="width:60%;display:inline-block;vertical-align:top;font-size:14px;">
- 这么好的鞋竟然可以厂家直购！超划算！
-  </span>
-  </a> -->
-  
 </body>
 </html>

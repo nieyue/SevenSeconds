@@ -57,6 +57,9 @@ WHERE novice_task_id=#{noviceTaskId}
 	<if test="acountId!=null">
 	AND acount_id=#{acountId}
 	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
+	</if>
 	AND ${orderName} 
 	<if test="orderWay=='asc'">
 	<![CDATA[>=]]> 
@@ -71,6 +74,9 @@ WHERE novice_task_id=#{noviceTaskId}
 	</if>
 	<if test="acountId!=null">
 	AND acount_id=#{acountId}
+	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
 	</if>
 	</where> 
 		ORDER BY 
@@ -95,6 +101,9 @@ WHERE novice_task_id=#{noviceTaskId}
 	</if>
 	<if test="acountId!=null">
 	AND acount_id=#{acountId}
+	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
 	</if>
 	</where>
 </select>   

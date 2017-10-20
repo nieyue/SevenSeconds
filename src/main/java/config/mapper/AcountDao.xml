@@ -481,6 +481,7 @@ SELECT
     	master_id,
     	role_id
 FROM acount_tb 
-WHERE uuid=#{uuid}
+WHERE 
+uuid=#{uuid}
 </select>  
 </mapper>

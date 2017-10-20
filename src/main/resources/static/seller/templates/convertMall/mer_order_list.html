@@ -9,9 +9,9 @@
 			<tr >
 			  <th style="background-color:#000 !important;"></th>
 			  <th  colspan="1" style="background-color:#000 !important;">订单</th>
-			  <th colspan="5" style="background-color:#000 !important;">商品信息</th>
+			  <th colspan="7" style="background-color:#000 !important;">商品信息</th>
 			  <th  colspan="3" style="background-color:#000 !important;">收货地址</th>
-			  <th  colspan="5" style="background-color:#000 !important;">其他</th> 
+			  <th  colspan="3" style="background-color:#000 !important;">其他</th> 
 			</tr>
 			<tr>
 			  <th>序号</th>
@@ -22,6 +22,8 @@
 			  <th>单价</th>
 			  <th>数量</th>
 			  <th>总价</th>
+			  <th>快递公司</th>
+			  <th>快递单号</th>
 			  <th>订单状态</th>
 			  
 			  <th>收货人</th>
@@ -66,6 +68,36 @@
 			  	<span class="text-danger" ng-bind="orderMer.totalPrice"></span>
 			  </div>
 			  </td>
+			   <td>
+			   <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  <span ng-show="orderMer.$$courier==0" class="text-warning" ng-init="orderMer.$$courier=0"   
+			  ng-bind="orderMer.courierCompany==0?
+			  '暂无':orderMer.courierCompany==1?
+			  '顺丰速运SF':orderMer.courierCompany==2?
+			  '中通快递ZTO':orderMer.courierCompany==3?
+			  '圆通速递YTO':orderMer.courierCompany==4?
+			  '申通快递STO':orderMer.courierCompany==5?
+			  '百世快递BestExpress':orderMer.courierCompany==6?
+			  '韵达快递YUNDA':orderMer.courierCompany==7?
+			  '中国邮政EMS':orderMer.courierCompany==8?
+			  '宅急送ZJS':orderMer.courierCompany==9?
+			  'FedEx联邦':orderMer.courierCompany==10?
+			  '京东物流':''"></span>
+			   <select ng-show="orderMer.$$courier==1" style="width:180px;height:50px;" ng-model="orderMer.courierCompany" name="courierCompany"
+     			ng-options="sa.id as sa.value for sa in orderMerCourier">
+  				</select>
+			  <span class="btn btn-danger" ng-show="orderMer.$$courier==0" ng-click="changeCourier(orderMer)">修改</span>
+			  <span ng-show="orderMer.$$courier==1" class="btn btn-danger" ng-click="updateOrderMerCourier(orderMer)">保存</span>
+			  </div>
+			  </td>
+			  
+			   <td >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  	<input  type="text" ng-model="orderMer.courierNumber" ng-maxlength="32" placeholder="请确认发货后，填写快递单号"/>
+			  	<button class="btn btn-success" ng-click="updateOrderMerCourier(orderMer)">保存</button>
+			  </div>
+			  </td>
+			  
 			   <td>
 			   <div ng-repeat="orderMer in merOrder.orderMerList" >
 			  <span ng-show="orderMer.$$status==0" class="text-warning" ng-init="orderMer.$$status=0"   ng-bind="orderMer.status==0?

@@ -29,7 +29,7 @@ var myUtils = {
 		nicename: /^[^\s]{1,10}$/,// 1-10位,不包含空格。
 		signature:/^[^\s]{1,15}$/,// 1-15位,不包含空格.
 		email:/^([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\-|\.]?)*[a-zA-Z0-9]+(\.[a-zA-Z]{2,3})+$/, // 邮箱
-		phone:/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/, // 手机
+		phone:/^1[0-9]{10}$/, // 手机
 		identity:/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/, // 15位和18位身份证号码
 		password:/^[0-9_a-zA-Z]{6,20}$/ // 数字、字母、下划线，6-20长度
 	},
@@ -620,7 +620,7 @@ var myUtils = {
 			                  url:options.ajaxObj.url,
 			                  type:"POST",
 			                  data:fd,
-			                  timeout:10000,
+			                  timeout:30000,
 			                  enctype:'multipart/form-data',
 			                  processData:false,// 告诉jQuery不要去处理发送的数据
 			                  contentType:false, // 告诉jQuery不要去设置Content-Type请求头

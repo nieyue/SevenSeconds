@@ -38,6 +38,7 @@ import com.nieyue.limit.RequestLimitException;
 import com.nieyue.rabbitmq.confirmcallback.Sender;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.FinanceService;
+import com.nieyue.service.NoviceTaskService;
 import com.nieyue.service.RoleService;
 import com.nieyue.util.MyDESutil;
 import com.nieyue.util.MyValidator;
@@ -63,6 +64,8 @@ public class AcountController {
 	private RoleService roleService;
 	@Resource
 	private FinanceService financeService;
+	@Resource
+	private NoviceTaskService noviceTaskService;
 	@Resource
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
@@ -205,6 +208,75 @@ public class AcountController {
 		session.setAttribute("acount", acount);
 		//System.err.println(um);
 		return ResultUtil.getSR(um);
+	}
+	/**
+	 * 账户个人信息
+	 * @param nickname 昵称
+	 * @param icon 头像
+	 * @return
+	 */
+	@RequestMapping(value = "/updateInfo", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList updateInfoAcount(@ModelAttribute Acount acount,HttpSession session)  {
+		List<Object> list=new ArrayList<Object>();
+		//判断是否存在
+		Acount ac = acountService.loadAcount(acount.getAcountId());
+		if(ac==null || ac.getAcountId()==null){
+			list.add("账户不存在");
+			return ResultUtil.getSlefSRFailList(list); 
+		}
+		acount.setPassword(ac.getPassword());
+		acount.setPhone(ac.getPhone());
+		acount.setEmail(ac.getEmail());
+		acount.setMasterId(ac.getMasterId());
+		acount.setOpenid(ac.getOpenid());
+		acount.setUuid(ac.getUuid());
+		acount.setStatus(ac.getStatus());
+		acount.setSpreadId(ac.getSpreadId());
+		acount.setScale(ac.getScale());
+		acount.setRoleId(ac.getRoleId());
+		boolean um = acountService.updateAcount(acount);
+		if(um){
+		session.setAttribute("acount", acount);
+		list.add(acount);
+		return ResultUtil.getSlefSRSuccessList(list); 
+		}
+		return ResultUtil.getSlefSRFailList(list); 
+	}
+	/**
+	 * 账户修改密码
+	 * @param adminName 手机号/电子邮箱
+	 * @param password  新密码
+	 * @param validCode 短信验证码
+	 * @return
+	 * @throws VerifyCodeErrorException 
+	 */
+	@RequestMapping(value = "/updatePassword", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList updateAcountPassword(
+			@RequestParam("adminName")String adminName,
+			@RequestParam("password")String password,
+			@RequestParam(value="validCode",required=false) String validCode,
+			HttpSession session) throws VerifyCodeErrorException  {
+		List<Object> list=new ArrayList<Object>();
+		//判断是否存在
+		Acount ac = acountService.loginAcount(adminName, null, null);
+		if(ac==null || ac.getAcountId()==null){
+			list.add("账户不存在");
+			return ResultUtil.getSlefSRFailList(list); 
+		}
+		//手机验证码
+		BoundValueOperations<String, String> an = stringRedisTemplate.boundValueOps(projectName+"ValidCode"+adminName);
+		String phoneValidCode= an.get();
+		if(!phoneValidCode.equals(validCode)){
+			throw new VerifyCodeErrorException();//验证码错误
+		}
+		ac.setPassword(MyDESutil.getMD5(password));
+		boolean um = acountService.updateAcount(ac);
+		if(um){
+		list.add(ac);
+		return ResultUtil.getSlefSRSuccessList(list);
+		}
+		return ResultUtil.getSlefSRFailList(list);
+		
 	}
 	/**
 	 * 账户修改真实姓名、手机号、微信号、支付宝账号
@@ -352,7 +424,7 @@ public class AcountController {
 	 * 手机验证码发送
 	 * 
 	 * @param adminName
-	 * @param session
+	 * @param templateCode 1注册，2修改密码
 	 * @return
 	 * @throws RequestLimitException 
 	 * @throws AcountIsExistException 
@@ -360,11 +432,19 @@ public class AcountController {
 	 */
 	@RequestMapping(value = "/validCode", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody
-	StateResultList validCode(@RequestParam("adminName") final String adminName) throws RequestLimitException, AcountIsExistException  {
+	StateResultList validCode(
+			@RequestParam("adminName")  String adminName,
+			@RequestParam(value="templateCode",required=false,defaultValue="1")  Integer templateCode//默认注册
+			)
+					throws RequestLimitException, AcountIsExistException  {
 		List<String> l=new ArrayList<String>();
-		//账户已经存在
-		if(acountService.loginAcount(adminName, null,null)!=null){
+		//注册，账户已经存在
+		if(acountService.loginAcount(adminName, null,null)!=null && templateCode==1){
 			throw new  AcountIsExistException();//账户已经存在异常
+		}
+		//修改密码
+		if(acountService.loginAcount(adminName, null,null)==null && templateCode!=1){
+			return ResultUtil.getSlefSRFailList(l);
 		}
 		if(!Pattern.matches(MyValidator.REGEX_PHONE,adminName)){
 					return ResultUtil.getSlefSRFailList(l);
@@ -376,7 +456,7 @@ public class AcountController {
 		
 		Integer userValidCode=(int) (Math.random()*9000)+1000;
 		an.set(userValidCode.toString(), 60, TimeUnit.SECONDS);
-		 sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName);
+		 sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName,templateCode);
 		//l.add(userValidCode.toString());
 		return ResultUtil.getSlefSRSuccessList(l);
 	}
@@ -476,23 +556,18 @@ public class AcountController {
 				list.add(acount);
 				//新手任务，获得一名徒弟  +350积分（这个任务为达成条件任务，无需排序）
 				if(masterId!=null&&!masterId.equals("")){
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-						int count = acountService.countAll(null, null, null, null, null, masterId, null, null, null, null);
-						if(count==1){//第一次才能有
-							NoviceTask noviceTask = new NoviceTask();
-							noviceTask.setAcountId(masterId);
-							noviceTask.setFrequency(0);
-							sender.sendNoviceTask(noviceTask);
-						}
-						//升级scale
-						Double ms = partnerBusiness.getPartnerScale(count);
-						Acount ma = acountService.loadAcount(masterId);
-						ma.setScale(ms);
-						acountService.updateAcount(acount);
-						}
-					}).start();
+					int count = noviceTaskService.countAll(null, masterId, 0);
+					if(count==0){//第一次才能有
+						NoviceTask noviceTask = new NoviceTask();
+						noviceTask.setAcountId(masterId);
+						noviceTask.setFrequency(0);
+						sender.sendNoviceTask(noviceTask);
+					}
+					//升级scale
+					Double ms = partnerBusiness.getPartnerScale(count);
+					Acount ma = acountService.loadAcount(masterId);
+					ma.setScale(ms);
+					acountService.updateAcount(acount);
 				}
 				return ResultUtil.getSlefSRSuccessList(list);
 				}else{
@@ -544,8 +619,8 @@ public class AcountController {
 			}
 		JSONObject jo = JSONObject.fromObject(wxinfo);
 		String uuid = jo.getString("unionid");
-		
 		Acount acount = acountService.weixinBaseAcountLogin(uuid);
+		
 		//新用户注册登录
 		if(acount==null||acount.equals("")){
 		//获取masterId
@@ -572,10 +647,17 @@ public class AcountController {
 			acount.setScale(0.2);
 			//acount.setMasterId(bvomasterId);
 			acount.setUuid(jo.getString("unionid"));
-			acount.setSex(jo.getInt("sex"));
-			acount.setNickname(jo.getString("nickname"));
+			if(jo.get("gender").equals("男")){
+				acount.setSex(1);
+			}else if(jo.get("gender").equals("女")){
+				acount.setSex(2);
+			}else{
+				acount.setSex(0);
+			}
+			acount.setNickname(jo.getString("name"));
 			acount.setOpenid(jo.getString("openid"));
-			acount.setIcon(jo.getString("headimgurl"));
+			//acount.setIcon(jo.getString("headimgurl"));
+			acount.setIcon(jo.getString("iconurl"));
 			acount.setCountry(jo.getString("country"));
 			acount.setProvince(jo.getString("province"));
 			acount.setCity(jo.getString("city"));

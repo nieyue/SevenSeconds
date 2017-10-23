@@ -38,7 +38,7 @@ public class DailyTaskServiceImpl implements DailyTaskService{
 		for (int i = 0; i < nl.size(); i++) {
 			DailyTask dt = nl.get(i);
 			//已经做过了
-			if(dt.getType().equals(type) && dt.getFrequency().equals(fre)){
+			if(dt.getType().equals(type)){
 				return b;
 			}
 			totalNum+=dt.getFrequency();

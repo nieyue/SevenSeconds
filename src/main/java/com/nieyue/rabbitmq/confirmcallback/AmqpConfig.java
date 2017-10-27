@@ -65,6 +65,24 @@ public class AmqpConfig {
 	@Value("${myPugin.rabbitmq.REPLY_DIRECT_QUEUE}")
 	public  String REPLY_DIRECT_QUEUE; 
 	/**
+	 * 弹幕
+	 */
+	@Value("${myPugin.rabbitmq.BARRAGE_DIRECT_EXCHANGE}")
+	public  String BARRAGE_DIRECT_EXCHANGE ;  
+	@Value("${myPugin.rabbitmq.BARRAGE_DIRECT_ROUTINGKEY}")
+	public String BARRAGE_DIRECT_ROUTINGKEY; 
+	@Value("${myPugin.rabbitmq.BARRAGE_DIRECT_QUEUE}")
+	public  String BARRAGE_DIRECT_QUEUE; 
+	/**
+	 * 投诉
+	 */
+	@Value("${myPugin.rabbitmq.COMPLAIN_DIRECT_EXCHANGE}")
+	public  String COMPLAIN_DIRECT_EXCHANGE ;  
+	@Value("${myPugin.rabbitmq.COMPLAIN_DIRECT_ROUTINGKEY}")
+	public String COMPLAIN_DIRECT_ROUTINGKEY; 
+	@Value("${myPugin.rabbitmq.COMPLAIN_DIRECT_QUEUE}")
+	public  String COMPLAIN_DIRECT_QUEUE; 
+	/**
 	 * 签到
 	 */
 	@Value("${myPugin.rabbitmq.SIGN_DIRECT_EXCHANGE}")
@@ -253,6 +271,61 @@ public class AmqpConfig {
     public Binding replyDirectBinding() {  
     	/** 将队列绑定到交换机 */  
     	return BindingBuilder.bind(replyDirectQueue()).to(replyDirectExchange()).with(REPLY_DIRECT_ROUTINGKEY);  
+    } 
+    
+    
+    /** 
+     *弹幕
+     */  
+    /*
+     * 设置交换机类型
+     */  
+    @Bean  
+    public DirectExchange barrageDirectExchange() {  
+    	DirectExchange de = new DirectExchange(BARRAGE_DIRECT_EXCHANGE);
+    	return de;
+    } 
+    /*
+     * 设置队列
+     */
+    @Bean  
+    public Queue barrageDirectQueue() {  
+    	return new Queue(BARRAGE_DIRECT_QUEUE);  
+    } 
+    /*
+     * 设置绑定
+     */
+    @Bean  
+    public Binding barrageDirectBinding() {  
+    	/** 将队列绑定到交换机 */  
+    	return BindingBuilder.bind(barrageDirectQueue()).to(barrageDirectExchange()).with(BARRAGE_DIRECT_ROUTINGKEY);  
+    } 
+    
+    /** 
+     *投诉
+     */  
+    /*
+     * 设置交换机类型
+     */  
+    @Bean  
+    public DirectExchange complainDirectExchange() {  
+    	DirectExchange de = new DirectExchange(COMPLAIN_DIRECT_EXCHANGE);
+    	return de;
+    } 
+    /*
+     * 设置队列
+     */
+    @Bean  
+    public Queue complainDirectQueue() {  
+    	return new Queue(COMPLAIN_DIRECT_QUEUE);  
+    } 
+    /*
+     * 设置绑定
+     */
+    @Bean  
+    public Binding complainDirectBinding() {  
+    	/** 将队列绑定到交换机 */  
+    	return BindingBuilder.bind(complainDirectQueue()).to(complainDirectExchange()).with(COMPLAIN_DIRECT_ROUTINGKEY);  
     } 
     
     

@@ -149,6 +149,49 @@ INDEX INDEX_STATUS (status) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 
+#创建弹幕表 
+CREATE TABLE barrage_tb(
+barrage_id int(11) NOT NULL AUTO_INCREMENT COMMENT '弹幕id',
+content varchar(255) COMMENT '内容',
+icon varchar(255)  COMMENT '头像',
+location tinyint(4)  COMMENT '显示位置，随机1,2,3,4',
+font_style tinyint(4) DEFAULT 1 COMMENT '字体风格，默认1',
+font_size tinyint(4) DEFAULT 1 COMMENT '字体大小，默认1小，2中，3大',
+font_bgcolor varchar(255) COMMENT '背景颜色默认#000',
+font_color varchar(255) COMMENT '字体颜色默认#fff',
+complain_number int(11) DEFAULT 0 COMMENT '投诉次数，默认0',
+create_date datetime COMMENT '创建时间',
+update_date datetime COMMENT '更新时间',
+status tinyint(4) DEFAULT 1 COMMENT '状态，默认正常1，异常0',
+article_id int(11) COMMENT '文章id外键',
+acount_id int(11) COMMENT '弹幕人id外键',
+PRIMARY KEY (barrage_id),
+INDEX INDEX_ARTICLEID (article_id) USING BTREE,
+INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
+INDEX INDEX_CREATEDATE (create_date) USING BTREE,
+INDEX INDEX_UPDATEDATE (update_date) USING BTREE,
+INDEX INDEX_COMPLAINNUMBER (complain_number) USING BTREE,
+INDEX INDEX_STATUS (status) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='弹幕表';
+
+#创建投诉表 
+CREATE TABLE complain_tb(
+complain_id int(11) NOT NULL AUTO_INCREMENT COMMENT '投诉id',
+type tinyint(4) DEFAULT 1 COMMENT '投诉类型，默认1非法政治言论，2情色暴力，3诱导诈骗',
+content varchar(255) COMMENT '内容',
+create_date datetime COMMENT '创建时间',
+update_date datetime COMMENT '更新时间',
+status tinyint(4) DEFAULT 1 COMMENT '状态，默认审核1，采纳2',
+barrage_id int(11) COMMENT '弹幕id外键',
+acount_id int(11) COMMENT '投诉人id外键',
+PRIMARY KEY (complain_id),
+INDEX INDEX_BARRAGEID (barrage_id) USING BTREE,
+INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
+INDEX INDEX_CREATEDATE (create_date) USING BTREE,
+INDEX INDEX_UPDATEDATE (update_date) USING BTREE,
+INDEX INDEX_TYPE (type) USING BTREE,
+INDEX INDEX_STATUS (status) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='投诉表';
 
 #创建评论表 
 CREATE TABLE comment_tb(

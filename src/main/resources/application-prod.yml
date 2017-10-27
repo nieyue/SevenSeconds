@@ -57,6 +57,12 @@ myPugin:
     REPLY_DIRECT_EXCHANGE: reply.sevenseconds.exchange.direct
     REPLY_DIRECT_ROUTINGKEY: reply.sevenseconds.routingkey.direct
     REPLY_DIRECT_QUEUE: reply.sevenseconds.queue.direct
+    BARRAGE_DIRECT_EXCHANGE: barrage.sevenseconds.exchange.direct
+    BARRAGE_DIRECT_ROUTINGKEY: barrage.sevenseconds.routingkey.direct
+    BARRAGE_DIRECT_QUEUE: barrage.sevenseconds.queue.direct
+    COMPLAIN_DIRECT_EXCHANGE: complain.sevenseconds.exchange.direct
+    COMPLAIN_DIRECT_ROUTINGKEY: complain.sevenseconds.routingkey.direct
+    COMPLAIN_DIRECT_QUEUE: complain.sevenseconds.queue.direct
     SIGN_DIRECT_EXCHANGE: sign.sevenseconds.exchange.direct
     SIGN_DIRECT_ROUTINGKEY: sign.sevenseconds.routingkey.direct
     SIGN_DIRECT_QUEUE: sign.sevenseconds.queue.direct

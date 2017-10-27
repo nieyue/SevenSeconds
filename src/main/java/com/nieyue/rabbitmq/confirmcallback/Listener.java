@@ -17,7 +17,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.Article;
+import com.nieyue.bean.Barrage;
 import com.nieyue.bean.Comment;
+import com.nieyue.bean.Complain;
 import com.nieyue.bean.DailyData;
 import com.nieyue.bean.DailyTask;
 import com.nieyue.bean.Data;
@@ -31,7 +33,9 @@ import com.nieyue.business.DailyTaskBusiness;
 import com.nieyue.business.NoviceTaskBusiness;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.ArticleService;
+import com.nieyue.service.BarrageService;
 import com.nieyue.service.CommentService;
+import com.nieyue.service.ComplainService;
 import com.nieyue.service.DailyDataService;
 import com.nieyue.service.DailyTaskService;
 import com.nieyue.service.DataService;
@@ -78,6 +82,10 @@ public class Listener {
 	private CommentService commentService;
 	@Resource
 	private ReplyService replyService;
+	@Resource
+	private BarrageService barrageService;
+	@Resource
+	private ComplainService complainService;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	//private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
@@ -568,7 +576,7 @@ public class Listener {
 			    
 			    
 			    /**
-			     * 评论
+			     * 回复
 			     * @param channel
 			     * @param dataRabbitmqDTO
 			     * @param message
@@ -581,6 +589,54 @@ public class Listener {
 			    		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 			    	} catch (Exception e) {
 			    		// TODO Auto-generated catch block
+			    		try {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    		} catch (IOException e1) {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    			
+			    			e1.printStackTrace();
+			    		}
+			    		//e.printStackTrace();
+			    	} //确认消息成功消费 
+			    }
+			    
+			    /**
+			     * 弹幕
+			     * @param channel
+			     * @param dataRabbitmqDTO
+			     * @param message
+			     * @throws IOException
+			     */
+			    @RabbitListener(queues="${myPugin.rabbitmq.BARRAGE_DIRECT_QUEUE}") 
+			    public void barrage(Channel channel, Barrage barrage,Message message) throws IOException   {
+			    	try {
+			    		barrageService.addBarrage(barrage);
+			    		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+			    	} catch (Exception e) {
+			    		try {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    		} catch (IOException e1) {
+			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
+			    			
+			    			e1.printStackTrace();
+			    		}
+			    		//e.printStackTrace();
+			    	} //确认消息成功消费 
+			    }
+			    
+			    /**
+			     * 投诉
+			     * @param channel
+			     * @param dataRabbitmqDTO
+			     * @param message
+			     * @throws IOException
+			     */
+			    @RabbitListener(queues="${myPugin.rabbitmq.COMPLAIN_DIRECT_QUEUE}") 
+			    public void complain(Channel channel, Complain complain,Message message) throws IOException   {
+			    	try {
+			    		complainService.addComplain(complain);
+			    		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+			    	} catch (Exception e) {
 			    		try {
 			    			channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);
 			    		} catch (IOException e1) {

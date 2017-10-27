@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 日期格式化类
@@ -322,5 +323,7 @@ public class DateUtil {
         
        // DateUtil.getSeparatedTime(s0.getCreateDate(), new Date())
        System.out.println(MyDESutil.getMD5("jiaxingyufa"));
+       
+       System.out.print(new Random().nextInt(4)+1);
     }  
 }

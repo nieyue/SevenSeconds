@@ -11,7 +11,9 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.nieyue.bean.Barrage;
 import com.nieyue.bean.Comment;
+import com.nieyue.bean.Complain;
 import com.nieyue.bean.DailyTask;
 import com.nieyue.bean.DataRabbitmqDTO;
 import com.nieyue.bean.NoviceTask;
@@ -78,6 +80,22 @@ public class Sender  implements RabbitTemplate.ConfirmCallback{
 	 public void sendReply(Reply reply) {  
 		 CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
 		 this.rabbitTemplate.convertAndSend(amqpConfig.REPLY_DIRECT_EXCHANGE, amqpConfig.REPLY_DIRECT_ROUTINGKEY, reply, correlationData);  
+	 }
+	 /**
+	  * 弹幕
+	  * @param dataRabbitmqDTO
+	  */
+	 public void sendBarrage(Barrage barrage) {  
+		 CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+		 this.rabbitTemplate.convertAndSend(amqpConfig.BARRAGE_DIRECT_EXCHANGE, amqpConfig.BARRAGE_DIRECT_ROUTINGKEY, barrage, correlationData);  
+	 }
+	 /**
+	  * 投诉
+	  * @param dataRabbitmqDTO
+	  */
+	 public void sendComplain(Complain complain) {  
+		 CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+		 this.rabbitTemplate.convertAndSend(amqpConfig.COMPLAIN_DIRECT_EXCHANGE, amqpConfig.COMPLAIN_DIRECT_ROUTINGKEY, complain, correlationData);  
 	 }
 	 /**
 	  * 签到

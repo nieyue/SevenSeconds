@@ -255,10 +255,10 @@
 			     // 阻止输出log
 			    editor.config.printLog = false;
 			    //取消过滤js
-			    //if($rootScope.sessionRole.name=='超级管理员'
-			    //||$rootScope.sessionRole.name!='运营管理员'){
-			    //editor.config.jsFilter=false;
-			  //  }
+			    if($rootScope.sessionRole.name=='超级管理员'
+			    ||$rootScope.sessionRole.name!='运营管理员'){
+			    editor.config.jsFilter=false;
+			    }
 			    //zindex
 			    editor.config.zindex = 99999999;
 			    editor.config.menuFixed = 50;

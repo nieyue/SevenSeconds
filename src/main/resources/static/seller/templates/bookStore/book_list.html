@@ -20,6 +20,7 @@
 			  <th>费用</th>
 			  <th>收藏数</th>
 			  <th>数据</th>
+			  <th>推广url</th>
 			  <th>跳转url</th>
 			  <th>状态</th>
 			  <th>创建时间</th>
@@ -77,6 +78,14 @@
 				</a>
 			  </div>
 			  </td>
+			  <td>
+			  <div >
+				<span class="comment-right-body-title" >
+					小说推广链接：<a style="color:green;" href="{{ssDomainUrl}}/book.html?bookId={{book.bookId}}">
+					{{ssDomainUrl}}/book.html?bookId={{book.bookId}}
+					</a>
+				</span>
+			  </div>
 			  <td >
 			  <span  ng-bind="book.redirectUrl"></span>
 			  </td>

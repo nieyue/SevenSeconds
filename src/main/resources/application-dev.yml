@@ -83,3 +83,8 @@ myPugin:
   alibabaSmsSignName: 雅耀
   alibabaSmsTemplateCodeAcountRegister: SMS_13026946
   alibabaSmsTemplateCodePasswordUpdate: SMS_13026944
+  aliyunSmsAppkey: LTAIgDJerZxD8twJ
+  aliyunSmsAppsecret: 9PuLZNoEQRPDJm465MxL1JIXQY9Msh
+  aliyunSmsSignName: 七秒资讯
+  aliyunSmsTemplateCodeAcountRegister: SMS_89885232
+  aliyunSmsTemplateCodePasswordUpdate: SMS_89885231

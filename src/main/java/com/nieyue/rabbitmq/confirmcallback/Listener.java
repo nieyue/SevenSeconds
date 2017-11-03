@@ -108,6 +108,7 @@ public class Listener {
        		 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
        		 return;
        		}
+       		
        		//如果账户不存在则用，1000
        		Acount inacount = acountService.loadAcount(dataRabbitmqDTO.getAcountId());
        		if(inacount==null||inacount.equals("")){
@@ -258,7 +259,14 @@ public class Listener {
 	        	   */
 	        	   //当前文章
 	        	   Article article = articleService.loadSmallArticle(dataRabbitmqDTO.getArticleId());
-	       		//如果消耗完则返回
+	       		
+	        	   //如果文章超过30天，则不计费
+	        	   if( DateUtil.getSeparatedTime(article.getCreateDate(), new Date())>30){
+	        		   articleService.updateArticleClick(article);
+	        		   channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+	           			return;
+	        	   }   
+	        	   //如果消耗完则返回
 	       		if(article.getNowTotalPrice()>=article.getTotalPrice()){
 	       			article.setStatus("完成");
 	       			articleService.updateArticleClick(article);
@@ -284,7 +292,7 @@ public class Listener {
 	        	    * 自身财务、收益
 	        	    */
 	        	   //自身财务
-	        	   List<Finance> financelist = financeService.browsePagingFinance(dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
+	        	   List<Finance> financelist = financeService.browsePagingFinance(null,dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
 	        	   Finance selfFinance = financelist.get(0);
 	        	  
 	        	   //记录流水，阅读文章收益
@@ -310,7 +318,7 @@ public class Listener {
 	        		  Acount masterAcount = acountService.loadAcount(masterID);
 	        		  if(masterAcount!=null&&!masterAcount.equals("")&&masterAcount.getScale()>0.0){
 	        			  //父账户财务
-	        			  List<Finance> masterfinancelist = financeService.browsePagingFinance(masterAcount.getAcountId(), 1, 1, "finance_id", "asc");
+	        			  List<Finance> masterfinancelist = financeService.browsePagingFinance(null,masterAcount.getAcountId(), 1, 1, "finance_id", "asc");
 	        			 if(masterfinancelist.size()>0){//有父账户
 	        			Finance masterFinance = masterfinancelist.get(0);
 	        			 //记录父账户流水，阅读文章收益
@@ -449,7 +457,7 @@ public class Listener {
 		        	   
 		        	   
 		        	   //推广账户  达人奖励 转发推广文章    10积分（获得3个有效阅读）
-		        	   List<Finance> tgfinancelist = financeService.browsePagingFinance(dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
+		        	   List<Finance> tgfinancelist = financeService.browsePagingFinance(null,dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
 		        	   Finance tgFinance = tgfinancelist.get(0);
 		        	 //推广账户 的当前文章阅读次数
 		        	   BoundValueOperations<String, String> tgbvo = stringRedisTemplate.boundValueOps(projectName+"AcountId"+dataRabbitmqDTO.getAcountId()+"ArtiticlId"+dataRabbitmqDTO.getArticleId()+"PromotionReading");
@@ -486,7 +494,7 @@ public class Listener {
 			        	   
 		        	   //自身财务 有ip才计费
 		        	   if(isAddIp==1){
-			        	List<Finance> financelist = financeService.browsePagingFinance(inacount.getAcountId(), 1, 1, "finance_id", "asc");
+			        	List<Finance> financelist = financeService.browsePagingFinance(null,inacount.getAcountId(), 1, 1, "finance_id", "asc");
 			        	Finance selfFinance = financelist.get(0);
 		        	   //记录流水，阅读文章收益
 		        	   FlowWater flowWater = new FlowWater();
@@ -511,7 +519,7 @@ public class Listener {
 		        		  Acount masterAcount = acountService.loadAcount(masterID);
 		        		  if(masterAcount!=null&&!masterAcount.equals("")&&masterAcount.getScale()>0.0){
 		        			  //父账户财务
-		        			  List<Finance> masterfinancelist = financeService.browsePagingFinance(masterAcount.getAcountId(), 1, 1, "finance_id", "asc");
+		        			  List<Finance> masterfinancelist = financeService.browsePagingFinance(null,masterAcount.getAcountId(), 1, 1, "finance_id", "asc");
 		        			 if(masterfinancelist.size()>0){//有父账户
 		        			Finance masterFinance = masterfinancelist.get(0);
 		        			 //记录父账户流水，阅读文章收益
@@ -661,7 +669,7 @@ public class Listener {
 			    	try {
 			    		boolean b = signService.addSign(sign);
 			    		if(b){
-			    			List<Finance> financelist = financeService.browsePagingFinance(sign.getAcountId(), 1, 1, "finance_id", "asc");
+			    			List<Finance> financelist = financeService.browsePagingFinance(null,sign.getAcountId(), 1, 1, "finance_id", "asc");
 			    			Finance selfFinance = financelist.get(0);
 			    			//记录流水，新手任务收益
 			    			FlowWater flowWater = new FlowWater();
@@ -705,7 +713,7 @@ public class Listener {
 			    	try {
 			    		boolean b = noviceTaskService.addNoviceTask(noviceTask);
 			    	if(b){
-			    		List<Finance> financelist = financeService.browsePagingFinance(noviceTask.getAcountId(), 1, 1, "finance_id", "asc");
+			    		List<Finance> financelist = financeService.browsePagingFinance(null,noviceTask.getAcountId(), 1, 1, "finance_id", "asc");
 			        	Finance selfFinance = financelist.get(0);
 		        	   //记录流水，新手任务收益
 		        	   FlowWater flowWater = new FlowWater();
@@ -730,7 +738,7 @@ public class Listener {
 		        	   //达人奖励,师傅收益
 		        	  Acount acount = acountService.loadAcount(noviceTask.getAcountId());
 		        	  if(acount.getMasterId()!=null && !acount.getMasterId().equals("")){
-		        		  List<Finance> masterfinancelist = financeService.browsePagingFinance(acount.getMasterId(), 1, 1, "finance_id", "asc");
+		        		  List<Finance> masterfinancelist = financeService.browsePagingFinance(null,acount.getMasterId(), 1, 1, "finance_id", "asc");
 				        	if(masterfinancelist.size()>0){
 		        		  Finance masterFinance = masterfinancelist.get(0);
 		        		  //师傅记录流水，新手任务收益
@@ -780,7 +788,7 @@ public class Listener {
 			    		boolean b = dailyTaskService.addDailyTask(dailyTask);
 			    		if(b){
 			    			
-			    			List<Finance> financelist = financeService.browsePagingFinance(dailyTask.getAcountId(), 1, 1, "finance_id", "asc");
+			    			List<Finance> financelist = financeService.browsePagingFinance(null,dailyTask.getAcountId(), 1, 1, "finance_id", "asc");
 			    			Finance selfFinance = financelist.get(0);
 			    			//记录流水，新手任务收益
 			    			FlowWater flowWater = new FlowWater();
@@ -800,7 +808,7 @@ public class Listener {
 			    			//师傅每日任务收益分成
 			    			Acount acount = acountService.loadAcount(dailyTask.getAcountId());
 			    			if(acount.getMasterId()!=null && !acount.getMasterId().equals("")){
-			    				List<Finance> masterfinancelist = financeService.browsePagingFinance(acount.getMasterId(), 1, 1, "finance_id", "asc");
+			    				List<Finance> masterfinancelist = financeService.browsePagingFinance(null,acount.getMasterId(), 1, 1, "finance_id", "asc");
 			    				if(masterfinancelist.size()>0){
 			    					Finance masterFinance = masterfinancelist.get(0);
 			    					//师傅记录流水，新手任务收益
@@ -851,7 +859,7 @@ public class Listener {
 			    	try {
 			    		boolean b = flowWaterService.addFlowWater(flowWater);
 			    		if(b){
-			    			List<Finance> financelist = financeService.browsePagingFinance(flowWater.getAcountId(), 1, 1, "finance_id", "asc");
+			    			List<Finance> financelist = financeService.browsePagingFinance(null,flowWater.getAcountId(), 1, 1, "finance_id", "asc");
 			    			Finance selfFinance = financelist.get(0);
 			    			//自身消费增加 ,money为负数，所以减
 			    			selfFinance.setConsume(selfFinance.getConsume()-flowWater.getMoney());
@@ -884,7 +892,7 @@ public class Listener {
 			    	try {
 			    		boolean b = flowWaterService.addFlowWater(flowWater);
 			    		if(b){
-			    			List<Finance> financelist = financeService.browsePagingFinance(flowWater.getAcountId(), 1, 1, "finance_id", "asc");
+			    			List<Finance> financelist = financeService.browsePagingFinance(null,flowWater.getAcountId(), 1, 1, "finance_id", "asc");
 			    			Finance selfFinance = financelist.get(0);
 			    			//自身消费增加 ,money为负数，所以减
 			    			selfFinance.setConsume(selfFinance.getConsume()-flowWater.getMoney());

@@ -20,9 +20,11 @@ public interface FinanceService {
 	/** 装载财务 */	
 	public Finance loadFinance(Integer financeId);	
 	/** 财务总共数目 */	
-	public int countAll(Integer acountId);
+	public int countAll(
+			Double money,
+			Integer acountId);
 	/** 账户分页浏览收益数目排行榜 */
 	public List<AcountDTO> browsePagingFinanceByAcountId(Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;		
 	/** 分页财务信息 */
-	public List<Finance> browsePagingFinance(Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
+	public List<Finance> browsePagingFinance(Double money,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
 }

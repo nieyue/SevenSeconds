@@ -45,13 +45,15 @@ public class FinanceServiceImpl implements FinanceService{
 	}
 
 	@Override
-	public int countAll(Integer acountId) {
-		int c = financeDao.countAll(acountId);
+	public int countAll(
+			Double money,
+			Integer acountId) {
+		int c = financeDao.countAll(money,acountId);
 		return c;
 	}
 
 	@Override
-	public List<Finance> browsePagingFinance(Integer acountId,int pageNum, int pageSize,
+	public List<Finance> browsePagingFinance(Double money,Integer acountId,int pageNum, int pageSize,
 			String orderName, String orderWay) {
 		if(pageNum<1){
 			pageNum=1;
@@ -59,7 +61,7 @@ public class FinanceServiceImpl implements FinanceService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<Finance> l = financeDao.browsePagingFinance(acountId,pageNum-1, pageSize, orderName, orderWay);
+		List<Finance> l = financeDao.browsePagingFinance(money,acountId,pageNum-1, pageSize, orderName, orderWay);
 		return l;
 	}
 	@Override

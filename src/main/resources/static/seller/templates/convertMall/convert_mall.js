@@ -576,17 +576,41 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			$scope.pageNumber=10;//每页显示数目
 			$scope.mostShowPageNumber=5;//设定最多显示页码数目	
 			$scope.pagination=myUtils.myPaginationHandler();
-			
+			//查询条件
+			$scope.search={
+				orderNumber:null,//订单号
+				acountId:null//账户ID
+			};
 			//点击哪页显示哪页
-			$scope.toPage=function(currentPageNumber){
+			$scope.toPage=function(currentPageNumber,search){
 			  if($scope.pagination.toPage(currentPageNumber,$scope.currentPage,$scope.totalPage)){
 			  //$scope.showmerCateListIcon=true;
 			  $scope.currentPage=$scope.pagination.currentPage;
-			  $scope.merOrderListInit();
+			  $scope.merOrderListInit(search);
 			  }
 			};
-			$scope.merOrderListInit=function(){
-			  $.get(requestDomainUrl+"/merOrder/count",function(cd){
+			$scope.merOrderListInit=function(search){
+				var countUrl=requestDomainUrl+"/merOrder/count";
+				var listUrl=requestDomainUrl+"/merOrder/list?pageNum="+(($scope.currentPage-1)*$scope.pageNumber+1)+"&pageSize="+$scope.pageNumber;
+				var i=0;//控制计数器
+				function params(name,value){
+				if(value){
+				i++;
+				if(i==1){
+				countUrl+="?"+name+"="+value;
+				}else{
+				countUrl+="&"+name+"="+value;
+				}
+				listUrl+="&"+name+"="+value;
+				}
+				}
+				if(search.orderNumber){					
+				params("orderNumber",search.orderNumber);
+				}
+				if(search.acountId){					
+					params("acountId",search.acountId);
+				}
+			  $.get(countUrl,function(cd){
            		$scope.totalNumber=cd;             
            //页码初始化
           $scope.totalPage=$scope.pagination.getTotalPage($scope.totalNumber,$scope.pageNumber);//总页码数目     
@@ -594,17 +618,29 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
           //所有页码
           $scope.showAllPageNumberArray=$scope.pagination.getShowPageNumber($scope.totalPage,$scope.pageNumber,$scope.totalPage,$scope.currentPage);
         //初始化
-  $.get(requestDomainUrl+"/merOrder/list?pageNum="+(($scope.currentPage-1)*$scope.pageNumber+1)+"&pageSize="+$scope.pageNumber,function(pld){
+  $.get(listUrl,function(pld){
            $scope.merOrderList=pld;
 			 console.log($scope.merOrderList)
 			$scope.$apply();
                });
        });
 			};
-			$scope.merOrderListInit();
+			$scope.merOrderListInit($scope.search);
 			/*
             *列表end
             */
+			/*
+			 *查询
+			 */
+			$scope.searchMerOrderForm=function(){
+				console.log($scope.search)
+				 $scope.currentPage=1;//重置
+				$scope.merOrderListInit($scope.search);
+			}
+			/*
+			 *查询end
+			 */
+			
 			/*
             *修改订单状态 状态，0已下单-未支付，1已支付-未发货，2已发货-未完成，3申请退款，4已退款，5拒绝退款,6已完成
             */
@@ -630,7 +666,9 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             			}
             			,function(data){
                 	if(data.code==200){
-                		location.reload();
+                		//location.reload();
+                		orderMer.$$status=0;
+                		$scope.$apply();
                 		myUtils.myLoadingToast("加载成功" ); 
                 	}else{
                 		myUtils.myLoadingToast("加载失败");   	   				
@@ -668,7 +706,9 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             			}
             	,function(data){
             		if(data.code==200){
-            			location.reload();
+            			orderMer.$$courier=0;
+            			$scope.$apply();
+            			//location.reload();
             			myUtils.myLoadingToast("加载成功" ); 
             		}else{
             			myUtils.myLoadingToast("加载失败");   	   				

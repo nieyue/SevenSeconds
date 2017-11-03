@@ -325,5 +325,8 @@ public class DateUtil {
        System.out.println(MyDESutil.getMD5("jiaxingyufa"));
        
        System.out.print(new Random().nextInt(4)+1);
+       String aaaaa=null;
+      // System.out.println(aaaaa.equals("ret"));
+       System.err.println(DateUtil.getSeparatedTime( new Date(),DateUtil.getFirstToDay(new Date(), 30))>30);
     }  
 }

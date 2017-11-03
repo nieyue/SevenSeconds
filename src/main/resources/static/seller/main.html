@@ -1339,6 +1339,30 @@
                 } 
             }
         })
+         .state("main.financeData", {//财务数据
+            url:"/financeData",
+            views: {
+            	'rightbody@main': {
+                    templateUrl: "/seller/templates/finance_data.html",
+                    controller:function($rootScope,$scope,$state){
+                   console.log(111)
+                   $scope.fcms=['200','500','1000','2000','3000','5000','10000','30000','50000','80000','100000'];
+                   $scope.financeMoneyModel='3000';
+                   console.log($scope.financeMoneyModel)
+                   $scope.initFinanceCount=function(value){
+                   $.get("/finance/count?money="+value,
+                    	function(data){
+                   $scope.financeCountByMoney=data;
+       	   				$scope.$apply();
+       	   				//console.log($scope.fcms)
+       	   				//console.log($scope.financeMoneyModel)
+       	   				});
+                   };
+                   $scope.initFinanceCount($scope.financeMoneyModel);
+            }
+            }
+            }
+        })
          .state("main.acountAdd", {//账户增加
             url:"/acountAdd",
             views: {

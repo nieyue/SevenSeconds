@@ -82,13 +82,14 @@ public class FinanceController {
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingFinance(
+			@RequestParam(value="money",required=false)Double money,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
 			@RequestParam(value="orderName",required=false,defaultValue="finance_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
 			List<Finance> list = new ArrayList<Finance>();
-			list= financeService.browsePagingFinance(acountId,pageNum, pageSize, orderName, orderWay);
+			list= financeService.browsePagingFinance(money,acountId,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				
 				return ResultUtil.getSlefSRSuccessList(list);
@@ -129,8 +130,10 @@ public class FinanceController {
 	 * @return
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody int countAll(@RequestParam(value="acountId",required=false)Integer acountId,HttpSession session)  {
-		int count = financeService.countAll(acountId);
+	public @ResponseBody int countAll(
+			@RequestParam(value="money",required=false)Double money,
+			@RequestParam(value="acountId",required=false)Integer acountId,HttpSession session)  {
+		int count = financeService.countAll(money,acountId);
 		return count;
 	}
 	/**
@@ -157,7 +160,7 @@ public class FinanceController {
 			@RequestParam("acountId") Integer acountId,
 			HttpSession session)  {
 		List<JSONObject> l = new ArrayList<JSONObject>();
-		List<Finance> list= financeService.browsePagingFinance(acountId,1, 1, "finance_id","desc");
+		List<Finance> list= financeService.browsePagingFinance(null,acountId,1, 1, "finance_id","desc");
 		if(list.size()<=0){
 			return ResultUtil.getSlefSRFailList(l);
 		}

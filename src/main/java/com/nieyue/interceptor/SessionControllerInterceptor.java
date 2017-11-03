@@ -73,6 +73,9 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
        if(request.getRequestURI().indexOf("getSession")>-1){
         	return true;
         }
+//       if(1==1){
+//    	   return true;
+//       }
         if(
         		request.getServletPath().equals("/")
         		||request.getRequestURI().indexOf("swagger")>-1

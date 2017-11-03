@@ -1,0 +1,13 @@
+<!-- 财务数据 -->
+<div style="border-bottom:1px solid #ccc">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">财务总数据</label>
+</div>
+<!-- 财务数据end -->
+<!-- 财务资金人数 -->
+ <label  class="text-danger nieyueText">财务资金分析</label>
+  <div class=" comment-input-margin" >
+  积分余额大于或等于<select style="width:180px;height:50px;" ng-change="initFinanceCount(financeMoneyModel)"  ng-model="financeMoneyModel" name="financeMoneyModel"  ng-options="fcm for fcm in fcms">
+  </select>
+  人数：<span ng-bind="financeCountByMoney"></span>
+  </div>
+<!-- 财务资金人数end -->

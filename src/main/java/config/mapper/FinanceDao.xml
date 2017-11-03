@@ -147,6 +147,9 @@ WHERE finance_id=#{financeId}
     	acount_id
 	FROM finance_tb
 	<where>
+	<if test="money!=null">
+	AND  money>=#{money}
+	</if>
 	<if test="acountId!=null">
 	AND  acount_id=#{acountId}
 	</if>
@@ -159,6 +162,9 @@ WHERE finance_id=#{financeId}
 	</if>
 	(SELECT ${orderName} FROM finance_tb 
 	<where>
+	<if test="money!=null">
+	AND  money>=#{money}
+	</if>
 	<if test="acountId!=null">
 	AND  acount_id=#{acountId}
 	</if>
@@ -180,6 +186,9 @@ WHERE finance_id=#{financeId}
 	 	count(finance_id)
 	FROM finance_tb
 	<where>
+	<if test="money!=null">
+	AND  money>=#{money}
+	</if>
 		<if test="acountId!=null">
 		AND  acount_id=#{acountId}
 		</if>

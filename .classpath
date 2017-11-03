@@ -44,5 +44,7 @@
 	<classpathentry kind="lib" path="src/lib/taobao-sdk-java-auto_1455552377940-20161118.jar"/>
 	<classpathentry kind="lib" path="src/lib/taobao-sdk-java-auto_1457071677200-20160815-source.jar"/>
 	<classpathentry kind="lib" path="src/lib/taobao-sdk-java-auto_1457071677200-20160815.jar"/>
+	<classpathentry kind="lib" path="src/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/lib/aliyun-java-sdk-core-3.2.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
@@ -45,6 +46,7 @@ import com.nieyue.util.MyValidator;
 import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
+import com.yayao.messageinterface.AliyunSms;
 import com.yayao.messageinterface.SMSInterface;
 
 import net.sf.json.JSONObject;
@@ -70,6 +72,8 @@ public class AcountController {
 	private StringRedisTemplate stringRedisTemplate;
 	@Resource
 	private SMSInterface sMSInterface;
+	@Resource
+	private AliyunSms aliyunSms;
 	@Resource
 	private Sender sender;
 	@Resource
@@ -290,27 +294,50 @@ public class AcountController {
 			@RequestParam(value="realname")String realname,
 			@RequestParam(value="alipay")String alipay,
 			HttpSession session)  {
-		//手机号登陆 账户已经存在
-		if(!phone.equals("")&&((Acount)session.getAttribute("acount")).getPhone().equals(phone)
-				&&acountService.loginAcount(phone, null,acountId)!=null){//不存在就错
-			return ResultUtil.getSR(false);
-		}
-		//微信登陆 账户已经存在
-		if((((Acount)session.getAttribute("acount")).getPhone()==null||((Acount)session.getAttribute("acount")).getPhone().equals(""))
-				&&acountService.loginAcount(phone, null,acountId)==null){//存在就错
-			return ResultUtil.getSR(false);
-		}
-		if(phone.equals("")){
-			phone=null;
-		}
 		Acount newa = acountService.loadAcount(acountId);
-			newa.setPhone(phone);
+		if(!((Acount)session.getAttribute("acount")).getAcountId().equals(acountId)){
+			return ResultUtil.getSR(false);
+		}
+		if(phone!=null&&!phone.equals("")){
+		//微信登陆 账户已经存在
+		if(((Acount)session.getAttribute("acount")).getPhone()==null||((Acount)session.getAttribute("acount")).getPhone().equals(""))
+				{
+				if(acountService.loginAcount(phone, null,null)!=null){
+					//存在就错
+					return ResultUtil.getSR(false);
+				}else{
+					newa.setPhone(phone);
+					newa.setWechat(wechat);
+					newa.setRealname(realname);
+					newa.setAlipay(alipay);
+				boolean um = acountService.updateAcount(newa);
+				session.setAttribute("acount", newa);
+				return ResultUtil.getSR(um);
+				}
+		}
+		//手机号登陆 账户已经存在
+		if(!phone.equals(((Acount)session.getAttribute("acount")).getPhone())){
+			if(acountService.loginAcount(phone, null,null)==null){
+				//不存在就错
+				return ResultUtil.getSR(false);
+			}else{
+				newa.setPhone(phone);
+				newa.setWechat(wechat);
+				newa.setRealname(realname);
+				newa.setAlipay(alipay);
+			boolean um = acountService.updateAcount(newa);
+			session.setAttribute("acount", newa);
+			return ResultUtil.getSR(um);
+			}
+		}
+		}
+			newa.setPhone(null);
 			newa.setWechat(wechat);
 			newa.setRealname(realname);
 			newa.setAlipay(alipay);
-		boolean um = acountService.updateAcount(newa);
-		session.setAttribute("acount", newa);
-		return ResultUtil.getSR(um);
+			boolean um = acountService.updateAcount(newa);
+			session.setAttribute("acount", newa);
+			return ResultUtil.getSR(um);
 	}
 	/**
 	 * 账户增加
@@ -407,7 +434,7 @@ public class AcountController {
 			}
 			session.setAttribute("acount", acount);
 			session.setAttribute("role", r);
-			List<Finance> f = financeService.browsePagingFinance(acount.getAcountId(), 1, 1, "finance_id", "asc");
+			List<Finance> f = financeService.browsePagingFinance(null,acount.getAcountId(), 1, 1, "finance_id", "asc");
 			session.setAttribute("finance", f.get(0));
 			list.add(acount);
 			return ResultUtil.getSlefSRSuccessList(list);
@@ -456,9 +483,15 @@ public class AcountController {
 		
 		Integer userValidCode=(int) (Math.random()*9000)+1000;
 		an.set(userValidCode.toString(), 60, TimeUnit.SECONDS);
-		 sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName,templateCode);
+		 //sMSInterface.SmsNumSend(String.valueOf(userValidCode), adminName,templateCode);
+		 try {
+			aliyunSms.sendSms(String.valueOf(userValidCode), adminName,templateCode);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			 return ResultUtil.getSlefSRFailList(l);
+		}
 		//l.add(userValidCode.toString());
-		return ResultUtil.getSlefSRSuccessList(l);
+		 return ResultUtil.getSlefSRSuccessList(l);
 	}
 	/**
 	 * web用户登录
@@ -490,7 +523,7 @@ public class AcountController {
 			Integer roleId = acount.getRoleId();
 			Role r = roleService.loadRole(roleId);
 			session.setAttribute("role", r);
-			List<Finance> f = financeService.browsePagingFinance(acount.getAcountId(), 1, 1, "finance_id", "asc");
+			List<Finance> f = financeService.browsePagingFinance(null,acount.getAcountId(), 1, 1, "finance_id", "asc");
 			session.setAttribute("finance", f.get(0));
 			list.add(acount);
 			//return ResultUtil.getSlefSRSuccessList(list);
@@ -550,7 +583,7 @@ public class AcountController {
 				session.setAttribute("acount", acount);
 				Role role = roleService.loadRole(acount.getRoleId());
 				session.setAttribute("role", role);
-				List<Finance> f = financeService.browsePagingFinance(acount.getAcountId(), 1, 1, "finance_id", "asc");
+				List<Finance> f = financeService.browsePagingFinance(null,acount.getAcountId(), 1, 1, "finance_id", "asc");
 				//System.out.println(f.get(0).toString());
 				session.setAttribute("finance", f.get(0));
 				list.add(acount);
@@ -671,7 +704,7 @@ public class AcountController {
 		session.setAttribute("acount", acount);
 		Role role = roleService.loadRole(acount.getRoleId());
 		session.setAttribute("role", role);
-		List<Finance> f = financeService.browsePagingFinance(acount.getAcountId(), 1, 1, "finance_id", "asc");
+		List<Finance> f = financeService.browsePagingFinance(null,acount.getAcountId(), 1, 1, "finance_id", "asc");
 		//System.out.println(f.get(0).toString());
 		session.setAttribute("finance", f.get(0));
 		list.add(acount);

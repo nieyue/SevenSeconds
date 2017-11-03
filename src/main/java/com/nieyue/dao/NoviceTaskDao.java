@@ -26,8 +26,8 @@ public interface NoviceTaskDao {
 	/** 新手任务总共数目 */	
 	public int countAll(
 			@Param("createDate")Date createDate,
-			@Param("frequency")Integer frequency,
-			@Param("acountId")Integer acountId
+			@Param("acountId")Integer acountId,
+			@Param("frequency")Integer frequency
 			);	
 	/** 分页新手任务信息 */
 	public List<NoviceTask> browsePagingNoviceTask(

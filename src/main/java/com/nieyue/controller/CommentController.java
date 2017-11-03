@@ -195,7 +195,7 @@ public class CommentController {
 			comment.setPointNumber(comment.getPointNumber()+1);
 			commentService.updateComment(comment);
 			if(comment.getPointNumber()==20){//优质评论        30积分（点赞20个）
-				List<Finance> financelist = financeService.browsePagingFinance(comment.getAcountId(), 1, 1, "finance_id", "asc");
+				List<Finance> financelist = financeService.browsePagingFinance(null,comment.getAcountId(), 1, 1, "finance_id", "asc");
 	        	Finance selfFinance = financelist.get(0);
         	   //记录流水，阅读文章收益
         	   FlowWater flowWater = new FlowWater();

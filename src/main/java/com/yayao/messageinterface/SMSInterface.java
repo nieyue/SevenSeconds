@@ -12,7 +12,7 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumQueryResponse;
 import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 /**
- * 阿里短信
+ * 阿里大于短信
  * @author yy
  *
  */
@@ -45,9 +45,11 @@ public class SMSInterface {
 	 *@param stc 模板码 1用户注册，2修改密码
 	 */
     public  String SmsNumSend(String extend,String recNum,Integer stc){
+    	//String smsTemplatecode="";
     	String smsTemplatecode=alibabaSmsTemplateCodeAcountRegister;
     	if(stc==1){
     		smsTemplatecode=alibabaSmsTemplateCodeAcountRegister;
+    		//smsTemplatecode="SMS_89885232";
     	}else if(stc==2){
     		smsTemplatecode=alibabaSmsTemplateCodePasswordUpdate;
     		
@@ -55,13 +57,14 @@ public class SMSInterface {
     	// alibabaSmsAppkey: 23431362
     	//alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
     	 // alibabaSmsSignName: 雅耀
+    	//TaobaoClient client = new DefaultTaobaoClient(url, "LTAIgDJerZxD8twJ", "9PuLZNoEQRPDJm465MxL1JIXQY9Msh");
     	//TaobaoClient client = new DefaultTaobaoClient(url, "23431362", "dfbbbfe72864929214f23f48c901a638");
     	TaobaoClient client = new DefaultTaobaoClient(url, alibabaSmsAppkey, alibabaSmsAppsecret);
     	AlibabaAliqinFcSmsNumSendRequest  req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend(extend);
 		req.setSmsType("normal");
-		req.setSmsFreeSignName(alibabaSmsSignName);
-		//req.setSmsFreeSignName("雅耀");
+		//req.setSmsFreeSignName(alibabaSmsSignName);
+		req.setSmsFreeSignName("雅耀");
 		req.setRecNum(recNum);
 		req.setSmsParamString("{\"code\":\""+extend+"\",\"product\":\""+recNum+"\"}");
 		//req.setSmsTemplateCode("SMS_13026944");

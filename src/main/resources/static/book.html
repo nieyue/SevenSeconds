@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html ng-app="detailsApp" ng-controller="detailsCtrl" >
+<head>
+<title ng-bind="bookChapter.title"></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="{{bookChapter.title}}">
+<meta charset="UTF-8">
+<meta name="description"
+	content="{{bookChapter.title}}">
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+  <link href="http://www.newzhuan.cn/resources/css/bootstrap.min.css" rel="stylesheet">
+<!--  <link href="http://www.newzhuan.cn/resources/css/swiper.min.css" rel="stylesheet">
+ --><link href="http://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
+<style type="text/css">
+
+#newsDeatilsBody *{
+max-width:100% !important;
+}
+</style>
+</head>
+<body >
+	<div  class="comment-wrap "  >
+			<!-- <div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#ececec)" > -->
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#fff)" >
+			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+ -->				<!-- <div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div> -->
+<div class="text-center">
+<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+</div>
+
+			</div>
+		<!-- 小说列表 -->
+	<div  style="margin-top:0px !important;display:none;" on-finish-render-filters  id="newsDeatilsBody"   > 
+<!-- 		
+		<div style="margin-top:0px !important;display:none;" on-finish-render-filters id="newsDeatilsBody"   >
+-->
+		<div style="padding:5%;background-color:#fff;" >
+			<div class="media-center">
+			
+				<div >
+					<span style="font-size:1.2rem;font-weight:bold" >
+					第<span style="font-size:1.2rem;font-weight:bold" ng-bind="bookChapter.number"></span>章
+					</span>
+					<span style="font-size:1.2rem;font-weight:bold" ng-bind="bookChapter.title"></span>
+				</div>
+				<!-- <div class="text-muted" style="font-size:0.8rem;position:relative;margin:5px 0;">
+					<span ng-bind="bookChapter.createDate | limitTo :10" id="ad1-before"></span>
+					 <span style="color:#ccc; position:absolute;right:0;" >
+					阅读：<span ng-bind="bookChapter.readingNumber || '0'"></span>
+					</span>
+				</div > -->
+				<div style="font-size:1em !important;white-space:pre-wrap;" id="bookContentId"  ng-bind="bookChapter.content" >
+				</div> 
+		</div>
+			</div>
+				<div style="position:relative;left:0;top:0;width:100%;height:30px;">
+				<button  ng-click="goBookChapter(-1)" style="position:absolute;left:0;top:0;border-radius:15px;margin-left:10%;width:30%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">上一章</button>
+				<button  ng-click="goBookChapter(1)" style="position:absolute;right:0;top:0;border-radius:15px;margin-right:10%;width:30%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">下一章</button>
+				</div>
+				<div>
+				<hr>
+		<button ng-click="openApp(bookChapter)" style="border-radius:15px;margin-left:10%;width:80%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">下载七秒资讯，查看更多章节</button>
+				</div>
+		<div style="display:inline-block;border-bottom:1px solid #4780e5;margin-bottom:1px;margin:0 10px;">
+	        <span style="font-weight:bold;font-size:1.1rem">
+	        热门推荐
+	        </span>
+	    </div>
+
+		<!-- 第二列表 -->
+		<div style="margin:auto;text-align:center;">
+		 <!-- 广告位：七秒1 -->
+		<div  class="listGroup list-group " style="width:30%;display:inline-block;margin:5% 1% ;" ng-repeat="book in bookList" on-finish-render-filters  ng-click="clickBook(book)">
+				<!-- 谷歌广告 -->
+	<div style=" margin-bottom:1px;margin:10px 0;text-align:center;" ng-if="$index==3">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- 自适应-2 -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-5588246681675782"
+		     data-ad-slot="4339608720"
+		     data-ad-format="auto"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		<hr>
+		</div>
+		<!-- 谷歌广告 end -->	
+		<!-- 唐人ssp -->
+		<!-- <div  style="border-bottom:1px solid #ececec;padding:5px 0; margin-bottom:1px;margin:10px 0;text-align:center;"  ng-if=" $index%4==0 ">
+		<script type="text/javascript">
+		   var said=88; var height="100";  var keywords=""; var taokouling=""; 
+		</script>
+		<script src="https://ypro.waptime.net/ydljxf.js" type="text/javascript">
+		</script>
+		</div> -->
+		<!-- 唐人sspend -->
+		<!-- <script src="http://dup.baidustatic.com/js/om.js"></script>
+		 <script>
+		(function() {
+		    var s = "_" + Math.random().toString(36).slice(2);
+		    document.write('<div id="' + s + '"></div>');
+		    (window.slotbydup=window.slotbydup || []).push({
+		        id: '4992262',
+		        container: s,
+		        size: '20,5',
+		        display: 'inlay-fix'
+		    });
+		})();
+		</script>  -->
+			<div  style="width:100%;">
+			<div class="media-left" style="vertical-align:middle;width:100%;padding-right:0 !important;display:inline-block;">
+				 <img class="comment-list-item-img"
+					ng-src="{{book.imgAddress}}" >
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="book.title"></span>
+				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				</a> -->
+			</div> 
+			</div>
+		</div>
+		</div>
+				 		
+		</div>
+		</div>
+			
+		
+<!-- <script type="text/javascript" src="http://s.baidustatie.com/t/g.php?z=1alafnajzyz3"></script> -->
+		<!-- 底部 -->
+		<div style="width:100%;height:100px;"></div>
+		<!-- 底部 end-->
+		<!-- cnzz -->
+		<div style="display:none;">
+		 <script src="https://s19.cnzz.com/z_stat.php?id=1264381192&web_id=1264381192" language="JavaScript"></script>
+		</div>
+		
+	<script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
+	<!-- <script src="/resources/js/bootstrap3.2.0.js"></script> -->
+	<script src="http://www.newzhuan.cn/resources/js/angularjs.min.1.5.7.js"></script>
+	<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+ 	<!-- <script src="http://www.newzhuan.cn/resources/js/swiper.min.js"></script>  -->
+ 	<!-- 
+ 	 <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
+ 	 -->
+ 	<script src="/resources/js/domainManager.js"></script> 
+	<script  src="http://www.newzhuan.cn/resources/js/base.js"></script>
+	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
+
+	<script>
+	$(function(){
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+		
+	});
+    	var detailsApp=angular.module('detailsApp',[]);
+    	detailsApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+           detailsApp.directive('onFinishRenderFilters', function() {
+					return {
+					restrict: 'A',
+					link: function(scope, element, attr) {
+					if(scope.book){
+					$("#newsDeatilsBody").css("display","block");
+					//setTimeout(function(){
+					$(".loadAnimation").css("display","none");
+					//},2000);
+					
+					
+					scope.$emit('ngRepeatFinished');
+					
+					}
+					
+					}
+					};
+					}); 
+    	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
+    	$scope.wapName="小说";
+    	$scope.originDomain=domainManager.BookStore;
+    	$scope.bookChapterStartNumber=myUtils.GetQueryString("startNumber")||1;//默认开始章节
+    	$scope.bookChapterEndNumber=myUtils.GetQueryString("endNumber")||1;//默认结束章节
+    	
+    		
+    		//jsAd广告
+    			function initJsAdList(){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/jsAd/list",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data&& data.code==200){
+    		        	  $scope.jsAdList=data.list; 
+    		        	 // console.log($scope.jsAdList)
+    		        	  for(var i=0;i<$scope.jsAdList.length;i++){
+    		        	  myUtils.executeJS($scope.jsAdList[i]);
+    		        	  }
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }
+    		          }  
+    		          });  
+    		}
+    		initJsAdList();
+    			
+    			
+    			
+		//正文小说
+    		function initData(bookId,startNumber,endNumber){
+  		         
+  		          //加载小说 
+    			$.ajax({  
+  		          type : "get",  
+  		          url : "http://"+$scope.originDomain+"/bookChapter/listAll?bookId="+bookId+"&startNumber="+startNumber+"&endNumber="+endNumber,  
+  		         // url : "/school/"+id,  
+  		          async : false,  
+  		          success : function(data){
+  		        	console.log(data);
+  		        	if(data.code==40000){
+  		        	//myUtils.myTemplate("没有更多章节！"+
+  		        	//"<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>点击下载APP，阅读更多章节</button></div>");
+  		        	
+  		        	//$("#myTemplateNo").remove();
+  		        	//$("#myTemplate").css({"width":"100%","height":"100%","margin":"0","top":"0","left":"0"});
+  		        	return;
+  		        	}
+  		        	//data.list[0].content=$sce.trustAsHtml(data.list[0].content);
+    				$scope.bookChapter=data.list[0];
+  		          }  
+  		          });  
+    			
+    			
+    		}
+    			var num=1;
+    			//阅读
+            	function getWebRead(bookId,tgAcountId){
+    		 var uv=0;//默认为0不是独立访客，没有uv,1为有uv
+            	 //只有不存在，才是新访客
+            	if(!myUtils.getCookie("bookUv"+myUtils.GetQueryString("bookId"))){
+            		myUtils.setCookie("bookUv"+myUtils.GetQueryString("bookId"), myUtils.GetQueryString("bookId"), myUtils.currentToEndTime());
+            		uv=1;
+            	}
+            		$.ajax({  
+  		          type : "post",  
+  		          url : "http://"+$scope.originDomain+"/book/webRead", 
+  		          data:{
+  		          bookId:bookId,
+  		          acountId:tgAcountId,
+  		          uv:uv
+  		          }, 
+  		          success : function(data){
+  		         if(data.code!=200){
+  		         num++;
+  		         if(num<=3){
+  		         getWebRead(myUtils.GetQueryString("bookId"),tgAcountId);
+  		         }
+  		         return;
+  		         }
+  		          }  
+  		          });
+  		          }
+    		var tgAcountId=myUtils.GetQueryString("acountId")||1000;
+    		 getWebRead(myUtils.GetQueryString("bookId"),tgAcountId);//点击数据
+    		 initData(myUtils.GetQueryString("bookId")||38,$scope.bookChapterStartNumber,$scope.bookChapterEndNumber);//小说加载
+    		
+    		
+    		
+    		//自定义的template打开app
+		function openApp(){
+		//var bookId=myUtils.GetQueryString("bookId");
+		if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		    //window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	//window.location = "seven://app.com/openwith?bookId="+bookId;
+		  	window.location = "seven://app.com/openwith";
+		  	setTimeout(function(){
+		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	},1000);
+		    }else if (navigator.userAgent.match(/android/i)) {
+		    //window.location = "seven://app.com/openwith?bookId="+bookId;
+		  	window.location = "seven://app.com/openwith";
+		  	setTimeout(function(){
+		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	},1000);
+		    }
+		}
+    		//小说上一章-1，下一章1
+    		$scope.goBookChapter=function(t){
+    		$scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)+t;
+    		$scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)+t;
+    		//是否存在
+    		$.ajax({  
+  		          type : "post",  
+  		          url : "http://"+$scope.originDomain+"/bookChapter/count?bookId="+myUtils.GetQueryString("bookId")+"&number="+$scope.bookChapterStartNumber, 
+  		          success : function(data){
+  		          if(data>=1){
+    		console.log($scope.bookChapterEndNumber)
+    		location.href="http://"+location.host+"/book.html?bookId="+myUtils.GetQueryString("bookId")+"&startNumber="+$scope.bookChapterStartNumber+"&endNumber="+$scope.bookChapterEndNumber;
+  		          }else{
+  		          //复原
+  		          $scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)-t;
+    			  $scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)-t;
+    			  	myUtils.myTemplate("没有更多章节！"+
+  		        	"<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>点击下载APP，阅读更多章节</button></div>");
+  		        	
+  		        	$("#myTemplate").css({"width":"100%","height":"100%","margin":"0","top":"0","left":"0"});
+  		         console.log(1112)
+					$("#openAppId").on("click",function(){
+					console.log(111)
+						openApp();
+					});
+  		          }
+  		          }  
+  		          });
+    		 //initData(myUtils.GetQueryString("bookId"),parseInt(myUtils.GetQueryString("startNumber"))+t,parseInt(myUtils.GetQueryString("endNumber"))+t);//小说加载
+    		};
+    		//底部信息列表
+    			function initDataList(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.bookList.push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.bookList=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		$scope.status="1";//初始化状态
+    		
+    		
+    			initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			
+    			
+    			
+    			//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			myUtils.myFootLoadingToast("relative",null,function(){
+    			var gurl="http://"+$scope.originDomain+"/book/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        console.log($scope.bookList)
+  		      		        $scope.bookList=$scope.bookList.concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+    			},"add");
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+    		$scope.goRedirectUrl=function(bookId){
+    			//跳回book.html
+    			url="http://"+location.host+"/book.html?bookId="+bookId+"&acountId=1000";
+    			location.replace(url);
+    		};
+		//打开App或小说
+		$scope.clickBook=function(book){
+		//if($scope.showBookListRule(book)){
+		//   $scope.openApp(book);
+		//}else{
+		$scope.goRedirectUrl(book.bookId);
+		//}
+		};
+		//打开app
+		$scope.openApp=function(book){
+		   if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		    //window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	window.location = "seven://app.com/openwith?bookId="+book.bookId;
+		  	setTimeout(function(){
+		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	},1000);
+		    }else if (navigator.userAgent.match(/android/i)) {
+		  	window.location = "seven://app.com/openwith?bookId="+book.bookId;
+		  	setTimeout(function(){
+		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	},1000);
+		    }
+		};
+    	//显示规则
+    	$scope.showBookListRule=function(book){
+    	return (book.bookId)%3==0;
+    	};
+    	});
+    	
+   </script>
+  <script type="text/javascript" src="https://s.051352.com/yrc_jx001.js"></script>
+</body>
+</html>

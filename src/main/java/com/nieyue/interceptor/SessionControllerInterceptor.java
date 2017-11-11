@@ -113,11 +113,28 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("article/count")>-1
         		||(request.getRequestURI().indexOf("article/click")>-1&& CertificateBusiness.md5SessionCertificate(request))
         		||(request.getRequestURI().indexOf("article/read")>-1&& CertificateBusiness.md5SessionCertificate(request))
+        		||(request.getRequestURI().indexOf("article/turn")>-1&& CertificateBusiness.md5SessionCertificate(request))
         		||request.getRequestURI().indexOf("article/webRead")>-1
         		||request.getRequestURI().indexOf("article/list")>-1
         		//||request.getRequestURI().indexOf("article/data")>-1
         		||method.getName().equals("loadArticle")
         		||request.getRequestURI().indexOf("article/img/add")>-1
+        		//barrage弹幕
+        		||request.getRequestURI().indexOf("barrage/count")>-1
+        		||request.getRequestURI().indexOf("barrage/list")>-1
+        		||method.getName().equals("loadBarrage")
+        		//complain投诉
+        		||request.getRequestURI().indexOf("complain/count")>-1
+        		||request.getRequestURI().indexOf("complain/list")>-1
+        		||method.getName().equals("loadComplain")
+        		//label标签
+        		||request.getRequestURI().indexOf("label/count")>-1
+        		||request.getRequestURI().indexOf("label/list")>-1
+        		||method.getName().equals("loadLabel")
+        		//labelArticle标签文章
+        		||request.getRequestURI().indexOf("labelArticle/count")>-1
+        		||request.getRequestURI().indexOf("labelArticle/list")>-1
+        		||method.getName().equals("loadLabelArticle")
         		//dailyData
         		||request.getRequestURI().indexOf("dailyData/count")>-1
         		||request.getRequestURI().indexOf("dailyData/statisticsDailyData")>-1
@@ -186,6 +203,7 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||method.getName().equals("loadDailyTask")
         		//flowWater
         		||request.getRequestURI().indexOf("flowWater/count")>-1
+        		
         		
        
         		){
@@ -274,6 +292,40 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		if( request.getRequestURI().indexOf("/article/delete")>-1 
         				|| request.getRequestURI().indexOf("/article/update")>-1 
         				|| request.getRequestURI().indexOf("/article/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//弹幕不许删除/修改
+        		if( request.getRequestURI().indexOf("/barrage/delete")>-1 
+        				|| request.getRequestURI().indexOf("/barrage/update")>-1 
+        				|| request.getRequestURI().indexOf("/barrage/add")>-1){
+        			//增加自身
+        			if((request.getRequestURI().indexOf("/barrage/add")>-1)
+        					&& request.getParameter("acountId").equals(sessionFinance.getAcountId().toString())){
+        				return true;
+        			}
+        			throw new MySessionException();
+        		}
+        		//弹幕投诉不许删除/修改
+        		if( request.getRequestURI().indexOf("/complain/delete")>-1 
+        				|| request.getRequestURI().indexOf("/complain/update")>-1 
+        				|| request.getRequestURI().indexOf("/complain/add")>-1){
+        			//增加自身
+        			if((request.getRequestURI().indexOf("/complain/add")>-1)
+        					&& request.getParameter("acountId").equals(sessionFinance.getAcountId().toString())){
+        				return true;
+        			}
+        			throw new MySessionException();
+        		}
+        		//标签不许删除/修改
+        		if( request.getRequestURI().indexOf("/label/delete")>-1 
+        				|| request.getRequestURI().indexOf("/label/update")>-1 
+        				|| request.getRequestURI().indexOf("/label/add")>-1){
+        			throw new MySessionException();
+        		}
+        		//标签文章不许删除/修改
+        		if( request.getRequestURI().indexOf("/labelArticle/delete")>-1 
+        				|| request.getRequestURI().indexOf("/labelArticle/update")>-1 
+        				|| request.getRequestURI().indexOf("/labelArticle/add")>-1){
         			throw new MySessionException();
         		}
         		//文章时间段数据不许删除/修改/增加

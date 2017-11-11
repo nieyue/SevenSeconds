@@ -54,6 +54,9 @@ WHERE reply_id=#{replyId}
     	acount_id
 	FROM reply_tb
 	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
 	<if test="commentId!=null">
 	AND comment_id=#{commentId}
 	</if>
@@ -69,6 +72,9 @@ WHERE reply_id=#{replyId}
 	</if>
 	(SELECT ${orderName} FROM reply_tb
 	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
 	<if test="commentId!=null">
 	AND comment_id=#{commentId}
 	</if>
@@ -100,6 +106,9 @@ WHERE reply_id=#{replyId}
     	atb.phone
       FROM reply_tb rtb, acount_tb atb
 	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
 	<if test="commentId!=null">
 	AND rtb.comment_id=#{commentId}
 	</if>
@@ -115,6 +124,9 @@ WHERE reply_id=#{replyId}
 	</if>
 	(SELECT ${orderName} FROM reply_tb
 	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
 	<if test="commentId!=null">
 	AND comment_id=#{commentId}
 	</if>
@@ -140,6 +152,9 @@ WHERE reply_id=#{replyId}
 	 	count(reply_id)
 	FROM reply_tb
 	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
 	<if test="commentId!=null">
 	AND comment_id=#{commentId}
 	</if>

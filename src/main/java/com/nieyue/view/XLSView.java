@@ -19,7 +19,7 @@ import com.nieyue.bean.FinanceDetailsAcountDTO;
 import com.nieyue.util.DateUtil;
 
 
-@Component("xlsView")
+@Component
 public class XLSView extends AbstractXlsView{
 	private String fileName;
 	@Override

@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.Article;
+import com.nieyue.bean.ArticleCate;
 import com.nieyue.bean.Barrage;
 import com.nieyue.bean.Comment;
 import com.nieyue.bean.Complain;
@@ -29,9 +30,11 @@ import com.nieyue.bean.FlowWater;
 import com.nieyue.bean.NoviceTask;
 import com.nieyue.bean.Reply;
 import com.nieyue.bean.Sign;
+import com.nieyue.business.ArticleBusiness;
 import com.nieyue.business.DailyTaskBusiness;
 import com.nieyue.business.NoviceTaskBusiness;
 import com.nieyue.service.AcountService;
+import com.nieyue.service.ArticleCateService;
 import com.nieyue.service.ArticleService;
 import com.nieyue.service.BarrageService;
 import com.nieyue.service.CommentService;
@@ -56,6 +59,8 @@ import com.rabbitmq.client.Channel;
 public class Listener {
 	@Resource
 	private ArticleService articleService;
+	@Resource
+	private ArticleCateService articleCateService;
 	@Resource
 	private FinanceService financeService;
 	@Resource
@@ -86,6 +91,8 @@ public class Listener {
 	private BarrageService barrageService;
 	@Resource
 	private ComplainService complainService;
+	@Resource
+	private ArticleBusiness articleBusiness;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	//private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
@@ -259,9 +266,10 @@ public class Listener {
 	        	   */
 	        	   //当前文章
 	        	   Article article = articleService.loadSmallArticle(dataRabbitmqDTO.getArticleId());
-	       		
-	        	   //如果文章超过30天，则不计费
-	        	   if( DateUtil.getSeparatedTime(article.getCreateDate(), new Date())>30){
+	       			//不是同一天则，不计费
+	        	   if( !DateUtil.isSameDate(article.getCreateDate(), new Date())){
+	        		   //如果文章超过15天，则不计费
+	        		 //  if( DateUtil.getSeparatedTime(article.getCreateDate(), new Date())>15){
 	        		   articleService.updateArticleClick(article);
 	        		   channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 	           			return;
@@ -377,6 +385,7 @@ public class Listener {
 		       		//如果账户不存在则用，1000
 		       		Acount tginacount = acountService.loadAcount(dataRabbitmqDTO.getAcountId());//推广账户
 		       		Acount inacount = acountService.loadAcount(1000);//平台账户计费
+		       		//Acount inacount = acountService.loadAcount(dataRabbitmqDTO.getAcountId());//用户计费
 		       		if(tginacount==null||tginacount.equals("")){
 		       			tginacount = acountService.loadAcount(1000);
 		       		}
@@ -403,14 +412,14 @@ public class Listener {
 		   			//时间是3段:0-8,8-16,16-24
 		   			realdata.setCreateDate(DateUtil.getDayPeriod(3));
 		   			realdata.setArticleId(dataRabbitmqDTO.getArticleId());
-		   			realdata.setAcountId(inacount.getAcountId());
+		   			realdata.setAcountId(tginacount.getAcountId());
 		   			 dataService.saveOrUpdateData(realdata,dataRabbitmqDTO.getUv(), isAddIp,isAddIp);
 		   			//日数据
 		   			DailyData realdailydata=new DailyData();
 		   			//时间是日
 		   			realdailydata.setCreateDate(DateUtil.getStartTime());
 		   			realdailydata.setArticleId(dataRabbitmqDTO.getArticleId());
-		   			realdailydata.setAcountId(inacount.getAcountId());
+		   			realdailydata.setAcountId(tginacount.getAcountId());
 		   			dailyDataService.saveOrUpdateDailyData(realdailydata, dataRabbitmqDTO.getUv(), isAddIp, isAddIp);
 		        	  /**
 		        	   * 更新文章
@@ -456,7 +465,7 @@ public class Listener {
 		        	    */
 		        	   
 		        	   
-		        	   //推广账户  达人奖励 转发推广文章    10积分（获得3个有效阅读）
+		        	 /*  //推广账户  达人奖励 转发推广文章    10积分（获得3个有效阅读）
 		        	   List<Finance> tgfinancelist = financeService.browsePagingFinance(null,dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
 		        	   Finance tgFinance = tgfinancelist.get(0);
 		        	 //推广账户 的当前文章阅读次数
@@ -490,8 +499,32 @@ public class Listener {
 			        		   tgFinance.setMoney(tgFinance.getMoney()+dailyTaskBusiness.forwardingPromotionArticle(Integer.valueOf(tgbvo.get())));
 			        		   financeService.updateFinance(tgFinance);
 			        		   }
-			        	   }
+			        	   }*/
 			        	   
+		        	   //推广账户  达人奖励 转发推广文章    
+		        	   List<Finance> tgfinancelist = financeService.browsePagingFinance(null,dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
+		        	   Finance tgFinance = tgfinancelist.get(0);
+		        	   //获取文章类型
+		        	   ArticleCate articleCate = articleCateService.loadArticleCate(article.getArticleCateId());
+		        	  //检查是否符合转发文章奖励
+		        	   boolean isCheckReadingArticleMoney = articleBusiness.checkReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), realdailydata.getReadingNumber().intValue());
+		        	 if((isAddIp==1)&&isCheckReadingArticleMoney){
+		        		Double readingArticleMoney = articleBusiness.getReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), realdailydata.getReadingNumber().intValue());
+		        		 //记录流水，阅读文章收益
+		        		   FlowWater tgflowWater = new FlowWater();
+		        		   tgflowWater.setAcountId(dataRabbitmqDTO.getAcountId());
+		        		   tgflowWater.setCreateDate(new Date());
+		        		   tgflowWater.setMoney(readingArticleMoney);
+		        		   tgflowWater.setRealMoney(0.0);
+		        		   tgflowWater.setType(3);//3达人奖励
+		        		   tgflowWater.setSubtype(7);//转发推广文章  
+		        		   flowWaterService.addFlowWater(tgflowWater);
+		        		   //自身总收益增加
+		        		   tgFinance.setSelfProfit(tgFinance.getSelfProfit()+readingArticleMoney);
+		        		   //余额=增加
+		        		   tgFinance.setMoney(tgFinance.getMoney()+readingArticleMoney);
+		        		   financeService.updateFinance(tgFinance);
+		        	 }  
 		        	   //自身财务 有ip才计费
 		        	   if(isAddIp==1){
 			        	List<Finance> financelist = financeService.browsePagingFinance(null,inacount.getAcountId(), 1, 1, "finance_id", "asc");

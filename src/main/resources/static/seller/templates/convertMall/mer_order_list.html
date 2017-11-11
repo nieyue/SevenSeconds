@@ -25,6 +25,28 @@
 </form>
 <!-- 订单搜索选择end -->
 
+<!-- 订单列表excel -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">下载excel</label>
+</div>
+<!-- 订单列表excel end -->
+
+<!-- 订单列表excel选择 -->
+<form novalidate name="myDownloadMerOrderForm" ng-submit="downloadMerOrderForm()">
+  <span class=" comment-input-margin">
+ <label  class="text-danger">状态</label>
+			   <!-- ng-change="searchMerOrderForm(search)"  -->
+			   <select  style="width:180px;height:50px;" 
+			    ng-model="search.status" name="status"
+     			ng-options="sa.id as sa.value for sa in orderMerStatus">
+  				</select>
+    </span>
+  
+   <input type="submit" class="btn btn-lg btn-info" 
+  ng-disabled="myDownloadMerOrderForm.$invalid" value="下载"/>
+</form>
+<!-- 订单列表excel选择end -->
+
 <!-- 商品订单列表 -->
 		<div style="width:100%" class="tableWrap">
 			<table class="table table-bordered" style="width:100%">
@@ -110,7 +132,15 @@
 			  '中国邮政EMS':orderMer.courierCompany==8?
 			  '宅急送ZJS':orderMer.courierCompany==9?
 			  'FedEx联邦':orderMer.courierCompany==10?
-			  '京东物流':''"></span>
+			  '京东物流':orderMer.courierCompany==11?
+			  '德邦物流':orderMer.courierCompany==12?
+			  '安能物流':orderMer.courierCompany==13?
+			  '优速快递':orderMer.courierCompany==14?
+			  '天天快递':orderMer.courierCompany==15?
+			  '汇通快递':orderMer.courierCompany==16?
+			  '国通快递':orderMer.courierCompany==17?
+			  '递全峰快':orderMer.courierCompany==18?
+			  '菜鸟物流':''"></span>
 			   <select ng-show="orderMer.$$courier==1" style="width:180px;height:50px;" ng-model="orderMer.courierCompany" name="courierCompany"
      			ng-options="sa.id as sa.value for sa in orderMerCourier">
   				</select>
@@ -128,7 +158,8 @@
 			  
 			   <td>
 			   <div ng-repeat="orderMer in merOrder.orderMerList" >
-			  <span ng-show="orderMer.$$status==0" class="text-warning" ng-init="orderMer.$$status=0"   ng-bind="orderMer.status==0?
+			  <span ng-show="orderMer.$$status==0" class="text-warning" ng-init="orderMer.$$status=0"   
+			  ng-bind="orderMer.status==0?
 			  '已下单-未支付':orderMer.status==1?
 			  '已支付-未发货':orderMer.status==2?
 			  '已发货-未完成':orderMer.status==3?

@@ -68,6 +68,8 @@ public class CommentController {
 	 */
 	@RequestMapping(value = "/listDTO", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingCommentAcountDTO(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
+			@RequestParam(value="replyNumber",required=false)Integer replyNumber,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -75,7 +77,7 @@ public class CommentController {
 			@RequestParam(value="orderName",required=false,defaultValue="comment_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 		List<CommentAcountDTO> list = new ArrayList<CommentAcountDTO>();
-		list= commentService.browsePagingCommentAcountDTO(articleId,acountId,pageNum, pageSize, orderName, orderWay);
+		list= commentService.browsePagingCommentAcountDTO(pointNumber,replyNumber,articleId,acountId,pageNum, pageSize, orderName, orderWay);
 		if(list.size()>0){
 			return ResultUtil.getSlefSRSuccessList(list);
 		}else{
@@ -90,6 +92,8 @@ public class CommentController {
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingComment(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
+			@RequestParam(value="replyNumber",required=false)Integer replyNumber,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -97,7 +101,7 @@ public class CommentController {
 			@RequestParam(value="orderName",required=false,defaultValue="comment_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<Comment> list = new ArrayList<Comment>();
-			list= commentService.browsePagingComment(articleId,acountId,pageNum, pageSize, orderName, orderWay);
+			list= commentService.browsePagingComment(pointNumber,replyNumber,articleId,acountId,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
@@ -153,10 +157,12 @@ public class CommentController {
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody int countAll(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
+			@RequestParam(value="replyNumber",required=false)Integer replyNumber,
 			@RequestParam(value="articleId",required=false)Integer articleId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			HttpSession session)  {
-		int count = commentService.countAll(articleId,acountId);
+		int count = commentService.countAll(pointNumber,replyNumber,articleId,acountId);
 		return count;
 	}
 	/**

@@ -56,6 +56,7 @@ public class ReplyController {
 	 */
 	@RequestMapping(value = "/listDTO", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingReplyAcountDTO(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
 			@RequestParam(value="commentId",required=false)Integer commentId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -63,7 +64,7 @@ public class ReplyController {
 			@RequestParam(value="orderName",required=false,defaultValue="reply_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 		List<ReplyAcountDTO> list = new ArrayList<ReplyAcountDTO>();
-		list= replyService.browsePagingReplyAcountDTO(commentId,acountId,pageNum, pageSize, orderName, orderWay);
+		list= replyService.browsePagingReplyAcountDTO(pointNumber,commentId,acountId,pageNum, pageSize, orderName, orderWay);
 		if(list.size()>0){
 			return ResultUtil.getSlefSRSuccessList(list);
 		}else{
@@ -78,6 +79,7 @@ public class ReplyController {
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingReply(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
 			@RequestParam(value="commentId",required=false)Integer commentId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
@@ -85,7 +87,7 @@ public class ReplyController {
 			@RequestParam(value="orderName",required=false,defaultValue="reply_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<Reply> list = new ArrayList<Reply>();
-			list= replyService.browsePagingReply(commentId,acountId,pageNum, pageSize, orderName, orderWay);
+			list= replyService.browsePagingReply(pointNumber,commentId,acountId,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 			}else{
@@ -141,10 +143,11 @@ public class ReplyController {
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody int countAll(
+			@RequestParam(value="pointNumber",required=false)Integer pointNumber,
 			@RequestParam(value="commentId",required=false)Integer commentId,
 			@RequestParam(value="acountId",required=false)Integer acountId,
 			HttpSession session)  {
-		int count = replyService.countAll(commentId,acountId);
+		int count = replyService.countAll(pointNumber,commentId,acountId);
 		return count;
 	}
 	/**

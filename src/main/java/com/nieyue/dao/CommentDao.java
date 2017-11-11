@@ -25,10 +25,14 @@ public interface CommentDao {
 	public Comment loadComment(Integer commentId);	
 	/** 评论总共数目 */	
 	public int countAll(
+			@Param("pointNumber")Integer pointNumber,
+			@Param("replyNumber")Integer replyNumber,
 			@Param("articleId")Integer articleId,
 			@Param("acountId")Integer acountId);	
 	/** 分页评论信息 */
 	public List<Comment> browsePagingComment(
+			@Param("pointNumber")Integer pointNumber,
+			@Param("replyNumber")Integer replyNumber,
 			@Param("articleId")Integer articleId,
 			@Param("acountId")Integer acountId,
 			@Param("pageNum")int pageNum,
@@ -37,6 +41,8 @@ public interface CommentDao {
 			@Param("orderWay")String orderWay) ;		
 	/** 分页DTO评论信息 */
 	public List<CommentAcountDTO> browsePagingCommentAcountDTO(
+			@Param("pointNumber")Integer pointNumber,
+			@Param("replyNumber")Integer replyNumber,
 			@Param("articleId")Integer articleId,
 			@Param("acountId")Integer acountId,
 			@Param("pageNum")int pageNum,

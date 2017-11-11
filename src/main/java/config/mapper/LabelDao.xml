@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.LabelDao">
+<!-- 添加标签 -->
+<insert id="addLabel" parameterType="Label" keyProperty="labelId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  label_tb 
+   		 (
+   		 type,
+   		 name,
+   		 create_date,
+   		 update_date
+   		)
+   VALUES
+    	 (
+    	 #{type},
+    	 #{name},
+    	 #{createDate},
+    	 #{updateDate}
+    	 )  
+</insert>  
+<!-- 更新标签 -->
+<update id="updateLabel" parameterType="Label" >  
+    UPDATE 
+    	label_tb 
+    <set>
+    <if test="type!=null">
+    	type=#{type},
+    </if>
+    <if test="name!=null">
+    	name=#{name},
+    </if>
+    <if test="createDate!=null">
+    	create_date=#{createDate},
+    </if>
+    <if test="updateDate!=null">
+    	update_date=#{updateDate},
+    </if>
+    </set> 
+    WHERE
+    	 label_id=#{labelId} 
+</update> 
+<!-- 删除标签-->
+<delete id="delLabel"  parameterType="Integer" >  
+    DELETE FROM
+    	 label_tb 
+    	 WHERE label_id=#{labelId}
+</delete>  
+<!-- 加载标签-->
+<select id="loadLabel" parameterType="Integer" resultType="Label" >
+SELECT 
+		 label_id,
+		 type,
+   		 name,
+   		 create_date,
+   		 update_date
+FROM label_tb 
+WHERE label_id=#{labelId}
+</select>
+
+<!-- 分页查询标签-->
+<select id="browsePagingLabel" resultType="Label">  
+        SELECT
+	     label_id,
+		 type,
+   		 name,
+   		 create_date,
+   		 update_date
+	FROM label_tb
+	<where>
+	<if test="type!=null">
+	AND type=#{type}
+	</if>
+	<if test="name!=null">
+	AND name=#{name}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM label_tb
+	<where>
+	<if test="type!=null">
+	AND type=#{type}
+	</if>
+	<if test="name!=null">
+	AND name=#{name}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(label_id)
+	FROM label_tb
+	<where>
+	<if test="type!=null">
+	AND type=#{type}
+	</if>
+	<if test="name!=null">
+	AND name=#{name}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

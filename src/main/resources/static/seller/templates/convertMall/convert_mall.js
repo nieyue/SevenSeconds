@@ -579,7 +579,8 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			//查询条件
 			$scope.search={
 				orderNumber:null,//订单号
-				acountId:null//账户ID
+				acountId:null,//账户ID
+				status:1//状态
 			};
 			//点击哪页显示哪页
 			$scope.toPage=function(currentPageNumber,search){
@@ -591,10 +592,11 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			};
 			$scope.merOrderListInit=function(search){
 				var countUrl=requestDomainUrl+"/merOrder/count";
+				//var countUrl=requestDomainUrl+"/merOrder/list?pageNum=1&pageSize=999999999";
 				var listUrl=requestDomainUrl+"/merOrder/list?pageNum="+(($scope.currentPage-1)*$scope.pageNumber+1)+"&pageSize="+$scope.pageNumber;
 				var i=0;//控制计数器
 				function params(name,value){
-				if(value){
+				if(value!==null && value!==""){
 				i++;
 				if(i==1){
 				countUrl+="?"+name+"="+value;
@@ -610,8 +612,13 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				if(search.acountId){					
 					params("acountId",search.acountId);
 				}
+				if(search.status!=null){		
+					params("status",search.status);
+				}
 			  $.get(countUrl,function(cd){
-           		$scope.totalNumber=cd;             
+				  console.log(cd)
+           		//$scope.totalNumber=cd.list.length;             
+				  $scope.totalNumber=cd;             
            //页码初始化
           $scope.totalPage=$scope.pagination.getTotalPage($scope.totalNumber,$scope.pageNumber);//总页码数目     
           $scope.showPageNumberArray=$scope.pagination.getShowPageNumber($scope.totalPage,$scope.pageNumber,$scope.mostShowPageNumber,$scope.currentPage);//显示页码数目 
@@ -632,10 +639,11 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			/*
 			 *查询
 			 */
-			$scope.searchMerOrderForm=function(){
+			$scope.searchMerOrderForm=function(search){
 				console.log($scope.search)
 				 $scope.currentPage=1;//重置
-				$scope.merOrderListInit($scope.search);
+				$scope.toPage( $scope.currentPage, $scope.search);
+				//$scope.merOrderListInit($scope.search);
 			}
 			/*
 			 *查询end
@@ -680,6 +688,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             */
             /*
              *快递公司,0暂无,1顺丰速运SF,2中通快递ZTO,3圆通速递YTO,4申通快递STO,5百世快递BestExpress,6韵达快递YUNDA,7中国邮政EMS,8宅急送ZJS,9FedEx联邦,10京东物流
+             *11德邦物流,12安能物流,13优速快递,14天天快递,15汇通快递,16国通快递,17全峰快递,18菜鸟物流
              */
             $scope.changeCourier=function(orderMer){
             	orderMer.$$courier=1;//默认0显示结果，1，显示修改，
@@ -695,7 +704,15 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             	{id:7,value:'中国邮政EMS'},
             	{id:8,value:'宅急送ZJS'},
             	{id:9,value:'FedEx联邦'},
-            	{id:10,value:'京东物流'}
+            	{id:10,value:'京东物流'},
+            	{id:11,value:'德邦物流'},
+            	{id:12,value:'安能物流'},
+            	{id:13,value:'优速快递'},
+            	{id:14,value:'天天快递'},
+            	{id:15,value:'汇通快递'},
+            	{id:16,value:'国通快递'},
+            	{id:17,value:'全峰快递'},
+            	{id:18,value:'菜鸟物流'}
             	];
             $scope.updateOrderMerCourier=function(orderMer){
             	$.get(requestDomainUrl+"/orderMer/update",
@@ -717,6 +734,48 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             };
             /*
              *修改end
+             */
+            /*
+             *下载excel
+             */
+            $scope.downloadMerOrderForm=function(){
+            	//location.href=requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.download.id;
+            	myUtils.myPrevToast("加载中",function(){
+            	var form=$("<form>");//定义一个form表单  
+                 form.attr("style","display:none");  
+                 form.attr("target","");  
+                 form.attr("method","post");  
+                 form.attr("action",requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.search.status);  
+                 var input1=$("<input>");  
+                 input1.attr("type","hidden");  
+                 //input1.attr("name","exportData");  
+                // input1.attr("value",(new Date()).getMilliseconds());  
+                 $("body").append(form);//将表单放置在web中  
+                 form.append(input1);  
+                 form.submit();//表单提交  
+                 form.remove();
+                 myUtils.myPrevToast("加载完成",null,"remove"); 
+         /*   $.ajax({
+            		timeout:100000,
+            		xhrFields:{
+            			withCredentials: true 
+            		},
+            		url:requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.download.id,
+            		success:function(data){
+            			//location.href=requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.download.id;
+            			//location.href=data;
+            			console.log(data)
+            			myUtils.myPrevToast("加载完成",null,"remove"); 
+            		}
+            	});	
+             */
+            	//location.href=requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.download.id;
+            	//myUtils.myPrevToast("加载完成",null,"remove"); 
+            	},"add");
+            	
+            };
+            /*
+             *下载excelend
              */
                     }
                 } 

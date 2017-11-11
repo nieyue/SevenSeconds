@@ -61,7 +61,7 @@ public class BarrageController {
 			@RequestParam(value="status",required=false)Integer status,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="Barrage_id") String orderName,
+			@RequestParam(value="orderName",required=false,defaultValue="barrage_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay)  {
 			List<Barrage> list = new ArrayList<Barrage>();
 			list= barrageService.browsePagingBarrage(articleId,acountId,createDate,updateDate,complainNumber,status,pageNum, pageSize, orderName, orderWay);

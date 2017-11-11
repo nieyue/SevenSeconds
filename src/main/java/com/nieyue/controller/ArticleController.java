@@ -8,12 +8,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.BoundZSetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -43,6 +45,7 @@ import com.nieyue.util.ResultUtil;
 import com.nieyue.util.StateResult;
 import com.nieyue.util.StateResultList;
 import com.nieyue.util.UploaderPath;
+
 
 
 /**
@@ -131,6 +134,29 @@ public class ArticleController {
 		drd.setIp(IPCountUtil.getIpAddr(request));//请求的ip地址
 		sender.sendArticleWebRead(drd);
 		return ResultUtil.getSuccess();
+	}
+	/**
+	 * app文章转发
+	 * @param articleId 
+	 * @param acountId 
+	 * @return
+	 */
+	@RequestMapping(value = "/turn", method = {RequestMethod.GET,RequestMethod.POST})
+	public StateResultList appArticleTurn(
+			@RequestParam(value="articleId") Integer articleId,
+			@RequestParam(value="acountId") Integer acountId,
+			HttpSession session,HttpServletRequest request)  {
+	//存储当日的记录转发的文章
+	BoundSetOperations<String, String> bsodataturn= stringRedisTemplate.boundSetOps(projectName+"AcountId"+acountId+"Data"+DateUtil.getImgDir()+"Turn");
+	List<String> list=new ArrayList<String>();
+	if(bsodataturn.members().size()<3){
+	bsodataturn.add(articleId.toString());
+	bsodataturn.expire(DateUtil.currentToEndTime(), TimeUnit.SECONDS);
+	list.add(articleId.toString());
+	return ResultUtil.getSlefSRSuccessList(list);
+	}
+	list.add("数量超过");
+	return ResultUtil.getSlefSRFailList(list);
 	}
 	/**
 	 * 文章分页浏览

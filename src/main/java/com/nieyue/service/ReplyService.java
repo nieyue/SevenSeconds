@@ -20,9 +20,9 @@ public interface ReplyService {
 	/** 装载回复 */	
 	public Reply loadReply(Integer replyId);	
 	/** 回复总共数目 */	
-	public int countAll(Integer commentId,Integer acountId);
+	public int countAll(Integer pointNumber,Integer commentId,Integer acountId);
 	/** 分页回复信息 */
-	public List<Reply> browsePagingReply(Integer commentId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
+	public List<Reply> browsePagingReply(Integer pointNumber,Integer commentId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
 	/** 分页DTO回复信息 */
-	public List<ReplyAcountDTO> browsePagingReplyAcountDTO(Integer commentId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
+	public List<ReplyAcountDTO> browsePagingReplyAcountDTO(Integer pointNumber,Integer commentId,Integer acountId,int pageNum,int pageSize,String orderName,String orderWay) ;
 }

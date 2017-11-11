@@ -202,7 +202,11 @@ reply_number int(11) DEFAULT 0 COMMENT '回复数量',
 create_date datetime COMMENT '创建时间',
 article_id int(11) COMMENT '文章id外键',
 acount_id int(11) COMMENT '评论人id外键',
-PRIMARY KEY (comment_id)
+PRIMARY KEY (comment_id),
+INDEX INDEX_POINTNUMBER (point_number) USING BTREE,
+INDEX INDEX_REPLYNUMBER (reply_number) USING BTREE,
+INDEX INDEX_ARTICLEID (article_id) USING BTREE,
+INDEX INDEX_ACOUNTID (acount_id) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='评论表';
 
 #创建回复表 
@@ -213,7 +217,10 @@ point_number int(11) DEFAULT 0 COMMENT '点赞数',
 create_date datetime COMMENT '创建时间',
 comment_id int(11) COMMENT '评论id外键',
 acount_id int(11) COMMENT '回复人id外键',
-PRIMARY KEY (reply_id)
+PRIMARY KEY (reply_id),
+INDEX INDEX_POINTNUMBER (point_number) USING BTREE,
+INDEX INDEX_COMMENTID (comment_id) USING BTREE,
+INDEX INDEX_ACOUNTID (acount_id) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='回复表';
 
 #创建收藏表 
@@ -236,6 +243,30 @@ number int(11) COMMENT '图片顺序',
 article_id int(11) COMMENT '文章id外键',
 PRIMARY KEY (img_id)
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='图片表';
+
+#创建标签表 
+CREATE TABLE label_tb(
+label_id int(11) NOT NULL AUTO_INCREMENT COMMENT '标签id',
+type varchar(255) COMMENT '类型',
+name varchar(255) COMMENT '标签名',
+create_date datetime COMMENT '创建时间',
+update_date datetime COMMENT '更新时间',
+PRIMARY KEY (label_id),
+INDEX INDEX_TYPE (type) USING BTREE,
+INDEX INDEX_name (name) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='标签表';
+
+#创建标签文章表 
+CREATE TABLE label_article_tb(
+label_article_id int(11) NOT NULL AUTO_INCREMENT COMMENT '标签文章id',
+label_id int(11) COMMENT '标签ID,外键',
+article_id int(11) COMMENT '文章ID,外键',
+create_date datetime COMMENT '创建时间',
+update_date datetime COMMENT '更新时间',
+PRIMARY KEY (label_article_id),
+INDEX INDEX_LABELID (label_id) USING BTREE,
+INDEX INDEX_ARTICLEID (article_id) USING BTREE
+)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='标签文章表';
 
 #创建数据表 
 CREATE TABLE data_tb(

@@ -30,7 +30,7 @@ public class ReplyServiceImpl implements ReplyService{
 		//回复数
 		if(b){
 			Comment comment = commentDao.loadComment(reply.getCommentId());
-			int commentreplynumber = replyDao.countAll(comment.getCommentId(), null);
+			int commentreplynumber = replyDao.countAll(null,comment.getCommentId(), null);
 			comment.setReplyNumber(commentreplynumber);
 			b=commentDao.updateComment(comment);
 		}
@@ -56,13 +56,14 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public int countAll(Integer commentId,Integer acountId) {
-		int c = replyDao.countAll(commentId,acountId);
+	public int countAll(Integer pointNumber,Integer commentId,Integer acountId) {
+		int c = replyDao.countAll(pointNumber,commentId,acountId);
 		return c;
 	}
 
 	@Override
 	public List<Reply> browsePagingReply(
+			Integer pointNumber,
 			Integer commentId,Integer acountId,
 			int pageNum, int pageSize,
 			String orderName, String orderWay) {
@@ -72,11 +73,11 @@ public class ReplyServiceImpl implements ReplyService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<Reply> l = replyDao.browsePagingReply(commentId,acountId,pageNum-1, pageSize, orderName, orderWay);
+		List<Reply> l = replyDao.browsePagingReply(pointNumber,commentId,acountId,pageNum-1, pageSize, orderName, orderWay);
 		return l;
 	}
 	@Override
-	public List<ReplyAcountDTO> browsePagingReplyAcountDTO(Integer commentId, Integer acountId, int pageNum,
+	public List<ReplyAcountDTO> browsePagingReplyAcountDTO(Integer pointNumber,Integer commentId, Integer acountId, int pageNum,
 			int pageSize, String orderName, String orderWay) {
 		if(pageNum<1){
 			pageNum=1;
@@ -84,7 +85,7 @@ public class ReplyServiceImpl implements ReplyService{
 		if(pageSize<1){
 			pageSize=0;//没有数据
 		}
-		List<ReplyAcountDTO> l = replyDao.browsePagingReplyAcountDTO(commentId,acountId,pageNum-1, pageSize, orderName, orderWay);
+		List<ReplyAcountDTO> l = replyDao.browsePagingReplyAcountDTO(pointNumber,commentId,acountId,pageNum-1, pageSize, orderName, orderWay);
 		return l;
 	}
 

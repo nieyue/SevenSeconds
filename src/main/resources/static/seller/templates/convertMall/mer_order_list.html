@@ -35,8 +35,8 @@
 <form novalidate name="myDownloadMerOrderForm" ng-submit="downloadMerOrderForm()">
   <span class=" comment-input-margin">
  <label  class="text-danger">状态</label>
-			   <!-- ng-change="searchMerOrderForm(search)"  -->
 			   <select  style="width:180px;height:50px;" 
+			    ng-change="searchMerOrderForm(search)"
 			    ng-model="search.status" name="status"
      			ng-options="sa.id as sa.value for sa in orderMerStatus">
   				</select>

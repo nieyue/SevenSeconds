@@ -71,5 +71,11 @@ public class ArticleCate implements Serializable{
 	public void setHolder(Integer holder) {
 		this.holder = holder;
 	}
+
+	@Override
+	public String toString() {
+		return "ArticleCate [articleCateId=" + articleCateId + ", name=" + name + ", holder=" + holder + ", updateDate="
+				+ updateDate + "]";
+	}
 	
 }

@@ -149,7 +149,7 @@ public class ArticleController {
 	//存储当日的记录转发的文章
 	BoundSetOperations<String, String> bsodataturn= stringRedisTemplate.boundSetOps(projectName+"AcountId"+acountId+"Data"+DateUtil.getImgDir()+"Turn");
 	List<String> list=new ArrayList<String>();
-	if(bsodataturn.members().size()<3){
+	if(bsodataturn.members().size()<10){//10个
 	bsodataturn.add(articleId.toString());
 	bsodataturn.expire(DateUtil.currentToEndTime(), TimeUnit.SECONDS);
 	list.add(articleId.toString());

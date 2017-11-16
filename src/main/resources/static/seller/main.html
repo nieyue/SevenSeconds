@@ -99,6 +99,22 @@
                     }
                     
 		});
+		mainApp.filter("bigNumber",function(){
+                return function(bigNumber){
+                if(bigNumber){
+                bigNumber=Math.abs(bigNumber)>100000000?(bigNumber/100000000)+'亿':Math.abs(bigNumber)>10000?(bigNumber/10000)+'万':bigNumber;
+                }
+                 return bigNumber||0;
+                }
+            });
+		mainApp.filter("bigDouble",function(){
+                return function(bigDouble){
+                if(bigDouble){
+                bigDouble=Math.abs(bigDouble)>100000000?(bigDouble/100000000).toFixed(2)+'亿':Math.abs(bigDouble)>10000?(bigDouble/10000).toFixed(2)+'万':bigDouble;
+                }
+                 return bigDouble||0.0;
+                }
+            });
 /*         mainApp.directive('metis', function ($timeout) {
    		 return function ($scope, $element, $attrs) {
        		 if ($scope.$last == true) {
@@ -1359,6 +1375,54 @@
        	   				});
                    };
                    $scope.initFinanceCount($scope.financeMoneyModel);
+                   //财务总数据
+                   $scope.initFinanceData=function(){
+                   $.get("/finance/data",
+                    	function(data){
+                   $scope.financeData=data.list[0];
+       	   				$scope.$apply();
+       	   				});
+                   };
+                   $scope.initFinanceData();
+                   //流水类型集合
+                   $scope.currentFlowWaterTypeId=null;
+                   $scope.flowWaterTypes=[
+                   {id:1,value:"新手任务"},
+                   {id:2,value:"日常任务"},
+                   {id:3,value:"达人奖励"},
+                   {id:4,value:"文章阅读"},
+                   {id:5,value:"徒弟进贡"},
+                   {id:6,value:"推广分成"},
+                   {id:7,value:"签到"},
+                   {id:-1,value:"兑换商品"},
+                   {id:-2,value:"书城消费"}
+                   ];
+                   //财务日数据
+                   $scope.initFinanceDayData=function(flowWaterTypeId,num){
+                   if(!flowWaterTypeId){
+                   flowWaterTypeId='';
+                   }
+                   console.log(flowWaterTypeId)
+                  	var endDate=myUtils.timeStampToDate(new　Date());
+					var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(num));
+					$.get("/finance/daydata?startDate="+startDate+"&endDate="+endDate+"&type="+flowWaterTypeId,function(data){
+            		if(data.code==200){
+            		$scope.financeDayDataList=data.list.reverse();
+            		//console.log($scope.financeDayDataList)
+            		$scope.$apply();
+            		}else if(data.code==40000){
+            		$scope.financeDayDataList=[{createDate:myUtils.timeStampToDate(new Date()),userExpenditure:0,platformRevenue:0}];
+            		$scope.$apply();
+            		
+            		}
+            		});
+                   };
+                   $scope.initFinanceDayData($scope.currentFlowWaterTypeId,6);
+                   $scope.changeFlowWaterType=function(flowWaterTypeId){
+                   $scope.currentFlowWaterTypeId=flowWaterTypeId;
+                   $scope.initFinanceDayData($scope.currentFlowWaterTypeId,6);
+                   console.log( $scope.currentFlowWaterTypeId)
+                   };
             }
             }
             }

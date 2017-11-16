@@ -1,5 +1,6 @@
 package com.nieyue.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -7,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
+import com.nieyue.bean.FinanceDataDTO;
+import com.nieyue.bean.FinanceDayDataDTO;
 
 /**
  * 财务数据库接口
@@ -41,5 +44,9 @@ public interface FinanceDao {
 			@Param("pageNum")int pageNum,
 			@Param("pageSize")int pageSize,
 			@Param("orderName")String orderName,
-			@Param("orderWay")String orderWay) ;		
+			@Param("orderWay")String orderWay) ;	
+	/** 财务数据 */
+	public List<FinanceDataDTO> browseFinanceData(@Param("acountId")Integer acountId) ;		
+	/** 财务日数据 */
+	public List<FinanceDayDataDTO> browseFinanceDayData(@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("type")Integer type,@Param("subtype")Integer subtype) ;	
 }

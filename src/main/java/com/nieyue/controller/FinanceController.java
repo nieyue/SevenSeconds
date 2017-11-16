@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
+import com.nieyue.bean.FinanceDataDTO;
+import com.nieyue.bean.FinanceDayDataDTO;
 import com.nieyue.bean.FlowWater;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.ArticleService;
@@ -96,6 +99,48 @@ public class FinanceController {
 			}else{
 				return ResultUtil.getSlefSRFailList(list);
 			}
+	}
+	/**
+	 * 财务数据
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/data", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList browseFinanceData(HttpServletRequest request,
+			@RequestParam(value="acountId",required=false)Integer acountId,
+			HttpSession session)  {
+		List<FinanceDataDTO> list = new ArrayList<FinanceDataDTO>();
+		list= financeService.browseFinanceData(acountId);
+		if(list.size()>0){
+			return ResultUtil.getSlefSRSuccessList(list);
+			
+		}else{
+			return ResultUtil.getSlefSRFailList(list);
+		}
+	}
+	/**
+	 * 财务日数据
+	 * @param orderName 
+	 * @param orderWay 
+	 * @return
+	 */
+	//@RequestLimit(count=10,time=100000)
+	@RequestMapping(value = "/daydata", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList browseFinanceDayData(
+			HttpServletRequest request,
+			@RequestParam(value="startDate",required=false)Date startDate,
+			@RequestParam(value="endDate",required=false)Date endDate,
+			@RequestParam(value="type",required=false)Integer type,
+			@RequestParam(value="subtype",required=false)Integer subtype,
+			HttpSession session)  {
+		List<FinanceDayDataDTO> list = new ArrayList<FinanceDayDataDTO>();
+		list= financeService.browseFinanceDayData(startDate,endDate,type,subtype);
+		if(list.size()>0){
+			return ResultUtil.getSlefSRSuccessList(list);
+		}else{
+			return ResultUtil.getSlefSRFailList(list);
+		}
 	}
 	/**
 	 * 财务修改

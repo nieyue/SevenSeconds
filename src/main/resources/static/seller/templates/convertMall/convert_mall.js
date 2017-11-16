@@ -612,9 +612,9 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				if(search.acountId){					
 					params("acountId",search.acountId);
 				}
-				if(search.status!=null){		
+				/*if(search.status!=null){		
 					params("status",search.status);
-				}
+				}*/
 			  $.get(countUrl,function(cd){
 				  console.log(cd)
            		//$scope.totalNumber=cd.list.length;             
@@ -640,7 +640,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 			 *查询
 			 */
 			$scope.searchMerOrderForm=function(search){
-				console.log($scope.search)
+				console.log(search)
 				 $scope.currentPage=1;//重置
 				$scope.toPage( $scope.currentPage, $scope.search);
 				//$scope.merOrderListInit($scope.search);

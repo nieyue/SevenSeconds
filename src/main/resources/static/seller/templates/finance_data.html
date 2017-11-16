@@ -11,3 +11,81 @@
   人数：<span ng-bind="financeCountByMoney"></span>
   </div>
 <!-- 财务资金人数end -->
+
+<!-- 财务数据 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">财务总数据</label>
+</div>
+<!-- 财务数据end -->
+<!-- 财务数据列表 -->
+ <div style="width:100%">
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<tr>
+			  <th>总余额</th>
+			  <th>总充值金额</th>
+			  <th>总消费金额</th>
+			  <th>总提现金额</th>
+			  <th>总自身收益</th>
+			  <th>总合伙人收益</th>
+			  <th>总基准收益（赠送）</th>
+			</tr>
+			<tr >
+			  <td class="text-danger">
+			  ￥<span ng-bind="financeData.money|bigDouble"></span>
+			  </td>
+			  <td class="text-danger">
+			  ￥<span ng-bind="financeData.recharge|bigDouble"></span>
+			  </td>
+			  <td class="text-danger">
+			  ￥<span ng-bind="financeData.consume|bigDouble"></span>
+			  </td>
+			  <td class="text-danger">
+			  ￥<span ng-bind="financeData.withdrawals|bigDouble"></span>
+			  </td>
+			 <td class="text-danger">
+			  ￥<span ng-bind="financeData.selfProfit|bigDouble"></span>
+			  </td> 
+			 <td class="text-danger">
+			 ￥ <span ng-bind="financeData.partnerProfit|bigDouble"></span>
+			  </td> 
+			 <td class="text-danger">
+			 ￥ <span ng-bind="financeData.baseProfit|bigDouble"></span>
+			  </td> 
+			</table>
+		</div>
+<!-- 财务数据列表end -->
+<!-- 财务日数据 -->
+<div style="margin:10px;"  >
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">财务日数据</label>
+</div>
+<!-- 财务日数据end -->
+<!-- 切换数据 -->
+<div style="margin:10px;" >
+<button  class="btn btn-info" ng-click="changeFlowWaterType(null)" ng-disabled="currentFlowWaterTypeId==null">全部</button >
+<span ng-repeat="flowWaterType in flowWaterTypes">
+<button  class="btn btn-info" ng-click="changeFlowWaterType(flowWaterType.id)" ng-disabled="currentFlowWaterTypeId==flowWaterType.id"  ng-bind="flowWaterType.value"></button >
+</span>
+</div>
+<!-- 切换数据end -->
+<!-- 财务日数据列表 -->
+ <div style="width:100%" ">
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<tr>
+			  <th>日期</th>
+			  <th>用户收益(平台支出)</th>
+			  <th>用户消费(平台收益)</th>
+			</tr>
+			<tr ng-repeat="financeDayData in financeDayDataList">
+			  <td>
+			  <span ng-bind="financeDayData.createDate |  limitTo:10"></span>
+			  </td>
+			 <td class="text-danger">
+			 ￥ <span ng-bind="financeDayData.userExpenditure|bigDouble"></span>
+			  </td> 
+			 <td class="text-danger">
+			 ￥ <span ng-bind="financeDayData.platformRevenue|bigDouble"></span>
+			  </td> 
+			</table>
+		</div>
+<!-- 财务日数据列表end -->
+

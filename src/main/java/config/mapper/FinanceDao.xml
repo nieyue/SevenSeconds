@@ -195,5 +195,104 @@ WHERE finance_id=#{financeId}
 	</where>
 </select>   
    
+ <!-- 财务数据-->
+<select id="browseFinanceData" resultType="FinanceDataDTO">  
+    SELECT
+	   COALESCE(SUM(money),0) money, 
+	   COALESCE(SUM(recharge),0) recharge, 
+	   COALESCE(SUM(consume),0) consume,
+	   COALESCE(SUM(withdrawals),0) withdrawals,
+	   COALESCE(SUM(self_profit),0) selfProfit,
+	   COALESCE(SUM(partner_profit),0) partnerProfit,
+	   COALESCE(SUM(base_profit),0) baseProfit
+	FROM finance_tb
+	<where>
+	<if test="acountId!=null">
+	AND  acount_id=#{acountId}
+	</if>
+	</where>
+</select> 
+<!-- 财务日数据-->
+<select id="browseFinanceDayData" resultType="FinanceDayDataDTO">  
+  <if test="type==null">
+   SELECT 
+	COALESCE(sfwtb.money,0) userExpenditure,
+	COALESCE(pfwtb.money,0) platformRevenue,
+	sfwtb.create_date create_date
+	FROM 
+	(SELECT
+	  SUM(money) money,
+	  DATE(create_date) create_date
+	FROM flow_water_tb
+	<where>
+	<if test="startDate!=null">
+	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
+	</if>
+	<if test="endDate!=null">
+	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
+	</if>
+	AND type<![CDATA[> ]]>0
+	</where>
+	GROUP BY DATE(create_date)
+	) sfwtb 
+	left join 
+	 (SELECT
+	    SUM(money) money,
+	   DATE(create_date) create_date
+	FROM flow_water_tb
+	<where>
+	<if test="startDate!=null">
+	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
+	</if>
+	<if test="endDate!=null">
+	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
+	</if>
+	AND type<![CDATA[<]]>0
+	</where>
+	GROUP BY DATE(create_date)
+	) pfwtb
+	on DATE(sfwtb.create_date) = DATE(pfwtb.create_date )
+  </if>
+  <!-- 大 于 -->
+  <if test="type  &gt; 0">
+  SELECT
+	  COALESCE(SUM(money),0) userExpenditure,
+	  0 platformRevenue,
+	  DATE(create_date) create_date
+	FROM flow_water_tb
+	<where>
+	<if test="startDate!=null">
+	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
+	</if>
+	<if test="endDate!=null">
+	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
+	</if>
+	AND type=#{type}
+	</where>
+	GROUP BY DATE(create_date)
+  </if>
+  <!-- 小于 -->
+  <if test="type &lt;0">
+ SELECT
+	 0 userExpenditure,
+	COALESCE(SUM(money),0) platformRevenue,
+	  DATE(create_date) create_date
+	FROM flow_water_tb
+	<where>
+	<if test="startDate!=null">
+	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
+	</if>
+	<if test="endDate!=null">
+	AND  DATE(create_date)<![CDATA[<= ]]>DATE(#{endDate})
+	</if>
+	AND type=#{type} 
+	</where>
+	GROUP BY DATE(create_date)
+	
+  </if>
+  
+  
+	
+</select> 
  
 </mapper>

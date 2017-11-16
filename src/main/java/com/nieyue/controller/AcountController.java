@@ -515,7 +515,7 @@ public class AcountController {
 		if(acount==null|| acount.equals("")){
 			acount=acountService.loginAcount(adminName, password, null);
 		}
-		if(acount!=null&&!acount.equals("")&&acount.getStatus().equals(0)){
+		if(acount!=null&&!acount.equals("")&&(acount.getStatus().equals(0)||acount.getStatus().equals(2))){
 			acount.setLoginDate(new Date());
 			boolean b = acountService.updateAcount(acount);
 			if(b){

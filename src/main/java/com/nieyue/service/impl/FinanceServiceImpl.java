@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nieyue.bean.AcountDTO;
 import com.nieyue.bean.Finance;
+import com.nieyue.bean.FinanceDataDTO;
+import com.nieyue.bean.FinanceDayDataDTO;
 import com.nieyue.dao.FinanceDao;
 import com.nieyue.service.FinanceService;
 @Service
@@ -74,6 +76,16 @@ public class FinanceServiceImpl implements FinanceService{
 		}
 		List<AcountDTO> l = financeDao.browsePagingFinanceByAcountId( acountId,pageNum-1, pageSize, orderName, orderWay);
 		return l;
+	}
+	@Override
+	public List<FinanceDataDTO> browseFinanceData(Integer acountId) {
+		List<FinanceDataDTO> f = financeDao.browseFinanceData(acountId);
+		return f;
+	}
+	@Override
+	public List<FinanceDayDataDTO> browseFinanceDayData(Date startDate, Date endDate, Integer type, Integer subtype) {
+		List<FinanceDayDataDTO> f = financeDao.browseFinanceDayData(startDate, endDate, type, subtype);
+		return f;
 	}
 
 	

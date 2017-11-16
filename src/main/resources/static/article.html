@@ -159,6 +159,21 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 	        </span>
 	    </div>
 		<div class="listGroup list-group media comment-list-item ad3" ng-repeat="article in ad3List" on-finish-render-filters   ng-click="goAd(article)">
+
+		<!-- wosou广告 -->
+	<div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==3">
+		<script type="text/javascript">
+			var wososspconfig =
+			{
+			aid: "746"
+			};
+			</script>
+			<script type="text/javascript" src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
+		</script>
+	</div>
+	<!--  wosou end -->	
+
+
 			<!-- 0张图片列表 -->
 			<div ng-if="article.imgList.length==0" style="width:100%;">
 			<div class="media-body comment-right-body" style="display:inline-block;width:100%;">
@@ -166,6 +181,12 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 					<div class="comment-right-body-title">
 						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!--  <span style="float: left;">
+					<img style="width:10px;height:10px;"   src="http://img.newzhuan.com/uploaderPath/img/20170710/14996852163959251491845075.png"/>
+					</span> -->
+					<button  ng-if="showArticleListRule(article)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					</div> 
 				</div>
 			</div>
 			</div>
@@ -183,36 +204,12 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 					<div class="comment-right-body-title">
 						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<button ng-if="showArticleListRule(article)"  style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					</div>
 				</div>
 			</div>
-
- <!-- weizhi 广告 
-		<script type="text/javascript">
-			var wososspconfig =
-			{
-			aid: "746"
-			};
-			</script>
-			<script type="text/javascript" src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
-		</script>
-   weizhi end -->
-
 			</div>
-
-<!-- sougou广告 -->
-	<div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==2">
-		<script type="text/javascript">
-			var wososspconfig =
-			{
-			aid: "746"
-			};
-			</script>
-			<script type="text/javascript" src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
-		</script>
-	</div>
-	<!-- sougou end -->
-
-
 			<!-- 两张图片列表 -->
 			<div ng-if="article.imgList.length==2">
 					<div class="comment-right-body-title">
@@ -225,6 +222,13 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</div>
 			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <button  ng-if="showArticleListRule(article)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+						</div>
+				</div>
+			</div> 
 			</div>
 			<!-- 三张图片列表 -->
 			<div ng-if="article.imgList.length==3">
@@ -238,6 +242,13 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</div>
 			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<button  ng-if="showArticleListRule(article)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					</div>
+				</div>
+			</div>
 			</div>
 		</div>
 				 		
@@ -246,10 +257,12 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 		<!-- 广告3end -->
 <!-- <script id="_gg_127149" type="text/javascript" src="http://pub.miophp.com/js/127149.js"></script> -->
 
+<!-- 亿玛 -->
 <div  class="modelWrap" style="margin-top:3%;" >
 <script id="_gg_127331" type="text/javascript" src="http://pub.cdjgtfq.com/js/127331.js"></script>
 <script id="_gg_127332" type="text/javascript" src="http://pub.cdjgtfq.com/js/127332.js"></script>
 </div>
+<!-- 亿玛 end -->
 
 		<div  class="modelWrap" style="margin-top:3%;">
 		<div  class="modelWrap" style="text-align:center;padding:3% 0;margin:auto 3%;">
@@ -264,20 +277,33 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 	    </div> -->
 
 		<!-- 第二列表 -->
-		<div  class="listGroup list-group media comment-list-item" ng-repeat="article in articleList" on-finish-render-filters  ng-click="clickArticle(article)">
-			
-	<div style=" margin-bottom:1px;margin:10px 0;text-align:center;" ng-if="$index==3">
-		</div>
+		<div  class="listGroup list-group media comment-list-item articleList"   ng-repeat="article in articleList" on-finish-render-filters  ng-click="clickArticle(article)">
 	<!-- sougou广告 -->
-	<div class="sg_adv" style=" margin-bottom:1px;margin:10px 0;text-align:center;" ng-if="$index==5 || $index==8">
+	<div class="sg_adv" style=" margin-bottom:1px;margin:10px 0;text-align:center;display:none;" ng-if="$index==5 || $index==15">
 		<script type="text/javascript">
-		var sogou_ad_id=916721;
-		var sogou_ad_height=200;
-		var sogou_ad_width=300;
+			var sogou_ad_id=916768;
+			var sogou_ad_height=200;
+			var sogou_ad_width=500;
 		</script>
 		<script type='text/javascript' src='http://images.sohu.com/cs/jsfile/js/c.js'></script>
+
 	</div>
 	<!-- sougou end -->
+
+
+		<!-- wosou广告 -->
+	<div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==10">
+		<script type="text/javascript">
+			var wososspconfig =
+			{
+			aid: "746"
+			};
+			</script>
+			<script type="text/javascript" src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
+		</script>
+	</div>
+	<!--  wosou end -->	
+
 		<!-- 唐人ssp -->
 		<!-- <div  style="border-bottom:1px solid #ececec;padding:5px 0; margin-bottom:1px;margin:10px 0;text-align:center;"  ng-if=" $index%4==0 ">
 		<script type="text/javascript">
@@ -370,10 +396,14 @@ background-image:url('http://img.newzhuan.cn/uploaderPath/img/20171012/150777714
 				</div>
 			</div>
 			</div>
+
 		</div>
-				 		
+		
 		</div>
 		</div>
+
+
+
 			<!-- 广告4悬浮 -->
 <div class="swiper-container swiper-container1" style="position:fixed;left:0;bottom:0;width:100%"   >
     <div class="swiper-wrapper" >
@@ -406,9 +436,12 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		<!-- 底部 end-->
 		<!-- cnzz -->
 		<div style="display:none;">
+		<!-- cnzz 总统计 -->
+		<script src="https://s13.cnzz.com/z_stat.php?id=1269181002&web_id=1269181002" language="JavaScript"></script>
+		<!-- cnzzend -->
 		 <script src="https://s19.cnzz.com/z_stat.php?id=1264381192&web_id=1264381192" language="JavaScript"></script>
 		</div>
-		
+	</div><!-- end -->	
 	<script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
 	<!-- <script src="/resources/js/bootstrap3.2.0.js"></script> -->
 	<script src="http://www.newzhuan.cn/resources/js/angularjs.min.1.5.7.js"></script>
@@ -467,9 +500,9 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					//console.log(scope)
 					//console.log(element)
 					//console.log(attr)
-					//if (scope.$last === true) {
-					//if (scope.article) {
-					//}
+					/* if (scope.$last === true) {
+					} */
+					
 					if(scope.article){
 					$("#newsDeatilsBody").css("display","block");
 					//setTimeout(function(){
@@ -477,11 +510,47 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					//},2000);
 					//console.log($("#articleContentId").height())
 					//console.log($("img"))
-					//setTimeout(function(){
+					$("img").each(function(i){
+					if(i<3){
+					$(this).attr("src",$(this).attr("bn-lazy-src"));
+					//$(this).attr("src","http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif");
+					}
+					});
+					//阅读全文隐藏文字
+					$("#articleContentId").css({"height":"500px","overflow":'hidden'});
+			        //阅读全文
+					scope.readMore=function(){
+					$("#articleContentId").css({"height":"100%","overflow":'hidden'});
+					$("#readMoreId").css({"display":"none"});
 					$("img").each(function(){
 					$(this).attr("src",$(this).attr("bn-lazy-src"));
 					});
-					//},3000);
+					};
+					
+    			/* $(".ad3").each(function(i,element) {
+    			//console.log(i)
+    			//console.log(element)
+    			//console.log(scope.articleList.length)
+    			 	 if(i<=scope.articleList.length){
+    				$(this).after($(".articleList")[i]);
+    				}  
+    			}); */
+    			
+    					//添加到广告；
+						var newAd3List=[];
+						for(var ii=0;ii<scope.ad3List.length;ii++){
+						newAd3List[ii*2]=scope.ad3List[ii];
+						newAd3List[ii*2+1]=scope.articleList[ii];
+						}
+						scope.ad3List=newAd3List;
+						console.log(scope.ad3List)
+						var newArticleList=[];
+						for(var iii=0;iii<scope.articleList.length;iii++){
+						if(iii>scope.ad3List.length){
+						newArticleList.put(scope.articleList[iii]);
+						}
+						}
+						scope.articleList=newArticleList;
 					scope.$emit('ngRepeatFinished');
 					//$("#hongbao1").insertAfter($(".comment-list-item").get(4));
 					//$("#hongjiu1").insertAfter($(".comment-list-item").get(3));
@@ -503,14 +572,6 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     	$scope.originDomain=domainManager.SevenSeconds;
     	//$scope.originDomain=location.host;
     	//$scope.originDomain="www.newzhuan.cn";
-    	//阅读全文隐藏文字
-		$("#articleContentId").css({"height":"500px","overflow":'hidden'});
-        //阅读全文
-		$scope.readMore=function(){
-		$("#articleContentId").css({"height":"100%","overflow":'hidden'});
-		$("#readMoreId").css({"display":"none"});
-		
-		};
     	//初始化ad域名
     	/* $.ajax({
     		url:"http://"+$scope.originDomain+"/adDomain/get",
@@ -574,13 +635,18 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     			
     		//非跨域广告跳转	
     		$scope.goAd=function(article){
-    				if(article.redirectUrl){
+    			/* 	if(article.redirectUrl){
     					location.replace(article.redirectUrl);
     					
     				}else{
     					location.replace("http://"+location.host+"/article.html?acountId=1000&articleId="+article.articleId);
     				
-    				}
+    				} */
+    	if($scope.showArticleListRule(article)){
+		   $scope.openApp(article);
+		}else{
+		$scope.goRedirectUrl(article.articleId,article.redirectUrl);
+		}
     		};	
     			
     			
@@ -720,14 +786,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		}
     		
     		$scope.noMore=false;//false还有，true没有更多
-    		$scope.pageNum=1;//第多少个
+    		//$scope.pageNum=1;//第多少个
+    		$scope.pageNum=1;//第多少个，混合广告
     		$scope.pageSize=10;//每页个数
     		$scope.type="广告";//初始化类别
     		$scope.status="正常";//初始化状态
     		
     		//http://www.newzhuan.cn/articleCate/list?holder=0
-    		if($scope.article.articleCate.name=="推广" 
-    		||$scope.article.articleCate.name.indexOf("广告")>-1){
+    		if($scope.article.articleCate.name=="推广"){
     		$.ajax({  
     		  type : "get",  
     		 url : "http://"+$scope.originDomain+"/articleCate/list?holder=0&pageSize=100",  
@@ -743,6 +809,8 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		//$scope.type="推广";
     		 
     		 }});
+    		}else if($scope.article.articleCate.name.indexOf("广告")>-1){
+    		$scope.type="广告";
     		}
     		else{
     		$scope.type=$scope.article.articleCate.name;
@@ -753,7 +821,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		$("#articleContentId").css({"height":"100%","overflow":'hidden'});
 		$("#readMoreId").css({"display":"none"});
     		}
-    		
+    			
     			initDataList({
     			pageNum:$scope.pageNum,
     			pageSize:$scope.pageSize,
@@ -931,7 +999,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		};
     	//显示规则
     	$scope.showArticleListRule=function(article){
-    	return (article.articleId)%3==0;
+    	return ((article.articleId)%3==0)&&article.articleCate.name!="广告3";
     	};
     	});
     	
@@ -984,16 +1052,24 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 			//$(".baiduAd").html($("#"+s).html());
 			</script> -->
 			
-			<!-- dengliguang -->		
+<!-- dengliguang -->		
 <script>
 	$(function(){
+	function showSgAdv(){
 		var urll=window.location.href;
 		var arr=urll.split(".");
-		if(arr[1]!="kuaitingwang"){
-			$(".sg_adv").css("display","none");
+		if(arr[1]=="kuaitingwang" || arr[1]=="kangyouduo"){
+			$(".sg_adv").each(function(){
+			$(this).css("display","block");
+			});
 		}
+	}
+	setInterval(function(){
+	showSgAdv();
+	},500);
 	});
 		
 </script>
+<!-- dengliguang -->
 </body>
 </html>

@@ -268,6 +268,8 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				|| request.getRequestURI().indexOf("/finance/update")>-1 
         				|| request.getRequestURI().indexOf("/finance/list")>-1 
         				|| request.getRequestURI().indexOf("/finance/add")>-1 
+        				|| request.getRequestURI().indexOf("/finance/data")>-1 
+        				|| request.getRequestURI().indexOf("/finance/daydata")>-1 
         				||method.getName().equals("loadFinance")){
         			//加载自身财务
         			if((method.getName().equals("loadFinance")

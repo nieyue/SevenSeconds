@@ -3,6 +3,7 @@ package com.nieyue.rabbitmq.confirmcallback;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -412,14 +413,14 @@ public class Listener {
 		   			//时间是3段:0-8,8-16,16-24
 		   			realdata.setCreateDate(DateUtil.getDayPeriod(3));
 		   			realdata.setArticleId(dataRabbitmqDTO.getArticleId());
-		   			realdata.setAcountId(tginacount.getAcountId());
+		   			realdata.setAcountId(dataRabbitmqDTO.getAcountId());
 		   			 dataService.saveOrUpdateData(realdata,dataRabbitmqDTO.getUv(), isAddIp,isAddIp);
 		   			//日数据
 		   			DailyData realdailydata=new DailyData();
 		   			//时间是日
 		   			realdailydata.setCreateDate(DateUtil.getStartTime());
 		   			realdailydata.setArticleId(dataRabbitmqDTO.getArticleId());
-		   			realdailydata.setAcountId(tginacount.getAcountId());
+		   			realdailydata.setAcountId(dataRabbitmqDTO.getAcountId());
 		   			dailyDataService.saveOrUpdateDailyData(realdailydata, dataRabbitmqDTO.getUv(), isAddIp, isAddIp);
 		        	  /**
 		        	   * 更新文章
@@ -504,12 +505,16 @@ public class Listener {
 		        	   //推广账户  达人奖励 转发推广文章    
 		        	   List<Finance> tgfinancelist = financeService.browsePagingFinance(null,dataRabbitmqDTO.getAcountId(), 1, 1, "finance_id", "asc");
 		        	   Finance tgFinance = tgfinancelist.get(0);
+		        	  // System.err.println(tgFinance);
 		        	   //获取文章类型
 		        	   ArticleCate articleCate = articleCateService.loadArticleCate(article.getArticleCateId());
+		        	   DailyData tgDailyData = dailyDataService.loadDailyData(null, new Date(), article.getArticleId(), dataRabbitmqDTO.getAcountId());
 		        	  //检查是否符合转发文章奖励
-		        	   boolean isCheckReadingArticleMoney = articleBusiness.checkReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), realdailydata.getReadingNumber().intValue());
-		        	 if((isAddIp==1)&&isCheckReadingArticleMoney){
-		        		Double readingArticleMoney = articleBusiness.getReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), realdailydata.getReadingNumber().intValue());
+		        	   //Map<String,Object> readingArticleMoneyMap = articleBusiness.checkReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), tgDailyData.getPvs().intValue());
+		        	  Map<String,Object> readingArticleMoneyMap = articleBusiness.checkReadingArticleMoney(articleCate.getName(), article.getArticleId(), dataRabbitmqDTO.getAcountId(), tgDailyData.getReadingNumber().intValue());
+		        	   Double readingArticleMoney=(Double) readingArticleMoneyMap.get("money");
+		        	   //System.err.println(readingArticleMoney);
+		        	   if((isAddIp==1)&&(readingArticleMoney>0.0)){
 		        		 //记录流水，阅读文章收益
 		        		   FlowWater tgflowWater = new FlowWater();
 		        		   tgflowWater.setAcountId(dataRabbitmqDTO.getAcountId());

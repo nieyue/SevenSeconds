@@ -468,7 +468,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 	}
 	ceshi(); */
     //点击七秒
-		function goZhuanzhuan(){
+		/* function goZhuanzhuan(){
             if(navigator.appVersion.indexOf("Android")>-1){
               location.href="http://a.app.qq.com/o/simple.jsp?pkgname=io.dcloud.H518260C7";
             }else if(navigator.appVersion.indexOf("iPhone")>-1 || navigator.appVersion.indexOf("iPad")>-1){
@@ -476,7 +476,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
             }else{
              location.href="http://a.app.qq.com/o/simple.jsp?pkgname=io.dcloud.H518260C7";
             }
-		}
+		} */
 	//获取data-src
 		$("img").each(function(){
 			if($(this).attr("data-src")){
@@ -516,8 +516,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					//$(this).attr("src","http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif");
 					}
 					});
-					//阅读全文隐藏文字
-					$("#articleContentId").css({"height":"500px","overflow":'hidden'});
+					
 			        //阅读全文
 					scope.readMore=function(){
 					$("#articleContentId").css({"height":"100%","overflow":'hidden'});
@@ -666,7 +665,12 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
   		        	myUtils.myTemplate("页面已删除")
   		        	return;
   		        	}
-  		        	data.list[0].content=data.list[0].content.replace(/src/g, "bn-lazy-src");
+  		        	//data.list[0].content=data.list[0].content.replace(/src/g, "bn-lazy-src");
+  		        	  data.list[0].content= data.list[0].content.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi,function(match,capture){
+					  //capture,返回每个匹配的字符串
+					        var newStr='<img  bn-lazy-src="'+capture+'" alt="" />';
+					         return newStr;
+					  });
   		        	/* data.list[0].content.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, function (match, capture) {
 					 console.log($(match));
 					  console.log(capture);
@@ -815,10 +819,13 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		else{
     		$scope.type=$scope.article.articleCate.name;
     		}
+    	//阅读全文隐藏文字
+		$("#articleContentId").css({"height":"500px","overflow":'hidden'});
     	//如果是推广或者小说，没有全文阅读。	
-    	if($scope.article.articleCate.name=="推广" 
-    		|| $scope.article.articleCate.name=="小说"){
-    		$("#articleContentId").css({"height":"100%","overflow":'hidden'});
+    	if(
+    	//$scope.article.articleCate.name=="推广"||
+    	 $scope.article.articleCate.name=="小说"){
+    		$("#articleContentId").css({"height":"100%","overflow":'auto'});
 		$("#readMoreId").css({"display":"none"});
     		}
     			
@@ -868,8 +875,9 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     		status:"正常",
     		type:"广告3"
     		};
-    		if($scope.article.articleCate.name!="推广" 
-    		&& $scope.article.articleCate.name!="小说"){
+    		if(
+    		//$scope.article.articleCate.name!="推广"&&
+    		 $scope.article.articleCate.name!="小说"){
       			initAdList("ad3List",{
     			pageNum:$scope.ad3.pageNum,
     			pageSize:$scope.ad3.pageSize,
@@ -988,12 +996,30 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 		    //window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
 		  	window.location = "seven://app.com/openwith?articleId="+article.articleId;
 		  	setTimeout(function(){
+		  	var spreadId=myUtils.GetQueryString("spreadId");
+		  	if(spreadId!=null&&myUtils.userVerification.catNum.test(spreadId)){
+				$.get("http://"+$scope.originDomain+"/spread/"+spreadId,function(d){
+				if(d.code==200){
+				window.location =d.list[0].link;
+				}
+				});
+			}else{
 		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+			}
 		  	},1000);
 		    }else if (navigator.userAgent.match(/android/i)) {
 		  	window.location = "seven://app.com/openwith?articleId="+article.articleId;
 		  	setTimeout(function(){
+		  var spreadId=myUtils.GetQueryString("spreadId");
+		  	if(spreadId!=null&&myUtils.userVerification.catNum.test(spreadId)){
+				$.get("http://"+$scope.originDomain+"/spread/"+spreadId,function(d){
+				if(d.code==200){
+				window.location =d.list[0].link;
+				}
+				});
+			}else{
 		   window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+			}
 		  	},1000);
 		    }
 		};

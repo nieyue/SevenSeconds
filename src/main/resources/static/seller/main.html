@@ -272,7 +272,7 @@
 			    editor.config.printLog = false;
 			    //取消过滤js
 			    if($rootScope.sessionRole.name=='超级管理员'
-			    ||$rootScope.sessionRole.name!='运营管理员'){
+			    ||$rootScope.sessionRole.name=='运营管理员'){
 			    editor.config.jsFilter=false;
 			    }
 			    //zindex
@@ -999,6 +999,7 @@
 			$scope.pagination=myUtils.myPaginationHandler();
 			 //初始化查询
             $scope.serach={
+            acountId:null,
             masterId:null,
             roleId:$rootScope.roleList[0].roleId,
             phone:'',
@@ -1029,6 +1030,7 @@
 			acountListUrl+="&"+ele+"="+serach[ele];
 			}
 			}
+			isExsis("acountId");
 			isExsis("masterId");
 			isExsis("roleId");
 			isExsis("nickname");
@@ -1146,7 +1148,7 @@
 			/*
             *初始化合伙人收益比例增量
             */
-                    $scope.initScaleIncrement=function(){
+            $scope.initScaleIncrement=function(){
                     $.get("/scaleIncrement/get",
                     	function(data){
        	   				if(data.code==200){
@@ -1163,9 +1165,6 @@
 			/*
             *初始化合伙人收益比例增量end
             */
-            
-            
-           
                     }
                 } 
             }

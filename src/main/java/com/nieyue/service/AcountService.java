@@ -28,6 +28,7 @@ public interface AcountService {
 	public Acount loginAcount(String adminName,String password,Integer acountId);
 	/** 账户总共数目 */	
 	public int countAll(
+			Integer acountId,
 			Integer spreadId,
 			String phone,
 			String nickname,
@@ -43,6 +44,7 @@ public interface AcountService {
 	public List<AcountDTO> browsePagingAcountByMasterId(Integer masterId,int pageNum,int pageSize,String orderName,String orderWay) ;		
 	/** 分页账户信息 */
 	public List<Acount> browsePagingAcount(
+			Integer acountId,
 			Integer spreadId,
 			String phone,
 			String nickname,

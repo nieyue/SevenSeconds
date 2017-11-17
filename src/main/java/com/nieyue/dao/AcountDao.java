@@ -35,6 +35,7 @@ public interface AcountDao {
 			@Param("acountId")Integer acountId);
 	/** 账户总共数目 */	
 	public int countAll(
+			@Param("acountId")Integer acountId,
 			@Param("spreadId")Integer spreadId,
 			@Param("phone")String phone,
 			@Param("nickname")String nickname,
@@ -55,6 +56,7 @@ public interface AcountDao {
 			@Param("orderWay")String orderWay) ;		
 	/** 分页账户信息 */
 	public List<Acount> browsePagingAcount(
+			@Param("acountId")Integer acountId,
 			@Param("spreadId")Integer spreadId,
 			@Param("phone")String phone,
 			@Param("nickname")String nickname,

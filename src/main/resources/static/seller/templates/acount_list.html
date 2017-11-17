@@ -6,11 +6,15 @@
 </div>
 <!-- 账户列表选择 -->
 <div style="margin:10px;">
-<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">自定义查询（昵称/合伙人收益比例）</label>
+<label  class="text-danger nieyueText" style="font-size:16px;color:#ccc;">自定义查询（昵称/合伙人收益比例）</label>
 </div>
 <!-- 账户列表选择end -->
 <!-- 账户搜索选择 -->
 <form novalidate name="mySerachAcountForm" ng-submit="serachAcountForm()">
+  <span class=" comment-input-margin">
+ <label  class="text-danger">ID</label>
+    <input type="text" style="width:auto;" class=" comment-input" ng-model="serach.acountId" name="acountId"  ng-minlength="4" ng-maxlength="16" placeholder="4-16位">
+  </span>
   <span class=" comment-input-margin">
  <label  class="text-danger">昵称</label>
     <input type="text" style="width:auto;" class=" comment-input" ng-model="serach.nickname" name="nickname"  ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
@@ -22,6 +26,7 @@
 				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确手机号
 	</span>
   </span>
+  <div>
   <span class=" comment-input-margin">
  <label  class="text-danger">合伙人收益比例</label>
     <input type="text"  style="width:auto;"class=" comment-input" ng-model="serach.minScale" ng-change="controllerScale()" name="minScale" required ng-pattern="/(^[0]$|^(0\.(0[0-9]{1}|[0-9]\d?)|1(\.0{1,2})?)$)/"  placeholder="0-1之间两位小数" >
@@ -33,9 +38,11 @@
 				    	<i class="glyphicon glyphicon-info-sign"></i>0-1两位小数
 	</span>
   </span>
-  
+  </div>
+  <div>
    <input type="submit" class="btn btn-lg btn-danger" 
   ng-disabled="mySerachAcountForm.$invalid" value="提交"/>
+  </div>
 </form>
 <!-- 账户搜索选择end -->
 <!-- 账户列表选择 -->

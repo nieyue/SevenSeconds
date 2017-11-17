@@ -79,6 +79,7 @@ public class AcountServiceImpl implements AcountService{
 
 	@Override
 	public int countAll(
+			Integer acountId,
 			Integer spreadId,
 			String phone,
 			String nickname,
@@ -90,6 +91,7 @@ public class AcountServiceImpl implements AcountService{
 			Date createDate,
 			Date loginDate) {
 		int c = acountDao.countAll(
+				acountId,
 				spreadId,
 				phone,
 				nickname,
@@ -105,6 +107,7 @@ public class AcountServiceImpl implements AcountService{
 
 	@Override
 	public List<Acount> browsePagingAcount(
+			Integer acountId,
 			Integer spreadId,
 			String phone,
 			String nickname,
@@ -126,6 +129,7 @@ public class AcountServiceImpl implements AcountService{
 			pageSize=0;//没有数据
 		}
 		List<Acount> l = acountDao.browsePagingAcount(
+				acountId,
 				spreadId,
 				phone,
 				nickname,

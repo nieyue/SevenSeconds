@@ -59,7 +59,7 @@ public class SpreadController {
 				Integer sid = sp.getSpreadId();
 				//List<Acount> al = acountService.browsePagingAcount(sid, null, null, null, null, null, null, null,null,null, 1, Integer.MAX_VALUE, "acount_id", "asc");
 				//sp.setRegisterNumber(Long.valueOf(al.size()));
-				int count = acountService.countAll(sid, null, null, null, null, null, null, null, null, null);
+				int count = acountService.countAll(null,sid, null, null, null, null, null, null, null, null, null);
 				sp.setRegisterNumber(Long.valueOf(count));
 				sp.setNowTotalPrice(sp.getUnitPrice()*sp.getRegisterNumber());
 				spreadService.updateSpread(sp);
@@ -120,7 +120,7 @@ public class SpreadController {
 			Integer sid = spread.getSpreadId();
 			//List<Acount> al = acountService.browsePagingAcount(sid, null, null, null, null, null, null, null, null,null,1, Integer.MAX_VALUE, "acount_id", "asc");
 			//spread.setRegisterNumber(Long.valueOf(al.size()));
-			int count = acountService.countAll(sid, null, null, null, null, null, null, null, null, null);
+			int count = acountService.countAll(null,sid, null, null, null, null, null, null, null, null, null);
 			spread.setRegisterNumber(Long.valueOf(count));
 			spread.setNowTotalPrice(spread.getUnitPrice()*spread.getRegisterNumber());
 			spreadService.updateSpread(spread);

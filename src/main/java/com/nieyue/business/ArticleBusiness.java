@@ -46,8 +46,8 @@ public class ArticleBusiness {
 		Boolean isCheck=false;//是否检查当前阶段已经获得奖励，默认否
 		Map<String,Object> map=new HashMap<String,Object>();
 		if(type.equals("推广")){
-			step=-1;//推广每个阅读两积分
-			money=2.0;
+			step=-1;//推广每个阅读5积分
+			money=5.0;
 			/*//第一阶段 5~15 15~20
 			if(readingNumber>=5 && readingNumber<=15){
 				step=1;

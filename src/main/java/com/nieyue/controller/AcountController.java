@@ -110,6 +110,7 @@ public class AcountController {
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browsePagingAcount(
+			@RequestParam(value="acountId",required=false)Integer  acountId,
 			@RequestParam(value="spreadId",required=false)Integer spreadId,
 			@RequestParam(value="phone",required=false)String phone,
 			@RequestParam(value="nickname",required=false)String nickname,
@@ -125,7 +126,7 @@ public class AcountController {
 			@RequestParam(value="orderName",required=false,defaultValue="acount_id") String orderName,
 			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
 			List<Acount> list = new ArrayList<Acount>();
-			list= acountService.browsePagingAcount(spreadId,phone,nickname,minScale,maxScale,masterId,roleId,status,createDate,loginDate,pageNum, pageSize, orderName, orderWay);
+			list= acountService.browsePagingAcount(acountId,spreadId,phone,nickname,minScale,maxScale,masterId,roleId,status,createDate,loginDate,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){
 				return ResultUtil.getSlefSRSuccessList(list);
 				
@@ -370,6 +371,7 @@ public class AcountController {
 	 */
 	@RequestMapping(value = "/count", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody int countAll(
+			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="spreadId",required=false)Integer spreadId,
 			@RequestParam(value="phone",required=false)String phone,
 			@RequestParam(value="nickname",required=false)String nickname,
@@ -381,7 +383,7 @@ public class AcountController {
 			@RequestParam(value="createDate",required=false)Date createDate,
 			@RequestParam(value="loginDate",required=false)Date loginDate,
 			HttpSession session)  {
-		int count = acountService.countAll(spreadId,phone,nickname,minScale,maxScale,masterId,roleId,status,createDate,loginDate);
+		int count = acountService.countAll(acountId,spreadId,phone,nickname,minScale,maxScale,masterId,roleId,status,createDate,loginDate);
 		return count;
 	}
 	/**

@@ -31,25 +31,25 @@ public class DailyTaskBusiness {
    */
 	public Double dailyTrigger(int type,int nowNumber){
 		Double money=0.0;
-		//阅读资讯   0/10   20积分
+		//阅读资讯   0/10   2积分
 		if(type==1&& nowNumber>=readingInformationNumber){
-			money=20.0;
+			money=2.0;
 		}else
-		//分享资讯   0/3    50积分
+		//分享资讯   0/3    12积分
 		if(type==2&& nowNumber>=shareInformationNumber){
-			money=50.0;
+			money=12.0;
 		}else
-		//阅读推送   0/2   10积分
+		//阅读推送   0/2   2积分
 		if(type==3&& nowNumber>=readingPushNumber){
-			money=10.0;
+			money=2.0;
 		}else
-		//评论资讯   0/3   10积分
+		//评论资讯   0/3   9积分
 		if(type==4 && nowNumber>=commentInformationNumber){
-			money=10.0;
+			money=9.0;
 		}else
-		//分享朋友圈收徒  0/1  10积分
+		//分享朋友圈收徒  0/1  3积分
 		if(type==5&& nowNumber>=shareCircleRecruitApprenticeNumber){
-			money=10.0;
+			money=3.0;
 		}else{
 			money=0.0;
 		}
@@ -62,25 +62,25 @@ public class DailyTaskBusiness {
 	 */
 	public Double apprenticeNoviceTask(int frequency){
 		Double money=0.0;
-		//徒弟完成新手第一次任务师傅+40
+		//徒弟完成新手第一次任务师傅+8
 		if(frequency==1){
-			money=40.0;
+			money=8.0;
 		}else
-		//徒弟完成新手第二次任务师傅+30
+		//徒弟完成新手第二次任务师傅+10
 		if(frequency==2){
-			money=30.0;
+			money=10.0;
 		}else
-		//徒弟完成新手第三次任务师傅+40
+		//徒弟完成新手第三次任务师傅+12
 		if(frequency==3){
-			money=40.0;
+			money=12.0;
 		}else
-		//徒弟完成新手第三次任务师傅+40
+		//徒弟完成新手第三次任务师傅+14
 		if(frequency==4){
-			money=40.0;
+			money=14.0;
 		}else
-		//徒弟完成新手第三次任务师傅+50
+		//徒弟完成新手第三次任务师傅+16
 		if(frequency==5){
-			money=50.0;
+			money=16.0;
 		}else{
 			money=0.0;
 		}
@@ -93,9 +93,9 @@ public class DailyTaskBusiness {
 	 */
 	public Double qualityComment(int nowNumber){
 		Double money=0.0;
-		// 30积分 （点赞20次）
+		// 10积分 （点赞20次）
 		if(nowNumber>=clickFabulousNumber){
-			money=30.0;
+			money=10.0;
 		}else{
 			money=0.0;
 		}

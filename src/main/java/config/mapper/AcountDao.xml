@@ -228,6 +228,9 @@ from ( SELECT
     	role_id
 	FROM acount_tb
 	<where>
+	<if test="acountId!=null">
+		AND  acount_id=#{acountId}
+		</if>
 	<if test="spreadId!=null">
 		AND  spread_id=#{spreadId}
 		</if>
@@ -267,6 +270,9 @@ from ( SELECT
 	</if>
 	(SELECT ${orderName} FROM acount_tb 
 		 <where>
+		 <if test="acountId!=null">
+		AND  acount_id=#{acountId}
+		</if>
 		 <if test="spreadId!=null">
 		AND  spread_id=#{spreadId}
 		</if>
@@ -381,6 +387,9 @@ from ( SELECT
 	 	count(acount_id)
 	FROM acount_tb
 	<where>
+	<if test="acountId!=null">
+		AND  acount_id=#{acountId}
+		</if>
 	<if test="spreadId!=null">
 		AND  spread_id=#{spreadId}
 		</if>

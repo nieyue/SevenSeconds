@@ -30,5 +30,5 @@ function isProd(b){
 	}
 	return domainManager;
 }
-//var domainManager=isProd(true);//生产
-var domainManager=isProd(false);//本地
+var domainManager=isProd(true);//生产
+//var domainManager=isProd(false);//本地

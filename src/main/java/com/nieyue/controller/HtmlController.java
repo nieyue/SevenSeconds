@@ -521,7 +521,8 @@ public class HtmlController {
 	@RequestMapping(value="/getSession", method = {RequestMethod.GET,RequestMethod.POST})
 	public String getSession(
 			HttpSession session){
-		return session.getId();
+		System.out.println(session.getMaxInactiveInterval());
+		return session.getId()+"22241w3523fr";
 	}
 	
 	@Resource

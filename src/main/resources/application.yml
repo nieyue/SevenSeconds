@@ -28,7 +28,7 @@ mybatis:
     
     
 spring:
-  http:
+  http: 
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
@@ -41,8 +41,8 @@ spring:
   session:
     store-type: redis      
   profiles:
-    #active: dev
-    active: prod
+    active: dev
+    #active: prod
   rabbitmq:
     #addresses: 118.190.133.146
     addresses: 120.77.253.90

@@ -1,0 +1,76 @@
+	<div  class="comment-wrap "  >
+			<!-- <div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#ececec)" > -->
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#fff)" >
+				<div class="text-center">
+				<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+				</div>
+			</div>
+		<!-- 精品推荐 -->
+		<div style="padding:0 3%;">
+		<div style="display:inline-block;margin-bottom:1px;">
+	        <span style="font-weight:bold;font-size:1.1rem">
+	        精品推荐
+	        </span>
+	    </div>
+	    <div class="swiper-container" style="margin:auto;text-align:center;">
+		    <div class="swiper-wrapper">
+				<div  class="listGroup list-group swiper-slide" style="width:30%;display:inline-block;margin:1% 1%;" ng-repeat="recommend2Book in recommend2BookList" on-finish-render-filters  ng-click="clickBook(recommend2Book)">
+					<div  style="width:100%;">
+					<div class="media-left" style="vertical-align:middle;width:100%;padding-right:0 !important;display:inline-block;">
+						 <img class="comment-list-item-img"
+							ng-src="{{recommend2Book.imgAddress}}" >
+								<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="recommend2Book.title"></span>
+						<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+						</a> -->
+					</div> 
+					</div>
+				</div>
+		      <div class="swiper-slide"></div>
+		    </div>
+		 </div>
+		</div>			
+	    <!-- 精品推荐end -->
+	    <!--  热门推荐 -->
+		<div style="padding:0 3%;">
+		<div style="display:inline-block;margin-bottom:1px;">
+	        <span style="font-weight:bold;font-size:1.1rem">
+	        热门推荐
+	        </span>
+	    </div>
+
+		<!-- 第二列表 -->
+		<div >
+		 <!-- 广告位：七秒1 -->
+		<div  class="listGroup list-group " style="width:31%;display:inline-block;margin:1% 1% ;" ng-repeat="book in bookList" on-finish-render-filters  ng-click="clickBook(book)">
+				<!-- 谷歌广告 -->
+	<!-- <div style=" margin-bottom:1px;margin:10px 0;text-align:center;" ng-if="$index==3">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-5588246681675782"
+		     data-ad-slot="4339608720"
+		     data-ad-format="auto"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		<hr>
+		</div> -->
+		<!-- 谷歌广告 end -->	
+			<div  style="width:100%;">
+			<div class="media-left" style="vertical-align:middle;width:100%;padding-right:0 !important;display:inline-block;">
+				 <img class="comment-list-item-img"
+					ng-src="{{book.imgAddress}}" >
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="book.title"></span>
+				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				</a> -->
+			</div> 
+			</div>
+		</div>
+		</div>
+				 		
+		</div>
+	    <!-- 精品推荐end -->	
+		</div>			
+		
+		<!-- 底部 -->
+		<div style="width:100%;height:50px;"></div>

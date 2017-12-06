@@ -425,7 +425,11 @@ public class AcountController {
 			return ResultUtil.getSlefSRFailList(list);
 		}
 		Acount acount = acountService.loginAcount(adminName, MyDESutil.getMD5(password),null);
-		if(acount!=null&&!acount.equals("")){
+		if(acount.getStatus().equals(1)){
+			List<String> l1 = new ArrayList<String>();
+			l1.add("账户锁定");
+			return ResultUtil.getSlefSRFailList(l1);
+		}else if(acount!=null&&!acount.equals("")){
 			acount.setLoginDate(new Date());
 			boolean b = acountService.updateAcount(acount);
 			if(b){
@@ -441,10 +445,6 @@ public class AcountController {
 			list.add(acount);
 			return ResultUtil.getSlefSRSuccessList(list);
 			}
-		}else if(acount.getStatus().equals(1)){
-			List<String> l1 = new ArrayList<String>();
-			l1.add("账户锁定");
-			return ResultUtil.getSlefSRFailList(l1);
 		}
 		return ResultUtil.getSlefSRFailList(list);
 	}
@@ -682,17 +682,27 @@ public class AcountController {
 			acount.setScale(0.2);
 			//acount.setMasterId(bvomasterId);
 			acount.setUuid(jo.getString("unionid"));
-			if(jo.get("gender").equals("男")){
+			if(jo.get("sex")!=null&&!jo.get("sex").equals("")){
+				acount.setSex(new Integer(jo.get("sex").toString()));
+			}else if(jo.get("gender").equals("男")){
 				acount.setSex(1);
 			}else if(jo.get("gender").equals("女")){
 				acount.setSex(2);
 			}else{
 				acount.setSex(0);
 			}
-			acount.setNickname(jo.getString("name"));
+			
+			if(jo.get("nickname")!=null&&!jo.get("nickname").equals("")){
+				acount.setNickname(jo.getString("nickname"));
+			}else if(jo.get("name")!=null&&!jo.get("name").equals("")){
+				acount.setNickname(jo.getString("name"));
+			}
 			acount.setOpenid(jo.getString("openid"));
-			//acount.setIcon(jo.getString("headimgurl"));
-			acount.setIcon(jo.getString("iconurl"));
+			if(jo.get("headimgurl")!=null&&!jo.get("headimgurl").equals("")){
+				acount.setIcon(jo.getString("headimgurl"));
+			}else if(jo.get("iconurl")!=null&&!jo.get("iconurl").equals("")){
+				acount.setIcon(jo.getString("iconurl"));
+			}
 			acount.setCountry(jo.getString("country"));
 			acount.setProvince(jo.getString("province"));
 			acount.setCity(jo.getString("city"));

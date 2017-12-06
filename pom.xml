@@ -82,7 +82,8 @@
 		<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+				 <optional>true</optional>
+		</dependency> 
 		<dependency>
 		  <groupId>org.springframework.boot</groupId>
 		  <artifactId>spring-boot-starter-actuator</artifactId>
@@ -254,6 +255,7 @@
 		  <version>2.6.1</version>
 		</dependency>
 	</dependencies>
+	
 	<build>
 	<!-- <resources>
 	            <resource>
@@ -300,6 +302,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- <dependencies>
+		                <dependency>
+		                    <groupId>org.springframework</groupId>
+		                    <artifactId>springloaded</artifactId>
+		                    <version>1.2.6.RELEASE</version>
+		                </dependency>
+		            </dependencies>  -->
 				<executions>
 					<execution>
 						<goals>
@@ -316,7 +325,7 @@
 	                <encoding>UTF-8</encoding>  
 	                <compilerArguments>  
 	                    <extdirs>${project.basedir}/src/lib</extdirs>  
-	                </compilerArguments>  
+	                </compilerArguments>
 	            </configuration>  
        	    </plugin>  
 		</plugins>

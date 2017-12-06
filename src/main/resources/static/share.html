@@ -8,12 +8,32 @@
 		<meta name="description"
 			content="七秒资讯  一触即发！">
 			<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
-		<link type="text/css" rel="stylesheet" href="http://www.newzhuan.cn/resources/css/bootstrap.min.css">        
+		 <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
     <style>
         *{
             padding:0;
             margin:0;
         }
+        html,body{
+            font-size:16px;
+        	background:url("http://www.newzhuan.cn/resources/img/register_bg2.png") repeat; 
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   		 color: #fff;
+		}
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+		    color: #fff;
+		}
+		input:-ms-input-placeholder{
+		    color: #fff;
+		}
+		input::-webkit-input-placeholder{
+		    color: #fff;
+		}
+		.form-group{
+		margin-bottom:5px;
+		}
         .wrap{
             max-width:640px;
             margin: 0 auto;
@@ -32,12 +52,12 @@
          .register-form{
             position: absolute;
             left: 50%;
-            top:0;
+            top:47%;
             width: 100%;
             margin-left:-320px;
-            margin-top:62%;
             max-width:640px;
             z-index:99999;
+            
         }
         @media screen and (max-width:640px){
             .wrap{
@@ -55,54 +75,107 @@
        		.register-form{
             position: absolute;
             left: 0;
-            top:0;
+            top:47%;
             width: 100%;
             margin-left:0;
             max-width:640px;
             z-index:99999;
-        } 
+            padding-bottom:10px;
+        	} 
             }
        .background—wrap-img{
             width:100%;
             height:100%;
         }
-      
      
     </style>
 
     </head>
-    <body>
+    <body >
         <div class="wrap" >
             <div class="background—wrap">
-                <img class="background—wrap-img" src="http://img.newzhuan.cn/uploaderPath/img/20171009/1507521196264.jpg" alt="七秒资讯" />
+                <img class="background—wrap-img" src="http://www.newzhuan.cn/resources/img/register_bg.png" alt="七秒资讯" />
             </div>
             <form class="container register-form" >
-			  <div class="form-group">
-			    <input type="text" style="border:1px solid #ececec;position: static;left: 0;top:0; width: 100%;height:40px;padding-left:2rem" id="registerPhone" placeholder="手机号">
+			  <div class="form-group text-center">
+			  	<span style="display:inline-block;transform:rotate(90deg)">
+			  		<img alt=""  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	&nbsp;
+			  	</span>
+			  	&nbsp;
+			    <label style="color:#fff;font-size:1.5rem;">注册七秒资讯</label>
+			  	&nbsp;
+			  	<span style="display:inline-block;transform:rotate(90deg)">
+			  		<img alt=""  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	&nbsp;
+			  	</span>
+			  </div>
+			  <div class="form-group" style="position:relative;top:0;left:0;">
+			  	<span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:22px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_phone.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="text" style="position:absolute;top:0;left:0;border:0px solid rgba(255,255,255,0.70);position: static;left: 0;top:0; width: 100%;height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" id="registerPhone" placeholder="请输入手机号">
 			  </div>
 			  <div class="form-group">
-			    <input type="password" style="border:1px solid #ececec;position: static;left: 0;top:0; width: 100%;height:40px;padding-left:2rem" id="registerPassword" placeholder="密码">
+			  <span style="position:relative;top:0;left:0;display:inline-block;width: 60%;">
+			  	<span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:25px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_validcode.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="text" id="registerCode" style="border:0px solid rgba(255,255,255,0.70);width:100%; height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" placeholder="验证码"/>
+			  </span>
+				 <input type="button" class="button button-3d button-highlight button-rounded" style="width: 35%;height:37px;background-color:#FBE58D;color:red;padding:0;line-height:38px;float:right" id="registerCodeBtn" value="短信获取"/>
+		  </div>
+			  
+			  <div class="form-group" style="position:relative;top:0;left:0;">
+			  <span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:22px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_password.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="password" style="border:0px solid rgba(255,255,255,0.70);position: static;left: 0;top:0; width: 100%;height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" id="registerPassword" placeholder="请输入密码">
 			  </div>
-			  <div class="form-group">
-			    <input type="text" id="registerCode" style="border:1px solid #ececec;position: static;left: 0;top:0; width: 38%;height:40px;padding-left:2rem" placeholder="验证码"/>
-				<input type="button" style="border:1px solid #ececec;position: static;left: 0;top: 0; width: 60%;height:40px;" id="registerCodeBtn" value="获取验证码"/>
+			  <div class="text-center">
+			  <button type="button" onclick="registerSubmit()" class="button button-3d button-highlight button-rounded " style="width:60%;background-color:#FBE58D;color:red;">立即注册</button>
 			  </div>
-			  <button type="button" onclick="registerSubmit()" class="btn btn-danger btn-block">注册</button>
 			</form>
         </div>
-
-        
-
+<!-- 隐藏弹幕 -->
+        <div class="showDiag" style="display: none;background-color:#ccc;opacity:0.8;position:fixed;left:0;top:0;height:100%;width:100%;z-index:99999;"></div>
+	    <div class="showDiag" style="z-index:999999999;display: none;width:90%;height:40%;background-color:#fff;position:fixed;left:5%;bottom:3%;border-radius:20px;">
+	       <div style="position:absolute;top:30%;left:0;margin:auto;text-align:center;width:100%;">
+	       		  <span style="color:#FF3526;font-size:1.8rem;font-weight:bold">恭喜注册成功</span>
+	       </div>
+	       <div style="position:absolute;bottom:10%;left:0;margin:auto;text-align:center;width:100%;">
+		 <button type="button" onclick="directUrl()" class="button button-3d button-caution button-pill" style="width:60%;background-color:#FF3526;color:#fff;font-weight:bold;box-shadow:0 7px 0 #DB2528, 0 8px 3px rgba(0,0,0,0.3);font-size:14px;">下载七秒资讯</button>
+	       </div>
+        </div> 
+<!-- 隐藏弹幕 end-->
     </body>
-    <script src="http://www.newzhuan.cn/resources/js/jquery2.1.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script>
     <script src="http://www.newzhuan.cn/resources/js/base.js"></script>
     <script type="text/javascript">
     		   $("input").on("focus",function(){
+    		  //$(".background—wrap-img").css("height","auto");
+    		 // console.log(($(".wrap").css("width")).substr("px"))
+    		  console.log($(".wrap").css("width").substr(0,$(".wrap").css("width").indexOf("px"))<'640')
+    		  if($(".wrap").css("width").substr(0,$(".wrap").css("width").indexOf("px"))<'640'){
     		  $(".background—wrap-img").css("height","auto");
+     		  $(".register-form").css("top","0");
+    		  $(".register-form").css("margin-top","95%");
+    		  }
     		  });
     		  $("input").on("blur",function(){
     		  $(".background—wrap-img").css("height","100%");
+    		   $(".register-form").css("top","47%");
+    		  $(".register-form").css("margin-top","0"); 
     		  }); 
     
     				
@@ -155,7 +228,7 @@
 							clearInterval(setIntervalCode);
 							codetime=60;
 							registerCodeBtn.disabled=false;	
-							registerCodeBtn.value="获取验证码";
+							registerCodeBtn.value="短信获取";
 							return;
 						}							
 					codetime--;
@@ -217,9 +290,7 @@
 					//服务器返回响应，根据响应结果，分析是否登录成功；
 					if(data.code==200){
 					myUtils.myLoadingToast("注册成功");
-					setTimeout(function(){
-					directUrl();
-					},1000);
+					$(".showDiag").show();
 					}else{
 						myUtils.myLoadingToast("注册失败，请检查！");
 					}

@@ -1,0 +1,287 @@
+﻿
+	<div  class="comment-wrap "  >
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999999999999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#fff)" >
+<div class="text-center">
+<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+</div>
+
+			</div>
+		
+	<!-- 广告3 -->
+		<div class="listGroup list-group media comment-list-item ad3" ng-repeat="article in ad3List"    ng-click="goAd(article,$index)">
+<div class="modelWrap" style="margin-top:3%;" ng-if=" $index==11" >
+			<!-- 谷歌广告 -->
+		 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-5588246681675782"
+		     data-ad-slot="4339608720"
+		     data-ad-format="auto"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script> 
+		<!-- 谷歌广告 end -->
+</div>
+				<!-- sougou广告 -->
+	<div class="sg_adv" style=" margin-bottom:1px;margin:10px 0;text-align:center;display:none" ng-if=" $index==13">
+		<script  type="text/javascript">
+			var sogou_ad_id=916768;
+			var sogou_ad_height=200;
+			var sogou_ad_width=500;
+		</script>
+		<script type='text/javascript'  src='http://images.sohu.com/cs/jsfile/js/c.js'></script>
+
+	</div>
+	<!-- sougou end -->
+
+		<!-- wosou广告 -->
+	<div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==14">
+		<script  type="text/javascript">
+			var wososspconfig =
+			{
+			aid: "746"
+			};
+			</script>
+			<script type="text/javascript"  src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
+		</script>
+	</div>
+
+	<!--  wosou end -->	
+	<!-- 11.22 -->
+	<div style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==15">
+			<script class="iclicashAD" async="async" src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7180171"></script>
+			<script class="iclicashAD" async="async"  src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7370097"></script>
+			<!-- <script  class="iclicashAD" src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7370097"></script> -->
+	</div>
+	<!-- 11.22end -->
+		<!-- 亿玛 -->
+	<div  style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==16">
+	<script id="_gg_127331" type="text/javascript" async="async" src="http://pub.cdjgtfq.com/js/127331.js"></script>
+	<!-- <script id="_gg_127332" type="text/javascript" src="http://pub.cdjgtfq.com/js/127332.js"></script>
+	 --></div>
+	<!-- 亿玛 end -->
+			
+			<!-- 0张图片列表 -->
+			<div ng-if="article.imgList.length==0" style="width:100%;">
+			<div class="media-body comment-right-body" style="display:inline-block;width:100%;">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!--  <span style="float: left;">
+					<img style="width:10px;height:10px;"   src="http://img.newzhuan.com/uploaderPath/img/20170710/14996852163959251491845075.png"/>
+					</span> -->
+					<!-- <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button> -->
+					</div> 
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			</div>
+			<!-- 一张图片列表 -->
+			<div ng-if="article.imgList.length==1" style="width:100%;">
+			<div class="media-left" ng-if="article.imgList.length==1" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
+				 <img class="comment-list-item-img"
+					bn-lazy-src="{{article.imgList[0].imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				</a> -->
+			</div> 
+			<div class="media-body comment-right-body" style="display:inline-block;width:65%;">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!-- <button ng-if="showArticleListRule(article,$index)"  style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button> -->
+					</div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="article.imgList.length==2">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			<div class="media-body comment-right-body" style="display:block;">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!--  <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button> -->
+						</div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div> 
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="article.imgList.length==3">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img  style="width:100%"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			<div class="media-body comment-right-body" style="display:block;">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!-- <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button> -->
+					</div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			
+			</div>
+		</div>
+				 		
+		<!-- 广告3end -->
+
+
+		<!-- 第二列表 -->
+		<div  class="listGroup list-group media comment-list-item articleList"   ng-repeat="article in articleList"   ng-click="clickArticle(article,$index)">
+
+
+			<!-- 0张图片列表 -->
+			<div ng-if="article.imgList.length==0" style="width:100%;">
+			<div class="media-body comment-right-body" style="display:inline-block;width:100%;">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!--  <span style="float: left;">
+					<img style="width:10px;height:10px;"   src="http://img.newzhuan.com/uploaderPath/img/20170710/14996852163959251491845075.png"/>
+					</span> -->
+					<!-- <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					 --></div> 
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			</div>
+			<!-- 一张图片列表 -->
+			<div ng-if="article.imgList.length==1" style="width:100%;">
+			<div class="media-body comment-right-body" style="display:inline-block;width:65%;">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!-- <button ng-if="showArticleListRule(article,$index)"  style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					 --></div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			<div class="media-left" ng-if="article.imgList.length==1" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
+				 <img class="comment-list-item-img"
+					bn-lazy-src="{{article.imgList[0].imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				</a> -->
+			</div> 
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="article.imgList.length==2">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			 <div class="media-body comment-right-body" style="display:block">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <!-- <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					 -->	</div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div> 
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="article.imgList.length==3">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img  style="width:100%"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			<div class="media-body comment-right-body" style="display:block">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					<!-- <button  ng-if="showArticleListRule(article,$index)" style="float: left;border:1px solid #35caef;color:#35caef;text-align:center;border-radius:3px;padding:2px;background-color:#fff;">打开七秒资讯</button>
+					 --></div>
+				</div>
+				<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:98%;margin:auto;">
+					<span  style="float:left;" ng-bind="article.createDate | dateDiff"></span>
+					<span style="float:right;" class="newsType" >
+					<img src="/qimiao/resources/img/eye.png" style="width:0.8rem;vertical-align:top;"/>
+					<span  ng-bind="article.readingNumber"></span>
+					</span>
+				</div>
+			</div>
+			</div>
+
+		</div>
+		
+		</div>
+
+<div style="height:50px"></div>

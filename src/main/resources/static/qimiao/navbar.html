@@ -1,0 +1,10 @@
+<!-- 导航 -->
+<div style="width:100%;height:50px;background-color:#fff;position:fixed;left:0;bottom:0;border-top:1px solid #ececec;font-size:10px;">
+  <span ng-repeat="navbar in navbars" ng-click="navbarClick(navbar)" style="width:20%;display:inline-block;text-align:center;margin-top:5px;">
+  	<span style="display:inline-block;">
+  		<img ng-src="{{currentShow==$index?navbar.activeicon:navbar.icon}}" style="height:30px;"/>
+  	</span>
+  	<span ng-bind="navbar.title" ng-style="{color:(currentShow==$index)?'#000':'#ccc'}"  style="width:100%;height:20px;display:inline-block"></span>
+  </span>
+</div>	
+<!-- end导航 -->

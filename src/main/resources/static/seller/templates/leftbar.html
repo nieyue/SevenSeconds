@@ -210,6 +210,37 @@
 				</li>
 				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
 					<a href="javascript:;">
+						<span class="glyphicon glyphicon-piggy-bank"></span>
+						<span >金融管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-duplicate"></span>
+								<span >金融类型管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.financialCateList">金融类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.financialCateAdd">增加金融类型</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-piggy-bank"></span>
+								<span >金融管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.financialList">金融列表</a></li>
+								<li><a class="text-center" ui-sref="main.financialAdd">增加金融</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
 						<span class="glyphicon glyphicon-asterisk"></span>
 						<span >展示管理 </span>
 						<span class="glyphicon arrow"></span>

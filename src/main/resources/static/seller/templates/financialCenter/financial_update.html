@@ -1,0 +1,146 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.financialList">返回金融列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">修改金融</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myUpdateFinancialForm" ng-submit="updateFinancialForm()">
+        <label  class="text-danger">※金融类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="financial.financialCateId" name="financialCateId"
+    ng-options="financialCate.financialCateId as financialCate.name for financialCate in financialCateList;">
+  </select>
+  </div>
+    <label  class="text-danger">※金融名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="financial.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.title.$dirty && myUpdateFinancialForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确金融标题
+				    </div>
+  </div>
+    <label  class="text-danger">※金融期限</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="financial.term" name="term" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.term.$dirty && myUpdateFinancialForm.term.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确金融期限
+				    </div>
+  </div>
+  <label class="text-danger" >※推荐类型</label>
+  <div class="comment-input-margin " >
+     <select style="width:180px;height:50px;" ng-model="financial.recommend" name="recommend"
+     ng-options="sa.id as sa.value for sa in financialRecommend">
+  </select>
+  </div>
+  
+   <label  class="text-danger">※金融图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=150">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=40">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>
+    <input type="file" class="comment-input"   id="financialImgFileUpload">
+  <div  style="display: inline-block;position: relative;" ng-mouseenter="delFinancialImgBtn=true">
+  <img   ng-src="{{financial.imgAddress||''}}"/>
+  </div>
+  </div>
+  
+   <label class="text-danger" >※攻略</label>
+  <div class="comment-input-margin " >
+    <textarea type="text" class="comment-input" ng-trim=false style="width:100%;height:200px;"  required name="strategy"
+     ng-model="financial.strategy" required ng-minlength="1" ng-maxlength="65535" placeholder="65535位"  placeholder="1-65535位" ></textarea>
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.strategy.$dirty && myUpdateFinancialForm.strategy.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-65535位
+	</div>
+  </div>
+ 
+ <label class="text-danger" >※平台年化(%)</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="annualTransformation"
+     ng-model="financial.annualTransformation" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.annualTransformation.$dirty && myUpdateFinancialForm.annualTransformation.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+ <label class="text-danger" >※网加息(%)</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="netAddInterest"
+     ng-model="financial.netAddInterest" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.netAddInterest.$dirty && myUpdateFinancialForm.netAddInterest.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+ <label class="text-danger" >※综合年化(%)</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="comprehensiveAnnualTransformation"
+     ng-model="financial.comprehensiveAnnualTransformation" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.comprehensiveAnnualTransformation.$dirty && myUpdateFinancialForm.comprehensiveAnnualTransformation.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+ <label class="text-danger" >※项目总额</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="projectTotalMoney"
+     ng-model="financial.projectTotalMoney" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.projectTotalMoney.$dirty && myUpdateFinancialForm.projectTotalMoney.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+ <label class="text-danger" >※投资限额</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="investmentMoney"
+     ng-model="financial.investmentMoney" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.investmentMoney.$dirty && myUpdateFinancialForm.investmentMoney.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+ <label class="text-danger" >※起投金额</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="startInvestmentMoney"
+     ng-model="financial.startInvestmentMoney" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.startInvestmentMoney.$dirty && myUpdateFinancialForm.startInvestmentMoney.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label  class="text-danger">※计息方式</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="financial.interestMethod" name="interestMethod" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.interestMethod.$dirty && myUpdateFinancialForm.interestMethod.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确计息方式
+				    </div>
+  </div>
+   <label  class="text-danger">※还款方式</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="financial.repaymentMethod" name="repaymentMethod" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.repaymentMethod.$dirty && myUpdateFinancialForm.repaymentMethod.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确还款方式
+				    </div>
+  </div>
+  
+    <label  class="text-danger">跳转url</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="financial.redirectUrl" name="redirectUrl"  
+    ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
+   placeholder="http://或https://">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateFinancialForm.redirectUrl.$dirty && myUpdateFinancialForm.redirectUrl.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确跳转url
+				    </div>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="financial.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateFinancialForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

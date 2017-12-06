@@ -658,6 +658,7 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
 				//$scope.showStatus=1;
 			};
 			$scope.orderMerStatus=[
+				{id:-1,value:'全部'},
 				{id:0,value:'已下单-未支付'},
 				{id:1,value:'已支付-未发货'},
 				{id:2,value:'已发货-未完成'},
@@ -740,12 +741,16 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
              */
             $scope.downloadMerOrderForm=function(){
             	//location.href=requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.download.id;
+            	var url=requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000";
+            	if($scope.search.status!=-1){
+            		url+="&status="+$scope.search.status;
+            	}
             	myUtils.myPrevToast("加载中",function(){
             	var form=$("<form>");//定义一个form表单  
                  form.attr("style","display:none");  
                  form.attr("target","");  
                  form.attr("method","post");  
-                 form.attr("action",requestDomainUrl+"/merOrder/downloadXls?pageSize=1000000000&status="+$scope.search.status);  
+                 form.attr("action",url);  
                  var input1=$("<input>");  
                  input1.attr("type","hidden");  
                  //input1.attr("name","exportData");  

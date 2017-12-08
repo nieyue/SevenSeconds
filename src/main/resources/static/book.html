@@ -12,7 +12,7 @@
 	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
   <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <!--  <link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
- --><link href="http://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
+ --><link href="https://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
 <style type="text/css">
 
 #newsDeatilsBody *{
@@ -157,7 +157,7 @@ max-width:100% !important;
  	 <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
  	 -->
  	<script src="/resources/js/domainManager.js"></script> 
-	<script  src="http://www.newzhuan.cn/resources/js/base.js"></script>
+	<script  src="https://www.newzhuan.cn/resources/js/base.js"></script>
 	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
 
 	<script>
@@ -196,6 +196,7 @@ max-width:100% !important;
 					}); 
     	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
     	$scope.wapName="小说";
+    	$scope.protocol=location.protocol+"//";//协议
     	$scope.originDomain=domainManager.BookStore;
     	$scope.bookChapterStartNumber=myUtils.GetQueryString("startNumber")||1;//默认开始章节
     	$scope.bookChapterEndNumber=myUtils.GetQueryString("endNumber")||1;//默认结束章节
@@ -205,7 +206,7 @@ max-width:100% !important;
     			function initJsAdList(){
     			$.ajax({  
     		          type : "get",  
-    		          url : "http://"+$scope.originDomain+"/jsAd/list",  
+    		          url : $scope.protocol+$scope.originDomain+"/jsAd/list",  
     		          async : false,  
     		          success : function(data){
     		          if(data&& data.code==200){
@@ -229,7 +230,7 @@ max-width:100% !important;
   		          //加载小说 
     			$.ajax({  
   		          type : "get",  
-  		          url : "http://"+$scope.originDomain+"/bookChapter/listAll?bookId="+bookId+"&startNumber="+startNumber+"&endNumber="+endNumber,  
+  		          url : $scope.protocol+$scope.originDomain+"/bookChapter/listAll?bookId="+bookId+"&startNumber="+startNumber+"&endNumber="+endNumber,  
   		         // url : "/school/"+id,  
   		          async : false,  
   		          success : function(data){
@@ -260,7 +261,7 @@ max-width:100% !important;
             	}
             		$.ajax({  
   		          type : "post",  
-  		          url : "http://"+$scope.originDomain+"/book/webRead", 
+  		          url : $scope.protocol+$scope.originDomain+"/book/webRead", 
   		          data:{
   		          bookId:bookId,
   		          acountId:tgAcountId,
@@ -308,11 +309,11 @@ max-width:100% !important;
     		//是否存在
     		$.ajax({  
   		          type : "post",  
-  		          url : "http://"+$scope.originDomain+"/bookChapter/count?bookId="+myUtils.GetQueryString("bookId")+"&number="+$scope.bookChapterStartNumber, 
+  		          url : $scope.protocol+$scope.originDomain+"/bookChapter/count?bookId="+myUtils.GetQueryString("bookId")+"&number="+$scope.bookChapterStartNumber, 
   		          success : function(data){
   		          if(data>=1){
     		console.log($scope.bookChapterEndNumber)
-    		location.href="http://"+location.host+"/book.html?bookId="+myUtils.GetQueryString("bookId")+"&startNumber="+$scope.bookChapterStartNumber+"&endNumber="+$scope.bookChapterEndNumber;
+    		location.href=$scope.protocol+location.host+"/book.html?bookId="+myUtils.GetQueryString("bookId")+"&startNumber="+$scope.bookChapterStartNumber+"&endNumber="+$scope.bookChapterEndNumber;
   		          }else{
   		          //复原
   		          $scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)-t;
@@ -335,7 +336,7 @@ max-width:100% !important;
     			function initDataList(a){
     			$.ajax({  
     		          type : "get",  
-    		          url : "http://"+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          url : $scope.protocol+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
     		          async : false,  
     		          success : function(data){
     		          if(data.list.length<=0){
@@ -376,7 +377,7 @@ max-width:100% !important;
     			$scope.pageNum=$scope.pageNum+$scope.pageSize;
     			$scope.pageSize=$scope.pageSize;
     			myUtils.myFootLoadingToast("relative",null,function(){
-    			var gurl="http://"+$scope.originDomain+"/book/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			var gurl=$scope.protocol+$scope.originDomain+"/book/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
     			$.ajax({  
   		          type : "get",
   		          timeout: 3000,
@@ -391,7 +392,6 @@ max-width:100% !important;
          		 }
   				},
   		          success : function(data){
-  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
   		        	 if(data.list.length<=0){
   		        	 $scope.noMore=true;
   		        	 $scope.$apply();
@@ -421,7 +421,7 @@ max-width:100% !important;
     		//跳转页面
     		$scope.goRedirectUrl=function(bookId){
     			//跳回book.html
-    			url="http://"+location.host+"/book.html?bookId="+bookId+"&acountId=1000";
+    			url=$scope.protocol+location.host+"/book.html?bookId="+bookId+"&acountId=1000";
     			location.replace(url);
     		};
 		//打开App或小说

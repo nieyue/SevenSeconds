@@ -10,7 +10,7 @@ function isProd(b){
 		ConvertMall:'mall.newzhuan.cn',	
 		ActivityCenter:'activity.newzhuan.cn',
 		AppCenter:'app.newzhuan.cn',
-		FinancialCenter:'financial.newzhuan.cn',
+		FinancialCenter:'fin.newzhuan.cn',
 		ScheduleJob:'task.newzhuan.cn',	
 		Push:'push.newzhuan.cn',	
 		MyWangEditor:'img.newzhuan.cn',	
@@ -33,6 +33,6 @@ function isProd(b){
 	}
 	return domainManager;
 }
-//window.domainManager=isProd(true);//生产
-window.domainManager=isProd(false);//本地
+window.domainManager=isProd(true);//生产
+//window.domainManager=isProd(false);//本地
 })(window);

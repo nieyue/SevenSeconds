@@ -4,7 +4,8 @@
 //初始化书籍频道1经典必玩，2热门推荐，3，最热必玩
 mainApp.value('appTypes',[
 	{id:1,value:'最热必玩'},
-	{id:2,value:'热门推荐'}
+	{id:2,value:'热门推荐'},
+	{id:3,value:'H5专栏'}
 	]);
 mainApp.config(function ($stateProvider, $urlRouterProvider) {
 	var requestDomainUrl="http://"+domainManager.AppCenter;//请求数据url

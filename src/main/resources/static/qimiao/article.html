@@ -85,8 +85,8 @@
 			</div>
 			</div>
 			<!-- 一张图片列表 -->
-			<div ng-if="article.imgList.length==1" style="width:100%;">
-			<div class="media-left" ng-if="article.imgList.length==1" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
+			<div ng-if="article.imgList.length==1||article.imgList.length==2" style="width:100%;">
+			<div class="media-left"  style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
 				 <img class="comment-list-item-img"
 					bn-lazy-src="{{article.imgList[0].imgAddress}}" >
 					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
@@ -112,7 +112,7 @@
 			</div>
 			</div>
 			<!-- 两张图片列表 -->
-			<div ng-if="article.imgList.length==2">
+			<div ng-if="article.imgList.length==8">
 					<div class="comment-right-body-title">
 						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					</div>
@@ -199,7 +199,7 @@
 			</div>
 			</div>
 			<!-- 一张图片列表 -->
-			<div ng-if="article.imgList.length==1" style="width:100%;">
+			<div ng-if="article.imgList.length==1||article.imgList.length==2" style="width:100%;">
 			<div class="media-body comment-right-body" style="display:inline-block;width:65%;">
 				<div class="pull-left">
 					<div class="comment-right-body-title">
@@ -217,7 +217,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="media-left" ng-if="article.imgList.length==1" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
+			<div class="media-left"  style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
 				 <img class="comment-list-item-img"
 					bn-lazy-src="{{article.imgList[0].imgAddress}}" >
 					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
@@ -226,7 +226,7 @@
 			</div> 
 			</div>
 			<!-- 两张图片列表 -->
-			<div ng-if="article.imgList.length==2">
+			<div ng-if="article.imgList.length==8">
 					<div class="comment-right-body-title">
 						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 					</div>

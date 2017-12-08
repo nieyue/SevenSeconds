@@ -28,6 +28,7 @@ display:inline-block;
 }
 .comment-hot-title-icon{
 padding:2% 2% 2% 10%;
+width:5rem;
 
 }
 .comment-hot-title-title{
@@ -56,7 +57,7 @@ padding:2%;
 </style>
 	<div class="comment-list" ng-repeat="financial in financialList" ng-click="financialClick(financial)">
 		<div class="comment-hot-title row" >
-			<span class="comment-hot-title-icon col-xs-4">
+			<span class="comment-hot-title-icon col-xs-4" >
 				<img style="width:100%;" alt="" ng-src="{{financial.imgAddress||'http://www.jinrongchaoshi.com/upload/image/31/2017-12-01/5a2113adcc57e.png'}}">
 			</span>
 			<span class="comment-hot-title-title col-xs-5" style="color:#333333;float:inherit;font-size:0.8rem;" ng-bind="financial.title"></span>

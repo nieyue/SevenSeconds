@@ -14,7 +14,11 @@
 	<link href="https://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
 </head>
    <body >
-  	<div ui-view></div>
+  	<div ui-view style="max-width:640px;margin:auto;"></div>
+  	<!-- 七秒网站cnzz -->
+  	<div style="display:none;">
+  	<script src="https://s95.cnzz.com/z_stat.php?id=1260946323&web_id=1260946323" language="JavaScript"></script>
+  	</div>
 		<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 		<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
@@ -61,7 +65,7 @@
                     {"title":"金融","target":"main.financial","activeicon":$scope.baseiconurl+'/financial_active.png','icon':$scope.baseiconurl+'/financial.png'},
                     {"title":"小游戏","target":"main.app","activeicon":$scope.baseiconurl+'/app_active.png','icon':$scope.baseiconurl+'/app.png'},
                     {"title":"小说","target":"main.book","activeicon":$scope.baseiconurl+'/book_active.png','icon':$scope.baseiconurl+'/book.png'},
-                    {"title":"推广","target":"main.ad","activeicon":$scope.baseiconurl+'/ad_active.png','icon':$scope.baseiconurl+'/ad.png'},
+                    {"title":"精彩","target":"main.ad","activeicon":$scope.baseiconurl+'/ad_active.png','icon':$scope.baseiconurl+'/ad.png'},
                     ];
    		});
        mainApp.config(function ($stateProvider, $urlRouterProvider) {
@@ -340,6 +344,8 @@
                     controller:function($rootScope,$scope,$state){
                     console.log("financial")
                     $rootScope.currentShow=1;
+                     location.href="http://loanmarket.knightflower.com/loanMarket/regist.html?market_id=1065&agent=1066";
+                    return;
                       	$scope.protocol=location.protocol+"//";//协议
     				//$scope.originDomain="192.168.11.111:8085";
     				$scope.originDomain=domainManager.FinancialCenter; 	
@@ -458,7 +464,7 @@
     		$scope.status="1";//初始化状态
     		$scope.type=1;//默认1，最热必玩
     		
-    		//recommend 版面类型，1最热必玩，2热门推荐，
+    		//recommend 版面类型，1最热必玩，2热门推荐，3H5专栏
     			$scope.initTypeDataList({
     			pageNum:$scope.pageNum,
     			pageSize:$scope.pageSize,
@@ -467,8 +473,8 @@
     			orderName:"create_date",
     			orderWay:"desc"
     			});
-    			$scope.type=2;
-    		//recommend 版面类型，1最热必玩，2热门推荐，
+    			$scope.type=3;
+    		//recommend 版面类型，1最热必玩，2热门推荐，3H5专栏
     			$scope.initTypeDataList({
     			pageNum:$scope.pageNum,
     			pageSize:$scope.pageSize,

@@ -398,10 +398,10 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		$scope.article={
             		acountId:$state.params.acountId||1000,
             		content:'',
-            		unitPrice:20,
-            		totalPrice:20000000,
-            		totalPrice:20000000,
-            		userUnitPrice:2,
+            		unitPrice:2000,
+            		totalPrice:2000000000,
+            		totalPrice:2000000000,
+            		userUnitPrice:200,
             		isRecommend:0,
             		fixedRecommend:0,
             		model:'2',//默认2ip计费
@@ -493,12 +493,12 @@ mainApp.config(function ($stateProvider, $urlRouterProvider) {
             		};
                      //表单提交
                     $scope.addArticleForm=function(){
-                    if(parseFloat($scope.article.unitPrice)<0.2){
-                    return myUtils.myLoadingToast("单价最低为0.2元");
+                    if(parseFloat($scope.article.unitPrice)<20){
+                    return myUtils.myLoadingToast("单价最低为20元");
                     return ;
                     }
-                    if(parseFloat($scope.article.totalPrice)<2000){
-                    return myUtils.myLoadingToast("总价最低为2000元");
+                    if(parseFloat($scope.article.totalPrice)<200000){
+                    return myUtils.myLoadingToast("总价最低为200000元");
                     return ;
                     }
                     $scope.article.content =editor.$txt.html();

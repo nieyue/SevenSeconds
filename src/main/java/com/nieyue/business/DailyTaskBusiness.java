@@ -12,17 +12,22 @@ public class DailyTaskBusiness {
 	//阅读资讯
 	private  int readingInformationNumber=10;
 	//分享资讯
-	private  int shareInformationNumber=3;
+	private  int shareInformationNumber=1;
 	//阅读推送
-	private  int readingPushNumber=2;
+	//private  int readingPushNumber=2;
 	//评论资讯 
-	private  int commentInformationNumber=3;
+	//private  int commentInformationNumber=3;
 	//分享朋友圈收徒
 	private  int shareCircleRecruitApprenticeNumber=1;
+	//分享微信群收徒
+	private  int shareWechatGroupApprenticeNumber=1;
 	//点赞
-	private  int clickFabulousNumber=20;
+	//private  int clickFabulousNumber=20;
 	//转发推广文章  有效阅读
-	private  int effectiveReadingNumber=3;
+	//private  int effectiveReadingNumber=3;
+	//红包抽奖赚多多
+	private  int redBagLotteryNumber=1;
+	
   /**
    * 每日触发日常
    * @param type 任务类型
@@ -31,56 +36,64 @@ public class DailyTaskBusiness {
    */
 	public Double dailyTrigger(int type,int nowNumber){
 		Double money=0.0;
-		//阅读资讯   0/10   2积分
-		if(type==1&& nowNumber>=readingInformationNumber){
-			money=2.0;
+		// 1.新闻分享   0/1        30积分
+		if(type==1&& nowNumber>=shareInformationNumber){
+			money=30.0;
 		}else
-		//分享资讯   0/3    12积分
-		if(type==2&& nowNumber>=shareInformationNumber){
-			money=12.0;
+		//2.阅读资讯   0/10        100积分
+		if(type==2&& nowNumber>=readingInformationNumber){
+			money=100.0;
 		}else
-		//阅读推送   0/2   2积分
-		if(type==3&& nowNumber>=readingPushNumber){
-			money=2.0;
+		//3.分享朋友圈收徒  0/1     100积分
+		if(type==3&& nowNumber>=shareCircleRecruitApprenticeNumber){
+			money=100.0;
 		}else
-		//评论资讯   0/3   9积分
-		if(type==4 && nowNumber>=commentInformationNumber){
-			money=9.0;
+		// 4.分享到微信群收徒  0/1    100积分
+		if(type==4 && nowNumber>=shareWechatGroupApprenticeNumber){
+			money=100.0;
 		}else
-		//分享朋友圈收徒  0/1  3积分
-		if(type==5&& nowNumber>=shareCircleRecruitApprenticeNumber){
-			money=3.0;
+		// 5.红包抽奖赚多多   0/1     500积分
+		if(type==5 && nowNumber>=redBagLotteryNumber){
+			money=500.0;
 		}else{
 			money=0.0;
 		}
 		return money;
 	}
 	/**
-	 * 徒弟回馈师傅积分
+	 * 徒弟回馈师傅积分 徒弟每天获得200积分奖励
 	 * @param frequency 第几次
 	 * @return money 积分
 	 */
 	public Double apprenticeNoviceTask(int frequency){
 		Double money=0.0;
-		//徒弟完成新手第一次任务师傅+8
+		//1.5000
 		if(frequency==1){
-			money=8.0;
+			money=5000.0;
 		}else
-		//徒弟完成新手第二次任务师傅+10
+		//2.4000
 		if(frequency==2){
-			money=10.0;
+			money=4000.0;
 		}else
-		//徒弟完成新手第三次任务师傅+12
+		//3.3000
 		if(frequency==3){
-			money=12.0;
+			money=3000.0;
 		}else
-		//徒弟完成新手第三次任务师傅+14
+		//3.3000
 		if(frequency==4){
-			money=14.0;
+			money=3000.0;
 		}else
-		//徒弟完成新手第三次任务师傅+16
+		//5.3000
 		if(frequency==5){
-			money=16.0;
+			money=3000.0;
+		}else
+		//6.4000
+		if(frequency==6){
+			money=4000.0;
+		}else
+		//7.5000
+		if(frequency==7){
+			money=5000.0;
 		}else{
 			money=0.0;
 		}
@@ -91,7 +104,7 @@ public class DailyTaskBusiness {
 	 * @param nowNumber 点赞次数
 	 * @return money 积分
 	 */
-	public Double qualityComment(int nowNumber){
+/*	public Double qualityComment(int nowNumber){
 		Double money=0.0;
 		// 10积分 （点赞20次）
 		if(nowNumber>=clickFabulousNumber){
@@ -100,13 +113,13 @@ public class DailyTaskBusiness {
 			money=0.0;
 		}
 		return money;
-	}
+	}*/
 	/**
 	 * 转发推广文章
 	 * @param nowNumber 点赞次数
 	 * @return money 积分
 	 */
-	public Double forwardingPromotionArticle(int nowNumber){
+/*	public Double forwardingPromotionArticle(int nowNumber){
 		Double money=0.0;
 		// 10积分（获得3个有效阅读）
 		if(nowNumber>=effectiveReadingNumber){
@@ -115,6 +128,6 @@ public class DailyTaskBusiness {
 			money=0.0;
 		}
 		return money;
-	}
+	}*/
 	
 }

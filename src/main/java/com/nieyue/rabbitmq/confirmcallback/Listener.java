@@ -34,6 +34,7 @@ import com.nieyue.bean.Sign;
 import com.nieyue.business.ArticleBusiness;
 import com.nieyue.business.DailyTaskBusiness;
 import com.nieyue.business.NoviceTaskBusiness;
+import com.nieyue.business.SignBusiness;
 import com.nieyue.service.AcountService;
 import com.nieyue.service.ArticleCateService;
 import com.nieyue.service.ArticleService;
@@ -80,6 +81,8 @@ public class Listener {
 	private DailyTaskBusiness dailyTaskBusiness;
 	@Resource
 	private NoviceTaskBusiness noviceTaskBusiness;
+	@Resource
+	private SignBusiness signBusiness;
 	@Resource
 	private NoviceTaskService noviceTaskService;
 	@Resource
@@ -267,6 +270,11 @@ public class Listener {
 	        	   */
 	        	   //当前文章
 	        	   Article article = articleService.loadSmallArticle(dataRabbitmqDTO.getArticleId());
+	        	   //阅读不能大于ip
+	        	   if(article.getReadingNumber()>=article.getIps()){
+	        		   channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+	           			return;
+	        	   }
 	       			//不是同一天则，不计费
 	        	   if( !DateUtil.isSameDate(article.getCreateDate(), new Date())){
 	        		   //如果文章超过15天，则不计费
@@ -522,7 +530,7 @@ public class Listener {
 		        		   tgflowWater.setMoney(readingArticleMoney);
 		        		   tgflowWater.setRealMoney(0.0);
 		        		   tgflowWater.setType(3);//3达人奖励
-		        		   tgflowWater.setSubtype(7);//转发推广文章  
+		        		   tgflowWater.setSubtype(8);//转发推广文章  
 		        		   flowWaterService.addFlowWater(tgflowWater);
 		        		   //自身总收益增加
 		        		   tgFinance.setSelfProfit(tgFinance.getSelfProfit()+readingArticleMoney);
@@ -713,15 +721,15 @@ public class Listener {
 			    			FlowWater flowWater = new FlowWater();
 			    			flowWater.setAcountId(sign.getAcountId());
 			    			flowWater.setCreateDate(new Date());
-			    			flowWater.setMoney(sign.getLevel()*2.0);
+			    			flowWater.setMoney(signBusiness.signTrigger(sign.getLevel()));
 			    			flowWater.setRealMoney(0.0);
 			    			flowWater.setType(7);//7，签到
 			    			flowWater.setSubtype(1);
 			    			flowWaterService.addFlowWater(flowWater);
 			    			//自身总收益增加
-			    			selfFinance.setSelfProfit(selfFinance.getSelfProfit()+sign.getLevel()*2.0);
+			    			selfFinance.setSelfProfit(selfFinance.getSelfProfit()+signBusiness.signTrigger(sign.getLevel()));
 			    			//余额=增加
-			    			selfFinance.setMoney(selfFinance.getMoney()+sign.getLevel()*2.0);
+			    			selfFinance.setMoney(selfFinance.getMoney()+signBusiness.signTrigger(sign.getLevel()));
 			    			financeService.updateFinance(selfFinance);
 			    			
 			    		}
@@ -769,7 +777,7 @@ public class Listener {
 		        	   financeService.updateFinance(selfFinance);
 		        	   
 		        	   //如果为新手任务0收徒 或者非新手任务，则没有达人奖励。
-		        	   if(noviceTask.getFrequency()<=0||noviceTask.getFrequency()>5){
+		        	   if(noviceTask.getFrequency()<=0||noviceTask.getFrequency()>4){
 		        		   channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 		        		   return;
 		        	   }

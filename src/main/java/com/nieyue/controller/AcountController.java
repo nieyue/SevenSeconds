@@ -341,6 +341,85 @@ public class AcountController {
 			return ResultUtil.getSR(um);
 	}
 	/**
+	 * 绑定手机号
+	 * @return 
+	 */
+	@RequestMapping(value = "/bindPhone", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResult bindPhone(
+			@RequestParam("acountId") Integer acountId,
+			@RequestParam("phone") String phone,
+			@RequestParam("password") String password,
+			HttpSession session) {
+		boolean am=false;
+		//账户已经存在
+		if(acountService.loginAcount(phone, null,null)!=null ){
+			return ResultUtil.getSR(am);
+		}
+		Acount a = acountService.loadAcount(acountId);
+		if(a!=null && (a.getPhone()==null||a.getPhone().equals(""))){
+			a.setPhone(phone);
+			a.setPassword(MyDESutil.getMD5(password));
+			am = acountService.addAcount(a);
+		}
+		return ResultUtil.getSR(am);
+	}
+	/**
+	 * 绑定微信
+	 * @return 
+	 */
+	@RequestMapping(value = "/bindWechat", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResultList bindWechat(
+			@RequestParam("acountId") Integer acountId,
+			@RequestParam("wxinfo") String wxinfo,
+			HttpSession session) {
+		List<Object> list = new ArrayList<Object>();
+		if(wxinfo==null||wxinfo.equals("")){
+			return ResultUtil.getSlefSRFailList(list);
+		}
+		JSONObject jo = JSONObject.fromObject(wxinfo);
+		String uuid = jo.getString("unionid");
+		Acount a = acountService.weixinBaseAcountLogin(uuid);
+	if(a==null ||a.equals("")){
+		Acount acount = acountService.loadAcount(acountId);
+		if(acount!=null&&acount.getUuid()!=null&&!acount.getUuid().equals("")){
+			return ResultUtil.getSlefSRFailList(list);
+		}
+		acount.setUuid(jo.getString("unionid"));
+		if(jo.get("sex")!=null&&!jo.get("sex").equals("")){
+			acount.setSex(new Integer(jo.get("sex").toString()));
+		}else if(jo.get("gender").equals("男")){
+			acount.setSex(1);
+		}else if(jo.get("gender").equals("女")){
+			acount.setSex(2);
+		}else{
+			acount.setSex(0);
+		}
+		
+		if(jo.get("nickname")!=null&&!jo.get("nickname").equals("")){
+			acount.setNickname(jo.getString("nickname"));
+		}else if(jo.get("name")!=null&&!jo.get("name").equals("")){
+			acount.setNickname(jo.getString("name"));
+		}
+		acount.setOpenid(jo.getString("openid"));
+		if(jo.get("headimgurl")!=null&&!jo.get("headimgurl").equals("")){
+			acount.setIcon(jo.getString("headimgurl"));
+		}else if(jo.get("iconurl")!=null&&!jo.get("iconurl").equals("")){
+			acount.setIcon(jo.getString("iconurl"));
+		}
+		acount.setCountry(jo.getString("country"));
+		acount.setProvince(jo.getString("province"));
+		acount.setCity(jo.getString("city"));
+		boolean b = acountService.updateAcount(acount);
+		if(b){
+		session.setAttribute("acount", acount);
+		list.add(acount);
+		return ResultUtil.getSlefSRSuccessList(list);
+		}
+	}
+	return ResultUtil.getSlefSRFailList(list);
+	
+	}
+	/**
 	 * 账户增加
 	 * @return 
 	 */
@@ -589,7 +668,7 @@ public class AcountController {
 				//System.out.println(f.get(0).toString());
 				session.setAttribute("finance", f.get(0));
 				list.add(acount);
-				//新手任务，获得一名徒弟  +350积分（这个任务为达成条件任务，无需排序）
+				//新手任务，获得一名徒弟  +20000积分（这个任务为达成条件任务，无需排序）
 				if(masterId!=null&&!masterId.equals("")){
 					int count = noviceTaskService.countAll(null, masterId, 0);
 					if(count==0){//第一次才能有

@@ -200,7 +200,7 @@ public class CommentController {
 		if(newsize>oldsize){
 			comment.setPointNumber(comment.getPointNumber()+1);
 			commentService.updateComment(comment);
-			if(comment.getPointNumber()==20){//优质评论        30积分（点赞20个）
+			/*if(comment.getPointNumber()==20){//优质评论        30积分（点赞20个）
 				List<Finance> financelist = financeService.browsePagingFinance(null,comment.getAcountId(), 1, 1, "finance_id", "asc");
 	        	Finance selfFinance = financelist.get(0);
         	   //记录流水，阅读文章收益
@@ -216,7 +216,7 @@ public class CommentController {
         	   //余额=增加
         	   selfFinance.setMoney(selfFinance.getMoney()+dailyTaskBusiness.qualityComment(comment.getPointNumber()));
         	   financeService.updateFinance(selfFinance);
-			}
+			}*/
 			json.put("isPoint", 1);
 		}else{
 			json.put("isPoint", 0);

@@ -16,29 +16,25 @@ public class NoviceTaskBusiness {
    */
 	public Double disposableTrigger(int frequency){
 		Double money=0.0;
-		//第一次：阅读3篇文章  +28积分
+		//1.绑定手机号+2000积分  
 		if(frequency==1){
-			money=28.0;
+			money=2000.0;
 		}else
-		//第二次：阅读3篇文章；转发一篇文章  +68积分
+		//2.绑定微信+2000积分
 		if(frequency==2){
-			money=68.0;
+			money=2000.0;
 		}else
-		//第三次：阅读3篇文章；分享至朋友圈收徒  +28积分
+		//3.阅读资讯1分钟+2000积分
 		if(frequency==3){
-			money=28.0;
+			money=2000.0;
 		}else
-		//第四次：阅读3篇文章；评论3篇文章  +68积分
+		//4.观看视频1分钟+2000积分（延后开放）
 		if(frequency==4){
-			money=68.0;
+			money=2000.0;
 		}else
-		//第五次：阅读5篇文章  +88积分
-		if(frequency==5){
-			money=88.0;
-		}else
-		//第零次: 获得一名徒弟  +108积分（这个任务为达成条件任务，无需排序）
+		//0.首次收徒+20000积分
 		if(frequency==0){
-			money=108.0;
+			money=20000.0;
 		}else{
 			money=0.0;
 		}

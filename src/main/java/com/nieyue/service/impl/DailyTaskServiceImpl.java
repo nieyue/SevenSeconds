@@ -45,16 +45,12 @@ public class DailyTaskServiceImpl implements DailyTaskService{
 			totalMoney+=dt.getMoney();
 		}
 		//今日任务已经全部完成过
-		if(nl.size()==5 && totalNum==19 && totalMoney==500){
+		if(nl.size()==5 && totalNum==14 && totalMoney==830){
 		return b;	
 		}
 		}
 		dailyTask.setMoney(dailyTaskBusiness.dailyTrigger(type, fre));
 		b = dailyTaskDao.addDailyTask(dailyTask);
-		//今日任务全部完成
-		if(b && nl.size()==4 && totalNum>=9 && totalMoney>=250){
-			//另外加100积分
-		}
 		return b;
 	}
 	@Transactional(propagation=Propagation.REQUIRED)

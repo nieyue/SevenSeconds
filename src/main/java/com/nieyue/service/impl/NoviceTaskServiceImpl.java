@@ -35,7 +35,7 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 		if(nl.size()>0){
 			return b;
 		}
-		//获取每天做的任务
+		/*//获取每天做的任务
 		List<NoviceTask> daynl = noviceTaskDao.browsePagingNoviceTask(new Date(), noviceTask.getAcountId(),null, 0, Integer.MAX_VALUE, "create_date", "desc");
 		//今日已经做过做过了，且不是收徒（控制除开收徒外，每天只能做一次新手任务） 
 		if(daynl.size()>0){
@@ -44,7 +44,7 @@ public class NoviceTaskServiceImpl implements NoviceTaskService{
 				return b;
 			}
 		}
-		}
+		}*/
 		noviceTask.setMoney(noviceTaskBusiness.disposableTrigger(fre));
 		b = noviceTaskDao.addNoviceTask(noviceTask);
 		return b;

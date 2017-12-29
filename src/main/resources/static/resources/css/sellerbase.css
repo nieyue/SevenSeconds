@@ -79,6 +79,8 @@ th{
 }
 td{
 	background-color:#000ff  !important;
+	word-wrap:break-word;
+	word-break:keep-all;
 }
 /**
 **修改模态框位置

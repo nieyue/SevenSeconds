@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -32,11 +33,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nieyue.bean.Acount;
 import com.nieyue.bean.Article;
+import com.nieyue.bean.Finance;
+import com.nieyue.bean.FlowWater;
 import com.nieyue.comments.RequestToMethdoItemUtils;
 import com.nieyue.comments.RequestToMethodItem;
 import com.nieyue.limit.RequestLimit;
 import com.nieyue.sensitive.SensitivewordRedisFilter;
 import com.nieyue.service.ArticleService;
+import com.nieyue.service.FinanceService;
+import com.nieyue.service.FlowWaterService;
 import com.nieyue.util.HttpClientUtil;
 import com.nieyue.util.MyDESutil;
 import com.nieyue.util.MyPugin;
@@ -65,12 +70,47 @@ public class HtmlController {
 	VerificationCode verificationCode;
 	@Resource
 	ArticleService articleService;
+	@Resource
+	FinanceService financeService;
+	@Resource
+	FlowWaterService flowWaterService;
 	@Value("${myPugin.projectName}")
 	String projectName;
 	@Value("${myPugin.pushStoreDomainUrl}")
 	String pushStoreDomainUrl;
 	@Value("${myPugin.bookStoreDomainUrl}")
 	String bookStoreDomainUrl;
+	/**
+	 * APP广告点击 达人奖励 3.9
+	 * @param session
+	 * @param scaleValue
+	 * @return
+	 */
+	@RequestMapping(value="/appAd/click", method = {RequestMethod.GET,RequestMethod.POST})
+	public StateResult appAdClick(
+			HttpSession session,
+			@RequestParam("acountId")Integer acountId){
+		List<Finance> financelist = financeService.browsePagingFinance(null, acountId, 1, 1, "finance_id", "asc");
+		if(financelist.size()==1){
+			Finance finance = financelist.get(0);
+			Double money=200.0;
+    	   //记录流水，
+    	   FlowWater flowWater = new FlowWater();
+    	   flowWater.setAcountId(acountId);
+    	   flowWater.setCreateDate(new Date());
+    	   flowWater.setMoney(money);
+    	   flowWater.setType(3);//3达人奖励
+    	   flowWater.setSubtype(9);//APP广告点击（200积分）
+    	   flowWaterService.addFlowWater(flowWater);
+    	   //自身总收益增加
+    	   finance.setSelfProfit(finance.getSelfProfit()+money);
+    	   //余额=增加
+    	   finance.setMoney(finance.getMoney()+money);
+    	   financeService.updateFinance(finance);
+			
+		}
+		return ResultUtil.getSuccess();
+	}
 	/**
 	 * 设置全局合伙人收益比例增量
 	 * @param session

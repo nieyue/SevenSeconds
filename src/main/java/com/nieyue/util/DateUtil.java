@@ -324,9 +324,10 @@ public class DateUtil {
        // DateUtil.getSeparatedTime(s0.getCreateDate(), new Date())
        System.out.println(MyDESutil.getMD5("jiaxingyufa"));
        
-       System.out.print(new Random().nextInt(4)+1);
+       System.out.println(new Random().nextInt(4)+1);
        String aaaaa=null;
       // System.out.println(aaaaa.equals("ret"));
        System.err.println(DateUtil.getSeparatedTime( new Date(),DateUtil.getFirstToDay(new Date(), 30))>30);
+    System.out.println(Integer.MAX_VALUE);
     }  
 }

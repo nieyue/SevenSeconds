@@ -46,8 +46,8 @@ public class ArticleBusiness {
 		Boolean isCheck=false;//是否检查当前阶段已经获得奖励，默认否
 		Map<String,Object> map=new HashMap<String,Object>();
 		if(type.equals("推广")){
-			step=-1;//推广每个阅读5积分
-			money=5.0;
+			step=-1;//推广每个阅读200积分
+			money=200.0;
 			/*//第一阶段 5~15 15~20
 			if(readingNumber>=5 && readingNumber<=15){
 				step=1;
@@ -101,6 +101,38 @@ public class ArticleBusiness {
 		return map;
 	}
 	/**
+	 * 获取阅读文章的等级和奖励积分
+	 * @version 3.0
+	 * @param type 类型
+	 * @param articleId 文章ID
+	 * @param acountId 推广人ID
+	 * @param readingNumber 阅读数
+	 * @return map,step等级  money 积分数
+	 */
+	public Map<String,Object> getReadingArticleMapVersion3(
+			String type,
+			Integer articleId,
+			Integer acountId,
+			Integer readingNumber){
+		Integer step=0;//默认0阶段
+		Double money=0.0;//积分
+		Boolean isCheck=false;//是否检查当前阶段已经获得奖励，默认否
+		Map<String,Object> map=new HashMap<String,Object>();
+		if(type.equals("推广")){
+			step=-1;//推广每个阅读200积分
+			money=200.0;
+		}else{
+			step=0;//每个阅读50积分
+			money=50.0;
+		}
+		map.put("step", step);
+		map.put("money",money);
+		map.put("isCheck",isCheck);
+		return map;
+	}
+	
+	
+	/**
 	 * 检查是否能获得阅读文章的奖励积分
 	 * @param type 类型
 	 * @param articleId 文章ID
@@ -113,11 +145,11 @@ public class ArticleBusiness {
 			Integer acountId,
 			Integer readingNumber
 			){
-			Map<String, Object> map = getReadingArticleMap(type,articleId,acountId,readingNumber);	
+			Map<String, Object> map = getReadingArticleMapVersion3(type,articleId,acountId,readingNumber);	
 			Integer step=(Integer) map.get("step");
 			Boolean isCheck=(Boolean) map.get("isCheck");
 			Double money=(Double) map.get("money");
-			if(step==-1){//推广
+			if(step==-1 ||step==0){//推广或版本3正常阅读
 				return map;
 			}
 			//dailyDataService.browsePagingDailyData(new Date(), articleId, acountId, 1, Integer.MAX_VALUE, "daily_data_id", "asc");

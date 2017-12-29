@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nieyue.bean.Sign;
+import com.nieyue.business.SignBusiness;
 import com.nieyue.dao.SignDao;
 import com.nieyue.service.SignService;
 import com.nieyue.util.DateUtil;
@@ -17,6 +18,8 @@ import com.nieyue.util.DateUtil;
 public class SignServiceImpl implements SignService{
 	@Resource
 	SignDao signDao;
+	@Resource
+	SignBusiness signBusiness;
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public boolean addSign(Sign sign) {
@@ -26,7 +29,7 @@ public class SignServiceImpl implements SignService{
 		//新用户
 		if(signList.size()<=0){
 			sign.setLevel(1);
-			sign.setMoney(sign.getLevel()*2.0);
+			sign.setMoney(signBusiness.signTrigger(1));
 			b = signDao.addSign(sign);
 			return b;
 		}
@@ -47,7 +50,7 @@ public class SignServiceImpl implements SignService{
 				sign.setLevel(7);
 			}
 		}
-		sign.setMoney(sign.getLevel()*2.0);
+		sign.setMoney(signBusiness.signTrigger(s0.getLevel()));
 		b = signDao.addSign(sign);
 		return b;
 	}

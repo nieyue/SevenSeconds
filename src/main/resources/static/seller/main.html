@@ -1365,8 +1365,8 @@
                     templateUrl: "/seller/templates/finance_data.html",
                     controller:function($rootScope,$scope,$state){
                    console.log(111)
-                   $scope.fcms=['200','500','1000','2000','3000','5000','10000','30000','50000','80000','100000'];
-                   $scope.financeMoneyModel='3000';
+                   $scope.fcms=['20000','50000','100000','200000','300000','500000','1000000','3000000','5000000','8000000','10000000'];
+                   $scope.financeMoneyModel='300000';
                    console.log($scope.financeMoneyModel)
                    $scope.initFinanceCount=function(value){
                    $.get("/finance/count?money="+value,

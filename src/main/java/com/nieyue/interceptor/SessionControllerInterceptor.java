@@ -37,7 +37,6 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
 		
 		//如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
-        	System.out.println(handler);
             return true;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -87,6 +86,7 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         		||request.getRequestURI().indexOf("Domain")>-1
         		||request.getRequestURI().indexOf("jsAd")>-1
         		||request.getRequestURI().indexOf("sensitiveWord")>-1
+        		||(request.getRequestURI().indexOf("appAd/click")>-1 &&  CertificateBusiness.md5SessionCertificate(request))
         		//二维码、验证码、404、
         		||request.getRequestURI().indexOf("getVerificationCode")>-1
         		||request.getRequestURI().indexOf("getBarcode")>-1
@@ -252,7 +252,9 @@ public class SessionControllerInterceptor implements HandlerInterceptor {
         				throw new MySessionException();
         			}
         			//提交修改自身信息
-        			if((request.getRequestURI().indexOf("/acount/update")>-1)
+        			if((request.getRequestURI().indexOf("/acount/update")>-1
+        				||request.getRequestURI().indexOf("/acount/bindPhone")>-1
+        				||request.getRequestURI().indexOf("/acount/bindWechat")>-1)
         					&& request.getParameter("acountId").equals(sessionAcount.getAcountId().toString())){
         				return true;
         			}

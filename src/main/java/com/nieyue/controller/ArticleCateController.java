@@ -44,8 +44,8 @@ public class ArticleCateController {
 			@RequestParam(value="name",required=false)String name,
 			@RequestParam(value="pageNum",defaultValue="1",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
-			@RequestParam(value="orderName",required=false,defaultValue="article_cate_id") String orderName,
-			@RequestParam(value="orderWay",required=false,defaultValue="desc") String orderWay,HttpSession session)  {
+			@RequestParam(value="orderName",required=false,defaultValue="update_date") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="asc") String orderWay,HttpSession session)  {
 			List<ArticleCate> list = new ArrayList<ArticleCate>();
 			list= articleCateService.browsePagingArticleCate(holder,name,pageNum, pageSize, orderName, orderWay);
 			if(list.size()>0){

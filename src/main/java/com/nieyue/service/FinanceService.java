@@ -33,5 +33,5 @@ public interface FinanceService {
 	/** 财务数据 */
 	public List<FinanceDataDTO> browseFinanceData(Integer acountId) ;		
 	/** 财务日数据 */
-	public List<FinanceDayDataDTO> browseFinanceDayData(Date startDate,Date endDate,Integer type,Integer subtype) ;	
+	public List<FinanceDayDataDTO> browseFinanceDayData(Integer acountId,Date startDate,Date endDate,Integer type,Integer subtype) ;	
 }

@@ -129,13 +129,14 @@ public class FinanceController {
 	@RequestMapping(value = "/daydata", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResultList browseFinanceDayData(
 			HttpServletRequest request,
+			@RequestParam(value="acountId",required=false)Integer acountId,
 			@RequestParam(value="startDate",required=false)Date startDate,
 			@RequestParam(value="endDate",required=false)Date endDate,
 			@RequestParam(value="type",required=false)Integer type,
 			@RequestParam(value="subtype",required=false)Integer subtype,
 			HttpSession session)  {
 		List<FinanceDayDataDTO> list = new ArrayList<FinanceDayDataDTO>();
-		list= financeService.browseFinanceDayData(startDate,endDate,type,subtype);
+		list= financeService.browseFinanceDayData(acountId,startDate,endDate,type,subtype);
 		if(list.size()>0){
 			return ResultUtil.getSlefSRSuccessList(list);
 		}else{

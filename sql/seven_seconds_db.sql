@@ -372,19 +372,6 @@ INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
 INDEX INDEX_CREATEDATE (create_date) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='日常任务表';
 
-#创建日常任务表 
-CREATE TABLE daily_task_tb(
-daily_task_id int(11) NOT NULL AUTO_INCREMENT COMMENT '日常任务id',
-type tinyint(4)  COMMENT '类型',
-frequency tinyint(4)  COMMENT '次数',
-money decimal(11,2) DEFAULT 0 COMMENT '积分',
-create_date datetime COMMENT '创建时间',
-acount_id int(11) COMMENT '任务人id外键',
-PRIMARY KEY (daily_task_id),
-INDEX INDEX_ACOUNTID (acount_id) USING BTREE,
-INDEX INDEX_CREATEDATE (create_date) USING BTREE
-)ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='日常任务表';
-
 #创建流水表 
 CREATE TABLE flow_water_tb(
 flow_water_id int(11) NOT NULL AUTO_INCREMENT COMMENT '流水id',

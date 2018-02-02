@@ -83,8 +83,8 @@ public class FinanceServiceImpl implements FinanceService{
 		return f;
 	}
 	@Override
-	public List<FinanceDayDataDTO> browseFinanceDayData(Date startDate, Date endDate, Integer type, Integer subtype) {
-		List<FinanceDayDataDTO> f = financeDao.browseFinanceDayData(startDate, endDate, type, subtype);
+	public List<FinanceDayDataDTO> browseFinanceDayData(Integer acountId,Date startDate, Date endDate, Integer type, Integer subtype) {
+		List<FinanceDayDataDTO> f = financeDao.browseFinanceDayData( acountId,startDate, endDate, type, subtype);
 		return f;
 	}
 

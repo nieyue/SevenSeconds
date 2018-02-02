@@ -1419,6 +1419,17 @@
             		
             		}
             		});
+					$.get("/finance/daydata?acountId=1000&startDate="+startDate+"&endDate="+endDate+"&type="+flowWaterTypeId,function(data){
+            		if(data.code==200){
+            		$scope.ptFinanceDayDataList=data.list.reverse();
+            		//console.log($scope.financeDayDataList)
+            		$scope.$apply();
+            		}else if(data.code==40000){
+            		$scope.ptFinanceDayDataList=[{createDate:myUtils.timeStampToDate(new Date()),userExpenditure:0,platformRevenue:0}];
+            		$scope.$apply();
+            		
+            		}
+            		});
                    };
                    $scope.initFinanceDayData($scope.currentFlowWaterTypeId,6);
                    $scope.changeFlowWaterType=function(flowWaterTypeId){

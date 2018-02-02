@@ -48,5 +48,5 @@ public interface FinanceDao {
 	/** 财务数据 */
 	public List<FinanceDataDTO> browseFinanceData(@Param("acountId")Integer acountId) ;		
 	/** 财务日数据 */
-	public List<FinanceDayDataDTO> browseFinanceDayData(@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("type")Integer type,@Param("subtype")Integer subtype) ;	
+	public List<FinanceDayDataDTO> browseFinanceDayData(@Param("acountId")Integer acountId,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("type")Integer type,@Param("subtype")Integer subtype) ;	
 }

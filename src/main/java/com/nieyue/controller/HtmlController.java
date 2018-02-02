@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,7 @@ import com.nieyue.sensitive.SensitivewordRedisFilter;
 import com.nieyue.service.ArticleService;
 import com.nieyue.service.FinanceService;
 import com.nieyue.service.FlowWaterService;
+import com.nieyue.util.DateUtil;
 import com.nieyue.util.HttpClientUtil;
 import com.nieyue.util.MyDESutil;
 import com.nieyue.util.MyPugin;
@@ -89,9 +91,34 @@ public class HtmlController {
 	@RequestMapping(value="/appAd/click", method = {RequestMethod.GET,RequestMethod.POST})
 	public StateResult appAdClick(
 			HttpSession session,
-			@RequestParam("acountId")Integer acountId){
+			@RequestParam("acountId")Integer acountId,
+			@RequestParam(value="type",required=false,defaultValue="1")Integer type,//默认1 文章，2,百度
+			@RequestParam(value="articleId",required=false)Integer articleId
+			){
 		List<Finance> financelist = financeService.browsePagingFinance(null, acountId, 1, 1, "finance_id", "asc");
 		if(financelist.size()==1){
+			if(articleId==null||(articleService.loadSmallArticle(articleId)==null)){//不是最新的article广告
+			BoundValueOperations<String, String> bvo=stringRedisTemplate.boundValueOps(projectName+"appAdclick"+"type"+type+"AcountId"+acountId+"Data"+DateUtil.getImgDir());
+			if(bvo.get()==null||bvo.get().equals("")){
+				bvo.set("1");				
+				bvo.expire(DateUtil.currentToEndTime(), TimeUnit.SECONDS);
+			}else{
+				Integer num=Integer.valueOf(bvo.get())+1;
+				if(num<=3){//原来的版本，只记三次
+					bvo.set(String.valueOf(num));
+				}else{
+					return ResultUtil.getSlefSR("40000", "已经超过");
+				}
+			}
+			}else {
+				BoundValueOperations<String, String> bvoa=stringRedisTemplate.boundValueOps(projectName+"appAdclick"+"type"+type+"AcountId"+acountId+"ArticleId"+articleId+"Data"+DateUtil.getImgDir());
+				if(bvoa.get()==null||bvoa.get().equals("")){
+				bvoa.set("1");				
+				bvoa.expire(DateUtil.currentToEndTime(), TimeUnit.SECONDS);
+				}else{
+					return ResultUtil.getSlefSR("40000", "已经超过");
+				}
+			}
 			Finance finance = financelist.get(0);
 			Double money=200.0;
     	   //记录流水，

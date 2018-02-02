@@ -225,6 +225,9 @@ WHERE finance_id=#{financeId}
 	  DATE(create_date) create_date
 	FROM flow_water_tb
 	<where>
+	<if test="acountId!=null">
+	AND  acount_id=#{acountId}
+	</if>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
 	</if>
@@ -241,6 +244,9 @@ WHERE finance_id=#{financeId}
 	   DATE(create_date) create_date
 	FROM flow_water_tb
 	<where>
+	<if test="acountId!=null">
+	AND  acount_id= #{acountId}
+	</if>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
 	</if>
@@ -261,6 +267,9 @@ WHERE finance_id=#{financeId}
 	  DATE(create_date) create_date
 	FROM flow_water_tb
 	<where>
+	<if test="acountId!=null">
+	AND  acount_id=#{acountId}
+	</if>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
 	</if>
@@ -279,6 +288,9 @@ WHERE finance_id=#{financeId}
 	  DATE(create_date) create_date
 	FROM flow_water_tb
 	<where>
+	<if test="acountId!=null">
+	AND  acount_id= #{acountId}
+	</if>
 	<if test="startDate!=null">
 	AND  DATE(create_date)<![CDATA[>= ]]>DATE(#{startDate})
 	</if>

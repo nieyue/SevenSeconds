@@ -50,17 +50,17 @@
 						type="text" class="form-control" id="adminName" ng-model="adminName"
 						placeholder="手机/邮箱"/>
 				</div>
-				<div class="form-group">
+				 <div class="form-group">
 					 <input
 						type="password" class="form-control" id="password" ng-model="password"
 						placeholder="密码"/>
-				</div>
-				<!-- <div class="form-group">
+				</div> 
+				 <div class="form-group">
 					 <input
 						type="text" class="form-control" style="width:30%;display: inline-block" id="random" ng-model="random"
 						placeholder="验证码"/>
 					 <img alt=""  ng-src="{{verificationCode}}" ng-click="getVerificationCode()">
-				</div> -->
+				</div> 
 				<div>
 			        <div id="captcha">
 			        </div>
@@ -122,77 +122,33 @@
 	$scope.verificationCode="/getVerificationCode";
 	//获取验证码
 	$scope.getVerificationCode=function(){
-	//$.get("/getVerificationCode?d='+new Date()*1",function(d){
+	$.get("/getVerificationCode?d='+new Date()*1",function(d){
 	$scope.verificationCode="/getVerificationCode?d="+new Date().getTime();
-	//});
+	});
 	};
-	//geetest验证码
-	  var handler = function (captchaObj) {
+
         //登陆    
 		$scope.sellerSubmit=function(){
-			var result = captchaObj.getValidate();
-            if (!result) {
-                myUtils.myLoadingToast("请先点击验证");
-                return;
-            }else {
-                $.ajax({
-                    url: '/geetest/verify',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        geetest_challenge: result.geetest_challenge,
-                        geetest_validate: result.geetest_validate,
-                        geetest_seccode: result.geetest_seccode
-                    },
-                    success: function (data) {
-                        if (data.status === 'success') {
-                           //开始登陆
-	                           $http.post("/acount/login",{adminName:$scope.adminName,password:$scope.password
-								//,random:$scope.random
-								})
-								.success(function(data,status,headers,config){
-									if(data&& typeof data =='object' &&data.code=='200'){
-									console.log(data);
-										myUtils.myLoadingToast("登录成功", function(){
-										location.replace("/seller/main.html");
-											
-										});
-									}else{
-										myUtils.myLoadingToast("登录失败");
-									}
-								}).error(function(data,status,headers,config){
-									myUtils.myLoadingToast("登录失败", function(){
-										});
-								});
+         //开始登陆
+         $http.post("/acount/login",{adminName:$scope.adminName,password:$scope.password
+		   ,random:$scope.random
+			})
+			.success(function(data,status,headers,config){
+			if(data&& typeof data =='object' &&data.code=='200'){
+					console.log(data);
+					myUtils.myLoadingToast("登录成功", function(){
+					location.replace("/seller/main.html");
+						
+				});
+				}else{
+					myUtils.myLoadingToast("登录失败");
+				}
+			}).error(function(data,status,headers,config){
+				myUtils.myLoadingToast("登录失败", function(){
+					});
+				});
 
-                        } else if (data.status === 'fail') {
-                           myUtils.myLoadingToast('登录失败');
-                        }
-                    }
-                })
-            }
-            };
-        // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
-        captchaObj.appendTo("#captcha");
-		};
-    $.ajax({
-        url: "/geetest/register?t=" + (new Date()).getTime(), // 加随机数防止缓存
-        type: "get",
-        dataType: "json",
-        success: function (data) {
-            // 调用 initGeetest 初始化参数
-            // 参数1：配置参数
-            // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
-            initGeetest({
-                gt: data.gt,
-                challenge: data.challenge,
-                new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
-                offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-                product: "float", // 产品形式，包括：float，popup
-                width: "100%"
-            }, handler);
-        }
-    });
+               } 
 	
 	});
 	</script>

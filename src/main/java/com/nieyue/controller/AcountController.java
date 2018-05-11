@@ -492,17 +492,17 @@ public class AcountController {
 			@RequestParam(value="random",required=false) String random,
 			HttpSession session) throws MySessionException  {
 		//1代验证码
-		/*String ran= (String) session.getAttribute("random");
+		String ran= (String) session.getAttribute("random");
 		List<Acount> list = new ArrayList<Acount>();
 		if(!ran.equals(random)){
 			return ResultUtil.getSlefSRFailList(list);
-		}*/
-		Integer gtResult = (Integer) session.getAttribute("gtResult");
+		}
+		/*Integer gtResult = (Integer) session.getAttribute("gtResult");
 		List<Acount> list = new ArrayList<Acount>();
 		//System.out.println(gtResult);
 		if(gtResult!=1){
 			return ResultUtil.getSlefSRFailList(list);
-		}
+		}*/
 		Acount acount = acountService.loginAcount(adminName, MyDESutil.getMD5(password),null);
 		if(acount.getStatus().equals(1)){
 			List<String> l1 = new ArrayList<String>();

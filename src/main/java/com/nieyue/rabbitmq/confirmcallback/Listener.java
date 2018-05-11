@@ -933,7 +933,7 @@ public class Listener {
 			     * @param message
 			     * @throws IOException
 			     */
-			    @RabbitListener(queues="${myPugin.rabbitmq.BOOKORDERFLOWWATER_DIRECT_QUEUE}") 
+			 /*   @RabbitListener(queues="${myPugin.rabbitmq.BOOKORDERFLOWWATER_DIRECT_QUEUE}") 
 			    public void bookOrderFlowWater(Channel channel, FlowWater flowWater,Message message) throws IOException   {
 			    	try {
 			    		boolean b = flowWaterService.addFlowWater(flowWater);
@@ -958,5 +958,5 @@ public class Listener {
 			    		}
 			    		//e.printStackTrace();
 			    	} //确认消息成功消费 
-			    }
+			    }*/
 }

@@ -13,11 +13,11 @@ spring:
    datasource:
      name: master
      driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://120.77.253.90:3306/seven_seconds_db
+     url: jdbc:mysql://120.27.8.134:3306/seven_seconds_db
      username: root
      password: liliu
    redis:
-     host: 120.77.253.90
+     host: 120.27.8.134
      password: liliu
      port: 6379 
      database: 1
@@ -26,19 +26,20 @@ spring:
        min-idle: 100
        max-idle: 300
        max-active: 800 
+       
 myPugin: 
   session: 
-    myDomainName: newzhuan.cn
+    myDomainName: yuanzhiba.com
   projectName: SevenSeconds
-  pushStoreDomainUrl: http://push.newzhuan.cn
-  bookStoreDomainUrl: http://book.newzhuan.cn
+  pushStoreDomainUrl: http://push.yuanzhiba.com
+  bookStoreDomainUrl: http://book.yuanzhiba.com
   location: /home/config/thirdParty.properties
-  articleUrl: http://www.newzhuan.cn/article.html
-  shareUrl: http://www.newzhuan.cn/share.html
-  shareDomain: www.newzhuan.cn
-  gmwDomain: www.newzhuan.cn
-  ssDomain: www.newzhuan.cn
-  adDomain: www.newzhuan.cn
+  articleUrl: http://www.yuanzhiba.com/article.html
+  shareUrl: http://www.yuanzhiba.com/share.html
+  shareDomain: www.yuanzhiba.com
+  gmwDomain: www.yuanzhiba.com
+  ssDomain: www.yuanzhiba.com
+  adDomain: www.yuanzhiba.com
   jsAd: console.log('prod')
   requestAuth: requestAuthProd
   rabbitmq:
@@ -75,9 +76,9 @@ myPugin:
     MERORDERFLOWWATER_DIRECT_EXCHANGE: merorderflowwater.convertmall.exchange.direct
     MERORDERFLOWWATER_DIRECT_ROUTINGKEY: merorderflowwater.convertmall.routingkey.direct
     MERORDERFLOWWATER_DIRECT_QUEUE: merorderflowwater.convertmall.queue.direct
-    BOOKORDERFLOWWATER_DIRECT_EXCHANGE: bookorderflowwater.bookstore.exchange.direct
-    BOOKORDERFLOWWATER_DIRECT_ROUTINGKEY: bookorderflowwater.bookstore.routingkey.direct
-    BOOKORDERFLOWWATER_DIRECT_QUEUE: bookorderflowwater.bookstore.queue.direct
+#    BOOKORDERFLOWWATER_DIRECT_EXCHANGE: bookorderflowwater.bookstore.exchange.direct
+#    BOOKORDERFLOWWATER_DIRECT_ROUTINGKEY: bookorderflowwater.bookstore.routingkey.direct
+#    BOOKORDERFLOWWATER_DIRECT_QUEUE: bookorderflowwater.bookstore.queue.direct
   alibabaSmsAppkey: 23431362
   alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
   alibabaSmsSignName: 雅耀

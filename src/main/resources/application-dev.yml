@@ -31,15 +31,15 @@ myPugin:
   session: 
     myDomainName: null
   projectName: SevenSeconds
-  pushStoreDomainUrl: http://192.168.11.111:8002
-  bookStoreDomainUrl: http://192.168.11.111:8082
+  pushStoreDomainUrl: http://192.168.7.111:8002
+  bookStoreDomainUrl: http://192.168.7.111:8082
   location: c://config/thirdParty.properties
-  articleUrl: http://192.168.11.111/article.html
-  shareUrl: http://192.168.11.111/share.html
-  shareDomain: 192.168.11.111
-  gmwDomain: 192.168.11.111
-  ssDomain: 192.168.11.111
-  adDomain: 192.168.11.111
+  articleUrl: http://192.168.7.111/article.html
+  shareUrl: http://192.168.7.111/share.html
+  shareDomain: 192.168.7.111
+  gmwDomain: 192.168.7.111
+  ssDomain: 192.168.7.111
+  adDomain: 192.168.7.111
   jsAd: console.log('dev')
   requestAuth: requestAuthDev
   rabbitmq:

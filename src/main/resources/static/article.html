@@ -9,10 +9,10 @@
 <meta charset="UTF-8">
 <meta name="description"
 	content="{{article.title}}">
-	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+	<!-- <link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" /> -->
   <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <!--  <link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
- --><link href="https://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
+ --><link href="/resources/css/base.css" rel="stylesheet">
 <style type="text/css">
 html,body{
 background-color:#f7f7f7;
@@ -110,7 +110,7 @@ max-width:100% !important;
 	<!-- 广告3 -->
 		<div class="listGroup list-group media comment-list-item ad3" ng-repeat="article in ad3List"    ng-click="goAd(article,$index)">
 				<!-- sougou广告 -->
-	<div class="sg_adv" style=" margin-bottom:1px;margin:10px 0;text-align:center;display:none" ng-if=" $index==11">
+	<!-- <div class="sg_adv" style=" margin-bottom:1px;margin:10px 0;text-align:center;display:none" ng-if=" $index==11">
 		<script  type="text/javascript">
 			var sogou_ad_id=916768;
 			var sogou_ad_height=200;
@@ -118,11 +118,11 @@ max-width:100% !important;
 		</script>
 		<script type='text/javascript'  src='http://images.sohu.com/cs/jsfile/js/c.js'></script>
 
-	</div>
+	</div> -->
 	<!-- sougou end -->
 
 		<!-- wosou广告 -->
-	<div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==14">
+	<!-- <div id="sg" style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==14">
 		<script  type="text/javascript">
 			var wososspconfig =
 			{
@@ -131,21 +131,19 @@ max-width:100% !important;
 			</script>
 			<script type="text/javascript"  src="http://sspj.woso.cn/sitegc/wososearch_ssp.js ">
 		</script>
-	</div>
+	</div> -->
 
 	<!--  wosou end -->	
 	<!-- 11.22 -->
-	<div style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==15">
+	<!-- <div style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if=" $index==15">
 			<script class="iclicashAD" async="async" src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7180171"></script>
 			<script class="iclicashAD" async="async"  src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7370097"></script>
-			<!-- <script  class="iclicashAD" src="//cdn.aiclicash.com/jssdk/aisdk.js?aid=7370097"></script> -->
-	</div>
+	</div> -->
 	<!-- 11.22end -->
 		<!-- 亿玛 -->
-	<div  style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==16">
+	<!-- <div  style="margin-bottom:5px;margin:10px 0;text-align:center;" ng-if="$index==16">
 	<script id="_gg_127331" type="text/javascript" async="async" src="http://pub.cdjgtfq.com/js/127331.js"></script>
-	<!-- <script id="_gg_127332" type="text/javascript" src="http://pub.cdjgtfq.com/js/127332.js"></script>
-	 --></div>
+	</div> -->
 	<!-- 亿玛 end -->
 			
 			<!-- 0张图片列表 -->
@@ -352,14 +350,14 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 	<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
 	<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
- 	 <script src="https://www.newzhuan.cn/resources/js/bn-lazy-src.js"></script> 
+ 	 <script src="/resources/js/bn-lazy-src.js"></script> 
 	<!-- <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
 	<!-- <script src="https://cdn.bootcss.com/Swiper/4.0.6/js/swiper.min.js"></script> -->
  	<!-- 
  	 <script src="https://www.newzhuan.cn/resources/js/domainManager.js"></script> 
  	 -->
  	<script src="/resources/js/domainManager.js"></script> 
-	<script  src="https://www.newzhuan.cn/resources/js/base.js"></script>
+	<script  src="/resources/js/base.js"></script>
 	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
 
 	<script>
@@ -506,9 +504,10 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
     	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
     	$scope.wapName="每日生活";
     	$scope.protocol=location.protocol+"//";//协议
-    	//$scope.originDomain=domainManager.SevenSeconds;
+    	$scope.originDomain=domainManager.SevenSeconds;
     	//$scope.originDomain=location.host;
-    	$scope.originDomain="www.newzhuan.cn";
+    	//$scope.originDomain="www.newzhuan.cn";
+    	//$scope.originDomain="www.newzhuan.cn";
        			//广告
       			$scope.initAdList=function (ad,a){
     			$.ajax({  
@@ -885,7 +884,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
    </script>
 			
 <!-- dengliguang -->		
-<script>
+<!-- <script>
 	 $(function(){
 	function showSgAdv(){
 		var urll=window.location.href;
@@ -901,7 +900,7 @@ box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
 	},500);
 	}); 
 		
-</script>
+</script> -->
 <!-- dengliguang -->
 </body>
 </html>

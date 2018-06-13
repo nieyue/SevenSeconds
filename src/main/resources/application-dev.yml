@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
   session:
     timeout: 1800
   tomcat: 
@@ -31,15 +31,15 @@ myPugin:
   session: 
     myDomainName: null
   projectName: SevenSeconds
-  pushStoreDomainUrl: http://192.168.7.111:8002
-  bookStoreDomainUrl: http://192.168.7.111:8082
+  pushStoreDomainUrl: http://localhost:8002
+  bookStoreDomainUrl: http://localhost:8082
   location: c://config/thirdParty.properties
-  articleUrl: http://192.168.7.111/article.html
-  shareUrl: http://192.168.7.111/share.html
-  shareDomain: 192.168.7.111
-  gmwDomain: 192.168.7.111
-  ssDomain: 192.168.7.111
-  adDomain: 192.168.7.111
+  articleUrl: http://localhost/article.html
+  shareUrl: http://localhost/share.html
+  shareDomain: localhost
+  gmwDomain: localhost
+  ssDomain: localhost
+  adDomain: localhost
   jsAd: console.log('dev')
   requestAuth: requestAuthDev
   rabbitmq:

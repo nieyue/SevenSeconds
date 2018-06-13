@@ -6,12 +6,12 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<meta name="viewport"
 	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
-	<meta name="Keywords" content="七秒，七秒资讯"/>
-	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+	<meta name="Keywords" content="资讯"/>
+	<!-- <link rel="shortcut icon" href="/uploaderPath/img/20170907/15047652539005249544896312.png" /> -->
 	<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css"/>
 	<link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
-	<link href="https://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
+	<link href="/resources/css/base.css" rel="stylesheet">
 </head>
    <body >
   	<div ui-view style="max-width:640px;margin:auto;"></div>
@@ -24,7 +24,7 @@
 		<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
 		<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular-animate.min.js"></script>
 		<script src="https://cdn.bootcss.com/angular-ui-router/0.4.3/angular-ui-router.min.js"></script>
-		<script src="https://www.newzhuan.cn/resources/js/bn-lazy-src.js"></script>
+		<script src="/resources/js/bn-lazy-src.js"></script>
 		 <script src="https://cdn.bootcss.com/Swiper/4.0.6/js/swiper.min.js"></script> 
 		<script src="/resources/js/domainManager.js"></script>  
        <script src="/resources/js/base.js"></script> 
@@ -54,8 +54,8 @@
         mainApp.controller('mainCtrl', function($rootScope,$scope,$http) {
    		
        $scope.currentDate=myUtils.timeStampToDate(new Date());
-       $scope.backstageName="七秒资讯";//系统名称
-       $scope.companyName="七秒资讯";//公司名称
+       $scope.backstageName="资讯";//系统名称
+       $scope.companyName="资讯";//公司名称
        $rootScope.formDisabled=false;//表单提交，默认可以点击。
     	 $rootScope.mainDomainUrl="http://"+location.host;
         $scope.baseiconurl="/qimiao/resources/img";//基础图标路径

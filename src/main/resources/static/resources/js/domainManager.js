@@ -4,16 +4,16 @@ function isProd(b){
 	if(b){
 	//prod
 	 domainManager={
-		SevenSeconds:'www.yuanzhiba.com',	
-		Article:'www.yuanzhiba.com',	
-		BookStore:'book.newzhuan.cn',	
+		SevenSeconds:'article.boya1.cn',	
+		Article:'article.boya1.cn',	
+		BookStore:'book.boya1.cn',	
 		ConvertMall:'mall.newzhuan.cn',	
 		ActivityCenter:'activity.newzhuan.cn',
 		AppCenter:'app.newzhuan.cn',
 		FinancialCenter:'fin.newzhuan.cn',
 		ScheduleJob:'task.newzhuan.cn',	
 		Push:'push.newzhuan.cn',	
-		MyWangEditor:'admin.yuanzhiba.com',	
+		MyWangEditor:'img.boya1.cn',	
 		};
 	return domainManager;
 	}else{

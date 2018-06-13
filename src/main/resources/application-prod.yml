@@ -13,11 +13,11 @@ spring:
    datasource:
      name: master
      driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://120.27.8.134:3306/seven_seconds_db
+     url: jdbc:mysql://118.190.133.146:3306/seven_seconds_db
      username: root
      password: liliu
    redis:
-     host: 120.27.8.134
+     host: 118.190.133.146
      password: liliu
      port: 6379 
      database: 1
@@ -29,17 +29,17 @@ spring:
        
 myPugin: 
   session: 
-    myDomainName: yuanzhiba.com
+    myDomainName: boya1.cn
   projectName: SevenSeconds
-  pushStoreDomainUrl: http://push.yuanzhiba.com
-  bookStoreDomainUrl: http://book.yuanzhiba.com
+  pushStoreDomainUrl: http://push.boya1.cn
+  bookStoreDomainUrl: http://book.boya1.cn
   location: /home/config/thirdParty.properties
-  articleUrl: http://www.yuanzhiba.com/article.html
-  shareUrl: http://www.yuanzhiba.com/share.html
-  shareDomain: www.yuanzhiba.com
-  gmwDomain: www.yuanzhiba.com
-  ssDomain: www.yuanzhiba.com
-  adDomain: www.yuanzhiba.com
+  articleUrl: http://article.yuanzhiba.com/article.html
+  shareUrl: http://article.boya1.cn/share.html
+  shareDomain: article.boya1.cn
+  gmwDomain: article.boya1.cn
+  ssDomain: article.boya1.cn
+  adDomain: article.boya1.cn
   jsAd: console.log('prod')
   requestAuth: requestAuthProd
   rabbitmq:

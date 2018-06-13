@@ -13,8 +13,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 
 import com.nieyue.weixin.ssl.ClientCustomSSL;
 
@@ -48,8 +46,6 @@ public class HttpClientUtil {
 	    
 	    //String ret = doPostXml(url, "<xml></xml>").toString();
 	    //String ret = doGet("http://3g.k.sohu.com/t/n152233000");
-	    Connection ret = Jsoup.connect("http://3g.k.sohu.com/t/n152233000");
-	    System.out.println(ret.get().select(".scroll-wrap"));
 	  }
 
 	  /**

@@ -9,10 +9,10 @@
 <meta charset="UTF-8">
 <meta name="description"
 	content="{{bookChapter.title}}">
-	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+	<!-- <link rel="shortcut icon" href="/uploaderPath/img/20170907/15047652539005249544896312.png" /> -->
   <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <!--  <link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
- --><link href="https://www.newzhuan.cn/resources/css/base.css" rel="stylesheet">
+ --><link href="/resources/css/base.css" rel="stylesheet">
 <style type="text/css">
 
 #newsDeatilsBody *{
@@ -74,8 +74,8 @@ max-width:100% !important;
 				</div>
 				<div>
 				<hr>
-		<button ng-click="openApp(bookChapter)" style="border-radius:15px;margin-left:10%;width:80%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">下载七秒资讯，查看更多章节</button>
-				</div>
+		<!-- <button ng-click="openApp(bookChapter)" style="border-radius:15px;margin-left:10%;width:80%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">下载七秒资讯，查看更多章节</button>
+		 -->	</div>
 		<div style="display:inline-block;border-bottom:1px solid #4780e5;margin-bottom:1px;margin:0 10px;">
 	        <span style="font-weight:bold;font-size:1.1rem">
 	        热门推荐
@@ -157,7 +157,7 @@ max-width:100% !important;
  	 <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
  	 -->
  	<script src="/resources/js/domainManager.js"></script> 
-	<script  src="https://www.newzhuan.cn/resources/js/base.js"></script>
+	<script  src="/resources/js/base.js"></script>
 	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
 
 	<script>
@@ -318,8 +318,11 @@ max-width:100% !important;
   		          //复原
   		          $scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)-t;
     			  $scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)-t;
-    			  	myUtils.myTemplate("没有更多章节！"+
-  		        	"<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>点击下载APP，阅读更多章节</button></div>");
+    			  //var text="<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>保存微信公众号二维码，阅读更多章节</button></div>";
+    			  var text="<br><br><br><br><br><div>保存微信公众号二维码，阅读更多章节</div>";
+    			  var imgsrc="<div><img src='http://118.190.133.146:8091/20180524094838834.jpg'/></div>";
+    			  
+    			  	myUtils.myTemplate("没有更多章节！"+text+imgsrc);
   		        	
   		        	$("#myTemplate").css({"width":"100%","height":"100%","margin":"0","top":"0","left":"0"});
   		         console.log(1112)

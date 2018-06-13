@@ -44,7 +44,7 @@ spring:
     active: dev
     #active: prod
   rabbitmq:
-    addresses: 203.195.209.46
+    addresses: 118.190.133.146
     #addresses: 120.77.253.90
     username: nieyue
     password: liliu

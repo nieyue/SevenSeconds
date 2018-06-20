@@ -40,7 +40,7 @@ max-width:100% !important;
 					<div></div>
 				</div> -->
 <div class="text-center">
-<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+<!-- <img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif"> -->
 </div>
 
 			</div>
@@ -76,16 +76,16 @@ max-width:100% !important;
 				<hr>
 		<!-- <button ng-click="openApp(bookChapter)" style="border-radius:15px;margin-left:10%;width:80%;height:30px;color:#fff;border:0px;font-size:0.6rem;background:linear-gradient(to right,#189adb, #35caef)">下载七秒资讯，查看更多章节</button>
 		 -->	</div>
-		<div style="display:inline-block;border-bottom:1px solid #4780e5;margin-bottom:1px;margin:0 10px;">
+		<div ng-if="isShowRecommend" style="display:inline-block;border-bottom:1px solid #4780e5;margin-bottom:1px;margin:0 10px;">
 	        <span style="font-weight:bold;font-size:1.1rem">
 	        热门推荐
 	        </span>
 	    </div>
 
 		<!-- 第二列表 -->
-		<div style="margin:auto;text-align:center;">
+		<div ng-show="isShowRecommend" style="margin:auto;text-align:center;">
 		 <!-- 广告位：七秒1 -->
-		<div  class="listGroup list-group " style="width:30%;display:inline-block;margin:5% 1% ;" ng-repeat="book in bookList" on-finish-render-filters  ng-click="clickBook(book)">
+		<div class="listGroup list-group " style="width:30%;display:inline-block;margin:5% 1% ;" ng-repeat="book in bookList" on-finish-render-filters  ng-click="clickBook(book)">
 				<!-- 谷歌广告 -->
 <!-- 	<div style=" margin-bottom:1px;margin:10px 0;text-align:center;" ng-if="$index==3">
 		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -139,13 +139,12 @@ max-width:100% !important;
 		</div>
 			
 		
-<!-- <script type="text/javascript" src="http://s.baidustatie.com/t/g.php?z=1alafnajzyz3"></script> -->
 		<!-- 底部 -->
 		<div style="width:100%;height:100px;"></div>
 		<!-- 底部 end-->
 		<!-- cnzz -->
 		<div style="display:none;">
-		 <script src="https://s19.cnzz.com/z_stat.php?id=1264381192&web_id=1264381192" language="JavaScript"></script>
+		<script src="https://s19.cnzz.com/z_stat.php?id=1264381192&web_id=1264381192" language="JavaScript"></script>
 		</div>
 		
 	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
@@ -201,6 +200,7 @@ max-width:100% !important;
     	$scope.bookChapterStartNumber=myUtils.GetQueryString("startNumber")||1;//默认开始章节
     	$scope.bookChapterEndNumber=myUtils.GetQueryString("endNumber")||1;//默认结束章节
     	
+    	$scope.isShowRecommend=false;//不显示热门
     		
     		//jsAd广告
     			function initJsAdList(){
@@ -220,7 +220,7 @@ max-width:100% !important;
     		          }  
     		          });  
     		}
-    		initJsAdList();
+    		//initJsAdList();
     			
     			
     			
@@ -320,7 +320,7 @@ max-width:100% !important;
     			  $scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)-t;
     			  //var text="<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>保存微信公众号二维码，阅读更多章节</button></div>";
     			  var text="<br><br><br><br><br><div>保存微信公众号二维码，阅读更多章节</div>";
-    			  var imgsrc="<div><img src='http://118.190.133.146:8091/20180524094838834.jpg'/></div>";
+    			  var imgsrc="<div><img src='http://ccsd.boya1.cn/uploaderPath/img/20180619/1529387845360.jpg'/></div>";
     			  
     			  	myUtils.myTemplate("没有更多章节！"+text+imgsrc);
   		        	
@@ -416,7 +416,7 @@ max-width:100% !important;
         		return;
         		}
         		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
-        			onReachBottom();
+        			//onReachBottom();
         		}
         			
         		});

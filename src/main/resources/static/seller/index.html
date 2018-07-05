@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html ng-app="sellerApp" ng-controller="sellerCtrl">
+<head>
+<title ng-bind="companyName"></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+<meta name="keywords" content="{{backstageName}}"/>
+<meta charset="UTF-8"/>
+<meta name="description"
+	content="{{backstageName}}"/>
+<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/resources/css/sellerbase.css" rel="stylesheet"/>
+</head>
+<body>
+	<!-- 顶部 -->
+	<nav class="navbar navbar-inverse  navbar-static-top boxShaow" style="margin-bottom:0;">
+		<div class="container">
+			<div class="navbar-header">
+				<!-- <button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#example-navbar-collapse">
+					<span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button> -->
+				<img alt="七秒" style="width:50px;float:left;"  src="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png">
+				<a class="nieyueText" style="font-size:28px;line-height:50px;" href="#" ng-bind="companyName"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li><a href="#">立即注册</a></li>
+					<li><a href="#">登录</a></li> -->
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!-- end顶部 -->
+	<!-- 巨幕 -->
+	<div class="jumbotron mock-img-jumbotron">
+  		<div class="container seller-formdiv boxShaow ">
+  			<!-- sellerLogin -->
+			<form  id="sellerLoginForm"  ng-submit="sellerSubmit()">
+			<div class="form-group text-center">
+			<label id="sellerErrorValue" class="text-danger"></label>
+			</div>
+				<div class="form-group">
+					 <input
+						type="text" class="form-control" id="adminName" ng-model="adminName"
+						placeholder="手机/邮箱"/>
+				</div>
+				 <div class="form-group">
+					 <input
+						type="password" class="form-control" id="password" ng-model="password"
+						placeholder="密码"/>
+				</div> 
+				 <div class="form-group">
+					 <input
+						type="text" class="form-control" style="width:30%;display: inline-block" id="random" ng-model="random"
+						placeholder="验证码"/>
+					 <img alt=""  ng-src="{{verificationCode}}" ng-click="getVerificationCode()">
+				</div> 
+				<div>
+			        <div id="captcha">
+			        </div>
+			    </div>
+			    <br>
+				<!-- <div class="checkbox">
+					<label> 
+					<input type="checkbox" id="autoLogin" checked="checked">自动登录
+					</label>
+				</div> -->
+				<div class="form-group">
+				<button type="submit" class="btn btn-success btn-block" id="sellerSubmit" >登录</button>
+				</div>				
+				<div class="form-group">
+				<!-- <a href="/seller/seller_register">立即注册，免费开店&gt;</a>
+				<a class="pull-right">忘记密码？找回密码</a> -->
+				</div>				
+			</form>
+  			<!-- end sellerLogin -->
+		</div>
+	</div>
+	<!-- end巨幕 -->
+
+<!-- foot -->
+  <div class="container-fuild seller-foot">
+ 	<div class="seller-foot-contact">
+ 		<div>联系我们</div>
+ 		<div>公司名称：长沙<span ng-bind="companyName"></span>科技有限公司</div>
+ 		<div>公司地址：湖南省长沙市岳麓区麓谷企业广场E8栋3楼</div>
+ 		<div>备案号：<span style="cursor:pointer" onclick="javascript:location.replace('http://www.miitbeian.gov.cn')">湘ICP备17011137号</span></div>
+ 	</div>
+  <div class="seller-foot-copyright"><p>Copyright 2016 itcast Inc,All rights reserved.</p></div>
+  </div>
+<!-- endfoot -->
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+	<script src="/resources/js/gt.js"></script>
+	<script src="/resources/js/base.js"></script>
+<!-- 	<script src="/resources/js/seller.js"></script> -->
+	<script>
+	
+	angular.module('sellerApp',[])
+	.config(function($httpProvider){
+		 $httpProvider.defaults.transformRequest=function(obj){
+			var str=[];
+			for ( var p in obj) {
+				str.push(encodeURIComponent(p)+"="+encodeURIComponent(obj[p]))
+			}
+			return str.join("&");
+		} 
+		$httpProvider.defaults.headers.post={
+			'Content-Type':'application/x-www-form-urlencoded'
+		}
+	})
+	.controller('sellerCtrl',function($scope,$http){
+	$scope.backstageName="七秒";//系统名称
+	$scope.companyName="嘉行煜发网络";//公司名称
+	$scope.verificationCode="/getVerificationCode";
+	//获取验证码
+	$scope.getVerificationCode=function(){
+	$.get("/getVerificationCode?d='+new Date()*1",function(d){
+	$scope.verificationCode="/getVerificationCode?d="+new Date().getTime();
+	});
+	};
+
+        //登陆    
+		$scope.sellerSubmit=function(){
+         //开始登陆
+         $http.post("/acount/login",{adminName:$scope.adminName,password:$scope.password
+		   ,random:$scope.random
+			})
+			.success(function(data,status,headers,config){
+			if(data&& typeof data =='object' &&data.code=='200'){
+					console.log(data);
+					myUtils.myLoadingToast("登录成功", function(){
+					location.replace("/seller/main.html");
+						
+				});
+				}else{
+					myUtils.myLoadingToast("登录失败");
+				}
+			}).error(function(data,status,headers,config){
+				myUtils.myLoadingToast("登录失败", function(){
+					});
+				});
+
+               } 
+	
+	});
+	</script>
+</body>
+</html>

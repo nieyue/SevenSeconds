@@ -1,0 +1,120 @@
+    <div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.articleList({acountId:sessionRole.name=='超级管理员'?'':sessionRole.name=='运营管理员'?'':sessionAcount.acountId})">返回文章列表</button>
+</div>
+ <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">修改文章</label>
+<br/>
+<!-- 修改-->
+	<form style="margin-bottom:100px" novalidate name="myUpdateArticleForm" ng-submit="updateArticleForm()">
+    <label  class="text-danger">※标题</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="article.title" name="title" required ng-minlength="2" ng-maxlength="64" placeholder="2-64位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateArticleForm.title.$dirty && myUpdateArticleForm.title.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>输入正确标题
+	</div>
+  </div>
+  <label  class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+  		<span> ※持有者.默认为公共;</span>
+   </label>
+  <div class=" comment-input-margin" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <select style="width:180px;height:50px;" ng-change="articleCateInit(articleCate.holder)" ng-model="articleCate.holder" name="holder" 
+    ng-options="h.id as h.value for h in [{id:0,value:'公共'},{id:1,value:'平台方'}]">
+  </select>
+  </div>
+   <label  class="text-danger">
+  		<span> ※文章类型</span>
+   </label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="article.articleCateId" name="articleCateId" ng-init="articleCate.articleCateId=articleCateList[0].articleCateId"
+    ng-options="ac.articleCateId as ac.name for ac in articleCateList">
+  </select>
+  </div>
+   <label  class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※文章状态</label>
+  <div class=" comment-input-margin" ng-if="sessionAcount.roleId==1000||sessionRole.name=='运营管理员'">
+  <select style="width:180px;height:50px;" ng-model="article.status" name="status" ng-init="article.status=model"   ng-options="model for model in ['正常','完成']">
+  </select>
+  </div>
+  <label  class="text-danger" ng-if="sessionRole.name=='超级管理员'">※计费模式</label>
+  <div class=" comment-input-margin" ng-if="sessionRole.name=='超级管理员'">
+  <select style="width:180px;height:50px;" ng-model="article.model" name="model"   ng-options="model.id as model.value for model in [{id:1,value:'阅读计费'},{id:2,value:'ip计费'},{id:3,value:'uv计费'},{id:4,value:'千次展示计费'}]">
+  </select>
+  </div>
+   <label class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※单价（必填）</label>
+  <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="text" class="comment-input" required name="unitPrice"
+     ng-model="article.unitPrice" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateArticleForm.unitPrice.$dirty && myUpdateArticleForm.unitPrice.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※总价（必填）</label>
+  <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="text" class="comment-input" required name="totalPrice"
+     ng-model="article.totalPrice" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateArticleForm.totalPrice.$dirty && myUpdateArticleForm.totalPrice.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※用户单价（必填）</label>
+  <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="text" class="comment-input" required name="userUnitPrice"
+     ng-model="article.userUnitPrice" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myUpdateArticleForm.userUnitPrice.$dirty && myUpdateArticleForm.userUnitPrice.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+    <label  class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※是否热门推荐，默认否</label>
+ <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="radio" name="isRecommend" ng-init="article.isRecommend=0" ng-model="article.isRecommend" value="0"/>否
+	<input type="radio" name="isRecommend"  ng-model="article.isRecommend" value="1"/>是<br>
+  </div>
+   <label  class="text-danger" ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">※是否置顶，默认否</label>
+  <div class="comment-input-margin " ng-if="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+    <input type="radio" name="fixedRecommend" ng-init="article.fixedRecommend=0"  ng-model="article.fixedRecommend" value="0"/>否
+	<input type="radio" name="fixedRecommend"  ng-model="article.fixedRecommend" value="1"/>是<br>
+  </div>
+  
+    <label  class="text-danger">※封面图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=300">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=200">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>
+    <input type="file" class="comment-input"   id="articleImgFileUpload">
+  <div ng-repeat="img in article.imgList" style="display: inline-block;position: relative;" ng-mouseenter="delImgBtn=true">
+  <img    ng-src="{{img.imgAddress||''}}"/>
+  <span  ng-click="delImg(img)" style="background-color:#fff;position: absolute;top:0;right:0">×</span>
+  </div>
+  </div>
+   <div>
+  <input type="radio" ng-click="selectState=1" ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'" value="1" ng-model="selectState" name="selectState"/>链接
+  <input type="radio" ng-model="selectState" ng-click="selectState=2" value="2" name="selectState"/>内容
+  </div>
+  <label  class="text-default" ng-show="selectState==1">*链接地址</label>
+  <div class=" comment-input-margin" ng-show="selectState==1">
+    <input type="text" class=" comment-input"
+   ng-pattern="/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)/"
+      ng-model="article.redirectUrl" name="redirectUrl"
+      placeholder="http://或https://">
+      <div class="text-danger alert alert-danger " ng-show="myUpdateArticleForm.redirectUrl.$dirty && myUpdateArticleForm.redirectUrl.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>链接地址错误
+	</div>
+     </div>
+    <label  class="text-danger" ng-show="selectState==2">※内容</label>
+  <div class=" comment-input-margin" ng-show="selectState==2">
+        <textarea id="articleUpdateEditor" style="min-width:500px;min-height:500px;" >
+        <p></p>
+        </textarea>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateArticleForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

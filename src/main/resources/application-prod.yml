@@ -1,0 +1,91 @@
+server:
+  port: 8080
+  session:
+    timeout: 1800
+  #address: acount.yayao8.com
+  tomcat:
+    max-threads: 1000
+    min-spare-threads: 200
+    accept-count: 1000
+    max-connections: 1000
+ # connection-timeout: 60 
+spring:
+   datasource:
+     name: master
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://118.190.133.146:3306/seven_seconds_db
+     username: root
+     password: liliu
+   redis:
+     host: 118.190.133.146
+     password: liliu
+     port: 6379 
+     database: 1
+     timeout: 3000
+     pool: 
+       min-idle: 100
+       max-idle: 300
+       max-active: 800 
+       
+myPugin: 
+  session: 
+    myDomainName: boya1.cn
+  projectName: SevenSeconds
+  pushStoreDomainUrl: http://push.boya1.cn
+  bookStoreDomainUrl: http://book.boya1.cn
+  location: /home/config/thirdParty.properties
+  articleUrl: http://article.yuanzhiba.com/article.html
+  shareUrl: http://article.boya1.cn/share.html
+  shareDomain: article.boya1.cn
+  gmwDomain: article.boya1.cn
+  ssDomain: article.boya1.cn
+  adDomain: article.boya1.cn
+  jsAd: console.log('prod')
+  requestAuth: requestAuthProd
+  rabbitmq:
+    ARTICLECLICK_DIRECT_EXCHANGE: articleclick_sevenseconds.exchange.direct
+    ARTICLECLICK_DIRECT_ROUTINGKEY: articleclick_sevenseconds.routingkey.direct
+    ARTICLECLICK_DIRECT_QUEUE: articleclick_sevenseconds.queue.direct
+    ARTICLEREAD_DIRECT_EXCHANGE: articleread.sevenseconds.exchange.direct
+    ARTICLEREAD_DIRECT_ROUTINGKEY: articleread.sevenseconds.routingkey.direct
+    ARTICLEREAD_DIRECT_QUEUE: articleread.sevenseconds.queue.direct
+    ARTICLEWEBREAD_DIRECT_EXCHANGE: articlewebread.sevenseconds.exchange.direct
+    ARTICLEWEBREAD_DIRECT_ROUTINGKEY: articlewebread.sevenseconds.routingkey.direct
+    ARTICLEWEBREAD_DIRECT_QUEUE: articlewebread.sevenseconds.queue.direct
+    COMMENT_DIRECT_EXCHANGE: comment.sevenseconds.exchange.direct
+    COMMENT_DIRECT_ROUTINGKEY: comment.sevenseconds.routingkey.direct
+    COMMENT_DIRECT_QUEUE: comment.sevenseconds.queue.direct
+    REPLY_DIRECT_EXCHANGE: reply.sevenseconds.exchange.direct
+    REPLY_DIRECT_ROUTINGKEY: reply.sevenseconds.routingkey.direct
+    REPLY_DIRECT_QUEUE: reply.sevenseconds.queue.direct
+    BARRAGE_DIRECT_EXCHANGE: barrage.sevenseconds.exchange.direct
+    BARRAGE_DIRECT_ROUTINGKEY: barrage.sevenseconds.routingkey.direct
+    BARRAGE_DIRECT_QUEUE: barrage.sevenseconds.queue.direct
+    COMPLAIN_DIRECT_EXCHANGE: complain.sevenseconds.exchange.direct
+    COMPLAIN_DIRECT_ROUTINGKEY: complain.sevenseconds.routingkey.direct
+    COMPLAIN_DIRECT_QUEUE: complain.sevenseconds.queue.direct
+    SIGN_DIRECT_EXCHANGE: sign.sevenseconds.exchange.direct
+    SIGN_DIRECT_ROUTINGKEY: sign.sevenseconds.routingkey.direct
+    SIGN_DIRECT_QUEUE: sign.sevenseconds.queue.direct
+    NOVICETASK_DIRECT_EXCHANGE: novicetask.sevenseconds.exchange.direct
+    NOVICETASK_DIRECT_ROUTINGKEY: novicetask.sevenseconds.routingkey.direct
+    NOVICETASK_DIRECT_QUEUE: novicetask.sevenseconds.queue.direct
+    DAILYTASK_DIRECT_EXCHANGE: dailytask.sevenseconds.exchange.direct
+    DAILYTASK_DIRECT_ROUTINGKEY: dailytask.sevenseconds.routingkey.direct
+    DAILYTASK_DIRECT_QUEUE: dailytask.sevenseconds.queue.direct
+    MERORDERFLOWWATER_DIRECT_EXCHANGE: merorderflowwater.convertmall.exchange.direct
+    MERORDERFLOWWATER_DIRECT_ROUTINGKEY: merorderflowwater.convertmall.routingkey.direct
+    MERORDERFLOWWATER_DIRECT_QUEUE: merorderflowwater.convertmall.queue.direct
+#    BOOKORDERFLOWWATER_DIRECT_EXCHANGE: bookorderflowwater.bookstore.exchange.direct
+#    BOOKORDERFLOWWATER_DIRECT_ROUTINGKEY: bookorderflowwater.bookstore.routingkey.direct
+#    BOOKORDERFLOWWATER_DIRECT_QUEUE: bookorderflowwater.bookstore.queue.direct
+  alibabaSmsAppkey: 23431362
+  alibabaSmsAppsecret: dfbbbfe72864929214f23f48c901a638
+  alibabaSmsSignName: 雅耀
+  alibabaSmsTemplateCodeAcountRegister: SMS_13026946
+  alibabaSmsTemplateCodePasswordUpdate: SMS_13026944
+  aliyunSmsAppkey: LTAIgDJerZxD8twJ
+  aliyunSmsAppsecret: 9PuLZNoEQRPDJm465MxL1JIXQY9Msh
+  aliyunSmsSignName: 七秒资讯
+  aliyunSmsTemplateCodeAcountRegister: SMS_89885232
+  aliyunSmsTemplateCodePasswordUpdate: SMS_89885231

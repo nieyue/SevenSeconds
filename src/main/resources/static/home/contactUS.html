@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport" />
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="static/css/contactUS.css">
+<title>联系我们</title>
+
+</head>
+<body>
+	<div class="container wrap" id="top">
+	<!-- <div class="col-xs-4 col-xs-offset-4 col-sm-0 col-sm-offset-11 col-md-0 col-md-offset-11 back_top">
+				<img src="static/imgs/bt1.jpg" id="back_img1" alt="" /> 
+				<a href="#top" target="_self">
+					<img src="static/imgs/bt2.jpg" id="back_img2" alt=""  />
+				</a>	
+	</div>  -->
+		<!-- 顶部图片 -->
+		<div class="row top_row">
+		  <!-- <div class="col-xs-3 col-sm-1 col-md-3 top1">
+		  	<img src="static/imgs/2.png" alt="" />
+		  </div>
+		  <div class="col-xs-4 col-sm-2 col-md-3 top2">
+		  	<img src="static/imgs/qimiao.png" alt="" />
+		  </div>  -->
+		  <div class="col-xs-12 col-sm-10 col-md-offset-8 col-md-2 top3">
+		  	<img src="static/imgs/ct1.png" alt="" />
+		  </div>
+		</div>
+		<!-- 顶部目录栏 -->
+		<div class="row">
+			<div class="col-md-12 top_ml">
+				<div class="col-md-6 col-md-offset-3 tm">
+					<div class="ml">
+					<a href="javascript:;">加入七秒</a>
+					</div>
+					<div class="ml">
+						<a href="javascript:;">用户协议</a>
+					</div>
+					<div class="ml">
+						<a href="helpCenter.html">帮助中心</a>
+					</div>
+					<div class="ml">
+						<a href="javascript:;">联系我们</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 顶部大图片 -->	
+	<div class="row"> 
+		<div class="col-xs-12 col-sm-12 col-md-12 top_pic">
+			<img src="static/imgs/ct2.png" alt="" />
+		</div>
+	</div>
+	<!-- 中间对话 -->
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-2 middle_talk1">
+			<img src="static/imgs/ct3.png" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 middle_talk2">
+			<img src="static/imgs/ct4.png" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-1 col-md-offset-6 middle_talk3">
+			<img src="static/imgs/ct5.png" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1 middle_talk4">
+			<img src="static/imgs/ct6.png" alt="" />
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1 middle_talk5">
+			<form>
+			<div class="col-xs-12 col-sm-12 col-md-5 middle_talk7">
+					<div class="col-xs-12 col-sm-12 col-md-4 middle_tk1">
+						个人信息
+					</div>
+					<hr class="middle_hr"/>
+					<div class="middle_tk2">
+						您的名字：
+						<div class="middle_txt1">
+							<input type="text"  />
+						</div>
+					</div>
+					<div class="middle_tk2">
+						您的号码：
+						<div class="middle_txt2">
+							<input type="text"  />
+						</div>
+					</div>
+					<div class="middle_tk3">
+						您的邮箱：
+						<div class="middle_txt3">
+							<input type="text"  />
+						</div>
+					</div>
+					<div class="middle_tk4">
+						备注：
+						<div class="middle_ta2">
+							<textarea ></textarea>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-12 col-sm-12 col-md-4 middle_talk6">
+					<div class="col-md-4 middle_tk1">
+						地址
+					</div>
+					<hr class="middle_hr"/>
+					<div class="middle_tk2">
+						请选择：
+						<div class="middle_opt1">
+							<select style="width:80px;" id="pre" onchange="chg(this);">
+								<option value="-1">省份</option>
+							</select>
+							<!-- <span>省</span> -->
+						</div>
+						<div class="middle_opt2">
+							<select style="width:95px;" id="city" ;>
+								<option value="-1">地级市</option>
+							</select>
+							<!-- <span>市</span> -->
+						</div>
+					</div>
+					<div class="middle_address">
+						详细地址：
+						<div class="middle_ta1">
+							<textarea ></textarea>
+						</div>
+					</div>
+					<button type="button" class="btn btn-warning middle_bt" >提交</button>
+				</div>
+				
+			</form>
+		</div>
+		
+		<div class="col-xs-12 col-sm-12 col-md-1 col-md-offset-6 middle_talk8">
+			<img src="static/imgs/ct5.png" alt="" />
+		</div>
+		
+		<div class="col-xs-12 col-sm-12 col-md-12 middle_talk9">
+			<img src="static/imgs/ct7.png" alt="" />
+			
+			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 middle_talk10">
+				<img src="static/imgs/ct9.png" alt="" />
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 middle_talk12">
+				<img src="static/imgs/ct10.png" alt="" />
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 middle_talk11">
+				<img src="static/imgs/ct8.png" alt="" />
+			</div>
+			
+		</div>
+		
+	</div>
+		
+	<!-- 底部 -->
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 bottom_div">
+			<div class="col-md-5 col-md-offset-1 bottom_left">
+				<div class="bottom_left1">
+					<img src="static/imgs/ct11.png" alt="" />
+				</div>
+				<div class="bottom_left2">
+					电话：+073185510160
+				</div>
+				<div class="bottom_left3">
+					地址：湖南长沙市岳麓区麓谷企业广场E8栋一单元三楼
+				</div>
+			</div>
+			
+			<div class="col-md-2 bottom_code">
+				<div class="bottom_code1">
+					<img src="static/imgs/AndriodCode.png" alt="" />
+					<div class="bottom_code2">
+						关注官方微信
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3 bottom_right">
+				<div class="bottom_right1">
+					<img src="static/imgs/qq.png" alt="" />
+					<div class="bottom_right2">
+						官方QQ：3550631190
+					</div>
+				</div>
+				<div class="bottom_right3">
+					<img src="static/imgs/wx.png" alt="" />
+					<div class="bottom_right4">
+						官方微信：3550631190
+					</div>
+				</div>
+				<div class="bottom_right5">
+					<img src="static/imgs/ct11.png" alt="" />
+				</div>
+				<div class="bottom_right6">
+					服务时间：9：:00-17:30 (周一到周五)
+				</div>
+			</div>
+			<div class="col-md-12 bottom_ba">
+				湘ICP备17011137号 Copyright 2016 itcast Inc,All rights reserved
+			</div>
+		</div>
+	</div>
+</div>			 	
+<script>
+/*三级联动*/ 
+//声明省
+var pres = ["北京","上海","天津","重庆","河北省","山东省","辽宁省",
+           "黑龙江省","吉林省","甘肃省","青海省","河南省","江苏省",
+           "湖北省","湖南省","江西省","浙江省","广东省","云南省",
+           "福建省","台湾省","海南省","山西省","四川省","陕西省",
+           "贵州省","安徽省","广西","内蒙古","西藏","新疆","宁夏","香港","澳门"]; //直接声明Array
+ //声明市
+var cities = [
+    /* ["东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","平谷区","怀柔区","密云区","延庆区"],
+    ["黄浦区","卢湾区","徐汇区","长宁区","静安区","普陀区","闸北区","虹口区","杨浦区","闵行区","宝山区","嘉定区","浦东区","金山区","松江区","青浦区","南汇区","奉贤区","崇明区"],
+    ["和平区","东丽区","河东区","西青区","河西区","津南区","南开区","北辰区","河北区","武清区","红挢区","塘沽区","汉沽区","大港区","宁河区","静海区","宝坻区","蓟县区"],
+    ["万州区","涪陵区","渝中区","大渡口区","江北区","沙坪坝区","九龙坡区","南岸区","北碚区","万盛区","双挢区","渝北区","巴南区","黔江区","长寿区","綦江区","潼南区","铜梁区","大足区","荣昌区","壁山区","梁平区","城口区","丰都区","垫江区","武隆区","忠县区","开县区","云阳区","奉节区","巫山区","巫溪区","石柱区","秀山区","酉阳区","彭水区","江津区","合川区","永川区","南川区"], */
+	['北京市'],
+	['上海市'],
+	['天津市'],
+	['重庆市'],
+    ["石家庄","邯郸","邢台","保定","张家口","承德","廊坊","唐山","秦皇岛","沧州","衡水"],
+	["济南","青岛","淄博","枣庄","东营","烟台","潍坊","济宁","泰安","威海","日照","莱芜","临沂","德州","聊城","滨州","菏泽"],
+	["沈阳","大连","鞍山","抚顺","本溪","丹东","锦州","营口","阜新","辽阳","盘锦","铁岭","朝阳","葫芦岛"],
+	["哈尔滨","齐齐哈尔","牡丹江","佳木斯","大庆","绥化","鹤岗","鸡西","黑河","双鸭山","伊春","七台河","大兴安岭"],
+	["长春","吉林","四平","辽源","通化","白山","松原","白城","延边"],
+	["兰州","嘉峪关","金昌","白银","天水","酒泉","张掖","武威","定西","陇南","平凉","庆阳","临夏","甘南"],
+	["西宁","海东","海南","海北","黄南","玉树","果洛","海西"],
+	["郑州","开封","洛阳","平顶山","安阳","鹤壁","新乡","焦作","濮阳","许昌","漯河","三门峡","南阳","商丘","信阳","周口","驻马店","济源"],
+	["南京","镇江","苏州","南通","扬州","盐城","徐州","连云港","常州","无锡","宿迁","泰州","淮安"],
+	["武汉","宜昌","荆州","襄樊","黄石","荆门","黄冈","十堰","恩施","潜江","天门","仙桃","随州","咸宁","孝感","鄂州"],
+	["长沙","常德","株洲","湘潭","衡阳","岳阳","邵阳","益阳","娄底","怀化","郴州","永州","湘西","张家界"],
+	["南昌市","景德镇","九江","鹰潭","萍乡","新馀","赣州","吉安","宜春","抚州","上饶"],
+	["杭州","宁波","温州","嘉兴","湖州","绍兴","金华","衢州","舟山","台州","丽水"],
+	["广州","深圳","珠海","汕头","东莞","中山","佛山","韶关","江门","湛江","茂名","肇庆","惠州","梅州","汕尾","河源","阳江","清远","潮州","揭阳","云浮"],
+	["昆明","大理","曲靖","玉溪","昭通","楚雄","红河","文山","思茅","西双版纳","保山","德宏","丽江","怒江","迪庆","临沧"],
+	["福州","厦门","莆田","三明","泉州","漳州","南平","龙岩","宁德"],
+	["台北","高雄","台中","台南","屏东","南投","云林","新竹","彰化","苗栗","嘉义","花莲","桃园","宜兰","基隆","台东","金门","马祖","澎湖"],
+	["海口市","三亚市","五指山市","琼海市","儋州市","文昌市","万宁市","东方市","澄迈县","定安县","屯昌县","临高县","白沙黎族自治县","昌江黎族自治县","乐东黎族自治县","陵水黎族自治县","保亭黎族苗族自治县","琼中黎族苗族自治县"],
+	["太原","大同","阳泉","长治","晋城","朔州","吕梁","忻州","晋中","临汾","运城"],
+	["成都","绵阳","德阳","自贡","攀枝花","广元","内江","乐山","南充","宜宾","广安","达川","雅安","眉山","甘孜","凉山","泸州"],
+	["西安","宝鸡","咸阳","铜川","渭南","延安","榆林","汉中","安康","商洛"],
+	["贵阳","六盘水","遵义","安顺","铜仁","黔西南","毕节","黔东南","黔南"],
+	["合肥","芜湖","蚌埠","马鞍山","淮北","铜陵","安庆","黄山","滁州","宿州","池州","淮南","巢湖","阜阳","六安","宣城","亳州"],
+	["南宁","柳州","桂林","梧州","北海","防城港","钦州","贵港","玉林","南宁地区","柳州地区","贺州","百色","河池"],
+	["呼和浩特","包头","乌海","赤峰","呼伦贝尔盟","阿拉善盟","哲里木盟","兴安盟","乌兰察布盟","锡林郭勒盟","巴彦淖尔盟","伊克昭盟"],
+	["拉萨","日喀则","山南","林芝","昌都","阿里","那曲"],
+	["乌鲁木齐","石河子","克拉玛依","伊犁","巴音郭勒","昌吉","克孜勒苏柯尔克孜","博尔塔拉","吐鲁番","哈密","喀什","和田","阿克苏"],
+	["银川","石嘴山","吴忠","固原"],
+	['香港'],
+	['澳门']
+	/* ["中西区","东区","九龙城区","观塘区","南区","深水埗区","湾仔区","黄大仙区","油尖旺区","离岛区","葵青区","北区","西贡区","沙田区","屯门区","大埔区","荃湾区","元朗区"],
+	["花地玛堂区","圣安多尼堂区","大堂区","望德堂区","风顺堂区","路氹城"] */
+   ];
+/*  var areas = [
+        [
+            ["东城1", "东城2", "东城3"],
+            ["昌平1", "昌平2", "昌平3"],
+            ["海淀1", "海淀2", "海淀3"]
+        ],
+        [
+            ["浦东1", "浦东2", "浦东3"],
+            ["高区1", "高区2", "高区3"]
+        ],
+        [
+            ["济南1", "济南2"],
+            ["青岛1", "青岛2"]
+        ]
+    ]  */
+    //设置一个省的公共下标
+var pIndex = -1;
+var preEle = document.getElementById("pre");
+var cityEle = document.getElementById("city");
+//var areaEle = document.getElementById("area");
+
+ //先设置省的值
+for (var i = 0; i < pres.length; i++) {
+    //声明option.<option value="pres[i]">Pres[i]</option>
+    var op = new Option(pres[i], i);
+    //添加
+    preEle.options.add(op);
+}
+
+function chg(obj) {
+	   
+    /* if (obj.value == -1) {
+        areaEle.options.length = 0;
+    } */
+    //获取值
+    var val = obj.value;
+    pIndex = obj.value;
+    
+    //获取ctiry
+    var cs = cities[val];
+    //获取默认区
+    //var as = areas[val][0];
+    //先清空市
+    cityEle.options.length = 0;
+    //areaEle.options.length = 0;
+    if(cs!=undefined){
+    	 for (var i = 0; i < cs.length; i++) {
+            var op = new Option(cs[i], i);
+            cityEle.options.add(op);
+        }	 
+    }else{
+    	var op=new Option("地级市",-1);
+    	cityEle.options.add(op);
+    } 
+    /* for (var i = 0; i < as.length; i++) {
+        var op = new Option(as[i], i);
+        areaEle.options.add(op);
+    } */
+}
+/*  function chg2(obj) {
+    var val = obj.selectedIndex;
+    var as = areas[pIndex][val];
+    areaEle.options.length = 0;
+    for (var i = 0; i < as.length; i++) {
+        var op = new Option(as[i], i);
+        areaEle.options.add(op);
+    }
+} */
+
+
+$(function(){
+	//1、给顶部栏目添加点击事件
+	//ct当前显示的栏目 
+	var ct=3;
+	/* $($(".top3").find("a")[ct]).css({"background-color":"#2eb4f1","font-weight": "700"}) */				 
+	$(".tm").find("a")[ct].className="tp";
+	clickTop();
+	function clickTop(){
+		$(".tm").find("a").each(function(i,e){
+			$(e).on("click",function(){
+				if(ct==i){
+					return;
+				}
+				$(".tm").find("a")[ct].className="";
+				//$($(".tm").find("a")[ct]).css("color","#333");
+				$(".tm").find("a")[i].className="tp";
+				//$($(".tm").find("a")[i]).css("color","white");
+				ct=i;
+			});
+		});
+	}
+	
+	
+
+   
+     
+})
+</script>
+	
+</body>
+</html>

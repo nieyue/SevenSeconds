@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.FlowWaterDao">
+<!-- 添加流水-->
+<insert id="addFlowWater" parameterType="FlowWater" keyProperty="flowWaterId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  flow_water_tb 
+   		 (type,subtype,money,real_money,create_date,acount_id)
+   VALUES
+    	 (#{type},#{subtype},#{money},#{realMoney},#{createDate},#{acountId})  
+</insert>  
+<!-- 更新流水-->
+<update id="updateFlowWater" parameterType="FlowWater" >  
+    UPDATE 
+    	flow_water_tb 
+    <set>
+    <if test="type!=null">
+    	type=#{type},
+    </if>
+    <if test="subtype!=null">
+    	subtype=#{subtype},
+    </if>
+    <if test="money!=null">
+    	money=#{money},
+    </if>
+    <if test="realMoney!=null">
+    	real_money=#{realMoney},
+    </if>
+    <if test="createDate!=null">
+    	create_date=#{createDate},
+    </if>
+    <if test="acountId!=null">
+    	acount_id=#{acountId},
+    </if>
+    </set> 
+    WHERE
+    	 flow_water_id=#{flowWaterId} 
+</update> 
+<!-- 删除角色-->
+<delete id="delFlowWater"  parameterType="Integer" >  
+    DELETE FROM
+    	 flow_water_tb 
+    	 WHERE flow_water_id=#{flowWaterId}
+</delete>  
+<!-- 加载角色-->
+<select id="loadFlowWater" parameterType="Integer" resultType="FlowWater" >
+SELECT 
+		flow_water_id,
+	 	type,
+	 	subtype,
+	 	money,
+	 	real_money,
+    	create_date,
+    	acount_id
+FROM flow_water_tb 
+WHERE flow_water_id=#{flowWaterId}
+</select>
+
+<!-- 分页查询角色-->
+<select id="browsePagingFlowWater" resultType="FlowWater">  
+   SELECT
+	    flow_water_id,
+	 	type,
+	 	subtype,
+	 	money,
+	 	real_money,
+    	create_date,
+    	acount_id
+	FROM flow_water_tb
+	<where>
+	<if test="acountId!=null">
+    AND	acount_id=#{acountId}
+    </if>
+	<if test="type!=null">
+    AND	type=#{type}
+    </if>
+	<if test="subtype!=null">
+    AND	subtype=#{subtype}
+    </if>
+	<if test="createDate!=null">
+    AND	Date(create_date)=Date(#{createDate})
+    </if>
+	   AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM flow_water_tb 
+	<where>
+	<if test="acountId!=null">
+    AND	acount_id=#{acountId}
+    </if>
+    <if test="type!=null">
+    AND	type=#{type}
+    </if>
+	<if test="subtype!=null">
+    AND	subtype=#{subtype}
+    </if>
+	<if test="createDate!=null">
+    AND	Date(create_date)=Date(#{createDate})
+    </if>
+	</where>
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(flow_water_id)
+	FROM flow_water_tb
+	<where>
+	<if test="acountId!=null">
+    AND	acount_id=#{acountId}
+    </if>
+    <if test="type!=null">
+    AND	type=#{type}
+    </if>
+	<if test="subtype!=null">
+    AND	subtype=#{subtype}
+    </if>
+	<if test="createDate!=null">
+    AND	Date(create_date)=Date(#{createDate})
+    </if>
+	</where>
+</select>   
+ 
+</mapper>

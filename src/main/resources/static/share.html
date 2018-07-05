@@ -1,0 +1,305 @@
+<html>
+    <head>
+        <title>7秒邀请函！邀请您一起来玩！</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport" />
+        <meta name="keywords" content="七秒资讯  一触即发">
+		<meta charset="UTF-8">
+		<meta name="description"
+			content="七秒资讯  一触即发！">
+			<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+		 <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcss.com/Buttons/2.0.0/css/buttons.min.css" rel="stylesheet">
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        html,body{
+            font-size:16px;
+        	background:url("http://www.newzhuan.cn/resources/img/register_bg2.png") repeat; 
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   		 color: #fff;
+		}
+		::-moz-placeholder { /* Mozilla Firefox 19+ */
+		    color: #fff;
+		}
+		input:-ms-input-placeholder{
+		    color: #fff;
+		}
+		input::-webkit-input-placeholder{
+		    color: #fff;
+		}
+		.form-group{
+		margin-bottom:5px;
+		}
+        .wrap{
+            max-width:640px;
+            margin: 0 auto;
+           	
+        }
+        .background—wrap{
+            position: absolute;
+            left: 50%;
+            top:0;
+            width: 100%;
+            height:100%;
+            max-width:640px;
+            text-align: center;
+            margin-left:-320px;
+       } 
+         .register-form{
+            position: absolute;
+            left: 50%;
+            top:47%;
+            width: 100%;
+            margin-left:-320px;
+            max-width:640px;
+            z-index:99999;
+            
+        }
+        @media screen and (max-width:640px){
+            .wrap{
+                width:100% !important;
+                }
+             .background—wrap{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 100%;
+            max-width:640px;
+            margin-left:0;
+            text-align: center;
+       			}
+       		.register-form{
+            position: absolute;
+            left: 0;
+            top:47%;
+            width: 100%;
+            margin-left:0;
+            max-width:640px;
+            z-index:99999;
+            padding-bottom:10px;
+        	} 
+            }
+       .background—wrap-img{
+            width:100%;
+            height:100%;
+        }
+     
+    </style>
+
+    </head>
+    <body >
+        <div class="wrap" >
+            <div class="background—wrap">
+                <img class="background—wrap-img" src="http://www.newzhuan.cn/resources/img/register_bg.png" alt="七秒资讯" />
+            </div>
+            <form class="container register-form" >
+			  <div class="form-group text-center">
+			  	<span style="display:inline-block;transform:rotate(90deg)">
+			  		<img alt=""  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	&nbsp;
+			  	</span>
+			  	&nbsp;
+			    <label style="color:#fff;font-size:1.5rem;">注册七秒资讯</label>
+			  	&nbsp;
+			  	<span style="display:inline-block;transform:rotate(90deg)">
+			  		<img alt=""  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	&nbsp;
+			  	</span>
+			  </div>
+			  <div class="form-group" style="position:relative;top:0;left:0;">
+			  	<span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:22px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_phone.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="text" style="position:absolute;top:0;left:0;border:0px solid rgba(255,255,255,0.70);position: static;left: 0;top:0; width: 100%;height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" id="registerPhone" placeholder="请输入手机号">
+			  </div>
+			  <div class="form-group">
+			  <span style="position:relative;top:0;left:0;display:inline-block;width: 60%;">
+			  	<span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:25px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_validcode.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="text" id="registerCode" style="border:0px solid rgba(255,255,255,0.70);width:100%; height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" placeholder="验证码"/>
+			  </span>
+				 <input type="button" class="button button-3d button-highlight button-rounded" style="width: 35%;height:37px;background-color:#FBE58D;color:red;padding:0;line-height:38px;float:right" id="registerCodeBtn" value="短信获取"/>
+		  </div>
+			  
+			  <div class="form-group" style="position:relative;top:0;left:0;">
+			  <span style="position:absolute;top:8px;left:5px;">
+			  		<img alt="" style="width:22px;height:30px;"  src="http://www.newzhuan.cn/resources/img/register_password.png">
+			  	</span>
+			  	<span style="position:absolute;top:8px;left:30px;">
+			  		<img alt="" style="height:30px;"  src="http://www.newzhuan.cn/resources/img/register_line.png">
+			  	</span>
+			    <input type="password" style="border:0px solid rgba(255,255,255,0.70);position: static;left: 0;top:0; width: 100%;height:45px;padding-left:50px;background: rgba(255,255,255,0.70);border-radius: 6px;" id="registerPassword" placeholder="请输入密码">
+			  </div>
+			  <div class="text-center">
+			  <button type="button" onclick="registerSubmit()" class="button button-3d button-highlight button-rounded " style="width:60%;background-color:#FBE58D;color:red;">立即注册</button>
+			  </div>
+			</form>
+        </div>
+<!-- 隐藏弹幕 -->
+        <div class="showDiag" style="display: none;background-color:#ccc;opacity:0.8;position:fixed;left:0;top:0;height:100%;width:100%;z-index:99999;"></div>
+	    <div class="showDiag" style="z-index:999999999;display: none;width:90%;height:40%;background-color:#fff;position:fixed;left:5%;bottom:3%;border-radius:20px;">
+	       <div style="position:absolute;top:30%;left:0;margin:auto;text-align:center;width:100%;">
+	       		  <span style="color:#FF3526;font-size:1.8rem;font-weight:bold">恭喜注册成功</span>
+	       </div>
+	       <div style="position:absolute;bottom:10%;left:0;margin:auto;text-align:center;width:100%;">
+		 <button type="button" onclick="directUrl()" class="button button-3d button-caution button-pill" style="width:60%;background-color:#FF3526;color:#fff;font-weight:bold;box-shadow:0 7px 0 #DB2528, 0 8px 3px rgba(0,0,0,0.3);font-size:14px;">下载七秒资讯</button>
+	       </div>
+        </div> 
+<!-- 隐藏弹幕 end-->
+    </body>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script>
+    <script src="http://www.newzhuan.cn/resources/js/base.js"></script>
+    <script type="text/javascript">
+    		   $("input").on("focus",function(){
+    		  //$(".background—wrap-img").css("height","auto");
+    		 // console.log(($(".wrap").css("width")).substr("px"))
+    		  console.log($(".wrap").css("width").substr(0,$(".wrap").css("width").indexOf("px"))<'640')
+    		  if($(".wrap").css("width").substr(0,$(".wrap").css("width").indexOf("px"))<'640'){
+    		  $(".background—wrap-img").css("height","auto");
+     		  $(".register-form").css("top","0");
+    		  $(".register-form").css("margin-top","95%");
+    		  }
+    		  });
+    		  $("input").on("blur",function(){
+    		  $(".background—wrap-img").css("height","100%");
+    		   $(".register-form").css("top","47%");
+    		  $(".register-form").css("margin-top","0"); 
+    		  }); 
+    
+    				
+    			var hostUrl="http://"+domainManager.SevenSeconds;
+    			//var hostUrl="http://"+location.hostname;
+    			//var hostUrl="http://www.newzhuan.cn";
+    			function directUrl(){
+				if(navigator.appVersion.indexOf("Android")>-1){
+		              location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		            }else if(navigator.appVersion.indexOf("iPhone")>-1){
+		              //location.href="https://www.pgyer.com/zeqf";
+		              setTimeout(function(){
+		              location.href="https://itunes.apple.com/us/app/%E4%B8%83%E7%A7%92%E8%B5%84%E8%AE%AF/id1324946628";
+		              //myUtils.myLoadingToast("IOS暂不开放");
+		              },1000);
+		            }
+    			}
+    			
+    			//发送手机验证码
+				var registerCodeBtn=document.querySelector("#registerCodeBtn");
+				var registerPhone=document.querySelector("#registerPhone");
+				var codetime=60;
+				registerCodeBtn.addEventListener("click",function(){
+					if(!/(^1[0-9]{10}$)/.test(registerPhone.value)){
+					myUtils.myLoadingToast("手机号错误");
+					return ;
+				}
+				$.ajax(hostUrl+'/acount/validCode?d='+new Date().getTime(),{
+				data:{
+				adminName:registerPhone.value.trim()
+				},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				xhrFields: {withCredentials: true},	 
+				//headers:{'Content-Type':'application/json'},	              
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					if(data.code==200){
+					myUtils.myLoadingToast("发送成功");
+					registerCodeBtn.disabled=true;	
+					registerCodeBtn.value="还剩"+codetime+"秒";
+					codetime--;
+					//定时器
+					var setIntervalCode=setInterval(function(){
+					registerCodeBtn.value="还剩"+codetime+"秒";
+						if(codetime<=0){
+							clearInterval(setIntervalCode);
+							codetime=60;
+							registerCodeBtn.disabled=false;	
+							registerCodeBtn.value="短信获取";
+							return;
+						}							
+					codetime--;
+					},1000);
+					}else if(data.code){
+						myUtils.myLoadingToast(data.msg);
+						directUrl();//跳转
+					}else{
+						myUtils.myLoadingToast("发送失败，请检查！");
+					}
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					myUtils.myLoadingToast("发送失败，请检查！");
+					
+				}
+			});
+				},false);
+    
+    		//注册
+			function registerSubmit(){
+			var registerPhone=document.querySelector("#registerPhone");
+				var registerPassword=document.querySelector("#registerPassword");
+				var registerCode=document.querySelector("#registerCode");
+				if(!/(^1[0-9]{10}$)/.test(registerPhone.value)){
+					myUtils.myLoadingToast("手机号错误");
+					return ;
+				}
+				if(registerPassword.value.length<6||registerPassword.value.length>16){
+					myUtils.myLoadingToast("密码长度6-16");
+					return ;
+				}
+				if(registerCode.value.length!=4){
+					myUtils.myLoadingToast("验证码长度4");
+					return ;
+				}
+				var requestData={
+					adminName:registerPhone.value,
+					password:registerPassword.value,
+					validCode:registerCode.value
+					};
+				if(myUtils.GetQueryString("acountId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("acountId"))){
+				requestData.masterId=myUtils.GetQueryString("acountId");
+				}else	
+				if(myUtils.GetQueryString("masterId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("masterId"))){
+				requestData.masterId=myUtils.GetQueryString("masterId");
+				}	
+				if(myUtils.GetQueryString("spreadId")!=null&&myUtils.userVerification.catNum.test(myUtils.GetQueryString("spreadId"))){
+				requestData.spreadId=myUtils.GetQueryString("spreadId");
+				}	
+				$.ajax(hostUrl+'/acount/webregister',{
+				data:requestData,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				//headers:{'Content-Type':'application/json'},	  
+				xhrFields: {withCredentials: true},	             
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					if(data.code==200){
+					myUtils.myLoadingToast("注册成功");
+					$(".showDiag").show();
+					}else{
+						myUtils.myLoadingToast("注册失败，请检查！");
+					}
+					
+				},
+				error:function(xhr,type,errorThrown){
+					myUtils.myLoadingToast("注册失败，请检查！");
+				}
+			});
+
+			}
+        </script>
+
+</html>

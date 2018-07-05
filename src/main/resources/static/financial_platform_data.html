@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>内部数据</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="数据列表">
+<meta charset="UTF-8">
+<meta name="description"
+	content="数据列表">
+<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/sellerbase.css" rel="stylesheet">
+<style>
+th,tr,td{
+text-align:center;}
+.list-group-item{
+padding:0 15px !important;
+}
+</style>
+</head>
+
+<body ng-app="indexApp">
+	<div ng-controller="indexCtrl"  style="margin:auto;max-width:1200px;">
+<!-- 数据标题-->
+<div style="margin:10px;">
+	 <div  class="text-danger" style="font-size:30px;color:#ccc;text-align:center;">总数据</div>
+	
+</div>
+<!-- 数据标题 end-->
+<!-- 数据饼-->
+<div id='cake1' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 数据饼 end-->
+<!-- 数据列表 -->
+ <div style="width:100%">
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<tr>
+			  <th >金融名</th>
+			  <th >类型</th>
+			  <th>图片</th>
+			  <th >状态</th>
+			</tr>
+			<tr >
+			  <td ng-bind="financial.title"></td> 
+			  <td ng-bind="financial.financialCate.name"></td>
+			  <td>
+				 <img class=" comment-list-item-img " style="margin-top:3px;"
+					ng-src="{{financial.imgAddress}}" >
+			  </td>
+			  <td >
+			  	<span  ng-bind="financial.status==1?'上架':financial.status==0?'下架':''"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <th >名称</th>
+			  <th >期限</th>
+			  <th >推荐类型</th>
+			  <th >阅读数</th>
+			</tr>
+			<tr >
+			  <td  ng-bind="financial.title"></td>
+			   <td >
+			   <span ng-bind="financial.term"></span>
+			   </td> 
+			   <td >
+			   <span ng-repeat="recommend in financialRecommend" ng-if="recommend.id==financial.recommend" ng-bind="recommend.value"></span>
+			   </td> 
+			  <td >
+			  <span style="color:#999" ng-bind="financial.readingNumber"></span>
+			  </td>
+			</tr>
+			<tr>
+			  <th >PV</th>
+			  <th >UV</th>
+			  <th >IP</th>
+			  <th >创建日期</th> 
+			</tr>
+			<tr >
+			  <td ng-bind="Financial.pvs||'0'"></td>
+			  <td ng-bind="financial.uvs ||'0'"></td> 
+			  <td ng-bind="financial.ips ||'0'"></td>
+			  <td ng-bind="financial.createDate"></td>
+			</tr>
+			<tr>
+			  <th >项目总额</th>
+			  <th >投资限额</th>
+			  <th >起投金额</th>
+			</tr>
+			<tr >
+			  <td  ng-bind="financial.projectTotalMoney"></td>
+			   <td >
+			   <span ng-bind="financial.investmentMoney"></span>
+			   </td> 
+			   <td >
+			   <span ng-bind="financial.startInvestmentMoney"></span>
+			   </td> 
+			</tr>
+			</table>
+		</div>
+<!-- 数据列表end -->
+<!-- 每日数据标题-->
+<div style="margin:10px;">
+	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日数据</label>
+	
+</div>
+<!-- 每日数据标题 end-->
+<!-- 每日数据切换 -->
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-default" ng-click="financialDataByDay(1)" ng-disabled="showNum==1" >今日数据</button>
+  <button type="button" class="btn btn-info"  ng-click="financialDataByDay(7)"  ng-disabled="showNum==7">七日数据</button>
+  <button type="button" class="btn btn-warning"  ng-click="financialDataByDay(30)"  ng-disabled="showNum==30">月数据</button>
+</div>
+<!--每日数据切换end -->
+
+<!-- 每日数据图表-->
+<div id='dataByFinancialAndDayEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日数据图表 end-->
+<!-- 每日数据 -->
+<div style="width:100%" >
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<thead>
+			<tr>
+			  <th>日期</th>
+			  <th>PV</th>
+			  <th>UV</th>
+			  <th>IP</th>
+			  <th>阅读数</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataByFinancialAndDay in dataByFinancialAndDayList" >
+				  <td ng-bind="dataByFinancialAndDay.createDate | limitTo:10"></td>
+				  <td >
+				  <span ng-bind="dataByFinancialAndDay.pvs"></span>
+				  </td>
+				  <td ng-bind="dataByFinancialAndDay.uvs"></td>
+				  <td ng-bind="dataByFinancialAndDay.ips"></td>
+				  <td ng-bind="dataByFinancialAndDay.readingNumber"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+<!-- 每日数据end -->
+
+<!-- 每日时间段数据标题-->
+<div style="margin:10px;">
+	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日时间段数据</label>
+	
+</div>
+<!-- 每日时间段数据标题 end-->
+
+<!-- 每日时间段数据图表-->
+<div id='dataByFinancialAndTimePeriodEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日时间段数据图表 end-->
+<!-- 每日时间段数据 -->
+<div style="width:100%" >
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<thead>
+			<tr>
+			  <th>日期</th>
+			  <th>PV</th>
+			  <th>UV</th>
+			  <th>IP</th>
+			  <th>阅读数</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataByFinancialAndTimePeriod in dataByFinancialAndTimePeriodList" >
+				  <td>
+				  <span ng-bind="dataByFinancialAndTimePeriod.createDate | limitTo:10"></span>
+				  (
+				  <span ng-bind="dataByFinancialAndTimePeriod.index==0?'16-24':dataByFinancialAndTimePeriod.index==1?'8-16':'0-8'"></span>
+				  )
+				  </td>
+				  <td >
+				  <span ng-bind="dataByFinancialAndTimePeriod.pvs"></span>
+				  </td>
+				  <td ng-bind="dataByFinancialAndTimePeriod.uvs"></td>
+				  <td ng-bind="dataByFinancialAndTimePeriod.ips"></td>
+				  <td ng-bind="dataByFinancialAndTimePeriod.readingNumber"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+<!-- 每日时间段数据end -->
+
+
+<!-- 每日详细数据标题-->
+<div style="margin:10px;">
+	 <label  class="text-danger" style="font-size:24px;color:#ccc;">每日详细数据</label>
+	
+</div>
+<!-- 每日详细数据标题 end-->
+<!-- 每日详细数据图表-->
+<div id='dataByFinancialEchart' style='height:400px;border:1px dashed #ccc;'></div>
+<!-- 每日详细数据图表 end-->
+<!-- 每日详细数据列表 -->
+ 	<div style="width:100%" >
+			<table class="table table-bordered" style="width:100%;background-color: #fff;">
+			<thead>
+			<tr>
+			  <th>序号</th>
+			  <th>PV</th>
+			  <th>UV</th>
+			  <th>IP</th>
+			  <th>阅读数</th>
+			  <th>创建日期</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="dataByFinancial in dataByFinancialList" >
+				  <td >
+				  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+				  </td>
+				  <td >
+				  <span ng-bind="dataByFinancial.pvs"></span>
+				  </td>
+				  <td ng-bind="dataByFinancial.uvs"></td>
+				  <td ng-bind="dataByFinancial.ips"></td>
+				  <td ng-bind="dataByFinancial.readingNumber"></td>
+				  <td ng-bind="dataByFinancial.createDate | limitTo:10"></td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		<!-- 加载更多 -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    </ul>
+   </div>
+<!--  加载更多end -->
+
+		
+<!-- 每日详细数据列表end -->
+</div>
+	<!-- 页面列表end -->
+	
+	
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+	<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts-en.common.min.js"></script>
+	<script src="/resources/js/domainManager.js"></script>
+	<script src="/resources/js/base.js"></script>
+	<script>
+	$(function(){
+	//获取data-src
+	$("img").each(function(index){
+		if($(this).attr("data-src")){
+			$(this).attr("src",$(this).attr("data-src"));
+		}
+	});
+	//$("#loadAnimationBody").css("display","none");
+	});
+    	var indexApp=angular.module('indexApp',[]);
+    	  indexApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+       
+					
+    	indexApp.controller('indexCtrl',function($rootScope,$scope){
+    	//推荐类型
+    	$scope.financialRecommend=
+    [{id:0,value:'不推'},
+	{id:1,value:'封推'},
+	{id:2,value:'首投推'},
+	{id:3,value:'复投推'}
+	];
+    	//显示
+    	$scope.showNum=1;//默认显示当天数据 ，7七天数据，30月数据，0详细数据
+    	$scope.financialCenterDomainUrl="http://"+domainManager.FinancialCenter;
+    	//$scope.FinancialStoreDomainUrl="http://"+location.host+":8082";
+    	//$scope.FinancialStoreDomainUrl="http://Financial.newzhuan.cn";
+       	/**
+    	**日数据
+    	*/
+       	$scope.dataByFinancialAndDayListInit=function(day){
+       	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
+       	//var endDate=myUtils.timeStampToDate(myUtils.todayStartTime());//今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayEndTime());//今日
+        //初始化
+  $.get($scope.financialCenterDomainUrl+"/dailyData/statisticsDailyData?financialId="+myUtils.GetQueryString("financialId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
+           $scope.dataByFinancialAndDayList=pld.list;
+           initDataByFinancialAndDayList($('#dataByFinancialAndDayEchart')[0],day);
+			 //console.log($scope.dataByFinancialAndDayList)
+			$scope.$apply();
+               });
+			};
+				$scope.dataByFinancialAndDayListInit($scope.showNum);
+		/**
+		**切换日、周、月数据
+		*/		
+		$scope.financialDataByDay=function(day){
+		$scope.showNum=day;
+		$scope.dataByFinancialAndDayListInit($scope.showNum);
+		$scope.dataByFinancialAndTimePeriodListInit($scope.showNum);
+		};	
+		
+		//初始化图表每日数据
+	function initDataByFinancialAndDayList(echartObj,day){
+           var dataList={
+           createDates:[],
+           pvs:[],
+           uvs:[],
+           ips:[],
+           readingNumber:[]
+           };
+           	var  data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0
+           };
+           $scope.newDataByFinancialAndDayList=[];
+               for(var z=day-1;z>=0;z--){
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0
+		       };
+               data.createDate=myUtils.timeStampToDayDate(myUtils.beforeDayToTodayTime(z));//获取当前时间
+ 				$scope.newDataByFinancialAndDayList[z]=data;
+     	 		}
+           //注入
+           for(var i=0;i<$scope.newDataByFinancialAndDayList.length;i++){//先循环所有天数
+           if($scope.dataByFinancialAndDayList.length>0){
+             for(var j=0;j<$scope.dataByFinancialAndDayList.length;j++){//循环已有的天数
+             	if(myUtils.timeStampToDayDate($scope.dataByFinancialAndDayList[j].createDate)==$scope.newDataByFinancialAndDayList[i].createDate){
+             	$scope.newDataByFinancialAndDayList[i].createDate=myUtils.timeStampToDayDate($scope.dataByFinancialAndDayList[j].createDate);
+             	$scope.newDataByFinancialAndDayList[i].pvs=$scope.dataByFinancialAndDayList[j].pvs;
+             	$scope.newDataByFinancialAndDayList[i].uvs=$scope.dataByFinancialAndDayList[j].uvs;
+             	$scope.newDataByFinancialAndDayList[i].ips=$scope.dataByFinancialAndDayList[j].ips;
+             	$scope.newDataByFinancialAndDayList[i].readingNumber=$scope.dataByFinancialAndDayList[j].readingNumber;
+             	}
+             }
+           }
+           dataList.createDates.unshift(myUtils.timeStampToDayDate($scope.newDataByFinancialAndDayList[i].createDate));
+           dataList.pvs.unshift($scope.newDataByFinancialAndDayList[i].pvs);
+           dataList.uvs.unshift($scope.newDataByFinancialAndDayList[i].uvs);
+           dataList.ips.unshift($scope.newDataByFinancialAndDayList[i].ips);
+           dataList.readingNumber.unshift($scope.newDataByFinancialAndDayList[i].readingNumber);
+           }
+           $scope.dataByFinancialAndDayList=$scope.newDataByFinancialAndDayList;
+           initEcharts(dataList,echartObj);
+			$scope.$apply();
+      
+	}
+	
+  	/**
+    	**日时间段数据
+    	*/
+       	$scope.dataByFinancialAndTimePeriodListInit=function(day){
+       	var startDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(day-1<0?0:day-1));//默认为今日
+       	var endDate=myUtils.timeStampToDate(myUtils.todayEndTime());//今日
+        //初始化
+  $.get($scope.financialCenterDomainUrl+"/data/statisticsData?financialId="+myUtils.GetQueryString("financialId")+"&pageNum=1&pageSize="+day+"&startDate="+startDate+"&endDate="+endDate,function(pld){
+           $scope.dataByFinancialAndTimePeriodList=pld.list;
+           initDataByFinancialAndTimePeriodList($('#dataByFinancialAndTimePeriodEchart')[0],day);
+			// console.log($scope.dataByFinancialAndTimePeriodList)
+			$scope.$apply();
+               });
+			};
+				$scope.dataByFinancialAndTimePeriodListInit($scope.showNum);
+		
+		//初始化图表每日数据
+	function initDataByFinancialAndTimePeriodList(echartObj,day){
+           var dataList={
+           createDates:[],
+           pvs:[],
+           uvs:[],
+           ips:[],
+           readingNumber:[],
+           index:[]
+           };
+           	var  data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0,
+           index:0
+           };
+           $scope.newDataByFinancialAndTimePeriodList=[];
+               for(var z=day-1;z>=0;z--){
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+           			index:0
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z).getTime()+16*60*60*1000);//获取当前时间
+ 				$scope.newDataByFinancialAndTimePeriodList[z*3+0]=data;
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+          		    index:1
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z).getTime()+8*60*60*1000);//获取当前时间
+ 				$scope.newDataByFinancialAndTimePeriodList[z*3+1]=data;
+               data={
+		           createDate:'',
+		           pvs:0,
+		           uvs:0,
+		           ips:0,
+		           readingNumber:0,
+                   index:2
+		       };
+               data.createDate=myUtils.timeStampToDate(myUtils.beforeDayToTodayTime(z));//获取当前时间
+ 				$scope.newDataByFinancialAndTimePeriodList[z*3+2]=data;
+     	 		}
+           //注入
+           for(var i=0;i<$scope.newDataByFinancialAndTimePeriodList.length;i++){//先循环所有天数
+           if($scope.dataByFinancialAndTimePeriodList.length>0){
+             for(var j=0;j<$scope.dataByFinancialAndTimePeriodList.length;j++){//循环已有的天数
+             	if(myUtils.timeStampToDate($scope.dataByFinancialAndTimePeriodList[j].createDate)==$scope.newDataByFinancialAndTimePeriodList[i].createDate){
+             	$scope.newDataByFinancialAndTimePeriodList[i].createDate=myUtils.timeStampToDate($scope.dataByFinancialAndTimePeriodList[j].createDate);
+             	$scope.newDataByFinancialAndTimePeriodList[i].pvs=$scope.dataByFinancialAndTimePeriodList[j].pvs;
+             	$scope.newDataByFinancialAndTimePeriodList[i].uvs=$scope.dataByFinancialAndTimePeriodList[j].uvs;
+             	$scope.newDataByFinancialAndTimePeriodList[i].ips=$scope.dataByFinancialAndTimePeriodList[j].ips;
+             	$scope.newDataByFinancialAndTimePeriodList[i].readingNumber=$scope.dataByFinancialAndTimePeriodList[j].readingNumber;
+             	}
+             }
+           }
+           dataList.createDates.unshift(myUtils.timeStampToDate($scope.newDataByFinancialAndTimePeriodList[i].createDate));
+           dataList.pvs.unshift($scope.newDataByFinancialAndTimePeriodList[i].pvs);
+           dataList.uvs.unshift($scope.newDataByFinancialAndTimePeriodList[i].uvs);
+           dataList.ips.unshift($scope.newDataByFinancialAndTimePeriodList[i].ips);
+           dataList.readingNumber.unshift($scope.newDataByFinancialAndTimePeriodList[i].readingNumber);
+           }
+          // console.log($scope.newDataByFinancialAndTimePeriodList)
+           $scope.dataByFinancialAndTimePeriodList=$scope.newDataByFinancialAndTimePeriodList;
+           initEcharts(dataList,echartObj);
+				$scope.$apply();
+      
+	}
+		
+		
+			
+    		/*
+            *列表
+            */
+            $scope.dataByFinancialList=[]; 		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.totalNumber=0;//总管理员数目
+ 			$scope.showPageNumberArray=[];//显示页面循环的数组 类似 1,2,3,4,5
+			$scope.totalPage=0;//总页数
+				
+			$scope.currentPage=1;//当前页
+			$scope.pageNumber=10;//每页显示数目
+			$scope.mostShowPageNumber=5;//设定最多显示页码数目	
+			$scope.pagination=myUtils.myPaginationHandler();
+			//显示收益用户默认 否
+			$scope.profitAcountShow=false;
+			//收益用户
+			$scope.acount={};
+			
+			//点击哪页显示哪页
+			$scope.toPage=function(currentPageNumber){
+			  if($scope.pagination.toPage(currentPageNumber,$scope.currentPage,$scope.totalPage)){
+			  //$scope.showNoticeListIcon=true;
+			  $scope.currentPage=$scope.pagination.currentPage;
+			  $scope.dataByFinancialListInit();
+			  }
+			};
+			$scope.dataByFinancialListInit=function(){
+			  $.get($scope.financialCenterDomainUrl+"/data/count?financialId="+myUtils.GetQueryString("financialId"),function(cd){
+           		$scope.totalNumber=cd;             
+           //页码初始化
+          $scope.totalPage=$scope.pagination.getTotalPage($scope.totalNumber,$scope.pageNumber);//总页码数目     
+          $scope.showPageNumberArray=$scope.pagination.getShowPageNumber($scope.totalPage,$scope.pageNumber,$scope.mostShowPageNumber,$scope.currentPage);//显示页码数目 
+        //初始化
+  $.get($scope.financialCenterDomainUrl+"/data/list?financialId="+myUtils.GetQueryString("financialId")+"&pageNum="+(($scope.currentPage-1)*$scope.pageNumber+1)+"&pageSize="+$scope.pageNumber,function(pld){
+           $scope.dataByFinancialList=pld.list;
+           initDataByFinancialList($('#dataByFinancialEchart')[0]);
+			 console.log($scope.dataByFinancialList)
+			$scope.$apply();
+               });
+       });
+			};
+			$scope.dataByFinancialListInit();
+			/*
+            *列表end
+            */
+    	
+    	
+    	
+        //初始化
+  $.get($scope.financialCenterDomainUrl+"/financial/"+myUtils.GetQueryString("financialId"),function(d){
+  console.log(d)
+           $scope.financial=d.list[0];
+         //  $scope.showNoticeListIcon=false;
+         //initDataByFinancialList();
+         cakeEchartInit(
+         {title: $scope.financial.title,
+         type: $scope.financial.financialCate.name,
+         columns:[
+         '项目总额','投资限额','起投金额','阅读数','PV','UV','IP'],
+         prices:[
+         {name:'项目总额',value:$scope.financial.projectTotalMoney},
+         {name:'投资限额',value:$scope.financial.investmentMoney},
+         {name:'起投金额',value:$scope.financial.startInvestmentMoney}
+         ],
+         numbers:[
+         {name:'阅读数',value:$scope.financial.readingNumber},
+         {name:'PV',value:$scope.financial.pvs},
+         {name:'UV',value:$scope.financial.uvs},
+         {name:'IP',value:$scope.financial.ips}
+         ]
+         });
+			$scope.$apply();
+       });
+	//初始化图表每日详细数据
+	function initDataByFinancialList(echartObj){
+           var dataList={
+           createDates:[],
+           pvs:[],
+           uvs:[],
+           ips:[],
+           readingNumber:[]
+           };
+           $scope.newDataByFinancialList=[];
+           	var  data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0
+           };
+           for(var i=0;i<$scope.dataByFinancialList.length;i++){
+           if($scope.dataByFinancialList[i+1] && myUtils.timeStampToDayDate($scope.dataByFinancialList[i].createDate)==myUtils.timeStampToDayDate($scope.dataByFinancialList[i+1].createDate)){
+           data.pvs+=$scope.dataByFinancialList[i].pvs;
+           data.uvs+=$scope.dataByFinancialList[i].uvs;
+           data.ips+=$scope.dataByFinancialList[i].ips;
+           data.readingNumber+=$scope.dataByFinancialList[i].readingNumber;
+           data.createDate=$scope.dataByFinancialList[i].createDate;
+           }else{
+           data.pvs+=$scope.dataByFinancialList[i].pvs;
+           data.uvs+=$scope.dataByFinancialList[i].uvs;
+           data.ips+=$scope.dataByFinancialList[i].ips;
+           data.readingNumber+=$scope.dataByFinancialList[i].readingNumber;
+           data.createDate=$scope.dataByFinancialList[i].createDate;
+           $scope.newDataByFinancialList.push(data);
+           data={
+           createDate:'',
+           pvs:0,
+           uvs:0,
+           ips:0,
+           readingNumber:0
+           };
+           }
+           }
+           console.log($scope.newDataByFinancialList)
+            for(var j=0;j<$scope.newDataByFinancialList.length;j++){
+           dataList.createDates.unshift(myUtils.timeStampToDayDate($scope.newDataByFinancialList[j].createDate));
+           dataList.pvs.unshift($scope.newDataByFinancialList[j].pvs);
+           dataList.uvs.unshift($scope.newDataByFinancialList[j].uvs);
+           dataList.ips.unshift($scope.newDataByFinancialList[j].ips);
+           dataList.readingNumber.unshift($scope.newDataByFinancialList[j].readingNumber);
+           }
+          // console.log(dataList)
+           initEcharts(dataList,echartObj);
+				$scope.$apply();
+      
+	}
+	//initEcharts();
+	//图表init
+	function initEcharts(list,echartObj){
+	     // 指定图表的配置项和数据
+    var myChart = echarts.init(echartObj);
+        let option = {
+    // title: {
+    //     text: titleText
+    // },
+    tooltip: {
+        trigger: 'axis'
+    },
+    // 径向渐变，前三个参数分别是圆心 x, y 和半径，取值同线性渐变
+backgroundColor: {
+    type: 'linear',
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: [{
+        offset: 0, color: '#fff' // 0% 处的颜色
+    },  {
+        offset: 1, color: '#fff' // 100% 处的颜色
+    }
+    ],
+    globalCoord: false // 缺省为 false
+},
+    legend: {
+        data:['浏览次数(PV)','独立访客(UV)','IP','阅读数']
+    },
+    // grid: {
+    //     left: '3%',
+    //     right: '4%',
+    //     bottom: '3%',
+    //     containLabel: true
+    // },
+    toolbox: {
+        feature: {
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar','stack','tiled']},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap:  false,
+       data: list.createDates  
+       //data: ["ss",'saa','sdf',23]   
+    },
+     yAxis: [
+        {
+            type: 'value',
+            // scale: true,
+            name: '数量'
+            ,min: 0,
+            boundaryGap: [0.2, 0.2]
+        }
+    ],
+    series: [
+        {
+            name:'浏览次数(PV)',
+            type:'line',
+            //data: [1,1,2,2]
+            data: list.pvs
+        },
+        {
+            name:'独立访客(UV)',
+            type:'line',
+            data: list.uvs
+        },
+        {
+            name:'IP',
+            type:'line',
+            data: list.ips
+        },
+        {
+            name:'阅读数',
+            type:'line',
+            data: list.readingNumber
+        }
+    ]
+};
+
+    myChart.setOption(option,true);
+     setInterval(function(){
+	window.onresize = myChart.resize
+	},10);
+	}
+	
+	//饼状图
+	function cakeEchartInit(list){
+	var  myChart1 = echarts.init($('#cake1')[0]);
+	option = {
+    title : {
+        text: list.title,
+        subtext: '类型：'+list.type,
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    backgroundColor: {
+    type: 'linear',
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: [{
+        offset: 0, color: '#fff' // 0% 处的颜色
+    },  {
+        offset: 1, color: '#fff' // 100% 处的颜色
+    }
+    ],
+    globalCoord: false // 缺省为 false
+},
+    legend: {
+        x : 'center',
+        y : 'bottom',
+        data:list.columns
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true,
+                type: ['pie', 'funnel']
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'信息',
+            type:'pie',
+            radius : [20, 80],
+            center : ['25%', '50%'],
+            roseType : 'radius',
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            lableLine: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:list.prices
+        },
+        {
+            name:'数据',
+            type:'pie',
+            radius : [20, 80],
+            center : ['75%', '50%'],
+            roseType : 'area',
+            data:list.numbers
+        }
+    ]
+};
+	myChart1.setOption(option,true);
+	//window.onresize = myChart1.resize
+	setInterval(function(){
+	window.onresize = myChart1.resize
+	},10);
+	}
+    	});
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.LabelArticleDao">
+<!-- 添加标签文章 -->
+<insert id="addLabelArticle" parameterType="LabelArticle" keyProperty="labelArticleId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  label_article_tb 
+   		 (
+   		 label_id,
+   		 article_id,
+   		 create_date,
+   		 update_date
+   		)
+   VALUES
+    	 (
+    	 #{labelId},
+    	 #{articleId},
+    	 #{createDate},
+    	 #{updateDate}
+    	 )  
+</insert>  
+<!-- 更新标签文章 -->
+<update id="updateLabelArticle" parameterType="LabelArticle" >  
+    UPDATE 
+    	label_article_tb 
+    <set>
+    <if test="labelId!=null">
+    	label_id=#{labelId},
+    </if>
+    <if test="articleId!=null">
+    	article_id=#{articleId},
+    </if>
+    <if test="createDate!=null">
+    	create_date=#{createDate},
+    </if>
+    <if test="updateDate!=null">
+    	update_date=#{updateDate},
+    </if>
+    </set> 
+    WHERE
+    	 label_article_id=#{labelArticleId} 
+</update> 
+<!-- 删除标签文章-->
+<delete id="delLabelArticle"  parameterType="Integer" >  
+    DELETE FROM
+    	 label_article_tb 
+    	 WHERE label_article_id=#{labelArticleId}
+</delete>  
+<!-- 加载标签文章-->
+<select id="loadLabelArticle" parameterType="Integer" resultType="LabelArticle" >
+SELECT 
+		 label_article_id,
+		 label_id,
+   		 article_id,
+   		 create_date,
+   		 update_date
+FROM label_article_tb 
+WHERE label_article_id=#{labelArticleId}
+</select>
+
+<!-- 分页查询标签文章-->
+<select id="browsePagingLabelArticle" resultType="LabelArticle">  
+        SELECT
+	     label_article_id,
+		 label_id,
+   		 article_id,
+   		 create_date,
+   		 update_date
+	FROM label_article_tb
+	<where>
+	<if test="labelId!=null">
+	AND label_id=#{labelId}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM label_article_tb
+	<where>
+	<if test="labelId!=null">
+	AND label_id=#{labelId}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(label_article_id)
+	FROM label_article_tb
+	<where>
+	<if test="labelId!=null">
+	AND label_id=#{labelId}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

@@ -1,0 +1,45 @@
+ <div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.bookChapterList({bookId:bookId})">返回书章节列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">增加书章节</label>
+<br/>
+<!-- 增加 -->
+	<form novalidate name="myAddBookChapterForm" ng-submit="addBookChapterForm()">
+    <label  class="text-danger">※章数（含0正整数，0为楔子或者序章，1为第一章，以此类推）</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="bookChapter.number" name="number" ng-pattern="/^\+?[0-9][0-9]*$/" placeholder="含0正整数">
+    <div class="text-danger alert alert-danger " ng-show="myAddBookChapterForm.number.$dirty && myAddBookChapterForm.number.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入章数(含0正整数)
+				    </div>
+  </div>
+    <label  class="text-danger">※书章节名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="bookChapter.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddBookChapterForm.title.$dirty && myAddBookChapterForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确书章节标题
+				    </div>
+  </div>
+   <label class="text-danger" >※费用</label>
+  <div class="comment-input-margin " >
+     <select style="width:180px;height:50px;" ng-model="bookChapter.cost" name="cost"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'免费'},{id:1,value:'收费'}]">
+  </select>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="bookChapter.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'}]">
+  </select>
+  </div>
+  <label class="text-danger" >※书内容</label>
+  <div class="comment-input-margin " >
+    <textarea type="text" class="comment-input" ng-trim=false style="min-width:600px;width:100%;height:200px;"  required name="content"
+     ng-model="bookChapter.content" required ng-minlength="1" ng-maxlength="65535" placeholder="65535位"  placeholder="1-65535位" ></textarea>
+    <div class="text-danger alert alert-danger " ng-show="myAddBookChapterForm.content.$dirty && myAddBookChapterForm.content.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>1-65535位
+	</div>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myAddBookChapterForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 增加end-->

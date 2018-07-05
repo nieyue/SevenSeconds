@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+html body{background: #f5f5f5;}
+.wrap{max-width:980px;margin:0 auto;height:100%;background: white;}
+@media only screen and (max-width: 640px)  {
+  html {
+    font-size: 10px !important;
+  }
+}
+/*顶部图片*/
+/* .top1 img{width:75%;margin: -6% 10%;}
+.top2 img{width:80%;margin: 16% -37%;} */
+.top_row{position: relative;/* height: 168px;line-height: 168px; */margin: 2% 0 0 0;}
+.top3{padding: 0px 0px;position: relative;/* top: -83px; */}
+.top3 img{width:100%;margin: 0 0 0 45%;}
+/*顶部目录栏*/
+.top_ml{padding: 0px 0px;background-color: #068cf7;margin: 5% 0 0 0;}
+.tm{padding: 0px 0px;}
+.ml{float: left;width:25%;font-size: 17px;height: 45px;line-height: 45px;position: relative;}
+.ml a{position: absolute;width: 100%;text-align: center; height: 100%;text-decoration: none;color: white;}
+.ml a:hover{background-color: #da9735;}
+.tp{background-color: #da9735;color:white;}
+/*顶部大图片*/
+.top_pic {padding: 0px 0px;margin: 0.7% 0 0 0;}
+.top_pic img{width:100%;}
+/*中间对话*/
+.middle_talk1{padding: 0px 0px;}
+.middle_talk1 img{width:100%;margin: 12% 0 0 -15px;}
+.middle_talk2{padding: 0px 0px;}
+.middle_talk2 img{width:100%;margin: 5% 0 0 18%;}
+.middle_talk3{padding: 0px 0px;}
+.middle_talk3 img{width:34%;margin: 52% 0 0 0;}
+.middle_talk4{padding: 0px 0px;}
+.middle_talk4 img{width:100%;margin: 5% 0 0 45px;}
+.middle_talk5{position: relative;padding: 0px 0px;height: 284.5px;/* background-color: red; */width: 70.5%;margin: -31.3% 0 0 15.2%;}
+.middle_talk6{position: relative;width: 50%;height: 284.5px;background-color: white;padding: 0px 0px;}
+.middle_tk1{margin: 8% 0 0 5%;font-size: 16px;font-weight: 700;}
+.middle_hr{margin: 14% 0 0 9%;width: 75%;border-top: 1px solid #ccc;}
+.middle_tk2{margin: 3% 0 0 9%;width:75px;}
+.middle_tk3{margin: 3% 0 0 9%;width:75px;}
+.middle_tk4{margin: 3% 0 0 9%;width:75px;}
+.middle_opt1{position: relative;margin: -29% 0 0 80%;width:100px;}
+.middle_opt2{position: relative;margin: -29% 0 0 202%;width:115px;}
+.middle_address{margin: 2% 0 0 9%;}
+.middle_ta1 textarea{margin: 0px;width: 250px;height: 108px;resize: none;}
+.middle_ta2 textarea{margin: 0px;width: 250px;height: 108px;resize: none;}
+.middle_txt1{position: relative;margin: -29% 0 0 100%;}
+.middle_txt1 input{width: 115px;height: 22px;}
+
+.middle_txt2{position: relative;margin: -29% 0 0 100%;}
+.middle_txt2 input{width: 115px;height: 22px;}
+
+.middle_txt3{position: relative;margin: -29% 0 0 100%;}
+.middle_txt3 input{width: 115px;height: 22px;}
+
+.middle_bt{position: relative;margin: 3% 0 0 70%;}
+
+.middle_talk7{position: relative;width: 50%;height: 284.5px;/* background-color: yellow; */padding: 0px 0px;}
+.middle_talk8{padding: 0px 0px;}
+.middle_talk8 img{width:34%;margin: 52% 0 0 0;}
+.middle_talk9{padding: 0px 0px;}
+.middle_talk9 img{width:100%;margin: 3% 0 0 0;}
+.middle_talk10{padding: 0px 0px;text-align: center;margin: -48% 0 0 26.02%;}
+.middle_talk10 img{width:75%;margin: 12% 0 0 8px; }
+.middle_talk11{padding: 0px 0px;margin: -28% 0 0 26%;text-align: center;}
+.middle_talk11 img{width:78%;margin: 3% 0 0 18px;}
+.middle_talk12{padding: 0px 0px;margin: -41% 0 0 41%;}
+.middle_talk12 img{width: 44%;}
+/*底部*/
+.bottom_div{width:100%;height:210px;background-color: #052844;padding: 0px 0px;margin: 5% 0 0 0;}
+.bottom_left{margin: 6% 0 0 10%;}
+.bottom_left1 img{width:90%;}
+.bottom_left2{color: white;margin: 5% 0 0 0;}
+.bottom_left3{color: white;margin: 5% 0 0 0;}
+
+.bottom_code{margin: 4% 0 0 0;padding: 0px 0px;text-align: center;}
+.bottom_code1 img{width:95px;height:90px;}
+.bottom_code2{color: white;text-align: center;}
+
+.bottom_right{padding: 0px 0px;margin: 4.5% 0 0 0;}
+.bottom_right1 img{float: left;width:65px;height:20px;}
+.bottom_right2{width: 100%;color: white;text-align: center;}
+
+.bottom_right3{margin: 10% 0 0 0; }
+.bottom_right3 img{float: left;width:25px;height:25px;}
+.bottom_right4{width: 84%;color: white;text-align: center;}
+
+.bottom_right5 img{width:100%;}
+.bottom_right6{color:white;font-size: 12px;text-align: center;}
+.bottom_ba{color:white;text-align: center;margin: 3% 0 0 0;font-size: 12px;}
+
+
+

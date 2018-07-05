@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.NoviceTaskDao">
+<!-- 添加新手任务 -->
+<insert id="addNoviceTask" parameterType="NoviceTask" keyProperty="noviceTaskId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  novice_task_tb 
+   		 (frequency,money,create_date,acount_id)
+   VALUES
+    	 (#{frequency},#{money},#{createDate},#{acountId})  
+</insert>  
+<!-- 更新新手任务 -->
+<update id="updateNoviceTask" parameterType="NoviceTask" >  
+    UPDATE 
+    	novice_task_tb 
+    SET 
+    	frequency=#{frequency},
+    	money=#{money},
+    	create_date=#{createDate},
+    	acount_id=#{acountId}
+    WHERE
+    	novice_task_id=#{noviceTaskId} 
+</update> 
+<!-- 删除新手任务-->
+<delete id="delNoviceTask"  parameterType="Integer" >  
+    DELETE FROM
+    	 novice_task_tb 
+    	 WHERE novice_task_id=#{noviceTaskId}
+</delete>  
+<!-- 加载新手任务-->
+<select id="loadNoviceTask" parameterType="Integer" resultType="NoviceTask" >
+SELECT 
+		novice_task_id,
+		frequency,
+	 	money,
+    	create_date,
+    	acount_id
+FROM novice_task_tb 
+WHERE novice_task_id=#{noviceTaskId}
+</select>
+
+<!-- 分页查询新手任务-->
+<select id="browsePagingNoviceTask" resultType="NoviceTask">  
+        SELECT
+	    novice_task_id,
+		frequency,
+	 	money,
+    	create_date,
+    	acount_id
+	FROM novice_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM novice_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(novice_task_id)
+	FROM novice_task_tb
+	<where>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="frequency!=null">
+	AND frequency=#{frequency}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

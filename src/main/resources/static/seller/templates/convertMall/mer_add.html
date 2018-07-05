@@ -1,0 +1,98 @@
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">增加商品</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myAddMerForm" ng-submit="addMerForm()">
+    <label  class="text-danger">※商品类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="mer.merCateId" name="merCateId"
+    ng-options="merCate.merCateId as merCate.name for merCate in merCateList;">
+  </select>
+  </div>
+    <label  class="text-danger">※商品名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="mer.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.title.$dirty && myAddMerForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确商品标题
+				    </div>
+  </div>
+  
+   <label  class="text-danger">※商品图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=100">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=100">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>  
+    <input type="file" class="comment-input"   id="merImgFileUpload">
+  <div ng-repeat="merImg in mer.merImgList" style="display: inline-block;position: relative;" ng-mouseenter="delMerImgBtn=true">
+  <img    ng-src="{{merImg.imgAddress||''}}"/>
+  <span  ng-click="delMerImg(merImg)" style="background-color:#fff;position: absolute;top:0;right:0">×</span>
+  </div>
+  </div>
+  
+   <label class="text-danger" >※原始单价（必填）</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="oldPrice"
+     ng-model="mer.oldPrice" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.oldPrice.$dirty && myAddMerForm.oldPrice.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" >※折扣（必填）</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="discount"
+     ng-model="mer.discount" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.discount.$dirty && myAddMerForm.discount.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" >※单价（必填）</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="price"
+     ng-model="mer.price" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.price.$dirty && myAddMerForm.price.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" >※库存（必填）</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="stock"
+     ng-model="mer.stock" ng-pattern="/^\+?[1-9][0-9]*$/"  placeholder="大于0正整数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.stock.$dirty && myAddMerForm.stock.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>大于0正整数
+	</div>
+  </div>
+  
+   <label class="text-danger" >※邮费（必填,0为包邮）</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="postage"
+     ng-model="mer.postage" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddMerForm.postage.$dirty && myAddMerForm.postage.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="mer.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'},{id:2,value:'售完'}]">
+  </select>
+  </div>
+  
+ <label  class="text-danger" >※商品详情</label>
+  <div class=" comment-input-margin" >
+        <textarea id="merAddEditor" style="min-width:500px;min-height:500px;" >
+        <p></p>
+        </textarea>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myAddMerForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

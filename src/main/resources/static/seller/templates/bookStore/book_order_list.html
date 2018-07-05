@@ -1,0 +1,132 @@
+<!-- 书城订单列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">书城订单列表</label>
+<span style="color:#ccc">订单时间超过，不能修改状态</span >
+</div>
+<!-- 书城订单列表选择end -->
+<!-- 书城订单列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr >
+			  <th style="background-color:#000 !important;"></th>
+			  <th  colspan="1" style="background-color:#000 !important;">订单</th>
+			  <th colspan="6" style="background-color:#000 !important;">订单详情</th>
+			  <th  colspan="3" style="background-color:#000 !important;">其他</th> 
+			</tr>
+			<tr>
+			  <th>序号</th>
+			  
+			  <th>订单号</th>
+			  
+			  <th>支付月数（单位：月）</th>
+			  <th>支付类型</th>
+			  <th>积分</th>
+			  <th>真钱</th>
+			  <th>时间段</th>
+			  <th>订单状态</th>
+			  
+			  <th>订单账户</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			</tr>
+			<tr ng-repeat="bookOrder in bookOrderList.list" >
+			  <td rowspan="{{bookOrder.bookOrderDetailList.length}}">
+			  <span  ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <!-- <td >
+			 	<a ng-repeat="bookOrderImg in bookOrder.bookOrderImgList" href="javascript:;">
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:20px;height:20px;"
+					ng-src="{{bookOrderImg.imgAddress}}" >
+				</a>
+			  </td> -->
+			  <td rowspan="{{bookOrder.bookOrderDetailList.length}}">
+			  <span ng-bind="bookOrder.orderNumber"></span>
+			  </td>
+			  
+			  <td  >
+			  <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  <span  ng-bind="bookOrderDetail.billingMode"></span>
+			  <span class="text-default" ng-if="bookOrderDetail.billingMode==0">免费</span>
+			  <span class="text-primary" ng-if="bookOrderDetail.billingMode==1">包月</span>
+			  <span class="text-primary" ng-if="bookOrderDetail.billingMode==6">半年</span>
+			  <span class="text-danger" ng-if="bookOrderDetail.billingMode==12">包年</span>
+			  </div>
+			  </td>
+			  <td  >
+			  <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  <span class="text-default" ng-if="bookOrderDetail.payType==0">混合支付</span>
+			  <span class="text-primary" ng-if="bookOrderDetail.payType==1">真钱支付</span>
+			  <span class="text-danger" ng-if="bookOrderDetail.payType==2">积分支付</span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  	<span class="text-danger" ng-bind="bookOrderDetail.money"></span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  	<span class="text-danger" ng-bind="bookOrderDetail.realMoney"></span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  <div >
+			  	开始时间：<span class="text-default" ng-bind="bookOrderDetail.startDate"></span>
+			  </div>
+			  <div >
+			  	结束时间：<span class="text-default" ng-bind="bookOrderDetail.endDate"></span>
+			  </div>
+			  </div>
+			  </td>
+			   <td>
+			   <div ng-repeat="bookOrderDetail in bookOrder.bookOrderDetailList" >
+			  <span ng-show="bookOrderDetail.$$status==0" class="text-warning" ng-init="bookOrderDetail.$$status=0"   
+			  ng-bind="bookOrderDetail.status==0?
+			  '已下单':bookOrderDetail.status==1?
+			  '已支付':bookOrderDetail.status==2?
+			  '申请退款':bookOrderDetail.status==3?
+			  '已退款':bookOrderDetail.status==4?
+			  '拒绝退款':bookOrderDetail.status==5?
+			  '已完成':''"></span>
+			   <select ng-show="bookOrderDetail.$$status==1" style="width:180px;height:50px;" ng-model="bookOrderDetail.status" name="status"
+     			ng-options="sa.id as sa.value for sa in bookOrderDetailStatus">
+  				</select>
+			  <span class="btn btn-danger" ng-show="bookOrderDetail.$$status==0" ng-click="changeStatus(bookOrderDetail)">修改</span>
+			  <span ng-show="bookOrderDetail.$$status==1" class="btn btn-danger" ng-click="updateBookOrderDetailStatus(bookOrderDetail)">保存</span>
+			  </div>
+			  </td>
+			  
+			  <td rowspan="{{bookOrder.bookOrderDetailList.length}}">
+			  <a class="btn btn-info" ui-sref="main.bookOrderAcount({acountId:bookOrder.acountId})">下单账户</a>
+			  </td>
+			  <td rowspan="{{bookOrder.bookOrderDetailList.length}}">
+			  <span ng-bind="bookOrder.createDate"></span>
+			  </td>
+			  <td rowspan="{{bookOrder.bookOrderDetailList.length}}" >
+			  <span ng-bind="bookOrder.updateDate"></span>
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 书城订单列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

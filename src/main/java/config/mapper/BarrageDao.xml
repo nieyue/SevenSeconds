@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.BarrageDao">
+<!-- 添加弹幕 -->
+<insert id="addBarrage" parameterType="Barrage" keyProperty="barrageId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  barrage_tb 
+   		 (
+   		 content,
+   		 icon,
+   		 location,
+   		 font_style,
+   		 font_size,
+   		 font_bgcolor,
+   		 font_color,
+   		 complain_number,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 article_id,
+   		 acount_id)
+   VALUES
+    	 (
+    	 #{content},
+    	 #{icon},
+    	 #{location},
+    	 #{fontStyle},
+    	 #{fontSize},
+    	 #{fontBgcolor},
+    	 #{fontColor},
+    	 #{complainNumber},
+    	 #{createDate},
+    	 #{updateDate},
+    	 #{status},
+    	 #{articleId},
+    	 #{acountId}
+    	 )  
+</insert>  
+<!-- 更新弹幕 -->
+<update id="updateBarrage" parameterType="Barrage" >  
+    UPDATE 
+    	barrage_tb 
+    <set>
+    <if test="content!=null">
+    	content=#{content},
+    </if>
+    <if test="icon!=null">
+    	icon=#{icon},
+    </if>
+    <if test="location!=null">
+    	location=#{location},
+    </if>
+    <if test="fontStyle!=null">
+    	font_style=#{fontStyle},
+    </if>
+    <if test="fontSize!=null">
+    	font_size=#{fontSize},
+    </if>
+    <if test="fontBgcolor!=null">
+    	font_bgcolor=#{fontBgcolor},
+    </if>
+    <if test="fontColor!=null">
+    	font_color=#{fontColor},
+    </if>
+    <if test="complainNumber!=null">
+    	complain_number=#{complainNumber},
+    </if>
+    <if test="createDate!=null">
+    	create_date=#{createDate},
+    </if>
+    <if test="updateDate!=null">
+    	update_date=#{updateDate},
+    </if>
+    <if test="status!=null">
+    	status=#{status},
+    </if>
+    <if test="articleId!=null">
+    	article_id=#{articleId},
+    </if>
+    <if test="acountId!=null">
+    	acount_id=#{acountId},
+    </if>
+    </set> 
+    WHERE
+    	 barrage_id=#{barrageId} 
+</update> 
+<!-- 删除弹幕-->
+<delete id="delBarrage"  parameterType="Integer" >  
+    DELETE FROM
+    	 barrage_tb 
+    	 WHERE barrage_id=#{barrageId}
+</delete>  
+<!-- 加载弹幕-->
+<select id="loadBarrage" parameterType="Integer" resultType="Barrage" >
+SELECT 
+		 barrage_id,
+		 content,
+   		 icon,
+   		 location,
+   		 font_style,
+   		 font_size,
+   		 font_bgcolor,
+   		 font_color,
+   		 complain_number,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 article_id,
+   		 acount_id
+FROM barrage_tb 
+WHERE barrage_id=#{barrageId}
+</select>
+
+<!-- 分页查询弹幕-->
+<select id="browsePagingBarrage" resultType="Barrage">  
+        SELECT
+	     barrage_id,
+		 content,
+   		 icon,
+   		 location,
+   		 font_style,
+   		 font_size,
+   		 font_bgcolor,
+   		 font_color,
+   		 complain_number,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 article_id,
+   		 acount_id
+	FROM barrage_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="createDate!=null">
+	AND create_date=#{createDate}
+	</if>
+	<if test="updateDate!=null">
+	AND update_date=#{updateDate}
+	</if>
+	<if test="complainNumber!=null">
+	AND complain_number=#{complainNumber}
+	</if>
+	<if test="status!=null">
+	AND status=#{status}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM barrage_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="createDate!=null">
+	AND create_date=#{createDate}
+	</if>
+	<if test="updateDate!=null">
+	AND update_date=#{updateDate}
+	</if>
+	<if test="complainNumber!=null">
+	AND complain_number=#{complainNumber}
+	</if>
+	<if test="status!=null">
+	AND status=#{status}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(barrage_id)
+	FROM barrage_tb
+	<where>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="createDate!=null">
+	AND create_date=#{createDate}
+	</if>
+	<if test="updateDate!=null">
+	AND update_date=#{updateDate}
+	</if>
+	<if test="complainNumber!=null">
+	AND complain_number=#{complainNumber}
+	</if>
+	<if test="status!=null">
+	AND status=#{status}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

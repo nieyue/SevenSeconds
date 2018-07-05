@@ -1,0 +1,107 @@
+<style>
+html,body,div,span{
+margin:0;
+padding:0;
+}
+html,body{
+height:100%;
+width:100%;
+font-size:16px;
+}
+hr{
+margin:2% 0 ;
+}
+span{
+display:inline-block;
+}
+.comment-list {
+    height: auto;
+    width: 100%;
+    border:1px solid #F3F3F3;
+}
+.comment-hot-title {
+    height: 100%;
+    width: 100%;
+    font-size:0.8rem;
+    margin:0;
+	
+}
+.comment-hot-title-icon{
+padding:2% 2% 2% 10%;
+width:5rem;
+
+}
+.comment-hot-title-title{
+padding:2%;
+
+}
+
+.comment-hot-icon {
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    width: 2px;
+    border-left: 2px solid #189ADB;
+}
+.comment-hot-word {
+    color:#189ADB;
+    position: absolute;
+    left: 20px;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 18px;
+}
+</style>
+	<div class="comment-list" ng-repeat="financial in financialList" ng-click="financialClick(financial)">
+		<div class="comment-hot-title row" >
+			<span class="comment-hot-title-icon col-xs-4" >
+				<img style="width:100%;" alt="" ng-src="{{financial.imgAddress||'http://www.jinrongchaoshi.com/upload/image/31/2017-12-01/5a2113adcc57e.png'}}">
+			</span>
+			<span class="comment-hot-title-title col-xs-5" style="color:#333333;float:inherit;font-size:0.8rem;" ng-bind="financial.title"></span>
+			<span  class="comment-hot-title-title col-xs-1" style="float:right;padding:0;">
+				<img style="width:100%" alt="" src="/qimiao/resources/img/shoutou.png" ng-if="financial.recommend==2">
+				<img style="width:100%" alt="" src="/qimiao/resources/img/futou.png" ng-if="financial.recommend==3">
+			</span>
+			<span class="comment-hot-title-title col-xs-2" style="float:right;text-align:center;width:auto;">
+				<span  style="border:solid 1px #ff6b68;font-size:0.6rem;padding:2%;color:#ff6b68;width:max-content;" ng-bind="financial.financialCate.name"></span>
+			</span>
+		</div>
+		<hr/>
+		<div class="row" style="text-align:center;font-size:0.8rem;color:#999">
+			<span class="col-xs-4" style="border-right:1px solid #ececec;">
+				<div>
+					<span style="font-size:1.6rem" ng-bind="financial.annualTransformation">
+					</span>
+					%
+				</div>
+				<div>平台年华</div>
+			</span>
+			<span class="col-xs-4" style="border-right:1px solid #ececec;">
+				<div>
+					<span style="color:#ff6600;font-size:1.6rem" ng-bind="financial.netAddInterest">
+					</span>
+						%
+				</div>
+				<div>加息特权</div>
+			</span>
+			<span class="col-xs-4">
+				<div>
+					<span style="color:#ff6600;font-size:1.6rem" ng-bind="financial.comprehensiveAnnualTransformation">
+					</span>
+					%
+				</div>
+				<div>综合年华</div>
+			</span>
+		</div>
+		<hr/>
+		<div style="color:#999;padding:1% 4% 3%;font-size:0.8rem;">
+			期限<span ng-bind="financial.term"></span>&nbsp;&nbsp;
+			起投金额<span ng-bind="financial.startInvestmentMoney"></span>元&nbsp;&nbsp;
+			限投<span ng-bind="financial.investmentMoney"></span>元
+		</div>
+	<div style="height:10px;width:100%;background-color:#f3f3f3;"></div>
+	</div>
+

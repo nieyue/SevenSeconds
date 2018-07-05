@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.CommentDao">
+<!-- 添加评论 -->
+<insert id="addComment" parameterType="Comment" keyProperty="commentId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  comment_tb 
+   		 (content,point_number,reply_number,create_date,article_id,acount_id)
+   VALUES
+    	 (#{content},#{pointNumber},#{replyNumber},#{createDate},#{articleId},#{acountId})  
+</insert>  
+<!-- 更新评论 -->
+<update id="updateComment" parameterType="Comment" >  
+    UPDATE 
+    	comment_tb 
+    SET 
+    	content=#{content},
+    	point_number=#{pointNumber},
+    	reply_number=#{replyNumber},
+    	create_date=#{createDate},
+    	article_id=#{articleId},
+    	acount_id=#{acountId}
+    WHERE
+    	 comment_id=#{commentId} 
+</update> 
+<!-- 删除评论-->
+<delete id="delComment"  parameterType="Integer" >  
+    DELETE FROM
+    	 comment_tb 
+    	 WHERE comment_id=#{commentId}
+</delete>  
+<!-- 加载评论-->
+<select id="loadComment" parameterType="Integer" resultType="Comment" >
+SELECT 
+		comment_id,
+		content,
+	 	point_number,
+    	reply_number,
+    	create_date,
+    	article_id,
+    	acount_id
+FROM comment_tb 
+WHERE comment_id=#{commentId}
+</select>
+
+<!-- 分页查询评论-->
+<select id="browsePagingComment" resultType="Comment">  
+        SELECT
+	    comment_id,
+		content,
+	 	point_number,
+    	reply_number,
+    	create_date,
+    	article_id,
+    	acount_id
+	FROM comment_tb
+	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
+	<if test="replyNumber!=null">
+	AND reply_number=#{replyNumber}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM comment_tb
+	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
+	<if test="replyNumber!=null">
+	AND reply_number=#{replyNumber}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 分页DTO查询评论-->
+<select id="browsePagingCommentAcountDTO" resultType="CommentAcountDTO">  
+      SELECT 
+        ctb.comment_id,
+		ctb.content,
+	 	ctb.point_number,
+    	ctb.reply_number,
+    	ctb.create_date,
+    	ctb.article_id,
+    	ctb.acount_id,
+    	atb.nickname,
+    	atb.icon,
+    	atb.phone
+      FROM comment_tb ctb, acount_tb atb
+	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
+	<if test="replyNumber!=null">
+	AND reply_number=#{replyNumber}
+	</if>
+	<if test="articleId!=null">
+	AND ctb.article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND ctb.acount_id=#{acountId}
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM comment_tb
+	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
+	<if test="replyNumber!=null">
+	AND reply_number=#{replyNumber}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where> 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	AND ctb.acount_id=atb.acount_id
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select>
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(comment_id)
+	FROM comment_tb
+	<where>
+	<if test="pointNumber!=null">
+	AND point_number=#{pointNumber}
+	</if>
+	<if test="replyNumber!=null">
+	AND reply_number=#{replyNumber}
+	</if>
+	<if test="articleId!=null">
+	AND article_id=#{articleId}
+	</if>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

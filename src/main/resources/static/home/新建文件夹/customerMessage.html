@@ -1,0 +1,461 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>客户留言</title>
+<script type="text/javascript" src="/home/static/js/jquery.min.js"></script>
+<link href="/home/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	.wrap{
+		width:100% !important;
+		height:100%;
+	}
+	.top_first{
+		position: fixed;
+		width:100%;
+		height:11%;
+		background-color: #2d2a29;
+		top:0;
+		z-index: 9999;
+	}
+	.top_company{
+		position: relative;
+	    width: 29%;
+	    height: 50px;
+	    top: 23%;
+	    left:5%;
+	    line-height: 2.7;
+	}  
+	.top_company img{
+		width:50px;
+		height:50px;
+		float:left;
+	}
+	.top_company_font a{
+		color:#9E9E9E;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	.top_catalog{
+		position: relative;
+	    width: 60%;
+	    height: 50px;
+	    top: -35%;
+	    left: 30%;
+	    line-height: 3;
+	    margin-left: 120px;
+	}
+	.top_cat{
+		font-size: 16px;
+		color:white;
+		text-align: center;
+		height: 100%;
+		float: left;
+		padding: 0px 15px;
+	}
+	.top_cat a{
+		color:#9E9E9E;
+		text-decoration: none;
+	}
+/* 轮播图 */	 
+	.scroll{
+        /* left: 50%;
+        margin-left: -650px; */
+		width: 100%;
+		height: 350px;
+		/* background-color: red; */
+		position: relative;
+        /* border: 1px solid black; */
+		top:11%;	
+		/* left:1px; */
+	}
+	ul,ol{
+		list-style: none;
+	}
+	.box{
+		width: 100%;
+		height: 350px;
+		overflow: hidden; 
+        /* background-color: green; */
+		position: relative;
+		padding: 5px;
+	}
+	.box ul{
+		width: 1000%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	.box ul li{
+		float: left;
+	}
+    .scroll ol{
+		position: absolute;
+		right:50%;
+		bottom: 10px;
+		
+	}
+	.scroll ol li{
+		float: left;
+		width: 20px;
+		height: 20px;
+		text-align: center;
+		line-height: 20px;
+		border-radius: 50%;
+		background-color: pink;				
+		margin-left:10px ;
+		cursor: pointer;
+	}
+	.scroll ol li.current{
+		background-color: purple;
+	} 
+	
+/*简介*/ 
+	.catalog_first{
+		position: relative;
+		width: 100%;
+		height: 195px;
+		background-color: #ece7e7;
+		top:11%;
+		border-bottom: 1px solid #bdb6b6;
+	}
+	.catalog_abo{
+		position: relative;
+	    top: 15%;
+	    height: 65px;
+	    line-height: 2;
+	    font-size: 30px;
+	    left: 35px;
+	    color:#827575;
+	    width:500px;
+	} 
+	.catalog_hr{
+		position: relative;
+		top: 10%;
+		opacity: 0.2;
+		border-top: 1px solid #9a8e8e;
+	}
+	.catalog_web{
+		position:relative;
+		top:17%;
+		left: 35px;
+		width:500px;
+	}
+	.catalog_web a{
+		float:left;
+		text-decoration: none;
+		color:#00BCD4;
+	}
+/*具体内容*/	 
+	.content_first{
+		position: relative;
+	    top: 13%;
+	    background-color: #ece7e7;
+	    width: 80%;
+	    left: 10%;
+	    min-height: 250px;
+	    padding: 15px 15px;
+	    font-size: 20px;
+	    margin-bottom: 15px;
+	    font-weight: 200;
+	}
+	.content_first p{
+		color: #666;
+	    font-size: 20px;
+	    line-height: 220%;
+	    text-indent:2em
+	}
+	.content_div{
+		position: relative;
+	    width: 100%;
+	    text-align: center;
+	    color: #F44336;
+	}
+	.gly_div{
+		position: relative;
+    	padding: 12px 0px;	
+	}
+	.gly_div label{
+		padding: 0px 35px;
+	    margin-left: -60%;
+	}
+	.gly_div input{
+		width:50%;	
+	}
+	.gly_div textarea{
+		width:50%;
+		height:10%;	
+	}
+/*底部*/	
+	.bottom_first{
+		position: relative;
+		width: 100%;
+		min-height:300px;
+		background-color: #756d6d;
+		top:13%;
+		
+	}
+	.bootom_catalog{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    width: 40%;
+	    left: 50%;
+	    margin-left: -250px;
+	    top:100px;
+	}
+	.bottom_cat{
+		font-size: 16px;
+	    float: left;
+	    padding: 0px 15px;
+	}
+	.bottom_first a{
+		color:#9E9E9E;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	.bootom_catalog_cr{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    /* width: 35%; */
+	    left: 50%;
+	    margin-left: -239px;
+	    top: 145px;
+	}
+	.bootom_catalog_icp{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    width: 17%;
+	    left: 50%;
+	    margin-left: -239px;
+	    top: 192px;
+	}
+/*新闻动态隐藏页面*/	 
+	.hide_div{
+		position: fixed;
+	    width: 115px;
+	    height: 110px;
+	    left: 49.4%;
+	    background-color: #ece7e7;
+	    font-size: 15px;
+	    display: none;
+	    top: 9%;
+	    z-index: 10000;
+	}
+	.hide_page{
+		padding: 6px;
+		border-top: 1px solid #efd4d4;
+	}
+	.hide_page a{
+		text-decoration: none;
+	}
+	
+	.help-block{
+		color:red;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 顶部 -->
+		<div class="top_first">
+			<div class="top_company">
+				<img alt="" src="static/images/5.png">
+				<div class="top_company_font" id="info6" >
+					<a href="javascript:;">长沙嘉行煜发网络科技有限公司</a>
+				</div>
+			</div>
+			<div class="top_catalog">
+				<div class="top_cat page_top" id="info1" ><a href="javascript:;">首页</a></div>
+				<div class="top_cat page_top" id="info2" ><a href="javascript:;">关于我们</a></div>
+				<div class="top_cat page_top" id="info3" >
+					<a href="javascript:;">新闻动态</a>
+					<div class="glyphicon glyphicon-menu-up" id="up_p" style="left:5px"></div>
+					<div class="glyphicon glyphicon-menu-down" id="down_p" style="left:5px;display:none;"></div>
+				</div>
+				<div class="top_cat page_top" id="info4" ><a href="javascript:;">客服留言</a></div>
+				<div class="top_cat page_top" id="info5" ><a href="javascript:;">联系我们</a></div>
+			</div>
+		</div>	
+		<!-- 新闻动态下拉div -->
+		<div class="hide_div">
+			<div class="hide_page"><a href="javascript:;">行业资讯</a></div>
+			<div class="hide_page"><a href="javascript:;">公司新闻</a></div>
+			<div class="hide_page"><a href="javascript:;">优质服务</a></div>
+		</div>
+		<!-- 轮播图 -->
+		<div class="scroll" id="scroll">
+            <div id="box" class="box">
+				<ul id="ul">
+					<li><img src="static/images/1.png"  height="350" width="1425"></li>
+					<li><img src="static/images/2.png"  height="350" width="1425"></li>
+					<li><img src="static/images/3.png"  height="350" width="1425"></li>
+				</ul>				
+			</div>
+        </div>
+		<!-- 简介 -->
+		<div class="catalog_first">
+			<div class="catalog_abo">ContactUS</div>
+			<hr class="catalog_hr"/>
+			<div class="catalog_web">
+				<a href="/index.html">网站首页</a>
+				<div style="float:left;padding: 0px 10px;color:#777;">/</div>
+				<div style="color:#777">联系我们</div>
+			</div>
+		</div>
+		<!-- 具体内容 -->
+		<div class="content_first">
+			<p>我公司始终把客户的需求放在首位,更好地了解您的需求,提高我们的服务质量。"今天的质量、明天的市场、服务到永远"是我司为客户服务的准则， 要把它贯穿整个生态链中去。</p>
+			<div class="glyphicon glyphicon-pencil content_div">
+				<font>尊敬的客户，请填写您的需求，我们将竭诚为您服务！</font>
+				<div class="gly_div">
+					<form action="" id="" >
+						<div class="gly_div gly1">
+							<label>姓名</label></br>
+							<input id="name" type="text" name="customerName" placeholder="请输入您的名字!"/>
+							<span class="help-block"></span>
+						</div>
+						<div class="gly_div gly2">
+							<label>联系电话</label></br>
+							<input id="phone" type="" name="customerPhone" placeholder="请输入您的电话号码!"/>
+							<span class="help-block"></span>
+						</div>
+						<div class="gly_div gly3">
+							<label>EMAIL</label></br>
+							<input id="email" type="text" name="customerEmail" placeholder="请输入您的EMAIL!"/>
+							<span class="help-block"></span>
+						</div>
+						<div class="gly_div gly4">
+							<label>意见与需求</label></br>
+							<textarea id="need" name="customerNeed" placeholder="请输入您的意见与需求!"></textarea>
+							<span class="help-block"></span>
+						</div>
+					    <div>
+						<input class="btn btn-danger " type="button" id="gly_btn" value="提交"/>
+						<span class="help-block gly_btnk"></span>
+						</div>	
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- 底部 -->
+		<div class="bottom_first">
+			<div class="bootom_catalog">
+				<div class="bottom_cat page_bot" id="inf1" ><a href="javascript:;">首页</a></div>
+				<!-- <div class="bottom_cat page_bot" id="inf2" ><a href="javascript:;">招聘英才</a></div> -->
+				<div class="bottom_cat page_bot" id="inf3" ><a href="javascript:;">广告合作</a></div>
+				<div class="bottom_cat page_bot" id="inf4" ><a href="javascript:;">关于我们</a></div>
+				<div class="bottom_cat page_bot" id="inf5" ><a href="javascript:;">联系我们</a></div>
+				<div class="bottom_cat page_bot" style="opacity:0;"><a>a</a></div>
+			</div>
+			<div class="bootom_catalog_cr" style="color:white;font-size:18px;">Copyright 2016 itcast Inc,All rights reserved.</div>
+			<div class="bootom_catalog_icp page_bot" id="inf6">
+				<a href="javascript:;">湘ICP备17011137号</a>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="/home/static/js/dyc.js"></script>
+	<script type="text/javascript" src="/home/static/js/slideshow.js"></script>
+	<script type="text/javascript" src="/home/static/js/common.js"></script>
+	<script>
+		window.onload=function(){
+			slideshow.scroll();
+		}
+		var count=3;
+		mainPage.creatDys(".top_catalog",".top_cat",count);
+		mainPage.creatDys(".bottom_first",".page_bot",4);
+		//隐藏新闻动态的div 
+		mainPage.createHideDiv(); 
+	</script>
+<script>
+	var domainUrl="http://"+newsUtils.domain().SevenSeconds;
+	//对客户填写的数据进行前端验证     
+	$("#gly_btn").on("click",function(){
+			var name=$("#name").val();
+			//用户名判空 
+			if(name==""){
+				$(".gly1 .help-block").text("请输入用户名!");
+				return ;
+			}else{
+				$(".gly1 .help-block").text("");
+			}
+			//号码判空 
+			var phone=$("#phone").val();
+			//正则验证，号码只能输入数字 
+			var regPhone=/^[0-9]{11,13}$/;
+			if(phone==""){ 
+				$(".gly2 .help-block").text("请输联系电话!");
+				return ;
+			}else if(regPhone.test(phone)==false){
+				$(".gly2 .help-block").text("号码只能输入11到13位数字"); 
+				return ;
+			}else{
+				$(".gly2 .help-block").text("");
+			}
+			//电子邮箱验证 
+			var email=$("#email").val();
+			var regEmail=/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+			if(email==""){
+				$(".gly3 .help-block").text("请输入您的email");
+				return ;
+			}else if(!regEmail.test(email)){
+				$(".gly3 .help-block").text("请输入正确格式的email");
+				return ;
+			}else{
+				$(".gly3 .help-block").text("");
+			}
+			//意见与需求验证
+			var need=$("#need").val();
+			if(need==""){
+				$(".gly4 .help-block").text("请输入您的意见与需求！");
+				return ;
+			}else{
+				$(".gly4 .help-block").text("");
+			}
+			
+			//如果验证通过，那么把数据发送后台服务器保存到数据库
+			var CustMsg=$(".gly_div form").serialize();
+			$.ajax({
+				 url:domainUrl+"/customer/message",
+				data:$(".gly_div form").serialize(),
+				type:"post",
+				async:true,	
+				success:function(result){
+					console.log(result);
+					if(result.code==100){
+						$("#gly_btn").off();
+						$(".gly_btnk").text("提交成功");
+					}
+				}
+			});
+			
+	});
+	
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

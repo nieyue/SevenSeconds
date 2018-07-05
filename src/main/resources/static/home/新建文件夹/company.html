@@ -1,0 +1,780 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>公司新闻</title>
+<script type="text/javascript" src="/home/static/js/jquery.min.js"></script>
+<link href="/home/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	.wrap{
+		width:100% !important;
+		height:100%;
+	}
+	.top_first{
+		position: fixed;
+		width:100%;
+		height:11%;
+		background-color: #2d2a29;
+		top:0;
+		z-index: 9999;
+	}
+	.top_company{
+		position: relative;
+	    width: 29%;
+	    height: 50px;
+	    top: 23%;
+	    left:5%;
+	    line-height: 2.7;
+	}  
+	.top_company img{
+		width:50px;
+		height:50px;
+		float:left;
+	}
+	.top_company_font a{
+		color:#9E9E9E;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	.top_catalog{
+		position: relative;
+	    width: 60%;
+	    height: 50px;
+	    top: -35%;
+	    left: 30%;
+	    line-height: 3;
+	    margin-left: 120px;
+	}
+	.top_cat{
+		font-size: 16px;
+		color:white;
+		text-align: center;
+		height: 100%;
+		float: left;
+		padding: 0px 15px;
+	}
+	.top_cat a{
+		color:#9E9E9E;
+		text-decoration: none;
+	}
+/* 轮播图 */	 
+	.scroll{
+        /* left: 50%;
+        margin-left: -650px; */
+		width: 100%;
+		height: 350px;
+		/* background-color: red; */
+		position: relative;
+        /* border: 1px solid black; */
+		top:11%;	
+		/* left:1px; */
+	}
+	ul,ol{
+		list-style: none;
+	}
+	.box{
+		width: 100%;
+		height: 350px;
+		overflow: hidden; 
+        /* background-color: green; */
+		position: relative;
+		padding: 5px;
+	}
+	.box ul{
+		width: 1000%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	.box ul li{
+		float: left;
+	}
+    .scroll ol{
+		position: absolute;
+		right:50%;
+		bottom: 10px;
+		
+	}
+	.scroll ol li{
+		float: left;
+		width: 20px;
+		height: 20px;
+		text-align: center;
+		line-height: 20px;
+		border-radius: 50%;
+		background-color: pink;				
+		margin-left:10px ;
+		cursor: pointer;
+	}
+	.scroll ol li.current{
+		background-color: purple;
+	} 
+	
+/*简介*/ 
+	.catalog_first{
+		position: relative;
+		width: 100%;
+		height: 195px;
+		background-color: #ece7e7;
+		top:11%;
+		border-bottom: 1px solid #bdb6b6;
+	}
+	.catalog_abo{
+		position: relative;
+	    top: 15%;
+	    height: 65px;
+	    line-height: 2;
+	    font-size: 30px;
+	    left: 35px;
+	    color:#827575;
+	    width:500px;
+	} 
+	.catalog_ml{
+		position: relative;
+	    /* width: 50%; */
+	    height: 80px;
+	    /* left: 60%; */
+	    float: right;
+	    right: -160%;
+	}
+	.catalog_mln{
+		float:left;
+		padding: 5;
+	}
+	.catalog_mln a{ 
+		text-decoration: none;
+		font-size: 18px;
+		color:#9E9E9E;
+	}
+	.catalog_hr{
+		position: relative;
+		top: 10%;
+		opacity: 0.2;
+		border-top: 1px solid #9a8e8e;
+	}
+	.catalog_web{
+		position:relative;
+		top:17%;
+		left: 35px;
+		width:500px;
+	}
+	.catalog_web a{
+		float:left;
+		text-decoration: none;
+		color:#00BCD4;
+	}
+/*底部*/	
+	.bottom_first{
+		position: relative;
+		width: 100%;
+		min-height:300px;
+		background-color: #756d6d;
+		top:14%;
+		
+	}
+	.bootom_catalog{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    width: 40%;
+	    left: 50%;
+	    margin-left: -250px;
+	    top:80px;
+	}
+	.bottom_cat{
+		font-size: 16px;
+	    float: left;
+	    padding: 0px 15px;
+	}
+	.bottom_first a{
+		color:#9E9E9E;
+		text-decoration: none;
+		font-size: 18px;
+	}
+	.bootom_catalog_cr{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    /* width: 35%; */
+	    left: 50%;
+	    margin-left: -239px;
+	    top: 125px;
+	}
+	.bootom_catalog_icp{
+		position: absolute;
+	    height: 50px;
+	    line-height: 3;
+	    width: 17%;
+	    left: 50%;
+	    margin-left: -239px;
+	    top: 172px;
+	}
+/*新闻动态隐藏页面*/	 
+	.hide_div{
+		position: fixed;
+	    width: 115px;
+	    height: 110px;
+	    left: 49.4%;
+	    background-color: #ece7e7;
+	    font-size: 15px;
+	    display: none;
+	    top: 9%;
+	    z-index: 10000;
+	}
+	.hide_page{
+		padding: 6px;
+		border-top: 1px solid #efd4d4;
+	}
+	.hide_page a{
+		text-decoration: none;
+	}
+	
+	/*具体内容*/	
+	.content_show{
+		position: relative;
+	    top: 13%;
+	    background-color: #ece7e7;
+	    width: 80%;
+	    left: 10%;
+	    min-height: 730px;
+	    padding: 15px 15px;
+	    font-size: 20px;
+	    margin-bottom: 15px;
+	    font-size: 21px;
+	    font-weight: 200;
+	} 
+	
+	.content_first p{
+		color: #666;
+	    font-size: 20px;
+	    line-height: 220%;
+	    text-indent:2em
+	}
+	
+/*0张图片显示样式*/
+	.none_pic_show{
+		position: relative;
+	    width: 80%;
+	    height: 135px;
+	    background-color: #ccc;
+	    float: left;
+	    border-top: 1px solid #ececec;
+	    left: 10%;
+	}	
+	.none_pic_title{
+		height: 42px;
+		width:85%;
+	    line-height: 42px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    position: absolute;
+	    top: 10px;
+	    left: 12px;
+	}
+	.none_pic_title a{
+		width: 85%;
+	    height: 42px;
+	    line-height: 21px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    position: absolute;
+	    text-decoration: none;
+	    top: 20px;
+	    left: 12px;
+	}
+	.none_pic_time{
+		position: absolute;
+	    width: 85%;
+	    height: 30px;
+	    top: 80px;
+	    left: 25px;
+	}		
+/*一张图片显示样式*/	 
+	.one_pic_show{
+		position: relative;
+	    width: 80%;
+	    height: 135px;
+	    background-color: #ccc;
+	    float: left;
+	    line-height: 123px;
+	    margin: 0px auto;
+	    border-top: 1px solid #ececec;
+	    left: 10%;
+	}
+	.one_pic{
+		position: absolute;
+	    width: 160px;
+	    height: 102px;
+	    top: 15px;
+	    left: 10px;
+	}
+	.one_pic img{
+		width:160px;
+		height:102px;
+	}
+	.one_mid{
+		position: absolute;
+	    width: 85%;
+	    height: 82px;
+	    top: 20.5px;
+	    left: 180px;
+	}
+	.one_mid_title{
+		position: absolute;
+		width: 85%;
+	    height: 52px;
+	    line-height: 52px;
+	    left:10px;
+	    top: 5px;
+	}
+	.one_mid_title a{
+		position: absolute;
+		width: 85%;
+	    height: 52px;
+	    line-height: 160%;
+	    font-size: 18px;
+	    font-weight: 700;
+	    text-decoration: none;
+	    left:10px;
+	    top: 5px;
+	}
+	.one_mid_time{
+		position: absolute;
+	    width: 75%;
+	    height: 27px;
+	    line-height: 27px;
+	    top: 61px;
+	    left:20px;
+	}
+/*两张张图片显示样式*/
+	.two_pic_show{
+		position: relative;
+	    width: 80%;
+	    height: 215px;
+	    background-color: #ccc;
+	    float: left;
+	    border-top: 1px solid #ececec;
+	    left: 10%;
+	}
+	.two_mid_title{
+		position:absolute;
+		width:85%;
+		height: 42px;
+	    line-height: 42px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    left: 10px;
+	}
+	.two_mid_title a{
+		position:absolute;
+		width:85%;
+		height: 42px;
+	    line-height: 21px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    text-decoration: none;
+	    top:15px;
+	}
+	.two_pic{
+		position: absolute;
+	    width: 85%;
+	    height: 109px;
+	    margin-top: 3px;
+	    margin-left: 4.85px;
+	    float:left;
+	    left: 4px;
+	    top: 54px;
+	}
+	.two_pic img{
+		width:158px;
+		height:109px;
+		float:left;
+		padding: 2px;
+	} 
+	.two_mid_time{
+		height: 33.5px;
+	    line-height: 33.5px;
+	    top: 170px;
+	    position: absolute;
+	    left: 12px;
+	}
+/*三张图片显示样式*/	  
+	.three_pic_show{
+		position: relative;
+	    width: 80%;
+	    height: 215px;
+	    background-color: #ccc;
+	    float: left;
+	    border-top: 1px solid #ececec;
+	    left: 10%;
+	}	
+	.three_mid_title{
+		position:absolute;
+		width:80%;
+		height: 42px;
+	    line-height: 42px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    left: 10px;
+	}
+	.three_mid_title a{
+		position:absolute;
+		width:85%;
+		height: 42px;
+	    line-height: 21px;
+	    font-size: 18px;
+	    font-weight: 700;
+	    text-decoration: none;
+	    top:15px;
+	}
+	.three_pic{
+		position: absolute;
+	    width: 80%;
+	    height: 109px;
+	    margin-top: 3px;
+	    margin-left: 4.85px;
+	    float:left;
+	    left: 4px;
+	    top: 54px;
+	}
+	.three_pic img{
+		width:158px;
+		height:109px;
+		float:left;
+		padding: 2px;
+	} 
+	.three_mid_time{
+		height: 33.5px;
+	    line-height: 33.5px;
+	    top: 170px;
+	    position: absolute;
+	    left: 12px;
+	}
+
+/*分页条样式*/	
+	.page_div{
+	    float: left;
+	    width: 675px;
+	    left: 147px;
+	    font-size: 15px;
+	    height: 55px;
+	}
+	.page_label{
+		position: absolute;
+	    width: 350;
+	    height: 55px;
+	    left: 58%;
+	}			
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<!-- 顶部 -->
+		<div class="top_first">
+			<div class="top_company">
+				<img alt="" src="/home/static/images/5.png">
+				<div class="top_company_font" id="info6" >
+					<a href="javascript:;">长沙嘉行煜发网络科技有限公司</a>
+				</div>
+			</div>
+			<div class="top_catalog">
+				<div class="top_cat page_top" id="info1" ><a href="javascript:;">首页</a></div>
+				<div class="top_cat page_top" id="info2" ><a href="javascript:;">关于我们</a></div>
+				<div class="top_cat page_top" id="info3" >
+					<a href="javascript:;">新闻动态</a>
+					<div class="glyphicon glyphicon-menu-up" id="up_p" style="left:5px"></div>
+					<div class="glyphicon glyphicon-menu-down" id="down_p" style="left:5px;display:none;"></div>
+				</div>
+				<div class="top_cat page_top" id="info4" ><a href="javascript:;">客服留言</a></div>
+				<div class="top_cat page_top" id="info5" ><a href="javascript:;">联系我们</a></div>
+			</div>
+		</div>	
+		<!-- 新闻动态下拉div -->
+		<div class="hide_div">
+			<div class="hide_page"><a href="javascript:;">行业资讯</a></div>
+			<div class="hide_page"><a href="javascript:;">公司新闻</a></div>
+			<div class="hide_page"><a href="javascript:;">优质服务</a></div>
+		</div>
+		<!-- 轮播图 -->
+		<div class="scroll" id="scroll">
+            <div id="box" class="box">
+				<ul id="ul">
+					<li><img src="static/images/1.png"  height="350" width="1425"></li>
+					<li><img src="static/images/2.png"  height="350" width="1425"></li>
+					<li><img src="static/images/3.png"  height="350" width="1425"></li>
+				</ul>				
+			</div>
+        </div>
+		<!-- 简介 -->
+		<div class="catalog_first">
+			<div class="catalog_abo">
+				<div style="float:left">NewsDynamic</div>
+				<div class="catalog_ml">
+					<div class="catalog_mln"><a href="javascript:;">行业资讯</a></div>
+					<div class="catalog_mln"><a href="javascript:;">公司新闻</a></div>
+					<div class="catalog_mln"><a href="javascript:;">优质服务</a></div>
+				</div>
+			</div>
+			<hr class="catalog_hr"/>
+			<div class="catalog_web">
+				<a href="/index.html">网站首页</a>
+				<div style="float:left;padding: 0px 10px;color:#777;">/</div>
+				<div style="color:#777">公司新闻</div>
+			</div>
+		</div>
+		<!-- 具体内容 -->
+		<div class="content_show">
+			<div class="content_first">
+				<!-- 没有图片 -->
+				<!-- <div class="none_pic_show">
+					<div class="none_pic_title"><a href="javascript:;">标题</a></div>
+					<div class="none_pic_time">2017.10.26</div>
+				</div>  --> 
+				<!-- 一张图片 -->
+				 <!--  <div class="one_pic_show">
+					<div class="one_pic">
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+					</div>
+					
+					<div class="one_mid">
+						<div class="one_mid_title"><a href="javascript:;">标题</a></div>
+						<div class="one_mid_time">2017.10.26</div>
+					</div>
+				</div>   -->
+				<!-- 两张图片 -->	
+				<!-- <div class="two_pic_show">
+					<div class="two_mid_title"><a href="javascript:;">标题</a></div>
+					<div class="two_pic">
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+					</div>
+					<div class="two_mid_time">2017.10.26</div>
+				</div>    -->
+				
+			<!-- 三张图片 -->	
+				<!-- <div class="three_pic_show">
+					<div class="three_mid_title"><a href="javascript:;">标题</a></div>
+					<div class="three_pic">
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+						<img alt="" src="http://img.newzhuan.cn/uploaderPath/img/20171023/1508729169405.jpg" >
+					</div>
+					<div class="three_mid_time">2017.10.26</div>
+				</div>  -->
+			</div>
+			<!-- 分页 -->
+			<div class="page_div">
+				<!-- 分页条信息 -->
+				<div class="page_label" id="di">
+					<nav aria-label="Page navigation">
+				    	<ul class="pagination">
+				    		
+				    		
+					    </ul>
+					</nav>	
+				</div>
+			</div>
+		</div>	
+		
+		<!-- 底部 -->
+		<div class="bottom_first">
+			<div class="bootom_catalog">
+				<div class="bottom_cat page_bot" id="inf1" ><a href="javascript:;">首页</a></div>
+				<!-- <div class="bottom_cat page_bot" id="inf2" ><a href="javascript:;">招聘英才</a></div> -->
+				<div class="bottom_cat page_bot" id="inf3" ><a href="javascript:;">广告合作</a></div>
+				<div class="bottom_cat page_bot" id="inf4" ><a href="javascript:;">关于我们</a></div>
+				<div class="bottom_cat page_bot" id="inf5" ><a href="javascript:;">联系我们</a></div>
+				<div class="bottom_cat page_bot" style="opacity:0;"><a>a</a></div>
+			</div>
+			<div class="bootom_catalog_cr" style="color:white;font-size:18px;">Copyright 2016 itcast Inc,All rights reserved.</div>
+			<div class="bootom_catalog_icp page_bot" id="inf6">
+				<a href="javascript:;">湘ICP备17011137号</a>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="/home/static/js/dyc.js"></script>
+	<script type="text/javascript" src="/home/static/js/slideshow.js"></script>
+	<script type="text/javascript" src="/home/static/js/common.js"></script>
+	<script>
+		window.onload=function(){
+			slideshow.scroll();
+		}
+		var count=2;
+		mainPage.creatDys(".top_catalog",".top_cat",count);
+		mainPage.creatDys(".bottom_first",".page_bot",4);
+		
+		//隐藏新闻动态的div 
+		mainPage.createHideDiv();
+		mainPage.createNewsDiv(1);
+	</script>
+	
+	<script>
+		//查询news信息 
+		var domainUrl="http://"+newsUtils.domain().SevenSeconds+"/ssm-qimiao";
+		to_page(1);
+		function to_page(pageNum){
+			$.ajax({
+				url:domainUrl+"/news/show/type",
+				data:{"pageNum":pageNum,"type":2,"tab":"client"},
+				type:"post", 
+				success:function(result){
+					console.log(result);
+					//动态显示文章信息
+					showArticle(result.extend.msg);
+					//显示分页条信息 
+					showPage(result.extend.msg);
+				}	
+			});
+		}
+		
+		function showArticle(result){
+			$(".content_first").empty();
+	  		for(var i=0;i<result.extend.list.length;i++){
+	    	var title=result.extend.list[i].title;
+	    	var time=result.extend.list[i].time;
+	    	var picTotal=result.extend.list[i].imgList.length;
+	    	var articleId=result.extend.list[i].articleId;
+	    	var type=result.extend.list[i].type;
+	    	var content=result.extend.list[i].content;
+	    	var newsId=result.extend.list[i].newsId;
+	    	
+	    	//判断是否有图片 
+	    	//1、没图片
+	    	if(picTotal==0){
+	    		$(".content_first").append("<div class='none_pic_show'><div class='none_pic_title'><a href='/article.html?newsId="
+	    				  +newsId+"'>"
+	    				  +title+"</a></div><div class='none_pic_time'>"
+	    				  +time+"</div></div>");
+	    	}
+	    	
+	    	//2、判断是否有图片  
+	    	if(picTotal>0){
+	    		var picUrl=result.extend.list[i].imgList[0];
+		    		if(picTotal==1){	
+		    		//一张图片展示 
+		    			$(".content_first").append("<div class='one_pic_show'><div class='one_pic'><img alt='' src='"
+		    					+picUrl+"'></div><div class='one_mid'><div class='one_mid_title'><a href='/article.html?newsId="
+		    					+newsId+"'>"
+		    					+title+"</a></div><div class='one_mid_time'>"
+		    					+time+"</div></div></div> ");	
+		    		}
+		    		
+		    		//两张图片 
+	    			if(picTotal==2){
+	    				var picUrl1=result.extend.list[i].imgList[1];
+	    				$(".content_first").append("<div class='two_pic_show'><div class='two_mid_title'><a href='/article.html?newsId="
+	    						+newsId+"'>"
+			    				+title+"</a></div><div class='two_pic'><img alt='' src='"
+			    				+picUrl+"'><img alt='' src='"
+			    				+picUrl1+"'></div><div class='two_mid_time'>"
+			    				+time+"</div></div>");
+	    			}
+	    		
+		    		//三张图片 		
+	    			if(picTotal==3){
+	    				var picUrl1=result.extend.list[i].imgList[1];
+	    				var picUrl2=result.extend.list[i].imgList[2];
+	    				$(".content_first").append("<div class='three_pic_show'><div class='three_mid_title'><a href='/article.html?newsId="
+	    						+newsId+"'>"
+	    						+title+"</a></div><div class='three_pic'><img alt='' src='"
+			    				+picUrl+"'><img alt='' src='"
+			    				+picUrl1+"'><img alt='' src='"
+			    				+picUrl2+"'></div><div class='three_mid_time'>"
+			    				+time+"</div></div>"); 
+	    			}		 	
+	    	  }		
+	    	}	
+	    } 
+		//分页条信息
+		function showPage(result){
+			$(".page_font").empty();
+			var totalPage=result.extend.pageInfo.pages;
+			var nowPage=result.extend.pageInfo.pageNum;
+			var pageSize=result.extend.pageInfo.pageSize;
+			var totalSize=result.extend.pageInfo.total;
+			var pagination=result.extend.pageInfo.navigatepageNums;
+		
+		    //显示分页条信息	
+		    $("#di ul").empty();
+		    var firstPage=$("<li></li>").append("<a href='javascript:;' aria-label='Previous'><span aria-hidden='true'>首页</span>");
+		    var lastPage=$("<li></li>").append("<a href='javascript:;' aria-label='Previous'><span aria-hidden='true'>尾页</span>");
+		    
+		    var previousPage=$("<li></li>").append("<a href='javascript:;' aria-label='Previous'><span aria-hidden='true'>&laquo;</span>");
+			var nextPage=$("<li></li>").append("<a href='javascript:;' aria-label='Previous'><span aria-hidden='true'>&raquo;</span>");
+			
+			//添加首页、上一页 
+			$("#di ul").append(firstPage)
+	  		   		   .append(previousPage)
+	  		//设置如果是第一页：那么首页和上一页不可点击，最后一页：那么尾页和下一页不可点击 	
+	   		 if(nowPage==1){
+				firstPage.addClass("disabled");
+				previousPage.addClass("disabled");
+			}   
+	
+			if(nowPage==totalPage){
+				nextPage.addClass("disabled");
+				lastPage.addClass("disabled");
+			}   	    
+	  		   		    
+	  		//为首页，上一页，下一页，尾页 添加点击事件  
+			firstPage.click(function(){
+				if(nowPage!=1){
+					to_page(1);
+				}
+			});
+			previousPage.click(function(){
+				if(nowPage-1>0){
+					to_page(nowPage-1);
+				}
+			});
+			nextPage.click(function(){
+				if(nowPage+1<=totalPage){
+					to_page(nowPage+1);
+				}
+			});
+			lastPage.click(function(){
+				if(nowPage!=totalPage){
+					to_page(totalPage);
+				}
+			});
+			
+		    //获取每页显示的页码 
+	  		$.each(pagination,function(i,e){
+	  			var pages=$("<li></li>").append("<a href='javascript:;'>"+e+"</a>");
+	  			$("#di ul").append(pages);
+	  			if(nowPage==e){
+	  				pages.addClass("active");
+	  			}
+	  			pages.click(function(){
+					to_page(e);
+				}); 
+	  		});   
+	  		   		   
+	   		$("#di ul").append(nextPage)
+			   		   .append(lastPage); 	
+		} 	   		   
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

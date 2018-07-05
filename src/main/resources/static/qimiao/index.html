@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html ng-app="mainApp" ng-controller="mainCtrl">
+<head>
+	<title ng-bind="companyName"></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width"/>
+	<meta name="Keywords" content="资讯"/>
+	<!-- <link rel="shortcut icon" href="/uploaderPath/img/20170907/15047652539005249544896312.png" /> -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css"/>
+	<link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
+	<link href="/resources/css/base.css" rel="stylesheet">
+</head>
+   <body >
+  	<div ui-view style="max-width:640px;margin:auto;"></div>
+  	<!-- 七秒网站cnzz -->
+  	<div style="display:none;">
+  	<script src="https://s95.cnzz.com/z_stat.php?id=1260946323&web_id=1260946323" language="JavaScript"></script>
+  	</div>
+		<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+		<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular-animate.min.js"></script>
+		<script src="https://cdn.bootcss.com/angular-ui-router/0.4.3/angular-ui-router.min.js"></script>
+		<script src="/resources/js/bn-lazy-src.js"></script>
+		 <script src="https://cdn.bootcss.com/Swiper/4.0.6/js/swiper.min.js"></script> 
+		<script src="/resources/js/domainManager.js"></script>  
+       <script src="/resources/js/base.js"></script> 
+       <script type="text/javascript">
+       var mainApp=angular.module('mainApp', ['ngAnimate','ui.router','bn-lazy-src']);
+		mainApp.filter("bigNumber",function(){
+                return function(bigNumber){
+                if(bigNumber){
+                bigNumber=Math.abs(bigNumber)>100000000?(bigNumber/100000000)+'亿':Math.abs(bigNumber)>10000?(bigNumber/10000)+'万':bigNumber;
+                }
+                 return bigNumber||0;
+                }
+            });
+		mainApp.filter("bigDouble",function(){
+                return function(bigDouble){
+                if(bigDouble){
+                bigDouble=Math.abs(bigDouble)>100000000?(bigDouble/100000000).toFixed(2)+'亿':Math.abs(bigDouble)>10000?(bigDouble/10000).toFixed(2)+'万':bigDouble;
+                }
+                 return bigDouble||0.0;
+                }
+            });
+		mainApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+        mainApp.controller('mainCtrl', function($rootScope,$scope,$http) {
+   		
+       $scope.currentDate=myUtils.timeStampToDate(new Date());
+       $scope.backstageName="资讯";//系统名称
+       $scope.companyName="资讯";//公司名称
+       $rootScope.formDisabled=false;//表单提交，默认可以点击。
+    	 $rootScope.mainDomainUrl="http://"+location.host;
+        $scope.baseiconurl="/qimiao/resources/img";//基础图标路径
+                    $rootScope.currentShow=$rootScope.currentShow||0;//默认显示下表0，即是第一个
+                    $rootScope.navbars=[
+                    {"title":"资讯","target":"main.article","activeicon":$scope.baseiconurl+'/article_active.png','icon':$scope.baseiconurl+'/article.png'},
+                    {"title":"金融","target":"main.financial","activeicon":$scope.baseiconurl+'/financial_active.png','icon':$scope.baseiconurl+'/financial.png'},
+                    {"title":"小游戏","target":"main.app","activeicon":$scope.baseiconurl+'/app_active.png','icon':$scope.baseiconurl+'/app.png'},
+                    {"title":"小说","target":"main.book","activeicon":$scope.baseiconurl+'/book_active.png','icon':$scope.baseiconurl+'/book.png'},
+                    {"title":"精彩","target":"main.ad","activeicon":$scope.baseiconurl+'/ad_active.png','icon':$scope.baseiconurl+'/ad.png'},
+                    ];
+   		});
+       mainApp.config(function ($stateProvider, $urlRouterProvider) {
+     	$urlRouterProvider.when("", "main");
+     	$stateProvider
+     	.state("main", {
+            url: "/main",
+            views: {
+                '': {
+                    templateUrl: '/qimiao/main.html'
+                },
+                'navbar@main': {
+                    templateUrl: '/qimiao/navbar.html',
+                    controller:function($state,$scope,$rootScope){
+                    //切换导航
+                    $rootScope.navbarClick=function(navbar){
+                    //$rootScope.currentShow=$rootScope.navbars.indexOf(navbar);
+                     $state.go(navbar.target);
+                    };
+                    }
+                },
+                'body@main': {
+                    templateUrl: '/qimiao/article.html',
+                    controller:function($state,$scope,$rootScope){
+                    $rootScope.currentShow=0;
+                    var index=0;
+                    if(Math.random()<=0.2){
+                    index=0;
+                    }else if(Math.random()<=0.4){
+                    index=1;
+                    }else if(Math.random()<=0.6){
+                    index=2;
+                    }else if(Math.random()<=0.8){
+                    index=3;
+                    }else if(Math.random()<=1){
+                    index=4;
+                    }
+                    console.log(index)
+                    $state.go($rootScope.navbars[index].target);
+                    }
+                } 
+            }
+        })
+         .state("main.article", {
+            url:"/article",
+            views: {
+            	'body@main': {
+                    templateUrl: "/qimiao/article.html",
+                    controller:function($rootScope,$scope,$state){
+                    $rootScope.currentShow=0;
+					$(".loadAnimation").css("display","none");
+                    $("img").each(function(){
+						if($(this).attr("data-src")){
+							$(this).attr("src",$(this).attr("data-src"));
+						}
+						if($(this).attr("bn-lazy-src")){
+							$(this).attr("src","http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif");
+						}
+					});
+                    	$scope.protocol=location.protocol+"//";//协议
+    				//$scope.originDomain="www.newzhuan.cn";
+    				$scope.originDomain=domainManager.SevenSeconds;
+       			//广告
+      			$scope.initAdList=function (ad,a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : $scope.protocol+$scope.originDomain+"/article/list?pageNum="+a.pageNum+"&status="+a.status
+
++"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope[ad].push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope[ad]=data.list; 
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    	
+    		//底部信息列表
+    			$scope.initDataList=function (a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : $scope.protocol+$scope.originDomain+"/article/list?type="+a.type+"&status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.articleList.push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.articleList=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		//$scope.pageNum=1;//第多少个
+    		$scope.pageNum=1;//第多少个，混合广告
+    		$scope.pageSize=20;//每页个数
+    		$scope.type='';//初始化类别
+    		$scope.status="正常";//初始化状态
+    			 $scope.initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			type:$scope.type,
+    			status:$scope.status,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			}); 
+    		//广告3
+    		 	$scope.ad3={
+    		pageNum:1,
+    		pageSize:10,
+    		status:"正常",
+    		type:"广告3"
+    		};
+      			$scope.initAdList("ad3List",{
+    			pageNum:$scope.ad3.pageNum,
+    			pageSize:$scope.ad3.pageSize,
+    			status:$scope.ad3.status,
+    			type:$scope.ad3.type,
+    			orderName:"update_date",
+    			orderWay:"desc"
+    			});
+    			//修改结构
+    			$scope.updateStruct=function(){
+    				//添加到广告；规则两篇一个广告
+						if($scope.pageNum<=20 && $scope.ad3List.length>0 && $scope.articleList.length>0){
+						var newAd3List=[];
+						var olodAd3ListLength=$scope.ad3List.length;
+						for(var ii=0;ii<$scope.ad3List.length;ii++){
+						newAd3List[ii*3]=$scope.ad3List[ii];
+						newAd3List[ii*3+1]=$scope.articleList[ii*2];
+						newAd3List[ii*3+2]=$scope.articleList[ii*2+1];
+						}
+						$scope.ad3List=newAd3List;
+						var newArticleList=[];
+						for(var iii=0;iii<$scope.articleList.length;iii++){
+						if(iii>olodAd3ListLength*2){
+						newArticleList.push($scope.articleList[iii]);
+						}
+						}
+						$scope.ad3List=$scope.ad3List.concat(newArticleList);
+						$scope.articleList=[];
+						}
+    			};
+    			$scope.updateStruct();
+    			
+    			//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			var gurl=$scope.protocol+$scope.originDomain+"/article/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        //console.log($scope.articleList)
+  		      		        $scope.articleList=$scope.articleList.concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+  		}
+    		$(window).scroll(function(){
+        		//console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+    		$scope.goRedirectUrl=function(articleId,redirectUrl){
+    			//跳回article.html
+    			
+    			//console.log("http://"+location.host+"/article.html?articleId="+articleId+"&acountId=1000&redirectUrl="+redirectUrl)
+    			var url=$scope.protocol+location.host+"/article.html?articleId="+articleId+"&acountId=1000&redirectUrl="+redirectUrl;
+    			console.log(url)
+    			if(!redirectUrl){
+    			url=$scope.protocol+location.host+"/article.html?articleId="+articleId+"&acountId=1000";
+    			}
+    			location.replace(url);
+    		};
+    		
+		//打开App或文章
+		$scope.goAd=function(article,$index){
+		$scope.goRedirectUrl(article.articleId,article.redirectUrl);
+    		};	
+    			
+		$scope.clickArticle=function(article,$index){
+		$scope.goRedirectUrl(article.articleId,article.redirectUrl);
+		};
+		//打开app
+		$scope.openApp=function(article){
+		   if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		    //window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+		  	window.location = "seven://app.com/openwith?articleId="+article.articleId;
+		  	setTimeout(function(){
+		  	var spreadId=myUtils.GetQueryString("spreadId");
+		  	if(spreadId!=null&&myUtils.userVerification.catNum.test(spreadId)){
+				$.get($scope.protocol+$scope.originDomain+"/spread/"+spreadId,function(d){
+				if(d.code==200){
+				window.location =d.list[0].link;
+				}
+				});
+			}else{
+		   window.location = $scope.protocol+"a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+			}
+		  	},1000);
+		    }else if (navigator.userAgent.match(/android/i)) {
+		  	window.location = "seven://app.com/openwith?articleId="+article.articleId;
+		  	setTimeout(function(){
+		  var spreadId=myUtils.GetQueryString("spreadId");
+		  	if(spreadId!=null&&myUtils.userVerification.catNum.test(spreadId)){
+				$.get($scope.protocol+$scope.originDomain+"/spread/"+spreadId,function(d){
+				if(d.code==200){
+				window.location =d.list[0].link;
+				}
+				});
+			}else{
+		   window.location = $scope.protocol+"a.app.qq.com/o/simple.jsp?pkgname=com.yufa.zhuanzhuan";
+			}
+		  	},1000);
+		    }
+		};
+    	//显示规则
+    	$scope.showArticleListRule=function(article,$index){
+    	return (($index)%2==0)&&article.articleCate.name!="广告3";
+    	};
+    	
+                    }
+                } 
+            }
+        }).state("main.financial", {
+            url:"/financial",
+            views: {
+            	'body@main': {
+                    templateUrl: "/qimiao/financial.html",
+                    controller:function($rootScope,$scope,$state){
+                    console.log("financial")
+                    $rootScope.currentShow=1;
+                     location.href="http://loanmarket.knightflower.com/loanMarket/regist.html?market_id=1065&agent=1066";
+                    return;
+                      	$scope.protocol=location.protocol+"//";//协议
+    				//$scope.originDomain="192.168.11.111:8085";
+    				$scope.originDomain=domainManager.FinancialCenter; 	
+    			//信息列表
+    			$scope.initDataList=function (a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : $scope.protocol+$scope.originDomain+"/financial/list?type="+a.type+"&status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.financialList.push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.financialList=data.list; 
+    		        		   
+    		        	  } 
+    		        	  console.log($scope.financialList)
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		//$scope.pageNum=1;//第多少个
+    		$scope.pageNum=1;//第多少个，混合广告
+    		$scope.pageSize=20;//每页个数
+    		$scope.type='';//初始化类别
+    		$scope.status=1;//初始化状态
+    			 $scope.initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			type:$scope.type,
+    			status:$scope.status,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			}); 
+    		//跳转
+    		$scope.financialClick=function(financial){
+    		if(financial.redirectUrl){
+    		location.href=financial.redirectUrl;
+    		}
+    		};	
+    			
+                    }
+              }
+          }
+          }).state("main.app", {
+            url:"/app",
+            views: {
+            	'body@main': {
+                    templateUrl: "/qimiao/app.html",
+                    controller:function($rootScope,$scope,$state){
+                     console.log("app")
+                     $rootScope.currentShow=2;
+                     //第一个swiper
+				var swiper = new Swiper('.swiper-container', {
+			       slidesPerView: 4,
+			      spaceBetween:10,
+			      freeMode: true,
+			      observer:true,//修改swiper自己或子元素时，自动初始化swiper
+				  observeParents:true,//修改swiper的父元素时，自动初始化swiper
+			      pagination: {
+			        el: '.swiper-pagination',
+			        clickable: true,
+			      },
+			    });
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+		$(".loadAnimation").css("display","none");
+    	//$scope.originDomain="app.newzhuan.cn";
+    	$scope.originDomain=domainManager.AppCenter;
+    	
+
+    		$scope.initTypeDataList=function(a){
+    		var url="http://"+$scope.originDomain+"/app/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"";
+    		var appList="appList";
+    		if(a.type){
+    		url+="&type="+a.type;
+    		appList="type"+a.type+"AppList";//type2AppList
+    		}
+    		$.ajax({  
+    		          type : "get",  
+    		          url : url,  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope[appList].push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope[appList]=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		};
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=9;//每页个数
+    		$scope.status="1";//初始化状态
+    		$scope.type=1;//默认1，最热必玩
+    		
+    		//recommend 版面类型，1最热必玩，2热门推荐，3H5专栏
+    			$scope.initTypeDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+    			type:$scope.type,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			$scope.type=3;
+    		//recommend 版面类型，1最热必玩，2热门推荐，3H5专栏
+    			$scope.initTypeDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+    			type:$scope.type,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			
+    			
+    			
+    			//滚动刷新
+    		function onReachBottom(type){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			var gurl="http://"+$scope.originDomain+"/app/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			if(type){
+    			gurl+="&type="+type;
+    			}
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        console.log($scope[appList])
+  		      		        $scope[appList]=$scope[appList].concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom($scope.type);
+        		}
+        			
+        		});
+    		
+		//打开小说
+		$scope.clickApp=function(app){
+		if(app.androidUrl){
+		   if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		    if(app.iosUrl){
+		    location.href=app.iosUrl;
+		    }
+		    }else if (navigator.userAgent.match(/android/i)) {
+		    if(app.androidUrl){
+		    location.href=app.androidUrl;
+		    }
+			}
+		}
+		};
+                   
+                    }
+              }
+          }
+          }).state("main.book", {
+            url:"/book",
+            views: {
+            	'body@main': {
+                    templateUrl: "/qimiao/bookhome.html",
+                    controller:function($rootScope,$scope,$state){
+                    $rootScope.currentShow=3;
+                    console.log($rootScope.currentShow)
+				//第一个swiper
+				var swiper = new Swiper('.swiper-container', {
+			       slidesPerView: 4,
+			      spaceBetween:10,
+			      freeMode: true,
+			      observer:true,//修改swiper自己或子元素时，自动初始化swiper
+				  observeParents:true,//修改swiper的父元素时，自动初始化swiper
+			      pagination: {
+			        el: '.swiper-pagination',
+			        clickable: true,
+			      },
+			    });
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+		$(".loadAnimation").css("display","none");
+    	$scope.wapName="小说";
+    	//$scope.originDomain="book.newzhuan.cn";
+    	$scope.originDomain=domainManager.BookStore;
+    	$scope.bookChapterStartNumber=myUtils.GetQueryString("startNumber")||1;//默认开始章节
+    	$scope.bookChapterEndNumber=myUtils.GetQueryString("endNumber")||1;//默认结束章节
+
+    		//小说上一章-1，下一章1
+    		$scope.goBookChapter=function(t){
+    		$scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)+t;
+    		$scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)+t;
+    		//是否存在
+    		$.ajax({  
+  		          type : "post",  
+  		          url : "http://"+$scope.originDomain+"/bookChapter/count?bookId="+myUtils.GetQueryString("bookId")+"&number="+$scope.bookChapterStartNumber, 
+  		          success : function(data){
+  		          if(data>=1){
+    		console.log($scope.bookChapterEndNumber)
+    		location.href="http://"+location.host+"/book.html?bookId="+myUtils.GetQueryString("bookId")+"&startNumber="+$scope.bookChapterStartNumber+"&endNumber="+$scope.bookChapterEndNumber;
+  		          }else{
+  		          //复原
+  		          $scope.bookChapterStartNumber=parseInt($scope.bookChapterStartNumber)-t;
+    			  $scope.bookChapterEndNumber=parseInt($scope.bookChapterEndNumber)-t;
+    			  	myUtils.myTemplate("没有更多章节！"+
+  		        	"<br><br><br><br><br><div><button class='btn btn-success' id='openAppId''>点击下载APP，阅读更多章节</button></div>");
+  		        	
+  		        	$("#myTemplate").css({"width":"100%","height":"100%","margin":"0","top":"0","left":"0"});
+  		         console.log(1112)
+					$("#openAppId").on("click",function(){
+					console.log(111)
+						openApp();
+					});
+  		          }
+  		          }  
+  		          });
+    		};
+    		$scope.initRecommendDataList=function(a){
+    		var url="http://"+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"";
+    		var bookList="bookList";
+    		if(a.recommend){
+    		url+="&recommend="+a.recommend;
+    		bookList="recommend"+a.recommend+"BookList";//recommend2BookList
+    		}
+    		$.ajax({  
+    		          type : "get",  
+    		          url : url,  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			
+    		        			$scope[bookList].push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope[bookList]=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		};
+    		//底部信息列表
+    			function initDataList(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.bookList.push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.bookList=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=9;//每页个数
+    		$scope.status="1";//初始化状态
+    		$scope.recommend=2;//默认精推
+    		
+    		//recommend 推荐，默认0不推，1封推，2精推，3优推
+    			$scope.initRecommendDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+    			recommend:$scope.recommend,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			
+    			
+    			
+    			//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			var gurl="http://"+$scope.originDomain+"/book/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        console.log($scope.bookList)
+  		      		        $scope.bookList=$scope.bookList.concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+    		$scope.goRedirectUrl=function(bookId){
+    			//跳回book.html
+    			url="http://"+location.host+"/book.html?bookId="+bookId+"&acountId=1000";
+    			location.replace(url);
+    		};
+		//打开小说
+		$scope.clickBook=function(book){
+		$scope.goRedirectUrl(book.bookId);
+		};
+    	
+                    }
+              }
+          }
+          }).state("main.ad", {
+            url:"/ad",
+            views: {
+            	'body@main': {
+                    templateUrl: "/qimiao/ad.html",
+                    controller:function($rootScope,$scope,$state){
+                    $rootScope.currentShow=4;
+					$(".loadAnimation").css("display","none");
+                    $("img").each(function(){
+						if($(this).attr("data-src")){
+							$(this).attr("src",$(this).attr("data-src"));
+						}
+						if($(this).attr("bn-lazy-src")){
+							$(this).attr("src","http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif");
+						}
+					});
+                    $scope.protocol=location.protocol+"//";//协议
+    				//$scope.originDomain="www.newzhuan.cn";
+    				$scope.originDomain=domainManager.SevenSeconds;
+       			//广告
+      			$scope.initAdList=function (ad,a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : $scope.protocol+$scope.originDomain+"/article/list?pageNum="+a.pageNum+"&status="+a.status
+
++"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        	  $scope[ad]=$scope[ad].concat(data.list);
+    		        	  console.log($scope[ad])
+    		        		/*   for (var int = 0; int < data.length; int++) {
+    		        			$scope[ad].push(data.list[int]); 
+							} */
+							$scope.$apply();
+    		        	  }else{
+    		        	  $scope[ad]=data.list; 
+    		        	  } 
+    		          }  
+    		          });  
+    		}
+ 		
+    		$scope.noMore=false;//false还有，true没有更多			
+    		//广告10
+    		 	$scope.ad10={
+    		pageNum:1,
+    		pageSize:10,
+    		status:"正常",
+    		type:"广告3"
+    		};
+      			$scope.initAdList("ad10List",{
+    			pageNum:$scope.ad10.pageNum,
+    			pageSize:$scope.ad10.pageSize,
+    			status:$scope.ad10.status,
+    			type:$scope.ad10.type,
+    			orderName:"update_date",
+    			orderWay:"desc"
+    			});
+    			
+    		$(window).scroll(function(){
+        		//console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        		$scope.ad10.pageNum=$scope.ad10.pageNum+$scope.ad10.pageSize;
+        			$scope.initAdList("ad10List",{
+    			pageNum:$scope.ad10.pageNum,
+    			pageSize:$scope.ad10.pageSize,
+    			status:$scope.ad10.status,
+    			type:$scope.ad10.type,
+    			orderName:"update_date",
+    			orderWay:"desc"
+    			});
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+    		$scope.goRedirectUrl=function(articleId,redirectUrl){
+    			//跳回article.html
+    			
+    			//console.log("http://"+location.host+"/article.html?articleId="+articleId+"&acountId=1000&redirectUrl="+redirectUrl)
+    			var url=$scope.protocol+location.host+"/article.html?articleId="+articleId+"&acountId=1000&redirectUrl="+redirectUrl;
+    			console.log(url)
+    			if(!redirectUrl){
+    			url=$scope.protocol+location.host+"/article.html?articleId="+articleId+"&acountId=1000";
+    			}
+    			location.replace(url);
+    			
+    		};
+    		
+		//打开App或文章
+		$scope.goAd=function(article,$index){
+		$scope.goRedirectUrl(article.articleId,article.redirectUrl);
+    		};	
+
+    	
+                    }
+                } 
+            }
+        }); 
+		});	
+		</script>
+        </body>
+</html>

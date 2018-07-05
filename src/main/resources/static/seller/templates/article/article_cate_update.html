@@ -1,0 +1,31 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.articleCateList">返回文章类型列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">修改文章类型</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myUpdateArticleCateForm" ng-submit="updateArticleCateForm()">
+    <label  class="text-danger">※文章类名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="articleCate.name" name="name" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myUpdateArticleCateForm.name.$dirty && myUpdateArticleCateForm.name.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确文章类型标题
+				    </div>
+  </div>
+    <label  class="text-danger">
+  		<span> ※持有者.默认为公共;</span>
+  		<span style="display:block">（备注：所有持有者都能显示在APP上，只是使用权限不同）;</span>
+   		<span style="display:block" class="btn alert-success">可选公共（平台方定义，都能使用）;</span>
+	   	<span style="display:block" class="btn alert-danger" >平台方（平台方内部使用）;</span>
+	   	<span style="display:block" class="btn alert-warning">企业号（企业号使用）;</span>
+	   	<span style="display:block" class="btn alert-info">个人号（个人号使用）.</span>
+   </label>
+     <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="articleCate.holder" name="holder"
+    ng-options="holder.id as holder.value for holder in [{id:0,value:'公共'},{id:1,value:'平台方'},{id:2,value:'企业号'},{id:3,value:'个人号'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateArticleCateForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

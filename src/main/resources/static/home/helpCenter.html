@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" name="viewport" />
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<link rel="stylesheet" href="static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="static/css/helpCenter.css">
+<title>帮助中心</title>
+
+</head>
+<body>
+	<div class="container wrap" id="top">
+		<!-- 顶部图片 -->
+		<div class="row top_row">
+		  <div class="col-xs-12 col-sm-10 col-md-offset-8 col-md-2 top3">
+		  	<img src="static/imgs/ct1.png" alt="" />
+		  </div>
+		</div>
+		<!-- 顶部目录栏 -->
+		<div class="row">
+			<div class="col-md-12 top_ml">
+				<div class="col-md-6 col-md-offset-3 tm">
+					<div class="ml">
+					<a href="javascript:;">加入七秒</a>
+					</div>
+					<div class="ml">
+						<a href="javascript:;">用户协议</a>
+					</div>
+					<div class="ml">
+						<a href="javascript:;">帮助中心</a>
+					</div>
+					<div class="ml">
+						<a href="contactUS.html">联系我们</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 搜索框 -->
+	<div class="row">
+		<div class="col-md-5 col-md-offset-3 pb">
+		    <div class="input-group">
+		      <input type="text" class="form-control" placeholder="您好，请问需要什么帮助？">
+		      <span class="input-group-btn">
+		        <button class="btn btn-default" type="button">Go!</button>
+		      </span>
+		    </div><!-- /input-group -->
+		</div>	
+	</div>
+	<!-- 顶部大图片 -->	
+	<div class="row"> 
+		<div class="col-xs-12 col-sm-12 col-md-12 top_pic">
+			<img src="static/imgs/ct2.png" alt="" />
+		</div>
+	</div>
+	<!-- 中间问题 -->
+	<div class="row">
+		<div class="col-md-3 middle">
+			<div class="middle_server1">
+				服务专区
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">热门问题1</a>
+				</div> 
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">热门问题2</a>
+				</div> 
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">热门问题3</a>
+				</div> 
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">热门问题4</a>
+				</div> 
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">热门问题5</a>
+				</div> 
+			</div>
+			
+			<div class="middle_server2">
+				最新公告
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">最新公告1</a>
+				</div> 
+			</div>
+			<div class="middle_problem">
+				<div class="middle_d">•</div>
+				<div class="middle_p">
+					<a href="javascript:;">最新公告2</a>
+				</div> 
+			</div>
+		</div>
+		
+		<div class="col-md-8 middle_right">
+			热门问题
+		</div>
+	</div>
+		
+	<!-- 底部 -->
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 bottom_div">
+			<div class="col-md-5 col-md-offset-1 bottom_left">
+				<div class="bottom_left1">
+					<img src="static/imgs/ct11.png" alt="" />
+				</div>
+				<div class="bottom_left2">
+					电话：+073185510160
+				</div>
+				<div class="bottom_left3">
+					地址：湖南长沙市岳麓区麓谷企业广场E8栋一单元三楼
+				</div>
+			</div>
+			
+			<div class="col-md-2 bottom_code">
+				<div class="bottom_code1">
+					<img src="static/imgs/AndriodCode.png" alt="" />
+					<div class="bottom_code2">
+						关注官方微信
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3 bottom_right">
+				<div class="bottom_right1">
+					<img src="static/imgs/qq.png" alt="" />
+					<div class="bottom_right2">
+						官方QQ：3550631190
+					</div>
+				</div>
+				<div class="bottom_right3">
+					<img src="static/imgs/wx.png" alt="" />
+					<div class="bottom_right4">
+						官方微信：3550631190
+					</div>
+				</div>
+				<div class="bottom_right5">
+					<img src="static/imgs/ct11.png" alt="" />
+				</div>
+				<div class="bottom_right6">
+					服务时间：9：:00-17:30 (周一到周五)
+				</div>
+			</div>
+			<div class="col-md-12 bottom_ba">
+				湘ICP备17011137号 Copyright 2016 itcast Inc,All rights reserved
+			</div>
+		</div>
+	</div>
+</div>			 	
+<script>
+$(function(){
+	//1、给顶部栏目添加点击事件
+	//ct当前显示的栏目 
+	var ct=2;
+	/* $($(".top3").find("a")[ct]).css({"background-color":"#2eb4f1","font-weight": "700"}) */				 
+	$(".tm").find("a")[ct].className="tp";
+	clickTop();
+	function clickTop(){
+		$(".tm").find("a").each(function(i,e){
+			$(e).on("click",function(){
+				if(ct==i){
+					return;
+				}
+				$(".tm").find("a")[ct].className="";
+				//$($(".tm").find("a")[ct]).css("color","#333");
+				$(".tm").find("a")[i].className="tp";
+				//$($(".tm").find("a")[i]).css("color","white");
+				ct=i;
+			});
+		});
+	}
+	
+	
+
+   
+     
+})
+</script>
+	
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html ng-app="detailsApp" ng-controller="detailsCtrl" ng-class="fontSize" >
+<head>
+<title ng-bind="article.title"></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="{{article.title}}">
+<meta charset="UTF-8">
+<meta name="description"
+	content="{{article.title}}">
+	<link rel="shortcut icon" href="http://img.newzhuan.cn/uploaderPath/img/20170907/15047652539005249544896312.png" />
+ <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/base.css" rel="stylesheet">
+<!-- <link href="http://www.newzhuan.cn/resources/css/base.css" rel="stylesheet"> -->
+<style type="text/css">
+
+#newsDeatilsBody *{
+max-width:100% !important;
+}
+/* .appArticleContent *{
+font-size:1rem !important;
+} */
+</style>
+</head>
+<body >
+	<div  class="comment-wrap "  >
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:9999999999999999;position:fixed;left:0;top:0;background-color:#fff;" >
+			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div> -->
+ 			<!-- <div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div> -->
+				<div class="text-center">
+				<img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif">
+				</div>
+			</div>
+		<!-- 新闻列表 -->
+		<div style="margin-top:0px !important;display:none;"  id="newsDeatilsBody"   >
+<!-- 	
+	<div  style="margin-top:0px !important;"  on-finish-render-filters id="newsDeatilsBody"   >
+	 -->
+		<div style="padding:0 4%;background-color:#fff;" on-finish-render-filters>
+			<div class="media-center">
+			
+				<div >
+					<span style="font-size:1.2rem;font-weight:bold" ng-bind="article.title"></span>
+				</div>
+				<div class="text-muted" style="font-size:0.8rem;position:relative;margin:5px 0;">
+					<span ng-bind="article.createDate | limitTo :10" id="ad1-before"></span>
+					 <span style="color:#ccc; position:absolute;right:0;" >
+					阅读：<span ng-bind="article.readingNumber || '0'"></span>
+					</span>
+				</div >
+				<div style="font-size:1rem !important;" class="appArticleContent" ng-bind-html="article.content" >
+				</div> 
+				
+				
+			</div>
+		</div>
+		</div>
+		</div>
+
+		
+		<!-- <div style="width:100%;height:10px;background-color:#ececec;"></div> -->
+		<!-- 谷歌广告 -->
+		<div style=" margin-bottom:1px;margin:10px 0;text-align:center;">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- 自适应-2 -->
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-5588246681675782"
+			     data-ad-slot="4339608720"
+			     data-ad-format="auto"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
+		<!-- 谷歌广告 end -->
+		
+		<div style="width:100%;height:10px;background-color:#ececec;"></div>
+		<!-- 相关推荐 -->
+		<div style="max-width:640px;width:100%;margin:0 auto;">
+		<div style="margin-bottom:1px;margin:10px 0;text-align:center;">
+	        <span style="font-size:0.8rem">
+	        一&nbsp;&nbsp;相关推荐&nbsp;&nbsp;一 
+	        </span>
+	    </div>
+
+		<!-- 第二列表 -->
+		<div  class="listGroup list-group media comment-list-item" on-finish-render-filters ng-repeat="article in articleList"   ng-click="goRedirectUrl(article.articleId,article.redirectUrl)">
+			<!-- 0张图片列表 -->
+			<div ng-if="article.imgList.length==0" style="width:100%;">
+			<div class="media-body comment-right-body" style="display:inline-block;width:100%;">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<div class="media-body comment-right-body" style="display:block;">
+							<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:100%;">
+							<span style="float: left;" class="newsType"  ng-bind="article.articleCate.name"></span>
+							<span  style="float: right;" ng-bind="article.createDate | dateDiff"></span>
+							</div>
+					</div> 
+					<!-- <div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <span style="float: left;">
+					<img style="width:10px;height:10px;"   src="http://img.newzhuan.com/uploaderPath/img/20170710/14996852163959251491845075.png"/>
+					</span>
+					 <span style="float: left;border:1px solid red;color:red;text-align:center;width:18px;height:16px;border-radius:3px;line-height:16px">热</span>
+					 <span style="float: left;margin-left:5px; line-height:18px;" class="newsType" >100000+ 阅读</span>
+					</div>  -->
+			</div>
+			</div>
+			<!-- 一张图片列表 -->
+			<div ng-if="article.imgList.length==1" style="width:100%;">
+			<div class="media-body comment-right-body" style="display:inline-block;width:65%;">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+					<!-- <div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <span style="float: left;">
+					<img style="width:10px;height:10px;"   src="http://img.newzhuan.com/uploaderPath/img/20170710/14996852163959251491845075.png"/>
+					</span>
+					 <span style="float: left;border:1px solid red;color:red;text-align:center;width:18px;height:16px;border-radius:3px;line-height:16px">热</span>
+					 <span style="float: left;margin-left:5px; line-height:18px;" class="newsType" >100000+ 阅读</span>
+					</div>  -->
+					<div class="media-body comment-right-body" style="display:block;">
+							<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:100%;">
+							<span style="float: left;" class="newsType"  ng-bind="article.articleCate.name"></span>
+							<span  style="float: right;" ng-bind="article.createDate | dateDiff"></span>
+							</div>
+					</div> 
+			</div>
+			<div class="media-left" ng-if="article.imgList.length==1" style="vertical-align:middle;width:33%;padding-right:0 !important;display:inline-block;">
+				 <img class="comment-list-item-img"
+					bn-lazy-src="{{article.imgList[0].imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				<!-- <a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				</a> -->
+			</div> 
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="article.imgList.length==2">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			 <!-- <div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <span style="float: left;border:1px solid red;color:red;text-align:center;width:18px;height:16px;border-radius:3px;line-height:16px">热</span>
+					 <span style="float: left;margin-left:5px;line-height:18px;" class="newsType" >100000+ 阅读</span>
+					</div>
+				</div>
+			</div> --> 
+			<div class="media-body comment-right-body" style="display:block;">
+					<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:100%;">
+					<span style="float: left;" class="newsType"  ng-bind="article.articleCate.name"></span>
+					<span  style="float: right;" ng-bind="article.createDate | dateDiff"></span>
+					</div>
+			</div> 
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="article.imgList.length==3">
+					<div class="comment-right-body-title">
+						<span style="font-size:1rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="article.title"></span>
+					</div>
+			<div class="text-center" style="margin-bottom:6px;">
+				<div ng-repeat="img in article.imgList" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img  style="width:100%"
+					bn-lazy-src="{{img.imgAddress}}" >
+					<div ng-if="article.articleCate.name=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+			</div>
+			<!-- <div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:9px;">
+					 <span style="float: left;border:1px solid red;color:red;text-align:center;width:18px;height:16px;border-radius:3px;line-height:16px">热</span>
+					 <span style="float: left;margin-left:5px;line-height:18px;" class="newsType" >100000+ 阅读</span>
+					</div>
+				</div>
+			</div> -->
+			<div class="media-body comment-right-body" style="display:block;">
+					<div class="text-muted" style="color:#bfbebe;font-size:0.6rem;width:100%;">
+					<span style="float: left;" class="newsType"  ng-bind="article.articleCate.name"></span>
+					<span  style="float: right;" ng-bind="article.createDate | dateDiff"></span>
+					</div>
+			</div> 
+			</div>
+			</div>
+		</div>
+		<!-- 相关推荐end -->
+		
+		<!-- 底部 -->
+		<!-- <div style="width:100%;height:100px;"></div> -->
+		<!-- 底部 end-->
+		<!-- cnzz -->
+		<div style="display:none;">
+		<!-- cnzz 总统计 -->
+		<script src="https://s13.cnzz.com/z_stat.php?id=1269181002&web_id=1269181002" language="JavaScript"></script>
+		<!-- cnzzend -->
+		<script src="https://s22.cnzz.com/z_stat.php?id=1264379874&web_id=1264379874" language="JavaScript"></script>
+		</div>
+		
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+	<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+	<script src="http://www.newzhuan.cn/resources/js/bn-lazy-src.js"></script>
+	<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+ 	<!-- <script src="http://www.newzhuan.cn/resources/js/swiper.min.js"></script>  -->
+ 	<!-- 
+ 	 <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
+ 	 -->
+ 	<script src="/resources/js/domainManager.js"></script> 
+	<script  src="http://www.newzhuan.cn/resources/js/base.js"></script>
+	<!-- <script src="/resources/js/weixinlogin.js"></script> -->
+	<script>
+	//app调用
+    	//修改字体大小
+    	function changeFontSize(number){
+			var appElement = document.querySelector('[ng-controller=detailsCtrl]');
+			var scope = angular.element(appElement).scope();
+			scope.changeFontSize(number);
+			scope.$apply();
+		}
+	$(function(){
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+	});
+    	var detailsApp=angular.module('detailsApp',['bn-lazy-src']);
+    	detailsApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+           detailsApp.directive('onFinishRenderFilters', function() {
+					return {
+					restrict: 'A',
+					link: function(scope, element, attr) {
+					if(scope.article){
+					$("#newsDeatilsBody").css("display","block");
+					$(".loadAnimation").css("display","none");
+					
+					$("img").each(function(){
+					console.log($(this).attr("src"))
+					//console.log($(this).attr("bn-lazy-src"))
+					$(this).attr("src",$(this).attr("bn-lazy-src"));
+					});
+					//$(".comment-list-item").last().css("border-bottom","1px solid #ececec");
+					scope.$emit('ngRepeatFinished');
+					//$("#hongbao1").insertAfter($(".comment-list-item").get(4));
+					//$("#hongjiu1").insertAfter($(".comment-list-item").get(3));
+					
+					}
+					
+					}
+					};
+					}); 
+    	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
+    	$scope.wapName="每日生活";
+    	$scope.originDomain=domainManager.SevenSeconds;
+    	var tgAcountId=myUtils.GetQueryString("acountId")||1000;
+    	
+    		//选择字体大小
+    		$scope.changeFontSize=function(number){
+    		//sessionStorage.setItem("sevenSecondsFontSizeNumber", number);
+    		if(number==3){
+    		$scope.fontSize="fontSizeBig";
+    		}else if(number==2){
+    		$scope.fontSize="fontSizeNormal";
+    		}if(number==1){
+    		$scope.fontSize="fontSizeSmall";
+    		}
+    		};
+    		$scope.changeFontSize(2);
+    	//$scope.originDomain=location.host;
+    	//$scope.originDomain="www.newzhuan.cn";
+    	//初始化ad域名
+    	/* $.ajax({
+    		url:"http://"+$scope.originDomain+"/adDomain/get",
+    		async:false,  
+    		success:function(data){
+       			//console.log(data)
+       			if(data.code=='200'){
+       			var adDomain=data.list[0].adDomain;
+       			//"头协议"+分享域名
+         	$rootScope.adDomain=adDomain;
+         	var adDomainUrl="http://"+adDomain+"/ad.html";
+         	$("#Iframe").attr("src",adDomainUrl);
+         	
+       			return;
+       			}
+       	}}); */
+       			//广告
+      			function initAdList(ad,a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/article/list?pageNum="+a.pageNum+"&status="+a.status
+
++"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope[ad].push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope[ad]=data.list; 
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		//jsAd广告
+    			function initJsAdList(){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/jsAd/list",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data&& data.code==200){
+    		        	  $scope.jsAdList=data.list; 
+    		        	 // console.log($scope.jsAdList)
+    		        	  for(var i=0;i<$scope.jsAdList.length;i++){
+    		        	  myUtils.executeJS($scope.jsAdList[i]);
+    		        	  }
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }
+    		          }  
+    		          });  
+    		}
+    		//initJsAdList();
+    			
+    		//非跨域广告跳转	
+    		$scope.goAd=function(article){
+    				if(article.redirectUrl){
+    					location.replace(article.redirectUrl);
+    					
+    				}else{
+    					location.replace("http://"+location.host+"/app_article.html?acountId="+tgAcountId+"&articleId="+article.articleId);
+    				
+    				}
+    		};	
+    			
+    			
+    			
+		//正文文章
+    		function initData(articleId,fixedRecommendSize,isRecommendSize){
+  		         
+  		          //加载文章 
+    			$.ajax({  
+  		          type : "get",  
+  		          url : "http://"+$scope.originDomain+"/article/"+articleId,  
+  		         // url : "/school/"+id,  
+  		          async : false,  
+  		          success : function(data){
+  		        	//console.log(data);
+  		        	if(data.code==40000){
+  		        	myUtils.myTemplate("页面已删除")
+  		        	return;
+  		        	}
+  		        	data.list[0].content=data.list[0].content.replace(/src/g, "bn-lazy-src");
+  		        	data.list[0].content=$sce.trustAsHtml(data.list[0].content);
+    				$scope.article=data.list[0];
+    				//console.log($scope.article);
+    				//如果是跨域广告
+    				if(myUtils.GetQueryString("redirectUrl")&& $scope.article.articleCate.name=='广告'){
+    				if($scope.article.redirectUrl){
+    					window.parent.parent.document.location.replace($scope.article.redirectUrl);
+    				}else{
+    					window.parent.parent.document.location.replace("http://"+location.host+"/article.html?acountId="+tgAcountId+"&articleId="+$scope.article.articleId);
+    				
+    				}
+    				//既有文章内容又有文章跳转链接
+    				}else if($scope.article.redirectUrl && $scope.article.content){
+    					$("body").append("<div  style='width:100%;height:100%;position:fixed;left:0;top:0;z-index:9999999;background-color:#fff;'></div>");
+    					location.replace($scope.article.redirectUrl);
+    				}
+  		        	//$scope.news.content=$sce.trustAsHtml($scope.news.content);
+  		        	//微信分享接口
+  		        	/* if(myUtils.isWeiXinBrowse()){
+  		        		
+  		        		} */
+				 
+      		           
+  		         
+  		          }  
+  		          });  
+    			
+    			
+    		}
+    			var num=1;
+    			//阅读
+            	function getWebRead(articleId,tgAcountId){
+            	
+    		 var uv=0;//默认为0不是独立访客，没有uv,1为有uv
+            	 //只有不存在，才是新访客
+            	if(!myUtils.getCookie("articleUv"+myUtils.GetQueryString("articleId"))){
+            		myUtils.setCookie("articleUv"+myUtils.GetQueryString("articleId"), myUtils.GetQueryString("articleId"), myUtils.currentToEndTime());
+            		uv=1;
+            	}
+            		$.ajax({  
+  		          type : "post",  
+  		          url : "http://"+$scope.originDomain+"/article/webRead", 
+  		          data:{
+  		          articleId:articleId,
+  		          acountId:tgAcountId,
+  		          uv:uv
+  		          }, 
+  		          success : function(data){
+  		         if(data.code!=200){
+  		         num++;
+  		         if(num<=3){
+  		         getWebRead(myUtils.GetQueryString("articleId"),tgAcountId);
+  		         }
+  		         return;
+  		         }
+  		          }  
+  		          });
+  		          }
+  		         /*   if(!myUtils.GetQueryString("articleId")){
+    		myUtils.myTemplate("页面已删除")
+    		return;}  */
+    		
+    		// getWebRead(myUtils.GetQueryString("articleId"),tgAcountId);//点击数据
+    		 initData(myUtils.GetQueryString("articleId")||1264,1,1);//文章加载
+    		
+    		//底部信息列表
+    			function initDataList(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "http://"+$scope.originDomain+"/article/list?type="+a.type+"&status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		          
+    		            /**随机取
+    		        	  *arr数组
+    		        	  *num 取的个数
+    		        	  */
+    		        	  function  randomTake(arr,num){
+						    //新建一个数组,将传入的数组复制过来,用于运算,而不要直接操作传入的数组;
+						    var temp_array = new Array();
+						    for (var index in arr) {
+						        temp_array.push(arr[index]);
+						    }
+						    //取出的数值项,保存在此数组
+						    var return_array = new Array();
+						    for (var i = 0; i<num; i++) {
+						        //判断如果数组还有可以取出的元素,以防下标越界
+						        if (temp_array.length>0) {
+						            //在数组中产生一个随机索引
+						            var arrIndex = Math.floor(Math.random()*temp_array.length);
+						            //将此随机索引的对应的数组元素值复制出来
+						            return_array[i] = temp_array[arrIndex];
+						            //然后删掉此索引的数组元素,这时候temp_array变为新的数组
+						            temp_array.splice(arrIndex, 1);
+						        } else {
+						            //数组中数据项取完后,退出循环,比如数组本来只有10项,但要求取出20项.
+						            break;
+						        }
+						    }
+						    return return_array;
+						}
+    		        	  if(a.pageNum>1){
+    		        	 $scope.articleList =$scope.articleList.concat(randomTake(data.list,3));
+    		        		  /* for (var int = 0; int < data.length; int++) {
+    		        	  		var gailv=Math.floor(Math.random()*10);
+    		        			$scope.articleList.push(data.list[int]); 
+							} */
+    		        	  }else{
+    		        	 // $scope.articleList=data.list; 
+    		        	$scope.articleList =randomTake(data.list,3);
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		$scope.type="广告";//初始化类别
+    		$scope.status="正常";//初始化状态
+    		
+    		if($scope.article.articleCate.name=="推广"){
+    		$scope.type="推广";
+    		}else if($scope.article.articleCate.name.indexOf("广告")>-1){
+    		$scope.type="广告";
+    		}
+    		else{
+    		$scope.type=$scope.article.articleCate.name;
+    		}
+    		
+    			initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			type:$scope.type,
+    			status:$scope.status,
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+    			//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			myUtils.myFootLoadingToast("relative",null,function(){
+    			var gurl="http://"+$scope.originDomain+"/article/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&status="+$scope.status+"&orderName=create_date&orderWay=desc";
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        console.log($scope.articleList)
+  		      		        $scope.articleList=$scope.articleList.concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+    			},"add");
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			//onReachBottom();
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+    		$scope.goRedirectUrl=function(articleId,redirectUrl){
+    			//跳回article.html
+    			
+    			console.log("http://"+location.host+"/app_article.html?articleId="+articleId+"&acountId="+tgAcountId+"&redirectUrl="+redirectUrl)
+    			var url="http://"+location.host+"/app_article.html?articleId="+articleId+"&acountId="+tgAcountId+"&redirectUrl="+redirectUrl;
+    			if(!redirectUrl){
+    			url="http://"+location.host+"/app_article.html?articleId="+articleId+"&acountId="+tgAcountId;
+    			}
+    			location.replace(url);
+    			//点击跳转
+    			/* var ciframe=$("#c_iframe");
+    			ciframe.attr("src", ciframe.attr("src") + "#redirect" + redirectUrl);
+    			ciframe.appendTo("body"); */
+    		};
+
+    		
+    	});
+    	
+    	
+    	
+   </script>
+</body>
+</html>

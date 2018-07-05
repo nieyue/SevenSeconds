@@ -1,0 +1,222 @@
+<!-- 商品订单列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">商品订单列表</label>
+</div>
+<!-- 商品订单列表选择end -->
+
+<!-- 订单列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">自定义查询</label>
+</div>
+<!-- 订单列表选择end -->
+<!-- 订单搜索选择 -->
+<form novalidate name="mySearchMerOrderForm" ng-submit="searchMerOrderForm()">
+  <span class=" comment-input-margin">
+ <label  class="text-danger">订单号</label>
+    <input type="text" class="comment-input" style="width:20%" ng-model="search.orderNumber" name="orderNumber"  placeholder="订单号">
+  </span>
+  <span class=" comment-input-margin">
+ <label  class="text-danger">账号ID</label>
+    <input type="text" class="comment-input" style="width:20%" ng-model="search.acountId" name="acountId"  placeholder="账户ID">
+  </span>
+  
+   <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="mySearchMerOrderForm.$invalid" value="提交"/>
+</form>
+<!-- 订单搜索选择end -->
+
+<!-- 订单列表excel -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">下载excel</label>
+</div>
+<!-- 订单列表excel end -->
+
+<!-- 订单列表excel选择 -->
+<form novalidate name="myDownloadMerOrderForm" ng-submit="downloadMerOrderForm()">
+  <span class=" comment-input-margin">
+ <label  class="text-danger">状态</label>
+			   <select  style="width:180px;height:50px;" 
+			    ng-change="searchMerOrderForm(search)"
+			    ng-model="search.status" name="status"
+     			ng-options="sa.id as sa.value for sa in orderMerStatus">
+  				</select>
+    </span>
+  
+   <input type="submit" class="btn btn-lg btn-info" 
+  ng-disabled="myDownloadMerOrderForm.$invalid" value="下载"/>
+</form>
+<!-- 订单列表excel选择end -->
+
+<!-- 商品订单列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr >
+			  <th style="background-color:#000 !important;"></th>
+			  <th  colspan="1" style="background-color:#000 !important;">订单</th>
+			  <th colspan="8" style="background-color:#000 !important;">商品信息</th>
+			  <th  colspan="3" style="background-color:#000 !important;">收货地址</th>
+			  <th  colspan="3" style="background-color:#000 !important;">其他</th> 
+			</tr>
+			<tr>
+			  <th>序号</th>
+			  
+			  <th>订单号</th>
+			  
+			  <th>商品名称</th>
+			  <th>单价</th>
+			  <th>数量</th>
+			  <th>总价</th>
+			  <th>备注</th>
+			  <th>快递公司</th>
+			  <th>快递单号</th>
+			  <th>订单状态</th>
+			  
+			  <th>收货人</th>
+			  <th>收货手机号</th>
+			  <th>收货地址</th>
+			  
+			  <th>订单账户</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			</tr>
+			<tr ng-repeat="merOrder in merOrderList.list" >
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span  ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <!-- <td >
+			 	<a ng-repeat="merOrderImg in merOrder.merOrderImgList" href="javascript:;">
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:20px;height:20px;"
+					ng-src="{{merOrderImg.imgAddress}}" >
+				</a>
+			  </td> -->
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span ng-bind="merOrder.orderNumber"></span>
+			  </td>
+			  
+			  <td  >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  <span class="text-primary" ng-bind="orderMer.mer.title"></span>
+			  </div>
+			  </td>
+			  <td  >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  <span class="text-danger" ng-bind="orderMer.price"></span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  	<span class="text-info" ng-bind="orderMer.number"></span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  	<span class="text-danger" ng-bind="orderMer.totalPrice"></span>
+			  </div>
+			  </td>
+			  <td >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  	<span class="text-danger" ng-bind="orderMer.remark"></span>
+			  </div>
+			  </td>
+			   <td>
+			   <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  <span ng-show="orderMer.$$courier==0" class="text-warning" ng-init="orderMer.$$courier=0"   
+			  ng-bind="orderMer.courierCompany==0?
+			  '暂无':orderMer.courierCompany==1?
+			  '顺丰速运SF':orderMer.courierCompany==2?
+			  '中通快递ZTO':orderMer.courierCompany==3?
+			  '圆通速递YTO':orderMer.courierCompany==4?
+			  '申通快递STO':orderMer.courierCompany==5?
+			  '百世快递BestExpress':orderMer.courierCompany==6?
+			  '韵达快递YUNDA':orderMer.courierCompany==7?
+			  '中国邮政EMS':orderMer.courierCompany==8?
+			  '宅急送ZJS':orderMer.courierCompany==9?
+			  'FedEx联邦':orderMer.courierCompany==10?
+			  '京东物流':orderMer.courierCompany==11?
+			  '德邦物流':orderMer.courierCompany==12?
+			  '安能物流':orderMer.courierCompany==13?
+			  '优速快递':orderMer.courierCompany==14?
+			  '天天快递':orderMer.courierCompany==15?
+			  '汇通快递':orderMer.courierCompany==16?
+			  '国通快递':orderMer.courierCompany==17?
+			  '递全峰快':orderMer.courierCompany==18?
+			  '菜鸟物流':''"></span>
+			   <select ng-show="orderMer.$$courier==1" style="width:180px;height:50px;" ng-model="orderMer.courierCompany" name="courierCompany"
+     			ng-options="sa.id as sa.value for sa in orderMerCourier">
+  				</select>
+			  <span class="btn btn-danger" ng-show="orderMer.$$courier==0" ng-click="changeCourier(orderMer)">修改</span>
+			  <span ng-show="orderMer.$$courier==1" class="btn btn-danger" ng-click="updateOrderMerCourier(orderMer)">保存</span>
+			  </div>
+			  </td>
+			  
+			   <td >
+			  <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  	<input  type="text" ng-model="orderMer.courierNumber" ng-maxlength="32" placeholder="请确认发货后，填写快递单号"/>
+			  	<button class="btn btn-success" ng-click="updateOrderMerCourier(orderMer)">保存</button>
+			  </div>
+			  </td>
+			  
+			   <td>
+			   <div ng-repeat="orderMer in merOrder.orderMerList" >
+			  <span ng-show="orderMer.$$status==0" class="text-warning" ng-init="orderMer.$$status=0"   
+			  ng-bind="orderMer.status==0?
+			  '已下单-未支付':orderMer.status==1?
+			  '已支付-未发货':orderMer.status==2?
+			  '已发货-未完成':orderMer.status==3?
+			  '申请退款':orderMer.status==4?
+			  '已退款':orderMer.status==5?
+			  '拒绝退款':orderMer.status==6?
+			  '已完成':''"></span>
+			   <select ng-show="orderMer.$$status==1" style="width:180px;height:50px;" ng-model="orderMer.status" name="status"
+     			ng-options="sa.id as sa.value for sa in orderMerStatus">
+  				</select>
+			  <span class="btn btn-danger" ng-show="orderMer.$$status==0" ng-click="changeStatus(orderMer)">修改</span>
+			  <span ng-show="orderMer.$$status==1" class="btn btn-danger" ng-click="updateOrderMerStatus(orderMer)">保存</span>
+			  </div>
+			  </td>
+			  
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span ng-bind="merOrder.receiptInfo.name"></span>
+			  </td>
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span ng-bind="merOrder.receiptInfo.phone"></span>
+			  </td>
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span  ng-bind="merOrder.receiptInfo.address"></span>
+			  </td>
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			 <div>
+			  账户ID:<span ng-bind="merOrder.acountId"></span>
+			 </div>
+			  <a class="btn btn-info" ui-sref="main.merOrderAcount({acountId:merOrder.acountId})">下单账户</a>
+			  </td>
+			  <td rowspan="{{merOrder.orderMerList.length}}">
+			  <span ng-bind="merOrder.createDate"></span>
+			  </td>
+			  <td rowspan="{{merOrder.orderMerList.length}}" >
+			  <span ng-bind="merOrder.updateDate"></span>
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 商品订单列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页',search)" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous',search)" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber,search)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next',search)" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页',search)" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage,search)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

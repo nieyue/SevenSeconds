@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html ng-app="detailsApp" ng-controller="detailsCtrl" >
+<head>
+<title ng-bind="bookChapter.title"></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="{{bookChapter.title}}">
+<meta charset="UTF-8">
+<meta name="description"
+	content="{{bookChapter.title}}">
+	<!-- <link rel="shortcut icon" href="/uploaderPath/img/20170907/15047652539005249544896312.png" /> -->
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<!--  <link href="https://cdn.bootcss.com/Swiper/4.0.6/css/swiper.min.css" rel="stylesheet">
+ --><link href="http://article.boya1.cn/resources/css/base.css" rel="stylesheet">
+<style type="text/css">
+
+#newsDeatilsBody *{
+max-width:100% !important;
+}
+</style>
+</head>
+<body >
+	<div  class="comment-wrap "  >
+			<!-- <div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#ececec)" > -->
+			<div class='loadAnimation' style="padding-top:105px !important;width:100%;height:100%;z-index:99999999;position:fixed;left:0;top:0;background:linear-gradient(to bottom, #fff ,#fff)" >
+			<!-- <div  ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+ -->				<div class="lds-spinner" style="width:100%;height:100%;margin:auto;">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div> 
+<div class="text-center">
+<!-- <img alt="" style="width:100%;" src="http://img.newzhuan.cn/uploaderPath/img/20171012/15077771426357259452972994.gif"> -->
+</div>
+
+			</div>
+		<!-- 小说列表 -->
+	<div  style="margin-top:0px !important;display:none;" on-finish-render-filters  id="newsDeatilsBody"   > 
+
+
+		<!-- 列表 -->
+		<div style="display:inline-block;margin-bottom:1px;position:relative;left:0;top:0;width:100%;heigth:20px;">
+		<div  style="margin:auto;text-align:center;">
+			<div class="listGroup list-group " style="width:96%;display:inline-block;margin:2% 2% ;" ng-repeat="book in bookList" on-finish-render-filters  ng-click="clickBook(book)">
+
+				<div  style="width:100%;">
+					<div  style="width:100%;padding-right:0 !important;display:inline-block;">
+						 <img class="comment-list-item-img"
+							ng-src="{{book.imgAddress}}" style="border:1px solid #ececec;width:26%;vertical-align:top;">
+              <div style="display:inline-block;width:68%;text-align:left;margin-left:3%;">
+                <span  style="font-size:1rem;display:inline-block;" ng-bind="book.title"></span>
+                  <span style="font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;text-overflow:ellipsis;color:#ccc;" ng-bind="book.summary"></span>
+              </div>
+				
+					</div> 
+				</div>
+			</div>
+		</div>
+    <hr/>
+
+				 		
+		</div>
+		</div>
+			
+		
+		<!-- 底部 -->
+		<!-- <div style="width:100%;height:100px;"></div> -->
+		<!-- 底部 end-->
+	
+		
+	<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+	<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+	<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+ 	<!-- <script src="https://cdn.bootcss.com/Swiper/4.0.6/js/swiper.min.js"></script>  -->
+ 	<!-- 
+ 	 <script src="http://www.newzhuan.cn/resources/js/domainManager.js"></script> 
+ 	 -->
+ 	<script src="http://article.boya1.cn/resources/js/domainManager.js"></script> 
+	<script  src="http://article.boya1.cn/resources/js/base.js"></script>
+
+
+	<script>
+	$(function(){
+	  	//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+		
+		
+	});
+    	var detailsApp=angular.module('detailsApp',[]);
+    	detailsApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+           detailsApp.directive('onFinishRenderFilters', function() {
+					return {
+					restrict: 'A',
+					link: function(scope, element, attr) {
+					if(scope.bookList){
+					$("#newsDeatilsBody").css("display","block");
+					//setTimeout(function(){
+					$(".loadAnimation").css("display","none");
+					//},2000);
+					
+					
+					scope.$emit('ngRepeatFinished');
+					
+					}
+					
+					}
+					};
+					}); 
+    	detailsApp.controller('detailsCtrl',function($rootScope,$scope,$sce){
+    	$scope.wapName="小说";
+    	$scope.protocol=location.protocol=='https:'?location.protocol:'http:'+"//";//协议
+    	$scope.originDomain=domainManager.BookStore;
+   
+    	
+    	$scope.bookList=[];
+    	
+    			
+  
+    		
+    		//底部信息列表
+    			function initDataList(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : $scope.protocol+$scope.originDomain+"/book/list?status="+a.status+"&pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"&bookCateId="+a.bookCateId,  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.list.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.bookList.push(data.list[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.bookList=data.list; 
+    		        		   
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+
+    		
+    		
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		$scope.status="1";//初始化状态
+    		
+        if(!myUtils.GetQueryString("bookCateId")){
+          return;
+        }
+    		
+    			initDataList({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			status:$scope.status,
+          bookCateId:myUtils.GetQueryString("bookCateId"),
+    			orderName:"create_date",
+    			orderWay:"desc"
+    			});
+
+    		
+    			
+    			
+    			//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			myUtils.myFootLoadingToast("relative",null,function(){
+    			var gurl=$scope.protocol+$scope.originDomain+"/book/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&status="+$scope.status+"&orderName=create_date&orderWay=desc"+"&bookCateId="+myUtils.GetQueryString("bookCateId");
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+  				$scope.noMore=true;
+                  myUtils.myLoadingToast("没有更多了！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		        	 if(data.list.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        console.log($scope.bookList)
+  		      		        $scope.bookList=$scope.bookList.concat(data.list);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+    			},"add");
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
+    		
+    		//跳转页面
+        $scope.clickBook=function(book){
+          if(book.redirectUrl){
+          location.replace(book.redirectUrl);
+          }
+          
+        };
+    
+    	});
+    	
+   </script>
+</body>
+</html>

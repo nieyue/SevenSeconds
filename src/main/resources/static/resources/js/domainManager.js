@@ -13,7 +13,8 @@ function isProd(b){
 		FinancialCenter:'fin.newzhuan.cn',
 		ScheduleJob:'task.newzhuan.cn',	
 		Push:'push.newzhuan.cn',	
-		MyWangEditor:'img.boya1.cn',	
+		//MyWangEditor:'img.boya1.cn',
+		MyWangEditor:'ccsd.boya1.cn/tool',
 		};
 	return domainManager;
 	}else{

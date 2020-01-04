@@ -13,11 +13,11 @@ spring:
    datasource:
      name: master
      driver-class-name: com.mysql.jdbc.Driver
-     url: jdbc:mysql://118.190.133.146:3306/seven_seconds_db
-     username: root
+     url: jdbc:mysql://127.0.0.1:3306/seven_seconds_db
+     username: seven_seconds_db
      password: liliu
    redis:
-     host: 118.190.133.146
+     host: 127.0.0.1
      password: liliu
      port: 6379 
      database: 1
@@ -34,7 +34,7 @@ myPugin:
   pushStoreDomainUrl: http://push.boya1.cn
   bookStoreDomainUrl: http://book.boya1.cn
   location: /home/config/thirdParty.properties
-  articleUrl: http://article.yuanzhiba.com/article.html
+  articleUrl: http://article.boya1.cn/article.html
   shareUrl: http://article.boya1.cn/share.html
   shareDomain: article.boya1.cn
   gmwDomain: article.boya1.cn

@@ -302,7 +302,7 @@
 		                    <artifactId>springloaded</artifactId>
 		                    <version>1.2.6.RELEASE</version>
 		                </dependency>
-		            </dependencies>  -->
+		            </dependencies> -->
 				<executions>
 					<execution>
 						<goals>
